@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
+import ScreensLanding from "./screens/Landing";
 import "./App.css";
 
 class App extends Component {
@@ -11,7 +12,7 @@ class App extends Component {
           exact
           path="/landing"
           render={props => {
-            return <div> This is the landing page </div>;
+            return <ScreensLanding />;
           }}
         />
       </div>
