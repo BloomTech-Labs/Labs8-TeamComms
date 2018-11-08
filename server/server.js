@@ -29,7 +29,7 @@ mongoose
 
 const server = express();
 
-server.use(cors(corsOptions));
+server.use(cors());
 server.use(express.json());
 server.use(morgan("dev"));
 server.use(helmet());
