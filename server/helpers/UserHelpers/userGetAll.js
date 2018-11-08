@@ -7,10 +7,3 @@ const userGetAll = (req, res) => {
 };
 
 module.exports = userGetAll;
-
-//   try {
-//     const users = await User.find({});
-//     res.status(200).json(users);
-//   } catch (err) {
-//     next({ status: 500, message: err.message });
-//   }

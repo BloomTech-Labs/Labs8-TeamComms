@@ -10,6 +10,7 @@ Router.route("/").get(hlpr.userGetAll);
 Router.route("/:id").get(hlpr.userFind);
 Router.route("/register").post(hlpr.userRegister);
 Router.route("/login").post(hlpr.userLogin);
+Router.route("/edit").put(hlpr.userEdit);
 
 //put == findbyidandupdate(id, new info)
 
