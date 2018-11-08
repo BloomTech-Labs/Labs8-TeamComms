@@ -82,6 +82,165 @@ Runs the server in development mode.
 
 Open [http://localhost:3300](http://localhost:3300) to view it in the browser.
 
+---
+
+## User API Documenation
+
+### Register User
+
+Register a User if the username does not already exist. Usernames must be unique.
+
+_URL_ : `/api/users/register`
+
+_Method_ : `POST`
+
+_Data example_ All fields must be sent.
+
+```json
+{
+    *Required
+    "username": "jerry",
+    "password": "password123",
+    "phone_number": 1234567890,
+    "email": "testemail@email.com",
+    *Optional
+    "organization": "Organization LLC",
+    "premium": false
+}
+```
+
+#### Success Response
+
+_Condition_ : If everything is OK and a User didn't exist.
+
+_Code_ : 200
+
+_Content example_ 👍
+
+```
+{
+    "token": 123aBc456DfG123aBc456DfG123aBc456DfG123aBc456DfG123aBc456DfG,
+    "user": {
+        "username": "jerry",
+        "email": "testemail@email.com",
+        "phone_number": 1234567890,
+        "organization": "Organization LLC",
+        "premium": false,
+        "is_active": true
+}
+```
+
+#### Error Response
+
+_Condition_ : If fields are missed.
+
+_Code_ : 400 BAD REQUEST
+
+---
+
+### Login User
+
+Login a User and returns a token for User.
+
+_URL_ : `/api/users/login`
+
+_Method_ : `POST`
+
+_Data example_ All fields must be sent.
+
+```json
+{
+  "username": "jerry",
+  "password": "password123"
+}
+```
+
+#### Success Response
+
+_Condition_ : If everything is OK and a User didn't exist.
+
+_Code_ : 200
+
+_Content example_ 👍
+
+```
+{
+    "token": 123aBc456DfG123aBc456DfG123aBc456DfG123aBc456DfG123aBc456DfG,
+    "user": {
+        "username": "jerry",
+        "email": "testemail@email.com",
+        "phone_number": 1234567890,
+        "organization": "Organization LLC",
+        "premium": false,
+        "is_active": true
+}
+```
+
+#### Error Response
+
+_Condition_ : If 'username' and 'password' combination is wrong.
+
+_Code_ : 401
+
+---
+
+### Update User
+
+Update a User if a User is logged in and authenticated with token.
+
+_URL_ : `/api/users/edit`
+
+_Method_ : `PUT`
+
+_Data example_ All fields are optional.
+
+```json
+{
+  "username": "jerry",
+  "password": "password123",
+  "phone_number": 1234567890,
+  "email": "testemail@email.com",
+  "organization": "Organization LLC",
+  "is_active": true
+}
+```
+
+_Header_ : Pass token in header with a key of "auth"
+
+#### Success Response
+
+_Condition_ : If user is authenticated and everything is updated successfully.
+
+_Code_ : 200
+
+_Content example_ 👍
+
+```
+{
+    "user": {
+        "username": "jerry",
+        "email": "testemail@email.com",
+        "phone_number": 1234567890,
+        "organization": "Organization LLC",
+        "premium": false,
+        "is_active": true
+}
+```
+
+#### Error Response
+
+_Condition_ : If error updating or authenticating User.
+
+_Code_ : 401
+
+---
+
+### Delete/Inactivate User
+
+To delete a User, use the above `Edit User` endpoint and change `active: false`.
+
+---
+
 ## How to test the software
 
 ## Known issues
