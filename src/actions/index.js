@@ -1,6 +1,7 @@
 
-//below 1 line, boilerplate
-import { fetchAllMissions } from './fetchAllMissionsAction';
+import { appMounted } from './appMountedAction';
+import { reduxTest } from './reduxTestAction';
 
-//below 1 line, boilerplate
-export * from './fetchAllMissionsAction';
+
+export { appMounted } from './appMountedAction';
+export { reduxTest } from './reduxTestAction';
