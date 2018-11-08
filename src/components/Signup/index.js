@@ -8,7 +8,8 @@ class Signup extends Component {
     this.state = {
       username: "",
       password1: "",
-      password2: ""
+      password2: "",
+      user: {}
     };
   }
 
@@ -21,8 +22,33 @@ class Signup extends Component {
 
   userRegister = (e, credentials) => {
     e.preventDefault();
-    credentials = JSON.stringify(credentials);
-    console.log(credentials);
+    if (credentials.password1 === credentials.password2) {
+      const body = {
+        email: credentials.username,
+        password: credentials.password1,
+        username: credentials.username,
+        phone_number: Math.random() * 10
+      };
+      const temp = JSON.stringify(body);
+      console.log(temp);
+      console.log(body);
+      const headers = {
+        "Content-Type": "application/json"
+      };
+      axios
+        .post("https://teamcomm2.herokuapp.com/api/users/register", temp, {
+          headers: headers
+        })
+        .then(res => {
+          console.log("Token: ", res.data.token);
+          console.log("User: ", res.data.user);
+          localStorage.setItem("jwt", res.token);
+          this.setState({ user: res.user });
+        })
+        .catch(err => console.log({ err }));
+    } else {
+      console.log("Passwords do not match");
+    }
   };
 
   render() {
@@ -73,7 +99,7 @@ class Signup extends Component {
             <button type="submit" className="register-button">
               Signup
             </button>
-            <span class="switch-text">
+            <span className="switch-text">
               Already Registered?
               <button className="switch-button"> Click here to Login.</button>
             </span>
