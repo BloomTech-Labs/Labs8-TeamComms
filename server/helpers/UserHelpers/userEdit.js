@@ -31,6 +31,7 @@ const userEdit = async (req, res) => {
           }
         }
       );
+      
       res.status(200).send({
         user: {
           username: user.username,
