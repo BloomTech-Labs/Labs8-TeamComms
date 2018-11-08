@@ -4,7 +4,7 @@ const Router = express.Router();
 const hlpr = require("../helpers/UserHelpers/UserModules");
 
 // @route   /api/users/
-// @desc    Add, Remove, Edit
+// @desc    Add, Remove, Update
 
 /*
     Route - /api/users/register
@@ -19,10 +19,10 @@ Router.route("/register").post(hlpr.userRegister);
 */
 Router.route("/login").post(hlpr.userLogin);
 /*
-    Route - /api/users/edit
+    Route - /api/users/update
     Req - (All Optional) username, password, email, phone_number, organization
     Res - Token, {username, email, phone_number, organization} 
 */
-Router.route("/edit").put(hlpr.userEdit);
+Router.route("/update").put(hlpr.userEdit);
 
 module.exports = Router;

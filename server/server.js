@@ -4,6 +4,7 @@ const helmet = require("helmet");
 const mongoose = require("mongoose");
 const apiRoutes = require("./routes/apiRoutes");
 
+mongoose.set("useCreateIndex", true);
 mongoose
   .connect(
     "mongodb://localhost/Testdb",
