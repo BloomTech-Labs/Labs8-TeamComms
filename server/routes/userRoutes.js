@@ -9,6 +9,7 @@ const hlpr = require("../helpers/UserHelpers/UserModules");
 Router.route("/").get(hlpr.userGetAll);
 Router.route("/:id").get(hlpr.userFind);
 Router.route("/register").post(hlpr.userRegister);
+Router.route("/login").post(hlpr.userLogin);
 
 //put == findbyidandupdate(id, new info)
 

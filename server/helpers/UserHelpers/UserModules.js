@@ -1,5 +1,6 @@
 module.exports = {
   userGetAll: require("./userGetAll"),
   userRegister: require("./userRegister"),
-  userFind: require("./userFind")
+  userFind: require("./userFind"),
+  userLogin: require("./userLogin")
 };
