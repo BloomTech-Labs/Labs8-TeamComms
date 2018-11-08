@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const hashedPassword = require("../validation/hashedPassword");
 
 const userSchema = new mongoose.Schema({
   username: {
