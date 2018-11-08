@@ -1,0 +1,119 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.main {
+  margin: 0 auto;
+  padding: 5px 0 5px 0;
+  background-color: #1e1d1e;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.custominput {
+  width: 300px;
+  height: 50px;
+  font-size: 20px;
+  color: #323232;
+  text-align: center;
+  border-top: none;
+  border-bottom: none;
+
+}
+
+.custominput-top {
+  width: 300px;
+  height: 50px;
+  font-size: 20px;
+  color: #323232;
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.custominput-bottom {
+  width: 300px;
+  height: 50px;
+  font-size: 20px;
+  color: #323232;
+  text-align: center;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.register-button {
+  width: 300px;
+  height: 75px;
+  color: white;
+  border-radius: 5px;
+  background-color: #f5c268;
+  border: 1px solid grey;
+  font-size: 28px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  border: none;
+}
+
+.switch-button {
+  width: 120px;
+  height: 20px;
+  color: white;
+  border-radius: 5px;
+  background-color: #2cabae;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-left: 5px;
+  border: none;
+}
+
+.switch-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+}
+
+.logout-button {
+  width: 100px;
+  height: 30px;
+  color: black;
+  border-radius: 5px;
+  background-color: white;
+  border: 1px solid grey;
+  font-size: 16px;
+  border: none;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 5px;
+
+}
+
+.instructions-button {
+  width: 100px;
+  height: 30px;
+  color: grey;
+  background-color: white;
+  font-size: 16px;
+  border: none;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 15px;
+}
+
+.display-user-text {
+  color: #B45F06;
+  font-weight: bold;
+  word-wrap: none;
+}

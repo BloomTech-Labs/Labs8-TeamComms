@@ -1,28 +1,43 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+import React, { Component } from "react";
+import { Route, Switch } from "react-router-dom";
+import ScreensLanding from "./screens/Landing";
+import ReduxTest from './components/Test/ReduxTest'
+import { connect } from 'react-redux';
+import  { appMounted }  from './actions/index';
+import "./App.css";
+
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.appMounted();
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div className="App">       
+
+          Ready to go. 
+
+          <Switch>
+            <Route
+              exact
+              path="/landing"
+              render={props => {
+                return <ScreensLanding />;
+              }} 
+            />
+        
+          <Route exact path="/reduxtest" component={ReduxTest} />
+        </Switch>
       </div>
     );
   }
 }
 
-export default App;
+
+const mapStateToProps = state => {
+  return state;
+};  
+export default connect(mapStateToProps, { appMounted })(App);  
