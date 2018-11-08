@@ -2,6 +2,9 @@ const express = require("express");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
+
+require('dotenv').config()
+
 const apiRoutes = require("./routes/apiRoutes");
 
 mongoose.set("useCreateIndex", true);

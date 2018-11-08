@@ -24,7 +24,8 @@ const userLogin = async (req, res) => {
           email: user.email,
           phone_number: user.phone_number,
           organization: user.organization,
-          premium: user.premium
+          premium: user.premium,
+          is_active: user.is_active
         }
       });
     }
