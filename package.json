@@ -3,12 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
     "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.2"
   },
   "scripts": {
@@ -28,6 +30,7 @@
   ],
   "devDependencies": {
     "eslint-plugin-prettier": "^3.0.0",
-    "prettier": "1.14.3"
+    "prettier": "1.14.3",
+    "redux-devtools-extension": "^2.13.5"
   }
 }
