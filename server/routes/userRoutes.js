@@ -6,6 +6,8 @@ const hlpr = require("../helpers/UserHelpers/UserModules");
 // @route   /api/users/
 // @desc    Add, Remove, Update
 
+//TODO -- Have user is_active checks
+
 /*
     Route - /api/users/register
     Req - username, password, email, phone_number, organization(optional)
