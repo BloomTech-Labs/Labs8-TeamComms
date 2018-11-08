@@ -39,7 +39,7 @@ server.get("/", (req, res) => {
 server.use("/api", apiRoutes);
 
 const port = 3300;
-server.listen(port, function() {
+server.listen((process.env.PORT || port), function() {
   console.log(
     `\n=== Web API Listening on http://localhost:${port}... *.* ===\n`
   );
