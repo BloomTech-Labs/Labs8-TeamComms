@@ -21,7 +21,9 @@ const server = express();
 server.use(express.json());
 server.use(morgan("dev"));
 server.use(helmet());
-
+server.get('/', (req,res) => {
+  res.send("hello");
+})
 server.use("/api", apiRoutes);
 
 const port = 3300;
