@@ -1,21 +1,15 @@
 const User = require("../../models/UserModel"); //Model
-const hash = require("pbkdf2");
-const jwt = require("jsonwebtoken");
-
-const secret = "12345";
+const generateToken = require("../../validation/generateToken");
+const tokenCheck = require("../../validation/tokenCheck");
 
 const userEdit = async (req, res) => {
   let token = req.headers.auth;
   const newInfo = req.body;
   try {
-    if (token) {
-      jwt.verify(token, secret, (err, decodedToken) => {
-        if (err) {
-          throw new Error("Token Invalid");
-        } else {
-          token = decodedToken;
-        }
-      });
+    token = tokenCheck(token);
+    if (!token) {
+      throw new Error("Invalid token!");
+    } else {
       const user = await User.findByIdAndUpdate(
         { _id: token.id },
         { $set: newInfo },
@@ -27,9 +21,15 @@ const userEdit = async (req, res) => {
           }
         }
       );
-      res.send(user);
-    } else {
-      throw new Error("Token Invalid");
+      res.status(200).send({
+        user: {
+          username: user.username,
+          email: user.email,
+          phone_number: user.phone_number,
+          organization: user.organization,
+          premium: user.premium
+        }
+      });
     }
   } catch (err) {
     res.status(401).send(err.message);

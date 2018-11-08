@@ -1,27 +1,11 @@
 const User = require("../../models/UserModel"); //Model
-const hash = require("pbkdf2");
-const jwt = require("jsonwebtoken");
+const generateToken = require("../../validation/generateToken");
+const hashedPassword = require("../../validation/hashedPassword");
 
-const secret = "12345";
-function generateToken(user) {
-  const payload = {
-    username: user.username,
-    id: user._id
-  };
-
-  const options = {
-    expiresIn: "24h",
-    jwtid: (jwt_id++).toString()
-  };
-
-  return jwt.sign(payload, secret, options);
-}
 const userLogin = async (req, res) => {
   const creds = req.body;
   try {
-    creds.password = hash
-      .pbkdf2Sync(creds.password, "salt", 8, 20, "sha256")
-      .toString("hex");
+    creds.password = hashedPassword(creds.password);
 
     const user = await User.findOne({
       username: creds.username,
@@ -31,7 +15,16 @@ const userLogin = async (req, res) => {
     if (!user) {
       throw new Error("Invalid Credentials");
     } else {
-      res.send(generateToken(user));
+      res.status(200).send({
+        token: generateToken(user),
+        user: {
+          username: user.username,
+          email: user.email,
+          phone_number: user.phone_number,
+          organization: user.organization,
+          premium: user.premium
+        }
+      });
     }
   } catch (err) {
     res.status(401).send(err.message);
