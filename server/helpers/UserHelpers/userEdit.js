@@ -4,7 +4,7 @@ const hashedPassword = require("../../validation/hashedPassword");
 
 const userEdit = async (req, res) => {
   let token = req.headers.auth;
-  let newInfo = req.body;
+  let newInfo = req.body; //TODO - Talk with front end about what info is being passed in
   if (!newInfo.password.length) {
     delete newInfo.password;
   } else {
@@ -31,13 +31,14 @@ const userEdit = async (req, res) => {
           }
         }
       );
+      
       res.status(200).send({
         user: {
           username: user.username,
           email: user.email,
           phone_number: user.phone_number,
           organization: user.organization,
-          premium: user.premium
+          premium: user.premium,
         }
       });
     }

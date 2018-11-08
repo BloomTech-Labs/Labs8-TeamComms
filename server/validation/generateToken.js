@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const secret = "12345";
+const secret = process.env.SECRET_KEY;
 
 function generateToken(user) {
   const payload = {
