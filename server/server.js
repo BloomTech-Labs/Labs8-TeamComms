@@ -4,8 +4,12 @@ const helmet = require("helmet");
 const mongoose = require("mongoose");
 const apiRoutes = require("./routes/apiRoutes");
 
+mongoose.set("useCreateIndex", true);
 mongoose
-  .connect("mongodb://localhost/Testdb")
+  .connect(
+    "mongodb://localhost/Testdb",
+    { useNewUrlParser: true }
+  )
   .then(() => console.log("**Connected to Mongo**"))
   .catch(err => console.log(err.message));
 
@@ -17,12 +21,11 @@ server.use(helmet());
 
 server.use("/api", apiRoutes);
 
-
-
-
 const port = 3300;
 server.listen(port, function() {
   console.log(
     `\n=== Web API Listening on http://localhost:${port}... *.* ===\n`
   );
 });
+
+module.exports = server;
