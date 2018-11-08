@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const apiRoutes = require("./routes/apiRoutes");
 
 mongoose
-  .connect("mongodb://localhost/Testdb")
+  .connect("mongodb://localhost/Testdb", { useNewUrlParser: true })
   .then(() => console.log("**Connected to Mongo**"))
   .catch(err => console.log(err.message));
 

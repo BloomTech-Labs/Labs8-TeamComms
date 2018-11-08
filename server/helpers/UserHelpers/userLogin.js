@@ -5,6 +5,8 @@ const hashedPassword = require("../../validation/hashedPassword");
 const userLogin = async (req, res) => {
   const creds = req.body;
   try {
+    //Input - Password from request body
+    //Output - Returns hashed password to be checked with username in database
     creds.password = hashedPassword(creds.password);
 
     const user = await User.findOne({

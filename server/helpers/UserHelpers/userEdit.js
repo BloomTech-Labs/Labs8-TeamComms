@@ -6,16 +6,20 @@ const userEdit = async (req, res) => {
   let token = req.headers.auth;
   const newInfo = req.body;
   try {
+    //Input - Token into decoder and checks if secret is valid
+    //Output - Decoded token or null if invalid
     token = tokenCheck(token);
     if (!token) {
       throw new Error("Invalid token!");
     } else {
+      //Input - Checks user collection for user using id from decoded token payload then updates
+      //Output - New user object with updated info
       const user = await User.findByIdAndUpdate(
         { _id: token.id },
         { $set: newInfo },
         (err, result) => {
           if (err) {
-            throw new Error("Problem with updating user");
+            throw new Error("Problem with editing user");
           } else {
             return result;
           }

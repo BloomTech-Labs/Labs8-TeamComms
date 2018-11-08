@@ -4,9 +4,14 @@ const hashedPassword = require("../../validation/hashedPassword");
 
 const userRegister = async (req, res) => {
   try {
-    const user = new User(req.body); //document instance
+    //Creates new document instance
+    const user = new User(req.body); 
+
+    //Input - Password from request body
+    //Output - Returns hashed password to be checked with username in database
     user.password = hashedPassword(user.password);
 
+    //Saves user document to user collection
     await user.save();
 
     res.status(200).send({
