@@ -10,7 +10,7 @@ const apiRoutes = require("./routes/apiRoutes");
 mongoose.set("useCreateIndex", true);
 mongoose
   .connect(
-    "mongodb://localhost/Testdb",
+    process.env.MONGOLAB_URL,
     { useNewUrlParser: true }
   )
   .then(() => console.log("**Connected to Mongo**"))
@@ -21,6 +21,7 @@ const server = express();
 server.use(express.json());
 server.use(morgan("dev"));
 server.use(helmet());
+
 server.get('/', (req,res) => {
   res.send("hello");
 })
