@@ -20,7 +20,7 @@ NodeJS
 
 **Status**: Initial build in progress.
 
-**Links to production or demo instances:**
+**Links to production or demo instances:** Server - https://teamcomm2.herokuapp.com Client - https://team-comm.netlify.com/
 
 **Screenshots**:
 
@@ -90,7 +90,7 @@ Open [http://localhost:3300](http://localhost:3300) to view it in the browser.
 
 Register a User if the username does not already exist. Usernames must be unique.
 
-_URL_ : `/api/users/register`
+_URL_ : `https://teamcomm2.herokuapp.com/api/users/register`
 
 _Method_ : `POST`
 
@@ -142,7 +142,7 @@ _Code_ : 400 BAD REQUEST
 
 Login a User and returns a token for User.
 
-_URL_ : `/api/users/login`
+_URL_ : `https://teamcomm2.herokuapp.com/api/users/login`
 
 _Method_ : `POST`
 
@@ -188,7 +188,7 @@ _Code_ : 401
 
 Update a User if a User is logged in and authenticated with token.
 
-_URL_ : `/api/users/edit`
+_URL_ : `https://teamcomm2.herokuapp.com/api/users/edit`
 
 _Method_ : `PUT`
 
