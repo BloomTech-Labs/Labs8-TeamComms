@@ -19,27 +19,9 @@ class App extends Component {
       <div className="App">
         Ready to go.
         <Switch>
-          <Route
-            exact
-            path="/landing"
-            render={props => {
-              return <ScreensLanding />;
-            }}
-          />
-          <Route
-            exact
-            path="/login"
-            render={props => {
-              return <ScreensLogin />;
-            }}
-          />
-          <Route
-            exact
-            path="/register"
-            render={props => {
-              return <ScreensRegister />;
-            }}
-          />
+          <Route exact path="/landing" component={ScreensLanding} />
+          <Route exact path="/login" component={ScreensLogin} />
+          <Route exact path="/register" component={ScreensRegister} />
           <Route
             exact
             path="/missioncontrol"

@@ -15,6 +15,10 @@ class Register extends Component {
     };
   }
 
+  switchToLogin = e => {
+    this.props.history.push('/login');
+  }
+
   changeHandler = e => {
     e.preventDefault();
     this.setState({
@@ -121,10 +125,13 @@ class Register extends Component {
       span className = "switch-text" >
       Already Registered ?
       <
-      button className = "switch-button" > Click here to Login. < /button> <
-      /span> <
-      /form> <
-      /div> <
+      button className = "switch-button"
+      onClick = {
+        this.switchToLogin
+      } > Click here to Login. < /button> < /
+      span > <
+      /form> < /
+      div > <
       /React.Fragment>
     );
   }
