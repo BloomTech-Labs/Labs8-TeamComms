@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 import Header from "../../components/Header";
-import Signin from "../../components/Signin";
+import Login from "../../components/Login";
 import PropTypes from "prop-types";
 
 //this screen should return components necessary to build the landing page.
 
-class ScreensSignin extends Component {
+class ScreensLogin extends Component {
   render() {
     return (
       <React.Fragment>
         <Header />
-        <Signin />
+        <Login />
       </React.Fragment>
     );
   }
 }
-ScreensSignin.propTypes = {};
+ScreensLogin.propTypes = {};
 
-export default ScreensSignin;
+export default ScreensLogin;
