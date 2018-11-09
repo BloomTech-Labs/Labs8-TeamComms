@@ -20,7 +20,9 @@ NodeJS
 
 **Status**: Initial build in progress.
 
-**Links to production or demo instances:** Server - https://teamcomm2.herokuapp.com Client - https://team-comm.netlify.com/
+**Links to production or demo instances**:
+Server - https://teamcomm2.herokuapp.com
+Client - https://team-comm.netlify.com/
 
 **Screenshots**:
 
