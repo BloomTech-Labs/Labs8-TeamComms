@@ -4,6 +4,7 @@ import ScreensLanding from "./screens/Landing";
 import ScreensLogin from "./screens/Login";
 import ScreensRegister from "./screens/Register";
 import ScreensMissionControl from "./screens/MissionControl";
+import ConvoList from "./screens/ConvoList";
 import ReduxTest from "./components/Test/ReduxTest";
 import { connect } from "react-redux";
 import { appMounted } from "./actions/index";
@@ -28,6 +29,7 @@ class App extends Component {
             component={ScreensMissionControl}
           />
           <Route exact path="/reduxtest" component={ReduxTest} />
+          <Route exact path="/conversations" component={ConvoList} />
         </Switch>
       </div>
     );
