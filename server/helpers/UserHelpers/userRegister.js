@@ -5,8 +5,14 @@ const hashedPassword = require("../../validation/hashedPassword");
 const userRegister = async (req, res) => {
   try {
     //Creates new document instance
-    const user = new User(req.body);
+    const tempUser = req.body;
+    tempUser.displayName = `${req.body.givenName} ${req.body.familyName}`;
+    tempUser.name = {
+      givenName: req.body.givenName,
+      familyName: req.body.familyName
+    };
 
+    const user = new User(tempUser);
     //Input - Password from request body
     //Output - Returns hashed password to be checked with username in database
     user.password = hashedPassword(user.password);
@@ -17,7 +23,9 @@ const userRegister = async (req, res) => {
     res.status(200).send({
       token: `Bearer ${generateToken(user)}`,
       user: {
-        username: user.username,
+        id: user._id,
+        displayName: user.displayName,
+        name: user.name,
         email: user.email,
         phone_number: user.phone_number,
         organization: user.organization,
