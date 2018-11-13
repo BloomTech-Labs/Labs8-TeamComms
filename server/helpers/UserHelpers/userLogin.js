@@ -10,7 +10,7 @@ const userLogin = async (req, res) => {
     creds.password = hashedPassword(creds.password);
 
     const user = await User.findOne({
-      username: creds.username,
+      email: creds.email,
       password: creds.password
     });
 
@@ -18,7 +18,7 @@ const userLogin = async (req, res) => {
       throw new Error("Invalid Credentials");
     } else {
       res.status(200).send({
-        token: generateToken(user),
+        token: `Bearer ${generateToken(user)}`,
         user: {
           username: user.username,
           email: user.email,

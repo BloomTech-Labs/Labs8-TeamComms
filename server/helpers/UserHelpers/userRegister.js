@@ -15,7 +15,7 @@ const userRegister = async (req, res) => {
     await user.save();
 
     res.status(200).send({
-      token: generateToken(user),
+      token: `Bearer ${generateToken(user)}`,
       user: {
         username: user.username,
         email: user.email,
