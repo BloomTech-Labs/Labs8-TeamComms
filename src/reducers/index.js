@@ -1,13 +1,36 @@
 
-import { combineReducers } from 'redux';
+import { 
+    REG_CALLED, 
+    REG_RETURNED, 
+    SIGNIN_CALLED, 
+    SIGNIN_RETURNED
+} from '../actions/types';
 
-import  { appMounted }  from './appMountedReducer';
-import { reduxTest } from './reduxTestReducer';
 
+export const reducer = (state = null, action) => {
+    switch (action.type) {
 
-const rootReducer =  combineReducers({
-    appMounted, 
-    reduxTest
-})
-export default rootReducer;
+        case REG_CALLED:
+            return {...state, 
+                registrationCalled: true
+            }
+        case REG_RETURNED:
+            return {...state, 
+                registrationSuccess: true, 
+                userData: action.payload
+            }
 
+        case SIGNIN_CALLED:
+            return {...state, 
+            signinCalled: true
+        }
+        case SIGNIN_RETURNED:
+        return {...state, 
+            signInSuccess: true, 
+            userData: action.payload
+        }
+
+        default:
+            return state;
+    }
+}

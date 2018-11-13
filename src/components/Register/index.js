@@ -1,7 +1,7 @@
-import React, {
-  Component
-} from "react";
-import axios from "axios";
+
+import React, { Component } from "react";
+import { callReg } from '../../actions/index';
+import { connect } from "react-redux";
 import "./register.css";
 
 class Register extends Component {
@@ -10,14 +10,13 @@ class Register extends Component {
     this.state = {
       username: "",
       password1: "",
-      password2: "",
-      user: {}
+      password2: ""
     };
   }
 
   switchToLogin = e => {
-    this.props.history.push('/login');
-  }
+    this.props.history.push("/login");
+  };
 
   changeHandler = e => {
     e.preventDefault();
@@ -26,115 +25,91 @@ class Register extends Component {
     });
   };
 
-  userRegister = (e, credentials) => {
-    e.preventDefault();
-    if (credentials.password1 === credentials.password2) {
-      const body = {
-        email: credentials.username,
-        password: credentials.password1,
-        username: credentials.username,
+
+  handleRegSubmit = (e, userInput ) => {
+    if (userInput.password1 === userInput.password2) {
+      const credentials = {
+        email: userInput.username,
+        password: userInput.password1,
+        username: userInput.username,
         phone_number: Math.random() * 10
       };
-      const temp = JSON.stringify(body);
-      console.log(temp);
-      console.log(body);
-      const headers = {
-        "Content-Type": "application/json"
-      };
-      axios
-        .post("https://teamcomm2.herokuapp.com/api/users/register", temp, {
-          headers: headers
-        })
-        .then(res => {
-          console.log("Token: ", res.data.token);
-          console.log("User: ", res.data.user);
-          localStorage.setItem("jwt", res.token);
-          this.setState({
-            user: res.user
-          });
-        })
-        .catch(err => console.log({
-          err
-        }));
+      this.props.callReg(e, credentials);
     } else {
-      console.log("Passwords do not match");
+      e.preventDefault();
+      alert("Passwords do not match!");
+      return;  
     }
-  };
+  }
 
   render() {
-    let credentials = {
+    let userInput = {
       username: this.state.username,
       password1: this.state.password1,
       password2: this.state.password2
     };
-    return ( <
-      React.Fragment >
-      <
-      div className = "main" >
-      <
-      form method = "post"
-      className = "form-wrapper"
-      onSubmit = {
-        e => {
-          this.userRegister(e, credentials);
-        }
-      } >
-      <
-      img src = "./images/logo.png"
-      alt = "" / >
-      <
-      br / >
-      <
-      input placeholder = "username"
-      className = "custominput-top"
-      required type = "text"
-      onChange = {
-        this.changeHandler
-      }
-      name = "username"
-      value = {
-        this.state.username
-      }
-      />{" "} <
-      input placeholder = "password"
-      className = "custominput"
-      required type = "password"
-      name = "password1"
-      onChange = {
-        this.changeHandler
-      }
-      value = {
-        this.state.password1
-      }
-      />{" "} <
-      input placeholder = "confirm password"
-      className = "custominput-bottom"
-      required type = "password"
-      name = "password2"
-      onChange = {
-        this.changeHandler
-      }
-      value = {
-        this.state.password2
-      }
-      /> <
-      button type = "submit"
-      className = "register-button" >
-      Register <
-      /button> <
-      span className = "switch-text" >
-      Already Registered ?
-      <
-      button className = "switch-button"
-      onClick = {
-        this.switchToLogin
-      } > Click here to Login. < /button> < /
-      span > <
-      /form> < /
-      div > <
-      /React.Fragment>
+    return (
+      <React.Fragment>
+        <div className="main">
+          <form
+            method="post"
+            className="form-wrapper"
+            onSubmit={(e, userInput) => {
+              this.handleRegSubmit(e, userInput);          
+            }}
+          >
+            <img src="./images/logo.png" alt="" />
+            <br />
+            <input
+              placeholder="username"
+              className="custominput-top"
+              required
+              type="text"
+              onChange={this.changeHandler}
+              name="username"
+              value={this.state.username}
+            />{" "}
+            <input
+              placeholder="password"
+              className="custominput"
+              required
+              type="password"
+              name="password1"
+              onChange={this.changeHandler}
+              value={this.state.password1}
+            />{" "}
+            <input
+              placeholder="confirm password"
+              className="custominput-bottom"
+              required
+              type="password"
+              name="password2"
+              onChange={this.changeHandler}
+              value={this.state.password2}
+            />{" "}
+            <button type="submit" className="register-button">
+              Register{" "}
+            </button>{" "}
+            <span className="switch-text">
+              Already Registered ?
+              <button className="switch-button" onClick={this.switchToLogin}>
+                {" "}
+                Click here to Login.{" "}
+              </button>{" "}
+            </span>{" "}
+          </form>{" "}
+        </div>{" "}
+      </React.Fragment>
     );
   }
 }
 
-export default Register;
+const mapStateToProps = state => {
+  return state;
+};
+export default connect(
+  mapStateToProps,
+  {
+    callReg
+  }
+)(Register);
