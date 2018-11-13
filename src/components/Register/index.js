@@ -57,7 +57,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      email: "",
       password1: "",
       password2: "",
       givenName: "",
@@ -77,6 +77,8 @@ class Register extends Component {
   };
 
   handleRegSubmit = (e, userInput) => {
+    e.preventDefault();
+    console.log(userInput);
     if (userInput.password1 === userInput.password2) {
       const credentials = {
         email: userInput.email,
@@ -93,7 +95,7 @@ class Register extends Component {
   };
 
   render() {
-    let userInput = {
+    const userInput = {
       email: this.state.email,
       password1: this.state.password1,
       password2: this.state.password2,
@@ -105,7 +107,7 @@ class Register extends Component {
         <Main>
           <FormWrapper
             method="post"
-            onSubmit={(e, userInput) => {
+            onSubmit={e => {
               this.handleRegSubmit(e, userInput);
             }}
           >
@@ -116,7 +118,7 @@ class Register extends Component {
               name="givenName"
               onChange={this.changeHandler}
               value={this.state.givenName}
-            />
+            />{" "}
             <CustomInput
               placeholder="last name"
               required
@@ -124,14 +126,14 @@ class Register extends Component {
               name="familyName"
               onChange={this.changeHandler}
               value={this.state.familyName}
-            />
+            />{" "}
             <CustomInput
               placeholder="e-mail"
               required
               type="text"
               onChange={this.changeHandler}
-              name="username"
-              value={this.state.username}
+              name="email"
+              value={this.state.email}
             />{" "}
             <CustomInput
               placeholder="password"
@@ -148,14 +150,17 @@ class Register extends Component {
               name="password2"
               onChange={this.changeHandler}
               value={this.state.password2}
-            />
-            <RegisterButton type="submit"> Register </RegisterButton>
-          </FormWrapper>
+            />{" "}
+            <RegisterButton type="submit"> Register </RegisterButton>{" "}
+          </FormWrapper>{" "}
           <SwitchText>
             Already Registered ?
-            <SwitchLink onClick={this.switchToLogin}>&nbsp; Login.</SwitchLink>
-          </SwitchText>
-        </Main>
+            <SwitchLink onClick={this.switchToLogin}>
+              {" "}
+              &nbsp; Login.{" "}
+            </SwitchLink>{" "}
+          </SwitchText>{" "}
+        </Main>{" "}
       </React.Fragment>
     );
   }
