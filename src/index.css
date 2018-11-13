@@ -135,8 +135,13 @@ table {
 }
 
 html {
-  font-family: 'Roboto',
-    sans-serif;
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
 /* End of Reset */

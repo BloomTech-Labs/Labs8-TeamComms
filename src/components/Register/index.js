@@ -1,11 +1,10 @@
-import axios from "axios";
 import React, { Component } from "react";
 import { callReg } from "../../actions/index";
 import { connect } from "react-redux";
-import "./register.css";
 import styled from "styled-components";
+import { CustomInput, PrimaryButton } from "../Common/index";
 
-const RegisterButton = styled.button`
+const RegisterButton = styled(PrimaryButton)`
   width: 300px;
   height: 75px;
   color: white;
@@ -30,13 +29,39 @@ const SwitchText = styled.p`
   color: #facc43;
 `;
 
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+`;
+
+const Main = styled.div`
+  margin: 0 auto;
+  padding: 5px 0 5px 0;
+  background: black;
+`;
+
+const CustomInputTop = styled(CustomInput)`
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+`;
+
+const CustomInputBottom = styled(CustomInput)`
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom: none;
+`;
+
 class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
       username: "",
       password1: "",
-      password2: ""
+      password2: "",
+      givenName: "",
+      familyName: ""
     };
   }
 
@@ -54,10 +79,10 @@ class Register extends Component {
   handleRegSubmit = (e, userInput) => {
     if (userInput.password1 === userInput.password2) {
       const credentials = {
-        email: userInput.username,
+        email: userInput.email,
         password: userInput.password1,
-        username: userInput.username,
-        phone_number: Math.random() * 10
+        givenName: userInput.givenName,
+        familyName: userInput.familyName
       };
       this.props.callReg(e, credentials);
     } else {
@@ -69,43 +94,55 @@ class Register extends Component {
 
   render() {
     let userInput = {
-      username: this.state.username,
+      email: this.state.email,
       password1: this.state.password1,
-      password2: this.state.password2
+      password2: this.state.password2,
+      givenName: this.state.givenName,
+      familyName: this.state.familyName
     };
     return (
       <React.Fragment>
-        <div className="main">
-          <form
+        <Main>
+          <FormWrapper
             method="post"
-            className="form-wrapper"
             onSubmit={(e, userInput) => {
               this.handleRegSubmit(e, userInput);
             }}
           >
-            <img src="./images/logo.png" alt="" />
-            <br />
-            <input
+            <CustomInputTop
+              placeholder="first name"
+              required
+              type="text"
+              name="givenName"
+              onChange={this.changeHandler}
+              value={this.state.givenName}
+            />
+            <CustomInput
+              placeholder="last name"
+              required
+              type="text"
+              name="familyName"
+              onChange={this.changeHandler}
+              value={this.state.familyName}
+            />
+            <CustomInput
               placeholder="e-mail"
-              className="custominput-top"
               required
               type="text"
               onChange={this.changeHandler}
               name="username"
               value={this.state.username}
             />{" "}
-            <input
+            <CustomInput
               placeholder="password"
-              className="custominput"
               required
               type="password"
               name="password1"
               onChange={this.changeHandler}
               value={this.state.password1}
             />{" "}
-            <input
+            <CustomInputBottom
               placeholder="confirm password"
-              className="custominput-bottom"
               required
               type="password"
               name="password2"
@@ -113,14 +150,12 @@ class Register extends Component {
               value={this.state.password2}
             />
             <RegisterButton type="submit"> Register </RegisterButton>
-            <SwitchText>
-              Already Registered ?
-              <SwitchLink onClick={this.switchToLogin}>
-                &nbsp; Login.
-              </SwitchLink>
-            </SwitchText>
-          </form>
-        </div>
+          </FormWrapper>
+          <SwitchText>
+            Already Registered ?
+            <SwitchLink onClick={this.switchToLogin}>&nbsp; Login.</SwitchLink>
+          </SwitchText>
+        </Main>
       </React.Fragment>
     );
   }
