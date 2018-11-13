@@ -1,9 +1,13 @@
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  username: {
+  displayName: {
     type: String,
-    required: [true, 'Username is required!']
+    required: [true, 'displayName is required!']
+  },
+  name: {
+    familyName: {type: String, required: [true, "familyName is required!"]},
+    givenName: {type: String, required: [true, "givenName is required!"]},
   },
   password: {
     type: String,
@@ -11,21 +15,6 @@ const userSchema = new mongoose.Schema({
   },
   phone_number: {
     type: String,
-    validate: {
-      isAsync: true,
-      validator: function(v, cb) {
-        setTimeout(function() {
-          var phoneRegex = /\d{3}-\d{3}-\d{4}/;
-          var msg = v + ' is not a valid phone number!(111-111-1111)';
-          // First argument is a boolean, whether validator succeeded
-          // 2nd argument is an optional error message override
-          cb(phoneRegex.test(v), msg);
-        }, 5);
-      },
-      // Default error message, overridden by 2nd argument to `cb()` above
-      message: 'Default error message'
-    },
-    required: [true, 'User phone number required']
   }, 
   email: {
     type: String,

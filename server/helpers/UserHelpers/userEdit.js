@@ -5,11 +5,8 @@ const hashedPassword = require("../../validation/hashedPassword");
 const userEdit = async (req, res) => {
   let token = req.headers["jwt"] || req.headers['authorization'] || req.headers['auth'] || req.headers['x-access-token'];
   let newInfo = req.body; //TODO - Talk with front end about what info is being passed in
-  if(Object.keys(req.body).length < 5){
-    return res.send("Please send {username, email, phone_number, oldPw, newPw} even if empty string");
-  }
-  if (!newInfo.username.length) {
-    delete newInfo.username;
+  if(Object.keys(req.body).length < 4){
+    return res.send("Please send {displayName, givenName, familyName, email, oldPw, newPw} even if empty string");
   }
 
   if (!newInfo.phone_number.length) {
@@ -62,7 +59,8 @@ const userEdit = async (req, res) => {
 
       res.status(200).send({
         user: {
-          username: user.username,
+          displayName: user.displayName,
+          name: user.name,
           email: user.email,
           phone_number: user.phone_number,
           organization: user.organization,

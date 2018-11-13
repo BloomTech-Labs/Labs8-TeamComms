@@ -20,7 +20,9 @@ const userLogin = async (req, res) => {
       res.status(200).send({
         token: `Bearer ${generateToken(user)}`,
         user: {
-          username: user.username,
+          id: user._id,
+          displayName: user.displayName,
+          name: user.name,
           email: user.email,
           phone_number: user.phone_number,
           organization: user.organization,
