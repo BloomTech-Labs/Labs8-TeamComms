@@ -1,0 +1,46 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: #1e1d1e;
+}
+.list .custom-btn {
+  background-color: #f5c268;
+  color: white;
+  border: 1px solid grey;
+  border-radius: 5px;
+  margin: 0 5px;
+  padding: 5px;
+}
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 15px;
+  padding: 10px;
+  border: 1px solid white;
+  border-radius: 10px;
+  background: white;
+  color: #323232;
+  width: 30%;
+}
+
+.card h1 {
+  width: 60%;
+  font-weight: bold;
+}
+.card span {
+  width: 15%;
+  margin-left: 5px;
+}
