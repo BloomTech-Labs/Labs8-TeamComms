@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { PrimaryButton, Logo } from "../Common";
 
@@ -26,6 +27,10 @@ const HeaderWrapper = styled.div`
 const RegisterButton = styled(PrimaryButton)`
   background: #25bea0;
   color: #ffffff;
+  a {
+    text-decoration: none;
+    color: white;
+  }
 `;
 
 const LoginButton = styled(PrimaryButton)`
@@ -34,6 +39,10 @@ const LoginButton = styled(PrimaryButton)`
   border: 1px solid #ffffff;
   margin-left: 1rem;
   margin-right: 1rem;
+  a {
+    text-decoration: none;
+    color: white;
+  }
 `;
 
 const HeaderText = styled.h1`
@@ -57,11 +66,15 @@ class Header extends Component {
   render() {
     return (
       <HeaderWrapper>
-        <NavLink>Features</NavLink>
-        <NavLink>Pricing</NavLink>
-        <NavLink>About Us</NavLink>
-        <RegisterButton>Register</RegisterButton>
-        <LoginButton>Login</LoginButton>
+        <NavLink> Features </NavLink> <NavLink> Pricing </NavLink>
+        <NavLink> About Us </NavLink>
+        <Link to="/register">
+          <RegisterButton>Register</RegisterButton>
+        </Link>
+        <Link to="/login">
+          {" "}
+          <LoginButton>Login</LoginButton>{" "}
+        </Link>
       </HeaderWrapper>
     );
   }

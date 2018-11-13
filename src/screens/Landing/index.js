@@ -16,7 +16,8 @@ const JumboTron = styled.div`
   line-height: 1.25;
   grid-column: 1;
   grid-row: 1;
-  margin: 3rem;
+  margin: 1rem 3rem 3rem 3rem;
+
   font-weight: bold;
   color: #facc43;
   p {
@@ -98,25 +99,24 @@ class ScreensLanding extends Component {
     return (
       <StyledGrid>
         <JumboTron>
-          Your Remote Meetings Just Got Easier.
+          Your Remote Meetings Just Got Easier.{" "}
           <p>
             Team Communicator helps keep your remote team stay in sync by
-            managing your meetings in the cloud.
-            <br />
+            managing your meetings in the cloud. <br />
             <br />
             <Ul>
-              <Li>Track your Team's Questions</Li>
-              <Li>Upload Directly to Youtube</Li>
-              <Li>Quickly Transcribe Your Video's</Li>
-              <Li>Send Transcription's Via E-Mail</Li>
-            </Ul>
-          </p>
+              <Li> Track your Team 's Questions</Li>{" "}
+              <Li> Upload Directly to Youtube </Li>{" "}
+              <Li> Quickly Transcribe Your Video 's</Li>{" "}
+              <Li> Send Transcription 's Via E-Mail</Li>{" "}
+            </Ul>{" "}
+          </p>{" "}
           <StyledMiniForm action="">
             <Email placeholder="e-mail" required type="text" name="username" />
-            <RegisterButton>GO!</RegisterButton>
-          </StyledMiniForm>
-          <LittleP>14-Day Free Trial. No Credit Card Required.</LittleP>
-        </JumboTron>
+            <RegisterButton> GO! </RegisterButton>{" "}
+          </StyledMiniForm>{" "}
+          <LittleP> 14 - Day Free Trial.No Credit Card Required. </LittleP>{" "}
+        </JumboTron>{" "}
         <LandingImage src="./images/landingimage2.jpg" />
       </StyledGrid>
     );
