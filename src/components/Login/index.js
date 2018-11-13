@@ -1,4 +1,3 @@
-
 import React, { Component, Fragment } from "react";
 import { callLogIn } from "../../actions/index";
 import { connect } from "react-redux";
@@ -59,13 +58,13 @@ class Login extends Component {
               type="password"
               name="password"
               onChange={this.changeHandler}
-              value={this.state.password1}
-            />{" "}
+              value={this.state.password}
+            />
             <button type="submit" className="signin-button">
-              Sign In{" "}
-            </button>{" "}
-          </form>{" "}
-        </div>{" "}
+              Sign In
+            </button>
+          </form>
+        </div>
       </Fragment>
     );
   }

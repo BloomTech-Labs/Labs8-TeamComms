@@ -1,8 +1,34 @@
-
+import axios from "axios";
 import React, { Component } from "react";
-import { callReg } from '../../actions/index';
+import { callReg } from "../../actions/index";
 import { connect } from "react-redux";
 import "./register.css";
+import styled from "styled-components";
+
+const RegisterButton = styled.button`
+  width: 300px;
+  height: 75px;
+  color: white;
+  border-radius: 5px;
+  background: #25bea0;
+  border: 1px solid grey;
+  font-size: 28px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: none;
+`;
+
+const SwitchLink = styled.p`
+  color: white;
+  cursor: pointer;
+`;
+
+const SwitchText = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #facc43;
+`;
 
 class Register extends Component {
   constructor(props) {
@@ -25,8 +51,7 @@ class Register extends Component {
     });
   };
 
-
-  handleRegSubmit = (e, userInput ) => {
+  handleRegSubmit = (e, userInput) => {
     if (userInput.password1 === userInput.password2) {
       const credentials = {
         email: userInput.username,
@@ -38,9 +63,9 @@ class Register extends Component {
     } else {
       e.preventDefault();
       alert("Passwords do not match!");
-      return;  
+      return;
     }
-  }
+  };
 
   render() {
     let userInput = {
@@ -55,13 +80,13 @@ class Register extends Component {
             method="post"
             className="form-wrapper"
             onSubmit={(e, userInput) => {
-              this.handleRegSubmit(e, userInput);          
+              this.handleRegSubmit(e, userInput);
             }}
           >
             <img src="./images/logo.png" alt="" />
             <br />
             <input
-              placeholder="username"
+              placeholder="e-mail"
               className="custominput-top"
               required
               type="text"
@@ -86,19 +111,16 @@ class Register extends Component {
               name="password2"
               onChange={this.changeHandler}
               value={this.state.password2}
-            />{" "}
-            <button type="submit" className="register-button">
-              Register{" "}
-            </button>{" "}
-            <span className="switch-text">
+            />
+            <RegisterButton type="submit"> Register </RegisterButton>
+            <SwitchText>
               Already Registered ?
-              <button className="switch-button" onClick={this.switchToLogin}>
-                {" "}
-                Click here to Login.{" "}
-              </button>{" "}
-            </span>{" "}
-          </form>{" "}
-        </div>{" "}
+              <SwitchLink onClick={this.switchToLogin}>
+                &nbsp; Login.
+              </SwitchLink>
+            </SwitchText>
+          </form>
+        </div>
       </React.Fragment>
     );
   }

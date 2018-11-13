@@ -1,7 +1,4 @@
-import React, {
-  Component
-} from "react";
-import Header from "../../components/Header";
+import React, { Component } from "react";
 import Register from "../../components/Register";
 import PropTypes from "prop-types";
 
@@ -9,14 +6,10 @@ import PropTypes from "prop-types";
 
 class ScreensLanding extends Component {
   render() {
-    return ( <
-      React.Fragment >
-      <
-      Header / >
-      <
-      Register / >
-      <
-      /React.Fragment>
+    return (
+      <React.Fragment>
+        <Register />
+      </React.Fragment>
     );
   }
 }
