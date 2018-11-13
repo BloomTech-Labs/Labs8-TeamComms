@@ -48,7 +48,9 @@ class App extends Component {
       <AppWrapper>
         <FadedLogo src="../images/logo.png" width="200px" height="90px" />
         <Header />
-        <SearchBar />
+        {this.props.history.location.pathname === "/landing" ? null : (
+          <SearchBar />
+        )}
         <Switch>
           <Route exact path="/landing" component={ScreensLanding} />
 
@@ -62,7 +64,6 @@ class App extends Component {
             />
             <Route exact path="/conversations" component={ScreensConvoList} />
           </Content>
-          <Footer />
         </Switch>
       </AppWrapper>
     );
