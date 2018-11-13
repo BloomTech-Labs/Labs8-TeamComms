@@ -5,15 +5,10 @@ import ScreensLogin from "./screens/Login";
 import ScreensRegister from "./screens/Register";
 import ScreensMissionControl from "./screens/MissionControl";
 import ConvoList from "./screens/ConvoList";
-import ReduxTest from "./components/Test/ReduxTest";
 import { connect } from "react-redux";
-import { appMounted } from "./actions/index";
 import "./App.css";
 
 class App extends Component {
-  componentDidMount() {
-    this.props.appMounted();
-  }
 
   render() {
     return (
@@ -28,20 +23,16 @@ class App extends Component {
             path="/missioncontrol"
             component={ScreensMissionControl}
           />
-          <Route exact path="/reduxtest" component={ReduxTest} />
           <Route exact path="/conversations" component={ConvoList} />
         </Switch>
       </div>
     );
   }
 }
-
+// export default App;
 const mapStateToProps = state => {
   return state;
 };
 export default connect(
-  mapStateToProps,
-  {
-    appMounted
-  }
+  mapStateToProps,  
 )(App);
