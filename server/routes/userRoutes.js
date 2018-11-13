@@ -10,19 +10,21 @@ const hlpr = require("../helpers/UserHelpers/UserModules");
 
 /*
     Route - /api/users/register
-    Req - username, password, email, phone_number, organization(optional)
+    Req -  email, password, username, phone_number, organization(optional)
     Res - Token, {username, email, phone_number, organization} 
 */
 Router.route("/register").post(hlpr.userRegister);
+
 /*
     Route - /api/users/login
-    Req - username, password,
+    Req - email, password
     Res - Token, {username, email, phone_number, organization} 
 */
 Router.route("/login").post(hlpr.userLogin);
+
 /*
     Route - /api/users/update
-    Req - (All Optional) username, password, email, phone_number, organization
+    Req - username, email, phone_number, oldPw, newPw
     Res - Token, {username, email, phone_number, organization} 
 */
 Router.route("/update").put(hlpr.userEdit);

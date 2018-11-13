@@ -1,7 +1,6 @@
 
-import { appMounted } from './appMountedAction';
-import { reduxTest } from './reduxTestAction';
+import {callReg} from './callReg';
+import {callLogIn} from './callLogIn';
 
-
-export { appMounted } from './appMountedAction';
-export { reduxTest } from './reduxTestAction';
+export {callReg} from './callReg';
+export {callLogIn} from './callLogIn';

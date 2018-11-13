@@ -4,9 +4,8 @@ import ScreensLanding from "./screens/Landing";
 import ScreensLogin from "./screens/Login";
 import ScreensRegister from "./screens/Register";
 import ScreensMissionControl from "./screens/MissionControl";
-import ReduxTest from "./components/Test/ReduxTest";
+import ConvoList from "./screens/ConvoList";
 import { connect } from "react-redux";
-import { appMounted } from "./actions/index";
 import "./App.css";
 import styled from "styled-components";
 import Header from "./components/Header";
@@ -36,10 +35,6 @@ const Content = styled.div`
 `;
 
 class App extends Component {
-  componentDidMount() {
-    this.props.appMounted();
-  }
-
   render() {
     return (
       <AppWrapper>
@@ -56,20 +51,15 @@ class App extends Component {
               path="/missioncontrol"
               component={ScreensMissionControl}
             />
-            <Route exact path="/reduxtest" component={ReduxTest} />
+            <Route exact path="/conversations" component={ConvoList} />
           </Content>
         </Switch>
       </AppWrapper>
     );
   }
 }
-
+// export default App;
 const mapStateToProps = state => {
   return state;
 };
-export default connect(
-  mapStateToProps,
-  {
-    appMounted
-  }
-)(App);
+export default connect(mapStateToProps)(App);

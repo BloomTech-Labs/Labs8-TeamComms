@@ -1,5 +1,7 @@
-import React, { Component } from "react";
 import axios from "axios";
+import React, { Component } from "react";
+import { callReg } from "../../actions/index";
+import { connect } from "react-redux";
 import "./register.css";
 import styled from "styled-components";
 
@@ -34,8 +36,7 @@ class Register extends Component {
     this.state = {
       username: "",
       password1: "",
-      password2: "",
-      user: {}
+      password2: ""
     };
   }
 
@@ -50,45 +51,24 @@ class Register extends Component {
     });
   };
 
-  userRegister = (e, credentials) => {
-    e.preventDefault();
-    if (credentials.password1 === credentials.password2) {
-      const body = {
-        email: credentials.username,
-        password: credentials.password1,
-        username: credentials.username,
+  handleRegSubmit = (e, userInput) => {
+    if (userInput.password1 === userInput.password2) {
+      const credentials = {
+        email: userInput.username,
+        password: userInput.password1,
+        username: userInput.username,
         phone_number: Math.random() * 10
       };
-      const temp = JSON.stringify(body);
-      console.log(temp);
-      console.log(body);
-      const headers = {
-        "Content-Type": "application/json"
-      };
-      axios
-        .post("https://teamcomm2.herokuapp.com/api/users/register", temp, {
-          headers: headers
-        })
-        .then(res => {
-          console.log("Token: ", res.data.token);
-          console.log("User: ", res.data.user);
-          localStorage.setItem("jwt", res.token);
-          this.setState({
-            user: res.user
-          });
-        })
-        .catch(err =>
-          console.log({
-            err
-          })
-        );
+      this.props.callReg(e, credentials);
     } else {
-      console.log("Passwords do not match");
+      e.preventDefault();
+      alert("Passwords do not match!");
+      return;
     }
   };
 
   render() {
-    let credentials = {
+    let userInput = {
       username: this.state.username,
       password1: this.state.password1,
       password2: this.state.password2
@@ -99,8 +79,8 @@ class Register extends Component {
           <form
             method="post"
             className="form-wrapper"
-            onSubmit={e => {
-              this.userRegister(e, credentials);
+            onSubmit={(e, userInput) => {
+              this.handleRegSubmit(e, userInput);
             }}
           >
             <img src="./images/logo.png" alt="" />
@@ -113,7 +93,7 @@ class Register extends Component {
               onChange={this.changeHandler}
               name="username"
               value={this.state.username}
-            />
+            />{" "}
             <input
               placeholder="password"
               className="custominput"
@@ -122,7 +102,7 @@ class Register extends Component {
               name="password1"
               onChange={this.changeHandler}
               value={this.state.password1}
-            />
+            />{" "}
             <input
               placeholder="confirm password"
               className="custominput-bottom"
@@ -131,10 +111,10 @@ class Register extends Component {
               name="password2"
               onChange={this.changeHandler}
               value={this.state.password2}
-            />{" "}
-            <RegisterButton type="submit">Register</RegisterButton>
+            />
+            <RegisterButton type="submit"> Register </RegisterButton>
             <SwitchText>
-              Already Registered?
+              Already Registered ?
               <SwitchLink onClick={this.switchToLogin}>
                 &nbsp; Login.
               </SwitchLink>
@@ -146,4 +126,12 @@ class Register extends Component {
   }
 }
 
-export default Register;
+const mapStateToProps = state => {
+  return state;
+};
+export default connect(
+  mapStateToProps,
+  {
+    callReg
+  }
+)(Register);
