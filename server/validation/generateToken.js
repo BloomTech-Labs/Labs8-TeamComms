@@ -3,7 +3,6 @@ const secret = process.env.SECRET_KEY;
 
 function generateToken(user) {
   const payload = {
-    username: user.username,
     id: user._id
   };
 
