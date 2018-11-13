@@ -1,6 +1,6 @@
 
 import {callReg} from './callReg';
-import {callSignin} from './callSignin';
+import {callLogIn} from './callLogIn';
 
 export {callReg} from './callReg';
-export {callSignin} from './callSignin';
+export {callLogIn} from './callLogIn';

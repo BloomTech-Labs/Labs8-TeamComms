@@ -2,8 +2,8 @@
 import { 
     REG_CALLED, 
     REG_RETURNED, 
-    SIGNIN_CALLED, 
-    SIGNIN_RETURNED
+    LOGIN_CALLED, 
+    LOGIN_RETURNED
 } from '../actions/types';
 
 
@@ -20,13 +20,13 @@ export const reducer = (state = null, action) => {
                 userData: action.payload
             }
 
-        case SIGNIN_CALLED:
+        case LOGIN_CALLED:
             return {...state, 
-            signinCalled: true
+            loginCalled: true
         }
-        case SIGNIN_RETURNED:
+        case LOGIN_RETURNED:
         return {...state, 
-            signInSuccess: true, 
+            loginSuccess: true, 
             userData: action.payload
         }
 

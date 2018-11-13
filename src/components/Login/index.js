@@ -1,6 +1,6 @@
 
 import React, { Component, Fragment } from "react";
-import { callSignin } from "../../actions/index";
+import { callLogIn } from "../../actions/index";
 import { connect } from "react-redux";
 
 import "./login.css";
@@ -21,9 +21,9 @@ class Login extends Component {
     });
   };
 
-  handleSigninSubmit = (e, userInput) => {
+  handleLogInSubmit = (e, userInput) => {
     e.preventDefault();
-    this.props.callSignin(e, userInput);
+    this.props.callLogIn(e, userInput);
   };
 
   render() {
@@ -38,7 +38,7 @@ class Login extends Component {
             method="post"
             className="form-wrapper"
             onSubmit={e => {
-              this.handleSigninSubmit(e, userInput);
+              this.handleLogInSubmit(e, userInput);
             }}
           >
             <img src="./images/logo.png" alt="" />
@@ -77,6 +77,6 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    callSignin
+    callLogIn
   }
 )(Login);

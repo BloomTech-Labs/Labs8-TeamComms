@@ -19,8 +19,8 @@ const initialState = {
   userData: {},
   registrationCalled: false,
   registrationSuccess: false,
-  signinCalled: false,
-  signinReturned: false,
+  loginCalled: false,
+  loginReturned: false,
   conversions: {}
 }
 
