@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Header from "../../components/Header";
 import Login from "../../components/Login";
 import PropTypes from "prop-types";
 
@@ -9,7 +8,6 @@ class ScreensLogin extends Component {
   render() {
     return (
       <React.Fragment>
-        <Header />
         <Login />
       </React.Fragment>
     );

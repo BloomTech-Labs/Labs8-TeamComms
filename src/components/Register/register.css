@@ -17,7 +17,7 @@ html {
 .form-wrapper {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 10rem;
   margin: 0 auto;
 }
 
@@ -52,38 +52,11 @@ html {
   border-bottom-right-radius: 10px;
 }
 
-.register-button {
-  width: 300px;
-  height: 75px;
-  color: white;
-  border-radius: 5px;
-  background-color: #f5c268;
-  border: 1px solid grey;
-  font-size: 28px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  border: none;
-}
 
-.switch-button {
-  width: 120px;
-  height: 20px;
-  color: white;
-  border-radius: 5px;
-  background-color: #2cabae;
-  font-size: 12px;
-  margin-top: 5px;
-  margin-left: 5px;
-  border: none;
-}
 
-.switch-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
 
-}
+
+
 
 .logout-button {
   width: 100px;

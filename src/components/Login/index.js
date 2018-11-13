@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from "react";
+import React, { Component } from "react";
 import axios from "axios";
 import "./login.css";
 
@@ -45,9 +43,11 @@ class Login extends Component {
           user: res.user
         });
       })
-      .catch(err => console.log({
-        err
-      }));
+      .catch(err =>
+        console.log({
+          err
+        })
+      );
   };
 
   render() {
@@ -55,53 +55,42 @@ class Login extends Component {
       username: this.state.username,
       password1: this.state.password1
     };
-    return ( <
-      React.Fragment >
-      <
-      div className = "main" >
-      <
-      form method = "post"
-      className = "form-wrapper"
-      onSubmit = {
-        e => {
-          this.userRegister(e, credentials);
-        }
-      } >
-      <
-      img src = "./images/logo.png"
-      alt = "" / >
-      <
-      br / >
-      <
-      input placeholder = "username"
-      className = "custominput-top"
-      required type = "text"
-      onChange = {
-        this.changeHandler
-      }
-      name = "username"
-      value = {
-        this.state.username
-      }
-      /> <
-      input placeholder = "password"
-      className = "custominput-bottom"
-      required type = "password"
-      name = "password1"
-      onChange = {
-        this.changeHandler
-      }
-      value = {
-        this.state.password1
-      }
-      /> <
-      button type = "submit"
-      className = "signin-button" >
-      Sign In <
-      /button> < /
-      form > <
-      /div> < /
-      React.Fragment >
+    return (
+      <React.Fragment>
+        <div className="main">
+          <form
+            method="post"
+            className="form-wrapper"
+            onSubmit={e => {
+              this.userRegister(e, credentials);
+            }}
+          >
+            <img src="./images/logo.png" alt="" />
+            <br />
+            <input
+              placeholder="username"
+              className="custominput-top"
+              required
+              type="text"
+              onChange={this.changeHandler}
+              name="username"
+              value={this.state.username}
+            />{" "}
+            <input
+              placeholder="password"
+              className="custominput-bottom"
+              required
+              type="password"
+              name="password1"
+              onChange={this.changeHandler}
+              value={this.state.password1}
+            />{" "}
+            <button type="submit" className="signin-button">
+              Sign In{" "}
+            </button>{" "}
+          </form>{" "}
+        </div>{" "}
+      </React.Fragment>
     );
   }
 }
