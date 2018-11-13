@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Header from "../../components/Header";
 import ConvoList from "../../components/ConvoList";
 import PropTypes from "prop-types";
 
@@ -9,7 +8,6 @@ class ScreensConvoList extends Component {
   render() {
     return (
       <React.Fragment>
-        <Header />
         <ConvoList />
       </React.Fragment>
     );

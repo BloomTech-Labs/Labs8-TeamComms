@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import "./convoList.css";
 import dummyData from "./dummyData";
+import { EditButton, DeleteButton } from "../Common";
+
+import styled from "styled-components";
+
+const ConvoListWrapper = styled.ul``;
 
 class ConvoList extends Component {
   constructor(props) {
@@ -24,8 +29,12 @@ class ConvoList extends Component {
     return (
       <div className="card">
         <h1>{convo.title}</h1>
-        <button className="custom-btn">Edit</button>
-        <button className="custom-btn">Delete</button>
+        <EditButton>
+          <i class="fas fa-edit" />
+        </EditButton>
+        <DeleteButton>
+          <i class="fas fa-trash" />
+        </DeleteButton>
         <p>{convo.description}</p>
       </div>
     );

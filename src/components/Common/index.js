@@ -31,3 +31,46 @@ export const Logo = styled.img `
   grid-row: 1;
   justify-content: flex-start;
   `
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const DeleteButton = styled.button `
+  border: none;
+  background-color: white;
+  outline:none;
+  cursor: pointer;
+  color: lightgrey;
+  position: relative;
+  top: 5px;
+  right: 5px;
+  font-size: 14px;
+    &:hover {
+    color: red !important;  
+  }
+`
+
+export const EditButton = styled.button `
+border: none;
+background-color: white;
+outline:none;
+cursor: pointer;
+color: lightgrey;
+position: relative;
+top: 5px;
+right: 5px;
+font-size: 14px;
+&:hover {
+ color: #fabc09 !important;
+}
+`

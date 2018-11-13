@@ -3,9 +3,9 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   overflow: hidden;
   background: #8baaa0;
   background-position: fixed;
   color: #cfedfc;
+  margin-bottom: 2rem;
 }
