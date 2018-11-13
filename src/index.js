@@ -1,12 +1,22 @@
-
 import React from 'react';
-import { createLogger } from 'redux-logger';
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { render } from 'react-dom';
+import {
+  createLogger
+} from 'redux-logger';
+import {
+  createStore,
+  applyMiddleware
+} from 'redux';
+import {
+  composeWithDevTools
+} from 'redux-devtools-extension';
+import {
+  render
+} from 'react-dom';
 import Root from './Root';
 import thunk from 'redux-thunk';
-import {reducer} from './reducers/index'
+import {
+  reducer
+} from './reducers/index';
 
 import "./index.css";
 
@@ -28,13 +38,17 @@ const initialState = {
 const store = createStore(reducer,
   initialState,
   composeWithDevTools(
-  applyMiddleware(thunk, logger)
-));
+    applyMiddleware(thunk, logger)
+  ));
 
 
 render(
 
-  <Root store={store} />,
+  <
+  Root store = {
+    store
+  }
+  />,
 
   document.getElementById('root')
 );

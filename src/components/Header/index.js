@@ -7,7 +7,7 @@ const HeaderWrapper = styled.div`
   color: #ffffff;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-end;
   position: relative;
   flex-shrink: 0;
   z-index: 11;
@@ -57,7 +57,6 @@ class Header extends Component {
   render() {
     return (
       <HeaderWrapper>
-        <Logo src="../images/logo.png" width="200px" height="90px" />
         <NavLink>Features</NavLink>
         <NavLink>Pricing</NavLink>
         <NavLink>About Us</NavLink>
