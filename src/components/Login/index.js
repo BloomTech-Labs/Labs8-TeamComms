@@ -45,7 +45,7 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      email: "",
       password: ""
     };
   }
@@ -64,7 +64,7 @@ class Login extends Component {
 
   render() {
     let userInput = {
-      username: this.state.username,
+      email: this.state.email,
       password: this.state.password
     };
     return (
@@ -77,12 +77,12 @@ class Login extends Component {
             }}
           >
             <CustomInputTop
-              placeholder="username"
+              placeholder="email"
               required
               type="text"
               onChange={this.changeHandler}
-              name="username"
-              value={this.state.username}
+              name="email"
+              value={this.state.email}
             />{" "}
             <CustomInputBottom
               placeholder="password"
