@@ -78,7 +78,7 @@ class Header extends Component {
       <React.Fragment>
         {this.props.loginSuccess ? (
           <HeaderWrapper>
-            <NavLink to="/dashboard"> DashBoard </NavLink>{" "}
+            <NavLink to="/dashboard"> DashBoard </NavLink>
             <NavLink to="/favorites"> Favorites </NavLink>
             <Link to="/register">
               <RegisterButton>Refer A Friend</RegisterButton>

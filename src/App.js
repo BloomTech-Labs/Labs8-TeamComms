@@ -42,25 +42,37 @@ const Footer = styled.div`
 class App extends Component {
   render() {
     return (
-      <AppWrapper>
+      <AppWrapper history={this.props.history}>
         <FadedLogo src="../images/logo.png" width="190x" height="60px" />
         <Header history={this.props.history} />
         <Route
           exact
           path="/"
-          render={() =>
+          render={props =>
             this.props.logInSuccess ? (
-              <Redirect to="/dashboard" />
+              <Redirect history={props.history} to="/dashboard" />
             ) : (
-              <Redirect to="/landing" />
+              <Redirect history={props.history} to="/landing" />
             )
           }
         />
         <Switch>
           <Route exact path="/landing" component={ScreensLanding} />
           <Content>
-            <Route exact path="/login" component={ScreensLogin} />
-            <Route exact path="/register" component={ScreensRegister} />
+            <Route
+              exact
+              path="/login"
+              render={props => {
+                return <ScreensLogin history={this.props.history} />;
+              }}
+            />
+            <Route
+              exact
+              path="/register"
+              render={props => {
+                return <ScreensRegister history={this.props.history} />;
+              }}
+            />
             <Route
               exact
               path="/missioncontrol"

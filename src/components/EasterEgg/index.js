@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
 
 let randomNumber = Math.floor(Math.random() * 8);
 console.log(randomNumber);
@@ -51,15 +52,26 @@ const EggWrapper = styled.div`
   }
 `;
 
+const DisplayName = styled.span`
+  font-weight: bold;
+  color: #fabc09;
+`;
+
 class EasterEgg extends Component {
   render() {
     let newRandom = randomNumber;
     return (
       <EggWrapper>
+        Welcome,&nbsp;
+        <DisplayName>{this.props.userData.user.displayName}!</DisplayName>
+        &nbsp;
         {spacePuns[newRandom][0]} &nbsp; <p>{spacePuns[newRandom][1]}</p>
       </EggWrapper>
     );
   }
 }
 
-export default EasterEgg;
+const mapStateToProps = state => {
+  return state;
+};
+export default connect(mapStateToProps)(EasterEgg);
