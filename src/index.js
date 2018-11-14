@@ -19,7 +19,7 @@ const initialState = {
   registrationSuccess: false,
   loginCalled: false,
   loginReturned: false,
-  loginSuccess: true,
+  loginSuccess: false,
   conversations: [
     {
       title: "Conversation 1",
