@@ -1,13 +1,18 @@
 import React, { Component, Fragment } from "react";
-import { callLogIn } from "../../actions/index";
+
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { CustomInput, PrimaryButton } from "../Common";
+import GoogleButton from "../GoogleButton";
+import { callLogIn } from "../../actions/index";
 
 const Main = styled.div`
-  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
   padding: 5px 0 5px 0;
   background: #374353;
+  width: 300px;
+  margin: 0 auto;
 `;
 
 const FormWrapper = styled.form`
@@ -96,6 +101,8 @@ class Login extends Component {
             />
             <LoginButton type="submit">Sign In</LoginButton>
           </FormWrapper>
+          <p>- or - </p>
+          <GoogleButton history={history} />
         </Main>
       </Fragment>
     );
