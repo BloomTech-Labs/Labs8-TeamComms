@@ -10,7 +10,6 @@ Router.get(
   })
 );
 
-//callbackroute for google to redirect to
 Router.get(
   "/google/redirect",
   passport.authenticate("google", {
