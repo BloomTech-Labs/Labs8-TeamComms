@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { PrimaryButton, Logo } from "../Common";
+import Stripe from "../Stripe";
 import callLogOut from "../../actions/callLogOut";
 
 const HeaderWrapper = styled.div`
@@ -83,6 +84,7 @@ class Header extends Component {
             <Link to="/register">
               <RegisterButton>Refer A Friend</RegisterButton>
             </Link>
+            <Stripe />
             <LoginButton
               onClick={() => {
                 this.props.callLogOut(history);
