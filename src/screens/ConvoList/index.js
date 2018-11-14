@@ -5,6 +5,8 @@ import QuickAdd from "../../components/QuickAdd";
 import SearchBar from "../../components/SearchBar/index";
 import styled from "styled-components";
 import EasterEgg from "../../components/EasterEgg";
+import { connect } from "react-redux";
+import { callGoogleLogIn } from "../../actions/callGoogleLogIn";
 
 //this screen should return components necessary to build the convo list page.
 const ConvoGrid = styled.div`
@@ -14,6 +16,15 @@ const ConvoGrid = styled.div`
 `;
 
 class ScreensConvoList extends Component {
+  componentDidMount() {
+    let token = this.props.location.search.substring(1);
+    console.log(token);
+    if(token.length > 2) {
+this.props.callGoogleLogIn(this.props.history, token);
+    }
+    
+  }
+
   render() {
     return (
       <ConvoGrid>
@@ -27,4 +38,10 @@ class ScreensConvoList extends Component {
 }
 ScreensConvoList.propTypes = {};
 
-export default ScreensConvoList;
+const mapStateToProps = state => {
+  return state;
+};
+export default connect(
+  mapStateToProps,
+  { callGoogleLogIn }
+)(ScreensConvoList);

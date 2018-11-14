@@ -79,7 +79,7 @@ class App extends Component {
               component={ScreensMissionControl}
             />
 
-            <Route exact path="/dashboard" component={ScreensConvoList} />
+            <Route path="/dashboard/:token?" component={ScreensConvoList} />
           </Content>
         </Switch>
       </AppWrapper>
