@@ -1,6 +1,7 @@
 
 import axios from "axios";
 import { LOGIN_CALLED, LOGIN_RETURNED } from "./types";
+import history from '../history';
 
 
 export const callLogIn = (e, userInput) => {
@@ -25,6 +26,8 @@ export const callLogIn = (e, userInput) => {
         });
         console.log("RESPONSE: ", res);
         localStorage.setItem("jwt", res.data.token);
+        history.push('/conversations');
+        window.location.reload();
       })
       .catch(err =>
         console.log({'Axios-Error': err})
