@@ -3,6 +3,8 @@ import {
   REG_CALLED,
   REG_RETURNED
 } from "./types";
+import history from '../history';
+
 
 export const callReg = (e, credentials) => {
   e.preventDefault();
@@ -10,6 +12,7 @@ export const callReg = (e, credentials) => {
   const headers = {
     "Content-Type": "application/json"
   };
+
 
   const promise = axios.post("https://teamcomm2.herokuapp.com/api/users/register", body, {
     headers
@@ -27,7 +30,8 @@ export const callReg = (e, credentials) => {
         });
         console.log('RESPONSE: ', res);
         localStorage.setItem("jwt", res.data.token);
-
+        history.push('/conversations');
+        window.location.reload();
       })
       .catch(err =>
         console.log({
