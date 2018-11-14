@@ -6,6 +6,8 @@ import { render } from "react-dom";
 import Root from "./Root";
 import thunk from "redux-thunk";
 import { reducer } from "./reducers/index";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 import "./index.css";
 
@@ -74,11 +76,20 @@ const initialState = {
   ]
 };
 
-const store = createStore(
-  reducer,
+const persistConfig = {
+  key: "root",
+  storage
+};
+
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+export const store = createStore(
+  persistedReducer,
   initialState,
   composeWithDevTools(applyMiddleware(thunk, logger))
 );
+
+export const persistor = persistStore(store);
 
 render(
   <Root store={store} />,
