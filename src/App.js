@@ -44,10 +44,7 @@ class App extends Component {
     return (
       <AppWrapper>
         <FadedLogo src="../images/logo.png" width="190x" height="60px" />
-        <Header />{" "}
-        {/* {this.props.history.location.pathname === "/landing" ? null : (
-                  
-                )} */}
+        <Header history={this.props.history} />
         <Route
           exact
           path="/"
@@ -60,18 +57,18 @@ class App extends Component {
           }
         />
         <Switch>
-          <Route exact path="/landing" component={ScreensLanding} />{" "}
+          <Route exact path="/landing" component={ScreensLanding} />
           <Content>
-            <Route exact path="/login" component={ScreensLogin} />{" "}
-            <Route exact path="/register" component={ScreensRegister} />{" "}
+            <Route exact path="/login" component={ScreensLogin} />
+            <Route exact path="/register" component={ScreensRegister} />
             <Route
               exact
               path="/missioncontrol"
               component={ScreensMissionControl}
-            />{" "}
-            <Route exact path="/dashboard" component={ScreensConvoList} />{" "}
-          </Content>{" "}
-        </Switch>{" "}
+            />
+            <Route exact path="/dashboard" component={ScreensConvoList} />
+          </Content>
+        </Switch>
       </AppWrapper>
     );
   }

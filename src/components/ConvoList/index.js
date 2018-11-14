@@ -28,16 +28,16 @@ class ConvoList extends Component {
       <div className="card">
         <h1>{convo.title}</h1>
         <EditButton>
-          <i class="fas fa-edit" />
+          <i className="fas fa-edit" />
         </EditButton>
         <DeleteButton>
-          <i class="fas fa-trash" />
+          <i className="fas fa-trash" />
         </DeleteButton>
         <ShareButton>
-          <i class="fas fa-share" />
+          <i className="fas fa-share" />
         </ShareButton>
         <FavoriteButton>
-          <i class="fas fa-star" />
+          <i className="fas fa-star" />
         </FavoriteButton>
 
         <p>{convo.description}</p>

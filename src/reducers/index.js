@@ -1,36 +1,48 @@
-
-import { 
-    REG_CALLED, 
-    REG_RETURNED, 
-    LOGIN_CALLED, 
-    LOGIN_RETURNED
-} from '../actions/types';
-
+import {
+  REG_CALLED,
+  REG_RETURNED,
+  LOGIN_CALLED,
+  LOGIN_RETURNED,
+  LOGOUT_CALLED
+} from "../actions/types";
 
 export const reducer = (state = null, action) => {
-    switch (action.type) {
+  switch (action.type) {
+    case REG_CALLED:
+      return {
+        ...state,
+        registrationCalled: true
+      };
+    case REG_RETURNED:
+      return {
+        ...state,
+        registrationSuccess: true,
+        userData: action.payload
+      };
 
-        case REG_CALLED:
-            return {...state, 
-                registrationCalled: true
-            }
-        case REG_RETURNED:
-            return {...state, 
-                registrationSuccess: true, 
-                userData: action.payload
-            }
+    case LOGIN_CALLED:
+      return {
+        ...state,
+        loginCalled: true
+      };
+    case LOGIN_RETURNED:
+      return {
+        ...state,
+        loginSuccess: true,
+        userData: action.payload
+      };
+    case LOGOUT_CALLED:
+      return {
+        ...state,
+        userData: {},
+        registrationCalled: false,
+        registrationSuccess: false,
+        loginCalled: false,
+        loginReturned: false,
+        loginSuccess: false
+      };
 
-        case LOGIN_CALLED:
-            return {...state, 
-            loginCalled: true
-        }
-        case LOGIN_RETURNED:
-        return {...state, 
-            loginSuccess: true, 
-            userData: action.payload
-        }
-
-        default:
-            return state;
-    }
-}
+    default:
+      return state;
+  }
+};

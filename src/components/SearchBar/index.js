@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const SearchWrapper = styled.div`
   grid-column: 2/3;
-  grid-row: 1;
+  grid-row: 2;
   width: 100%;
   padding: 0.5rem;
   background: #25bea0;
