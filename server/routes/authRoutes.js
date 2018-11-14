@@ -18,19 +18,16 @@ Router.get(
     failureRedirect: "https://team-comm.netlify.com/register"
   }),
   (req, res) => {
-    console.log(req.user);
-    const jwt = generateToken(req.user);
-    console.log(jwt);
-    const htmlWithEmbeddedJWT = `
-    <html>
-      <script>
-        window.localStorage.setItem('JWT', '${jwt}');
-        window.location.href = '/';
-      </script>
-    </html>
-    `;
-
-    res.send(htmlWithEmbeddedJWT);
+    generateToken(req.user);
+    if (req.user) {
+      res.send({
+        success: true,
+        token: `Bearer ${generateToken(req.user)}`
+      });
+    }
+    else {
+      res.json({success: false})
+    }
   }
 );
 

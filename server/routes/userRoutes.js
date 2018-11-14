@@ -10,8 +10,8 @@ const hlpr = require("../helpers/UserHelpers/UserModules");
 
 /*
     Route - /api/users/register
-    Req -  email, password, username, phone_number, organization(optional)
-    Res - Token, {username, email, phone_number, organization} 
+    Req -  familyName, givenName, password, email
+    Res - Token, {displayName, name, email, phone_number, organization} 
 */
 Router.route("/register").post(hlpr.userRegister);
 
