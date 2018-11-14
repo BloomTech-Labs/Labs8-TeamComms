@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import "./convoList.css";
 import { connect } from "react-redux";
 // import dummyData from "./dummyData";
-import { EditButton, DeleteButton } from "../Common";
+import {
+  EditButton,
+  DeleteButton,
+  ShareButton,
+  FavoriteButton
+} from "../Common";
 
 import styled from "styled-components";
 
@@ -28,6 +33,13 @@ class ConvoList extends Component {
         <DeleteButton>
           <i class="fas fa-trash" />
         </DeleteButton>
+        <ShareButton>
+          <i class="fas fa-share" />
+        </ShareButton>
+        <FavoriteButton>
+          <i class="fas fa-star" />
+        </FavoriteButton>
+
         <p>{convo.description}</p>
       </div>
     );
