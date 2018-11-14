@@ -78,6 +78,7 @@ class App extends Component {
               path="/missioncontrol"
               component={ScreensMissionControl}
             />
+
             <Route exact path="/dashboard" component={ScreensConvoList} />
           </Content>
         </Switch>
