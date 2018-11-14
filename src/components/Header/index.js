@@ -1,6 +1,9 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import { PrimaryButton, Logo } from "../Common";
+import callLogOut from "../../actions/callLogOut";
 
 const HeaderWrapper = styled.div`
   background: #374353;
@@ -26,6 +29,10 @@ const HeaderWrapper = styled.div`
 const RegisterButton = styled(PrimaryButton)`
   background: #25bea0;
   color: #ffffff;
+  a {
+    text-decoration: none;
+    color: white;
+  }
 `;
 
 const LoginButton = styled(PrimaryButton)`
@@ -34,6 +41,10 @@ const LoginButton = styled(PrimaryButton)`
   border: 1px solid #ffffff;
   margin-left: 1rem;
   margin-right: 1rem;
+  a {
+    text-decoration: none;
+    color: white;
+  }
 `;
 
 const HeaderText = styled.h1`
@@ -47,24 +58,63 @@ const HeaderText = styled.h1`
   text-align: center;
 `;
 
-const NavLink = styled.h1`
-  pointer-events: none;
+const NavLink = styled(Link)`
   width: 6rem;
   font-size: 1rem;
+  text-decoration: none;
+  color: #ffffff;
+  cursor: pointer;
 `;
 
 class Header extends Component {
+  // LogOut = () => {
+  //   this.props.callLogOut(this.props.history);
+  // };
+
   render() {
+    const history = this.props.history;
+
     return (
-      <HeaderWrapper>
-        <NavLink>Features</NavLink>
-        <NavLink>Pricing</NavLink>
-        <NavLink>About Us</NavLink>
-        <RegisterButton>Register</RegisterButton>
-        <LoginButton>Login</LoginButton>
-      </HeaderWrapper>
+      <React.Fragment>
+        {this.props.loginSuccess ? (
+          <HeaderWrapper>
+            <NavLink to="/dashboard"> DashBoard </NavLink>
+            <NavLink to="/favorites"> Favorites </NavLink>
+            <Link to="/register">
+              <RegisterButton>Refer A Friend</RegisterButton>
+            </Link>
+            <LoginButton
+              onClick={() => {
+                this.props.callLogOut(history);
+              }}
+            >
+              Logout
+            </LoginButton>
+          </HeaderWrapper>
+        ) : (
+          <HeaderWrapper>
+            <NavLink to="/features"> Features </NavLink>{" "}
+            <NavLink to="/landing#pricing"> Pricing </NavLink>
+            <NavLink to="/about"> About Us </NavLink>
+            <Link to="/register">
+              <RegisterButton>Register</RegisterButton>
+            </Link>
+            <Link to="/login">
+              <LoginButton>Login</LoginButton>
+            </Link>
+          </HeaderWrapper>
+        )}
+      </React.Fragment>
     );
   }
 }
 
-export default Header;
+const mapStateToProps = state => {
+  return state;
+};
+export default connect(
+  mapStateToProps,
+  {
+    callLogOut
+  }
+)(Header);

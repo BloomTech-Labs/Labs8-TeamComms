@@ -57,9 +57,9 @@ class Login extends Component {
     });
   };
 
-  handleLogInSubmit = (e, userInput) => {
+  handleLogInSubmit = (e, userInput, history) => {
     e.preventDefault();
-    this.props.callLogIn(e, userInput);
+    this.props.callLogIn(e, userInput, history);
   };
 
   render() {
@@ -67,13 +67,15 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
+
+    let history = this.props.history;
     return (
       <Fragment>
         <Main>
           <FormWrapper
             method="post"
             onSubmit={e => {
-              this.handleLogInSubmit(e, userInput);
+              this.handleLogInSubmit(e, userInput, history);
             }}
           >
             <CustomInputTop

@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import "./convoList.css";
-import dummyData from "./dummyData";
+import { connect } from "react-redux";
+// import dummyData from "./dummyData";
+import {
+  EditButton,
+  DeleteButton,
+  ShareButton,
+  FavoriteButton
+} from "../Common";
+
+import styled from "styled-components";
 
 class ConvoList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      conversations: dummyData
-    };
-  }
   empty() {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -24,8 +27,19 @@ class ConvoList extends Component {
     return (
       <div className="card">
         <h1>{convo.title}</h1>
-        <button className="custom-btn">Edit</button>
-        <button className="custom-btn">Delete</button>
+        <EditButton>
+          <i className="fas fa-edit" />
+        </EditButton>
+        <DeleteButton>
+          <i className="fas fa-trash" />
+        </DeleteButton>
+        <ShareButton>
+          <i className="fas fa-share" />
+        </ShareButton>
+        <FavoriteButton>
+          <i className="fas fa-star" />
+        </FavoriteButton>
+
         <p>{convo.description}</p>
       </div>
     );
@@ -34,9 +48,9 @@ class ConvoList extends Component {
     return (
       <React.Fragment>
         <div className="list">
-          {this.state.conversations.length === 0
+          {this.props.conversations.length === 0
             ? this.empty()
-            : this.state.conversations.map(convo => {
+            : this.props.conversations.map(convo => {
                 // Will replace this with a Card component
                 return this.card(convo);
               })}
@@ -46,4 +60,7 @@ class ConvoList extends Component {
   }
 }
 
-export default ConvoList;
+const mapStateToProps = state => {
+  return state;
+};
+export default connect(mapStateToProps)(ConvoList);

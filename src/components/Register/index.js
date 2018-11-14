@@ -57,7 +57,7 @@ class Register extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
+      email: "",
       password1: "",
       password2: "",
       givenName: "",
@@ -76,7 +76,9 @@ class Register extends Component {
     });
   };
 
-  handleRegSubmit = (e, userInput) => {
+  handleRegSubmit = (e, userInput, history) => {
+    e.preventDefault();
+    console.log(userInput);
     if (userInput.password1 === userInput.password2) {
       const credentials = {
         email: userInput.email,
@@ -84,7 +86,7 @@ class Register extends Component {
         givenName: userInput.givenName,
         familyName: userInput.familyName
       };
-      this.props.callReg(e, credentials);
+      this.props.callReg(e, credentials, history);
     } else {
       e.preventDefault();
       alert("Passwords do not match!");
@@ -93,20 +95,23 @@ class Register extends Component {
   };
 
   render() {
-    let userInput = {
+    const userInput = {
       email: this.state.email,
       password1: this.state.password1,
       password2: this.state.password2,
       givenName: this.state.givenName,
       familyName: this.state.familyName
     };
+
+    let history = this.props.history;
+
     return (
       <React.Fragment>
         <Main>
           <FormWrapper
             method="post"
-            onSubmit={(e, userInput) => {
-              this.handleRegSubmit(e, userInput);
+            onSubmit={e => {
+              this.handleRegSubmit(e, userInput, history);
             }}
           >
             <CustomInputTop
@@ -130,9 +135,9 @@ class Register extends Component {
               required
               type="text"
               onChange={this.changeHandler}
-              name="username"
-              value={this.state.username}
-            />{" "}
+              name="email"
+              value={this.state.email}
+            />
             <CustomInput
               placeholder="password"
               required
@@ -140,7 +145,7 @@ class Register extends Component {
               name="password1"
               onChange={this.changeHandler}
               value={this.state.password1}
-            />{" "}
+            />
             <CustomInputBottom
               placeholder="confirm password"
               required

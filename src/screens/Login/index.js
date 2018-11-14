@@ -5,10 +5,10 @@ import PropTypes from "prop-types";
 //this screen should return components necessary to build the landing page.
 
 class ScreensLogin extends Component {
-  render() {
+  render(props) {
     return (
       <React.Fragment>
-        <Login />
+        <Login {...this.props} />
       </React.Fragment>
     );
   }
