@@ -2,7 +2,7 @@ import axios from "axios";
 import { GOOGLE_LOGIN_CALLED, GOOGLE_LOGIN_RETURNED } from "./types";
 // import history from '../history';
 
-export const callGoogleLogIn = (e, history, token) => {
+export const callGoogleLogIn = (history, token) => {
   console.log("logging in with google");
   console.log("token", token);
   let bearerToken = "Bearer " + token;
