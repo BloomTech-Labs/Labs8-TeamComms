@@ -10,7 +10,6 @@ Router.get(
   })
 );
 
-//callbackroute for google to redirect to
 Router.get(
   "/google/redirect",
   passport.authenticate("google", {
@@ -18,18 +17,8 @@ Router.get(
     failureRedirect: "https://team-comm.netlify.com/register"
   }),
   (req, res) => {
-    generateToken(req.user);
-    if (req.user) {
-      res.send({
-        success: true,
-        token: `Bearer ${generateToken(req.user)}`
-      });
-    }
-    else {
-      res.json({success: false})
-    }
-  }
-);
+    res.redirect(`https://team-comm.netlify.com/dashboard/Bearer ${generateToken(req.user)}`);
+  });
 
 // Router.get(
 //   "/",
