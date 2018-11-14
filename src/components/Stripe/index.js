@@ -21,15 +21,16 @@ class Stripe extends Component {
   render() {
     return (
       <StripeCheckout
+        label="Go Premium" //Original button
         name="Team Communicator"
         description="Premium Account"
         panelLabel="Go Premium" //Submit button
         amount={999} //Amount in cents
+        billingAddress={true}
+        allowRememberMe={false}
         token={this.onToken}
         stripeKey="pk_test_ZU3mlTy0q00DATc9EyF9A8jX"
-      >
-        <button className="btn btn-primary">Go Premium</button>
-      </StripeCheckout>
+      />
     );
   }
 }
