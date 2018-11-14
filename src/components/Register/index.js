@@ -76,7 +76,7 @@ class Register extends Component {
     });
   };
 
-  handleRegSubmit = (e, userInput) => {
+  handleRegSubmit = (e, userInput, history) => {
     e.preventDefault();
     console.log(userInput);
     if (userInput.password1 === userInput.password2) {
@@ -86,7 +86,7 @@ class Register extends Component {
         givenName: userInput.givenName,
         familyName: userInput.familyName
       };
-      this.props.callReg(e, credentials);
+      this.props.callReg(e, credentials, history);
     } else {
       e.preventDefault();
       alert("Passwords do not match!");
@@ -102,13 +102,16 @@ class Register extends Component {
       givenName: this.state.givenName,
       familyName: this.state.familyName
     };
+
+    let history = this.props.history;
+
     return (
       <React.Fragment>
         <Main>
           <FormWrapper
             method="post"
             onSubmit={e => {
-              this.handleRegSubmit(e, userInput);
+              this.handleRegSubmit(e, userInput, history);
             }}
           >
             <CustomInputTop
@@ -118,7 +121,7 @@ class Register extends Component {
               name="givenName"
               onChange={this.changeHandler}
               value={this.state.givenName}
-            />{" "}
+            />
             <CustomInput
               placeholder="last name"
               required
@@ -126,7 +129,7 @@ class Register extends Component {
               name="familyName"
               onChange={this.changeHandler}
               value={this.state.familyName}
-            />{" "}
+            />
             <CustomInput
               placeholder="e-mail"
               required
@@ -134,7 +137,7 @@ class Register extends Component {
               onChange={this.changeHandler}
               name="email"
               value={this.state.email}
-            />{" "}
+            />
             <CustomInput
               placeholder="password"
               required
@@ -142,7 +145,7 @@ class Register extends Component {
               name="password1"
               onChange={this.changeHandler}
               value={this.state.password1}
-            />{" "}
+            />
             <CustomInputBottom
               placeholder="confirm password"
               required
@@ -150,17 +153,14 @@ class Register extends Component {
               name="password2"
               onChange={this.changeHandler}
               value={this.state.password2}
-            />{" "}
-            <RegisterButton type="submit"> Register </RegisterButton>{" "}
-          </FormWrapper>{" "}
+            />
+            <RegisterButton type="submit"> Register </RegisterButton>
+          </FormWrapper>
           <SwitchText>
             Already Registered ?
-            <SwitchLink onClick={this.switchToLogin}>
-              {" "}
-              &nbsp; Login.{" "}
-            </SwitchLink>{" "}
-          </SwitchText>{" "}
-        </Main>{" "}
+            <SwitchLink onClick={this.switchToLogin}>&nbsp; Login.</SwitchLink>
+          </SwitchText>
+        </Main>
       </React.Fragment>
     );
   }

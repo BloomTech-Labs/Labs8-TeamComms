@@ -1,20 +1,21 @@
-
 import axios from "axios";
 import { LOGIN_CALLED, LOGIN_RETURNED } from "./types";
-import history from '../history';
+// import history from '../history';
 
-
-export const callLogIn = (e, userInput) => {
+export const callLogIn = (e, userInput, history) => {
   e.preventDefault();
   const credentials = {
-    username: userInput.username,
+    email: userInput.email,
     password: userInput.password
   };
   const body = JSON.stringify(credentials);
-  const headers = {"Content-Type": "application/json"};
+  const headers = { "Content-Type": "application/json" };
 
-  const promise = axios.post
-  ("https://teamcomm2.herokuapp.com/api/users/login", body, {headers});
+  const promise = axios.post(
+    "https://teamcomm2.herokuapp.com/api/users/login",
+    body,
+    { headers }
+  );
 
   return function(dispatch) {
     dispatch({ type: LOGIN_CALLED });
@@ -26,11 +27,9 @@ export const callLogIn = (e, userInput) => {
         });
         console.log("RESPONSE: ", res);
         localStorage.setItem("jwt", res.data.token);
-        history.push('/conversations');
-        window.location.reload();
+        history.push("/dashboard");
+        // window.location.reload();
       })
-      .catch(err =>
-        console.log({'Axios-Error': err})
-      );
+      .catch(err => console.log({ "Axios-Error": err }));
   };
 };

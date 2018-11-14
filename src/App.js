@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import ScreensLanding from "./screens/Landing";
 import ScreensLogin from "./screens/Login";
 import ScreensRegister from "./screens/Register";
@@ -10,7 +10,6 @@ import "./App.css";
 import styled from "styled-components";
 import Header from "./components/Header";
 import { Logo } from "./components/Common";
-import SearchBar from "./components/SearchBar";
 
 const AppWrapper = styled.div`
   position: absolute;
@@ -24,16 +23,14 @@ const AppWrapper = styled.div`
   color: #374353;
   display: grid;
   grid-template-columns: 15rem auto;
-  grid-template-rows: 5rem 5rem 25rem 5rem;
+  grid-template-rows: 4rem 25rem 5rem;
 `;
 
 const FadedLogo = styled(Logo)``;
 
 const Content = styled.div`
-  grid-column: 2;
-  grid-row: 3;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  grid-column: 1/3;
+  grid-row: 2;
 `;
 
 const Footer = styled.div`
@@ -45,24 +42,43 @@ const Footer = styled.div`
 class App extends Component {
   render() {
     return (
-      <AppWrapper>
-        <FadedLogo src="../images/logo.png" width="200px" height="90px" />
-        <Header />
-        {this.props.history.location.pathname === "/landing" ? null : (
-          <SearchBar />
-        )}
+      <AppWrapper history={this.props.history}>
+        <FadedLogo src="../images/logo.png" width="190x" height="60px" />
+        <Header history={this.props.history} />
+        <Route
+          exact
+          path="/"
+          render={props =>
+            this.props.logInSuccess ? (
+              <Redirect history={props.history} to="/dashboard" />
+            ) : (
+              <Redirect history={props.history} to="/landing" />
+            )
+          }
+        />
         <Switch>
           <Route exact path="/landing" component={ScreensLanding} />
-
           <Content>
-            <Route exact path="/login" component={ScreensLogin} />
-            <Route exact path="/register" component={ScreensRegister} />
+            <Route
+              exact
+              path="/login"
+              render={props => {
+                return <ScreensLogin history={this.props.history} />;
+              }}
+            />
+            <Route
+              exact
+              path="/register"
+              render={props => {
+                return <ScreensRegister history={this.props.history} />;
+              }}
+            />
             <Route
               exact
               path="/missioncontrol"
               component={ScreensMissionControl}
             />
-            <Route exact path="/conversations" component={ScreensConvoList} />
+            <Route exact path="/dashboard" component={ScreensConvoList} />
           </Content>
         </Switch>
       </AppWrapper>
