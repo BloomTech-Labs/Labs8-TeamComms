@@ -7,8 +7,7 @@ const JWTStrategy = passportJWT.Strategy;
 
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
-const dotenv = require('dotenv').config()
-
+const dotenv = require("dotenv").config();
 
 passport.use(
   new GoogleStrategy(
