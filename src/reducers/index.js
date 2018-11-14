@@ -3,7 +3,8 @@ import {
   REG_RETURNED,
   LOGIN_CALLED,
   LOGIN_RETURNED,
-  LOGOUT_CALLED
+  LOGOUT_CALLED,
+  GOOGLE_LOGIN_RETURNED
 } from "../actions/types";
 
 export const reducer = (state = null, action) => {
@@ -40,6 +41,12 @@ export const reducer = (state = null, action) => {
         loginCalled: false,
         loginReturned: false,
         loginSuccess: false
+      };
+    case GOOGLE_LOGIN_RETURNED:
+      return {
+        ...state,
+        loginSuccess: true,
+        userData: action.payload
       };
 
     default:

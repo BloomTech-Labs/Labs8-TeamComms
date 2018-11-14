@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
-import { callGoogleLogIn } from "../../actions/callGoogleLogIn";
 
 const GButton = styled.button`
   cursor: pointer;
@@ -58,5 +57,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { callGoogleLogIn }
+  {}
 )(GoogleButton);
