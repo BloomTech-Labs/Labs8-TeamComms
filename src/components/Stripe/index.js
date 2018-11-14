@@ -1,6 +1,18 @@
 import React from "react";
 import StripeCheckout from "react-stripe-checkout";
+import styled from "styled-components";
+import { PrimaryButton } from "../Common";
 import axios from "axios";
+
+const CustomBtn = styled(PrimaryButton)`
+  background: #25bea0;
+  color: #ffffff;
+  margin-left: 1rem;
+  a {
+    text-decoration: none;
+    color: white;
+  }
+`;
 
 const Stripe = () => {
   const onToken = token => {
@@ -29,7 +41,9 @@ const Stripe = () => {
       allowRememberMe={false}
       token={onToken}
       stripeKey="pk_test_ZU3mlTy0q00DATc9EyF9A8jX"
-    />
+    >
+      <CustomBtn>Go Premium</CustomBtn>
+    </StripeCheckout>
   );
 };
 
