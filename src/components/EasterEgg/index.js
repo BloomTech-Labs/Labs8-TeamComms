@@ -64,7 +64,7 @@ class EasterEgg extends Component {
       <EggWrapper>
         Welcome,&nbsp;
         <DisplayName>
-          {/* {this.props.userData.user.displayName} */}
+          {this.props.userData.user.displayName || "username"}!
         </DisplayName>
         &nbsp;
         {spacePuns[newRandom][0]} &nbsp; <p>{spacePuns[newRandom][1]}</p>
