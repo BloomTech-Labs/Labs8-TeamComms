@@ -19,6 +19,7 @@
     "passport-google-oauth20": "^1.0.0",
     "passport-jwt": "^4.0.0",
     "pbkdf2": "^3.0.17",
+    "stripe": "^6.15.0",
     "supertest": "^3.3.0"
   },
   "scripts": {
