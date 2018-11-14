@@ -13,7 +13,7 @@ passport.use(
   new GoogleStrategy(
     {
       //options for strategy
-      callbackURL: "http://localhost:3300/api/auth/google/redirect",
+      callbackURL: "https://teamcomm2.herokuapp.com/api/auth/google/redirect",
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET
     },
