@@ -5,11 +5,13 @@ import Stripe from "../Stripe";
 
 const Main = styled.div`
   padding: 5px 0 5px 0;
+  margin: 0 auto;
 `;
 
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin: 0 auto;
   padding: 15px;
   color: white;
@@ -64,7 +66,7 @@ class UserPref extends Component {
       givenName: "John",
       familyName: "Doe",
       displayName: "John Doe",
-      phoneNumber: 1234567890,
+      phoneNumber: "",
       organization: "Lambda School",
       email: "john.doe@lambda.com",
       premium: false
@@ -127,7 +129,7 @@ class UserPref extends Component {
               />
               <p>Phone Number: </p>
               <CustomInputNew
-                placeholder="123-456-7890"
+                placeholder="phone number"
                 type="number"
                 name="phoneNumber"
                 onChange={this.changeHandler}
@@ -158,7 +160,7 @@ class UserPref extends Component {
                 type="text"
                 name="phoneNumber"
                 onChange={this.changeHandler}
-                value={this.state.phone}
+                value={this.state.phoneNumber}
               />
               <br />
             </Group>
