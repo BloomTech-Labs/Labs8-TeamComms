@@ -17,9 +17,10 @@ Router.get(
     failureRedirect: "https://team-comm.netlify.com/register"
   }),
   (req, res) => {
-    res.redirect(`https://team-comm.netlify.com/dashboard/?${generateToken(req.user)}`);
+    res.redirect(`https://team-comm.netlify.com/dashboard/${generateToken(req.user)}`);
   });
 
+  
 // Router.get(
 //   "/",
 //   passport.authenticate("jwt", { session: false }),
