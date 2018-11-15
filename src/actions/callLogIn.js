@@ -8,13 +8,10 @@ export const callLogIn = (e, userInput, history) => {
     email: userInput.email,
     password: userInput.password
   };
-  const body = JSON.stringify(credentials);
-  const headers = { "Content-Type": "application/json" };
 
   const promise = axios.post(
     "https://teamcomm2.herokuapp.com/api/users/login",
-    body,
-    { headers }
+    credentials,
   );
 
   return function(dispatch) {
@@ -25,7 +22,6 @@ export const callLogIn = (e, userInput, history) => {
           type: LOGIN_RETURNED,
           payload: res.data
         });
-        console.log("RESPONSE: ", res);
         localStorage.setItem("jwt", res.data.token);
         history.push("/dashboard");
         // window.location.reload();

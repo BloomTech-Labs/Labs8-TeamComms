@@ -17,10 +17,11 @@ const ConvoGrid = styled.div`
 
 class ScreensConvoList extends Component {
   componentDidMount() {
-    let token = this.props.location.search.substring(1);
-    console.log(token);
-    if (token.length > 2) {
-      this.props.callGoogleLogIn(this.props.history, token);
+    if (this.props.match.params.token && !localStorage.getItem("jwt")) {
+      this.props.callGoogleLogIn(
+        this.props.history,
+        this.props.match.params.token
+      );
     }
   }
 

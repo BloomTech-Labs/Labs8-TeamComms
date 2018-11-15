@@ -4,17 +4,10 @@ import { REG_CALLED, REG_RETURNED } from "./types";
 
 export const callReg = (e, credentials, history) => {
   e.preventDefault();
-  const body = JSON.stringify(credentials);
-  const headers = {
-    "Content-Type": "application/json"
-  };
 
   const promise = axios.post(
     "https://teamcomm2.herokuapp.com/api/users/register",
-    body,
-    {
-      headers
-    }
+    credentials,
   );
 
   return function(dispatch) {
@@ -27,9 +20,7 @@ export const callReg = (e, credentials, history) => {
           type: REG_RETURNED,
           payload: res.data
         });
-        console.log("RESPONSE: ", res);
         localStorage.setItem("jwt", res.data.token);
-        console.log("sending it");
         console.log("hist", history);
         history.push("/dashboard");
       })
