@@ -56,14 +56,45 @@ class UserPref extends Component {
       premium: false
     };
   }
+
+  componentDidMount() {
+    // Change below to populate the state with current user data
+    // This is what the form will use to auto populate
+    this.setState({
+      givenName: "John",
+      familyName: "Doe",
+      displayName: "John Doe",
+      phoneNumber: 1234567890,
+      organization: "Lambda School",
+      email: "john.doe@lambda.com",
+      premium: false
+    });
+  }
+
+  handleUpdate = (e, userInput, history) => {
+    e.preventDefault();
+    console.log("Update");
+    console.log(this.state);
+  };
+
   render() {
+    const userInput = {
+      givenName: "John",
+      familyName: "Doe",
+      displayName: "John Doe",
+      phoneNumber: 1234567890,
+      organization: "Lambda School",
+      email: "john.doe@lambda.com",
+      premium: false
+    };
+    let history = this.props.history;
     return (
       <React.Fragment>
         <Main>
           <FormWrapper
-          // onSubmit={e => {
-          //   this.handleNewConvo(e, userInput, history);
-          // }}
+            onSubmit={e => {
+              this.handleUpdate(e, userInput, history);
+            }}
           >
             <Group>
               <legend>Account Details:</legend>
@@ -97,7 +128,6 @@ class UserPref extends Component {
               <p>Phone Number: </p>
               <CustomInputNew
                 placeholder="123-456-7890"
-                required
                 type="number"
                 name="phoneNumber"
                 onChange={this.changeHandler}
@@ -106,7 +136,6 @@ class UserPref extends Component {
               <p>Organization: </p>
               <CustomInputNew
                 placeholder="organization"
-                required
                 type="text"
                 name="organization"
                 onChange={this.changeHandler}
