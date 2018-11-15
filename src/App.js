@@ -10,6 +10,7 @@ import "./App.css";
 import styled from "styled-components";
 import Header from "./components/Header";
 import { Logo } from "./components/Common";
+import CreateConvo from "./components/CreateConvo";
 
 const AppWrapper = styled.div`
   position: absolute;
