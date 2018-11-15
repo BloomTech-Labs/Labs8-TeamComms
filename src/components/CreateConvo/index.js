@@ -20,10 +20,6 @@ const Group = styled.fieldset`
   margin: 10px 15px;
 `;
 
-const Header = styled.legend`
-  color: white;
-`;
-
 const CustomInputSingle = styled(CustomInput)`
   border-radius: 10px;
   width: 90%;
@@ -136,7 +132,7 @@ class CreateConvo extends Component {
             }}
           >
             <Group>
-              <Header>Conversation Details:</Header>
+              <legend>Conversation Details:</legend>
               <CustomInputTop
                 placeholder="Meeting Name"
                 required
@@ -165,7 +161,7 @@ class CreateConvo extends Component {
               />
             </Group>
             <Group>
-              <Header>Questions:</Header>
+              <legend>Questions:</legend>
               <ul>
                 {this.state.questions.map(question => (
                   <Entry>{question}</Entry>
@@ -181,7 +177,7 @@ class CreateConvo extends Component {
               <AddButton onClick={this.addQestions}>+</AddButton>
             </Group>
             <Group>
-              <Header>Participants:</Header>
+              <legend>Participants:</legend>
               <ul>
                 {this.state.participants.map(participant => (
                   <Entry>{participant}</Entry>
