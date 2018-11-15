@@ -4,6 +4,7 @@ import {
   LOGIN_CALLED,
   LOGIN_RETURNED,
   LOGOUT_CALLED,
+  GOOGLE_LOGIN_CALLED,
   GOOGLE_LOGIN_RETURNED
 } from "../actions/types";
 
@@ -18,6 +19,7 @@ export const reducer = (state = null, action) => {
       return {
         ...state,
         registrationSuccess: true,
+        loginSuccess: true,
         userData: action.payload
       };
 
@@ -41,6 +43,11 @@ export const reducer = (state = null, action) => {
         loginCalled: false,
         loginReturned: false,
         loginSuccess: false
+      };
+    case GOOGLE_LOGIN_CALLED:
+      return {
+        ...state,
+        loginCalled: true
       };
     case GOOGLE_LOGIN_RETURNED:
       return {
