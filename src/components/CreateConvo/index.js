@@ -104,6 +104,20 @@ class CreateConvo extends Component {
     console.log(userInput);
   };
 
+  addQestions = e => {
+    e.preventDefault();
+    const questions = this.state.questions;
+    questions.push(this.state.question);
+    this.setState({ questions, question: "" });
+  };
+
+  addParticipants = e => {
+    e.preventDefault();
+    const participants = this.state.participants;
+    participants.push(this.state.participant);
+    this.setState({ participants, participant: "" });
+  };
+
   render() {
     const userInput = {
       name: this.state.name,
@@ -164,7 +178,7 @@ class CreateConvo extends Component {
                 onChange={this.changeHandler}
                 value={this.state.question}
               />
-              <AddButton>+</AddButton>
+              <AddButton onClick={this.addQestions}>+</AddButton>
             </Group>
             <Group>
               <Header>Participants:</Header>
@@ -180,7 +194,7 @@ class CreateConvo extends Component {
                 onChange={this.changeHandler}
                 value={this.state.participant}
               />
-              <AddButton>+</AddButton>
+              <AddButton onClick={this.addParticipants}>+</AddButton>
             </Group>
             <RegisterButton type="submit"> Save </RegisterButton>
           </FormWrapper>
