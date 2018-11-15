@@ -17,10 +17,9 @@ const CustomBtn = styled(PrimaryButton)`
 const Stripe = () => {
   const onToken = token => {
     // Stripe token is generated automatically and passed as props to this function
-    const body = JSON.stringify(token);
     // We make an call to an endpoint on our server and send the token
     axios
-      .post("/api/stripe/payment", body)
+      .post("http://localhost:3300/api/stripe/payment", { token })
       .then(response => {
         console.log(response);
         alert("Payment Success");
