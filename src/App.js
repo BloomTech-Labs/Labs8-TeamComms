@@ -81,7 +81,6 @@ class App extends Component {
             />
 
             <Route path="/dashboard/:token?" component={ScreensConvoList} />
-            <Route path="/createconvo" component={CreateConvo} />
           </Content>
         </Switch>
       </AppWrapper>
