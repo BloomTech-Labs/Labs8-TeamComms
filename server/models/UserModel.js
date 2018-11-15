@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   googleId: String,
+  stripeId: String,
   displayName: {
     type: String,
     required: [true, 'displayName is required!']
