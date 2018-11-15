@@ -3,7 +3,7 @@ const tokenCheck = require("../../validation/tokenCheck");
 const hashedPassword = require("../../validation/hashedPassword");
 
 const userEdit = async (req, res) => {
-  let token = req.headers["jwt"] || req.headers['authorization'] || req.headers['auth'] || req.headers['x-access-token'];
+  let token = req.headers["jwt"] || req.headers['Authorization'] || req.headers['auth'] || req.headers['x-access-token'];
   let newInfo = req.body; //TODO - Talk with front end about what info is being passed in
   if(Object.keys(req.body).length < 4){
     return res.send("Please send {displayName, givenName, familyName, email, oldPw, newPw} even if empty string");

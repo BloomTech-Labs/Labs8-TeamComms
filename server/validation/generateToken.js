@@ -6,7 +6,6 @@ function generateToken(user) {
   const payload = {
     id: user._id
   };
-
   const options = {
     expiresIn: "24h",
     jwtid: "12345"
