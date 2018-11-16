@@ -11,6 +11,7 @@ import styled from "styled-components";
 import Header from "./components/Header";
 import { Logo } from "./components/Common";
 import CreateConvo from "./components/CreateConvo";
+import socketClient from "./components/socketClient";
 
 const AppWrapper = styled.div`
   position: absolute;
@@ -79,7 +80,7 @@ class App extends Component {
               path="/missioncontrol"
               component={ScreensMissionControl}
             />
-
+            <Route exact path="/socketClient" component={socketClient} />
             <Route path="/dashboard/:token?" component={ScreensConvoList} />
           </Content>
         </Switch>
