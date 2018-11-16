@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
 import io from 'socket.io-client';
 
-const socket = io('http://localhost:3300/sockets');
+const socket = io('http://localhost:8080');
 
 class Convo extends Component { 
   render() {
@@ -22,7 +22,11 @@ class Convo extends Component {
         <h1 style={{ color: "white" }}>convo page</h1>
         <h1 style={{ color: "white" }}>Title: {title}</h1>
         <p style={{ color: "white" }}>Description: <br/>{description}</p>
-        <div style={{width: "500px", height: "500px", border: "1px solid red"}}>sockets placeholder</div>
+        <div style={{color: "white", width: "500px", height: "500px", border: "1px solid red"}}>sockets placeholder</div>
+        <form action="">
+        <input type="text"/>
+        <button>send</button>
+        </form>
       </Fragment>
     )
   }

@@ -28,7 +28,7 @@ class ConvoList extends Component {
   card(convo) {
     return (
       <div className="card">
-        <Link to={`/coversation/${convo.id}`}>
+        <Link to={`/conversation/${convo.id}`}>
           <h1>{convo.title}</h1>
         </Link>
         <EditButton>
