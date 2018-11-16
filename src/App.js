@@ -12,6 +12,7 @@ import Header from "./components/Header";
 import { Logo } from "./components/Common";
 import CreateConvo from "./components/CreateConvo";
 import socketClient from "./components/socketClient";
+import Convo from './components/Convo';
 
 
 const AppWrapper = styled.div`
@@ -80,6 +81,11 @@ class App extends Component {
               exact
               path="/missioncontrol"
               component={ScreensMissionControl}
+            />
+            <Route
+              exact
+              path="/conversation/:id"
+              component={Convo}
             />
             <Route exact path="/socketClient" component={socketClient} />
             <Route path="/dashboard/:token?" component={ScreensConvoList} />
