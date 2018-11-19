@@ -9,9 +9,10 @@ import { connect } from "react-redux";
 import "./App.css";
 import styled from "styled-components";
 import Header from "./components/Header";
-import { Logo } from "./components/Common";
+import { Logo, Overpane } from "./components/Common";
 import CreateConvo from "./components/CreateConvo";
 import socketClient from "./components/socketClient";
+import { toggleOverpane } from "./actions/index";
 
 const AppWrapper = styled.div`
   position: absolute;
@@ -25,10 +26,13 @@ const AppWrapper = styled.div`
   color: #374353;
   display: grid;
   grid-template-columns: 15rem auto;
-  grid-template-rows: 4rem 25rem 5rem;
+  grid-template-rows: 5rem 25rem 5rem;
 `;
 
-const FadedLogo = styled(Logo)``;
+const FadedLogo = styled(Logo)`
+  margin-left: 35px;
+  margin-top: 10px;
+`;
 
 const Content = styled.div`
   grid-column: 1/3;
@@ -84,6 +88,15 @@ class App extends Component {
             <Route path="/dashboard/:token?" component={ScreensConvoList} />
           </Content>
         </Switch>
+
+        <Overpane
+          overpane={this.props.overpane}
+          onClick={e => {
+            this.props.toggleOverpane(e, !this.props.overpane);
+          }}
+        >
+          <ScreensLogin />
+        </Overpane>
       </AppWrapper>
     );
   }
@@ -92,4 +105,7 @@ class App extends Component {
 const mapStateToProps = state => {
   return state;
 };
-export default connect(mapStateToProps)(App);
+export default connect(
+  mapStateToProps,
+  { toggleOverpane }
+)(App);

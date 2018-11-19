@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const PrimaryButton = styled.button `
+export const PrimaryButton = styled.button`
   border: none;
   background: transparent;
   color: #25bea0;
@@ -21,76 +21,75 @@ export const PrimaryButton = styled.button `
   }
 `;
 
-export const Logo = styled.img `
+export const Logo = styled.img`
   order: 0;
   display: block;
   background: transparent;
   grid-column: 1;
   grid-row: 1;
   justify-content: flex-start;
-
-  `
-export const DeleteButton = styled.button `
+`;
+export const DeleteButton = styled.button`
   border: none;
   background-color: white;
-  outline:none;
+  outline: none;
   cursor: pointer;
   color: lightgrey;
   position: relative;
   top: 5px;
   right: 5px;
   font-size: 14px;
-    &:hover {
-    color: red !important;  
+  &:hover {
+    color: red !important;
   }
-`
+`;
 
-export const EditButton = styled.button `
-border: none;
-background-color: white;
-outline:none;
-cursor: pointer;  
-color: lightgrey;
-position: relative;
-top: 5px;
-right: 5px;
-font-size: 14px;
-&:hover {
- color: #fabc09 !important;
-}
-`
+export const EditButton = styled.button`
+  border: none;
+  background-color: white;
+  outline: none;
+  cursor: pointer;
+  color: lightgrey;
+  position: relative;
+  top: 5px;
+  right: 5px;
+  font-size: 14px;
+  &:hover {
+    color: #fabc09 !important;
+  }
+`;
 
-export const ShareButton = styled.button `
-border: none;
-background-color: white;
-outline:none;
-cursor: pointer;
-color: lightgrey;
-position: relative;
-top: 5px;
-right: 5px;
-font-size: 14px;
-&:hover {
- color: #374353!important;
-}
-`
+export const ShareButton = styled.button`
+  border: none;
+  background-color: white;
+  outline: none;
+  cursor: pointer;
+  color: lightgrey;
+  position: relative;
+  top: 5px;
+  right: 5px;
+  font-size: 14px;
+  &:hover {
+    color: #374353 !important;
+  }
+`;
 
-export const FavoriteButton = styled.button `
-border: none;
-background-color: white;
-outline:none;
-cursor: pointer;
-color: lightgrey;
-position: relative;
-top: 5px;
-right: 5px;
-font-size: 14px;
-&:hover {
- color: #25BEA0 !important;
-}
-`
+export const FavoriteButton = styled.button`
+  border: none;
+  background-color: white;
+  outline: none;
+  cursor: pointer;
+  color: lightgrey;
+  position: relative;
+  top: 5px;
+  right: 5px;
+  font-size: 14px;
+  &:hover {
+    color: #25bea0 !important;
+  }
+`;
 
-export const CustomInput = styled.input `
+export const CustomInput = styled.input`
   width: 300px;
   height: 50px;
   font-size: 20px;
@@ -98,4 +97,17 @@ export const CustomInput = styled.input `
   text-align: center;
   border-top: none;
   border-bottom: 1px solid grey;
+`;
+
+export const Overpane = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(0, 0, 0, 0.6);
+  padding: 2rem;
+  z-index: 1000;
+  transition: 250ms cubic-bezier(0.7, 0, 0.3, 1) transform;
+  transform: translateY(${props => (props.overpane ? "100%" : "0")});
 `;

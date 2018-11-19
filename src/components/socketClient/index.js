@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import io from "socket.io-client";
 import { connect } from "react-redux";
 import { loadInitialDataSocket } from "../../actions/index";
+import { Editor } from "primereact/editor";
+import "primereact/resources/themes/nova-light/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
 import("./css.css");
 
 let socket;
@@ -14,9 +18,10 @@ class socketClient extends Component {
     this.state = {
       ///
       color: "white",
-      textValue: ""
-      ///
+      text: ""
     };
+    ///
+
     //open initial socket connection on local
     //uncomment below to activate local host socket
     socket = io.connect("http://localhost:8080");
@@ -30,31 +35,46 @@ class socketClient extends Component {
 
     //socket.on is the receiver, this updates the text from the server.
     socket.on("update text", text => {
-      this.setState({ textValue: text });
+      this.setState({ text: text });
     });
   }
 
   // updates state and sends new state to server to distribute to clients with emit
   changeHandler = e => {
-    e.preventDefault();
-    this.setState({
-      [e.target.name]: e.target.value
-    });
+    // this.setState({
+    //   [e.target.name]: e.target.value
+    // });
     socket.emit("update text", e.target.value); //sends data to server
   };
 
+  renderHeader() {
+    return (
+      <span className="ql-formats">
+        <button className="ql-bold" aria-label="Bold" />
+        <button className="ql-italic" aria-label="Italic" />
+        <button className="ql-underline" aria-label="Underline" />
+      </span>
+    );
+  }
+
   render() {
     // testing for socket connections
+    const header = this.renderHeader();
 
     return (
-      <div style={{ textAlign: "center" }}>
-        <textarea
-          value={this.state.textValue}
-          onChange={this.changeHandler}
-          cols={40}
-          name="textValue"
-          rows={10}
+      <div>
+        <Editor
+          style={{ height: "320px" }}
+          value={this.state.text}
+          headerTemplate={header}
+          onTextChange={e =>
+            this.setState({ text: e.htmlValue }, e => {
+              socket.emit("update text", this.state.text);
+            })
+          }
         />
+
+        {/* <textarea value={this.state.textValue} onChange={this.changeHandler} cols={40} name="textValue" rows={10} /> */}
       </div>
     );
   }

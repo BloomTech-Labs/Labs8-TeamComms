@@ -7,9 +7,12 @@ import PropTypes from "prop-types";
 class ScreensLogin extends Component {
   render(props) {
     return (
-      <React.Fragment>
+      <div
+        style={{ width: "300px", margin: "0 auto", opacity: "1" }}
+        onClick={event => event.stopPropagation()}
+      >
         <Login {...this.props} />
-      </React.Fragment>
+      </div>
     );
   }
 }

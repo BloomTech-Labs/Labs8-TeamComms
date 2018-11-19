@@ -17,6 +17,7 @@ const logger = createLogger({
 
 const initialState = {
   userData: {},
+  overpane: false,
   registrationCalled: false,
   registrationSuccess: false,
   loginCalled: false,

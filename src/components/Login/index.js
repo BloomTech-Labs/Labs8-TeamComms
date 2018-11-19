@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { CustomInput, PrimaryButton } from "../Common";
+import { CustomInput, PrimaryButton, Logo } from "../Common";
 import GoogleButton from "../GoogleButton";
 import { callLogIn } from "../../actions/index";
 
@@ -10,16 +10,22 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   padding: 5px 0 5px 0;
-  background: #374353;
+
   width: 300px;
-  margin: 0 auto;
+  margin: 150px auto;
+  z-index: 2000;
+`;
+
+const oText = styled.span`
+  text-align: center;
+  color: #ffffff;
 `;
 
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   width: 300px;
-  margin: 0 auto;
+  margin: 20px auto;
 `;
 
 const CustomInputTop = styled(CustomInput)`
@@ -75,36 +81,35 @@ class Login extends Component {
 
     let history = this.props.history;
     return (
-      <Fragment>
-        <Main>
-          <FormWrapper
-            method="post"
-            onSubmit={e => {
-              this.handleLogInSubmit(e, userInput, history);
-            }}
-          >
-            <CustomInputTop
-              placeholder="email"
-              required
-              type="text"
-              onChange={this.changeHandler}
-              name="email"
-              value={this.state.email}
-            />{" "}
-            <CustomInputBottom
-              placeholder="password"
-              required
-              type="password"
-              name="password"
-              onChange={this.changeHandler}
-              value={this.state.password}
-            />
-            <LoginButton type="submit">Sign In</LoginButton>
-          </FormWrapper>
-          <p>- or - </p>
-          <GoogleButton history={history} />
-        </Main>
-      </Fragment>
+      <Main>
+        <Logo img src="../images/logo.png" />
+        <FormWrapper
+          method="post"
+          onSubmit={e => {
+            this.handleLogInSubmit(e, userInput, history);
+          }}
+        >
+          <CustomInputTop
+            placeholder="email"
+            required
+            type="text"
+            onChange={this.changeHandler}
+            name="email"
+            value={this.state.email}
+          />{" "}
+          <CustomInputBottom
+            placeholder="password"
+            required
+            type="password"
+            name="password"
+            onChange={this.changeHandler}
+            value={this.state.password}
+          />
+          <LoginButton type="submit">Sign In</LoginButton>
+        </FormWrapper>
+        <oText>- or -</oText>
+        <GoogleButton history={history} />
+      </Main>
     );
   }
 }
