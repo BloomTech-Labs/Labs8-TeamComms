@@ -70,7 +70,7 @@ export const ShareButton = styled.button`
   right: 5px;
   font-size: 14px;
   &:hover {
-    color: #374353 !important;
+    color: #374353;
   }
 `;
 
@@ -96,7 +96,7 @@ export const CustomInput = styled.input`
   color: #323232;
   text-align: center;
   border-top: none;
-  border-bottom: 1px solid grey;
+  border: 1px solid grey;
 `;
 
 export const Overpane = styled.div`

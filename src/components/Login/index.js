@@ -10,22 +10,25 @@ const Main = styled.div`
   display: flex;
   flex-direction: column;
   padding: 5px 0 5px 0;
-
-  width: 300px;
+  width: 360px;
   margin: 150px auto;
   z-index: 2000;
+  border-radius: 10px;
+  padding: 20px;
+  background: #ffffff;
 `;
 
-const oText = styled.span`
+const Text = styled.span`
   text-align: center;
-  color: #ffffff;
+  color: #374353;
+  margin-bottom: 12px;
 `;
 
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   width: 300px;
-  margin: 20px auto;
+  margin: 24px auto 12px;
 `;
 
 const CustomInputTop = styled(CustomInput)`
@@ -36,7 +39,7 @@ const CustomInputTop = styled(CustomInput)`
 const CustomInputBottom = styled(CustomInput)`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  border-bottom: none;
+  border-top: none;
 `;
 
 const LoginButton = styled(PrimaryButton)`
@@ -106,8 +109,9 @@ class Login extends Component {
             value={this.state.password}
           />
           <LoginButton type="submit">Sign In</LoginButton>
+          <Text>Forgot Your Password?</Text>
         </FormWrapper>
-        <oText>- or -</oText>
+        <Text>- or -</Text>
         <GoogleButton history={history} />
       </Main>
     );

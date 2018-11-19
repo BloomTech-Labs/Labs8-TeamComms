@@ -59,14 +59,13 @@ class socketClient extends Component {
 
   render() {
     // testing for socket connections
-    const header = this.renderHeader();
+    // const header = this.renderHeader();
 
     return (
       <div>
         <Editor
           style={{ height: "320px" }}
           value={this.state.text}
-          headerTemplate={header}
           onTextChange={e =>
             this.setState({ text: e.htmlValue }, e => {
               socket.emit("update text", this.state.text);
