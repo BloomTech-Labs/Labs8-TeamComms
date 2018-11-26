@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const ObjectId = mongoose.Schema.Types.ObjectId;
+
 
 const userSchema = new mongoose.Schema({
   googleId: String,
@@ -59,7 +61,19 @@ const userSchema = new mongoose.Schema({
   created_at: {
     type: Date,
     default: Date.now
-  }
+  },
+  meetings: [
+    {
+      type: ObjectId,
+      ref: 'Convo'
+    }
+  ],
+  created_meetings: [
+    {
+      type: ObjectId,
+      ref: 'Convo'
+    }
+  ]
 });
 
 const userModel = mongoose.model("User", userSchema); // users collection
