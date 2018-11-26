@@ -12,10 +12,16 @@ import { callGoogleLogIn } from "../../actions/callGoogleLogIn";
 const ConvoGrid = styled.div`
   display: grid;
   grid-template-columns: 20rem auto;
-  grid-template-rows: 2rem auto auto;
+  grid-template-rows: 4rem auto auto;
 `;
 
 class ScreensConvoList extends Component {
+  constructor() {
+    super();
+    this.state = {
+      toggleOverpane: true
+    };
+  }
   componentDidMount() {
     if (this.props.match.params.token && !localStorage.getItem("jwt")) {
       this.props.callGoogleLogIn(
@@ -25,11 +31,16 @@ class ScreensConvoList extends Component {
     }
   }
 
+  toggleOverpane = e => {
+    e.preventDefault();
+    this.setState({ toggleOverpane: !this.state.toggleOverpane });
+  };
+
   render() {
     return (
       <ConvoGrid>
         <EasterEgg />
-        <QuickAdd />
+        <QuickAdd toggleOverpane={this.toggleOverpane} />
         <SearchBar />
         <ConvoList />
       </ConvoGrid>

@@ -1,8 +1,8 @@
 import axios from "axios";
-import { LOGIN_CALLED, LOGIN_RETURNED } from "./types";
+import { LOGIN_CALLED, LOGIN_RETURNED, TOGGLE_OVERPANE } from "./types";
 // import history from '../history';
 
-export const callLogIn = (e, userInput, history) => {
+export const callLogIn = (e, userInput, history, overpane) => {
   e.preventDefault();
   const credentials = {
     email: userInput.email,
@@ -11,20 +11,18 @@ export const callLogIn = (e, userInput, history) => {
 
   const promise = axios.post(
     "https://teamcomm2.herokuapp.com/api/users/login",
-    credentials,
+    credentials
   );
 
   return function(dispatch) {
     dispatch({ type: LOGIN_CALLED });
     promise
       .then(res => {
-        dispatch({
-          type: LOGIN_RETURNED,
-          payload: res.data
-        });
+        dispatch({ type: LOGIN_RETURNED, payload: res.data });
+
         localStorage.setItem("jwt", res.data.token);
+        dispatch({ type: TOGGLE_OVERPANE, payload: overpane });
         history.push("/dashboard");
-        // window.location.reload();
       })
       .catch(err => console.log({ "Axios-Error": err }));
   };

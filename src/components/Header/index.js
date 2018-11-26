@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { PrimaryButton, Logo } from "../Common";
 import Stripe from "../Stripe";
-import callLogOut from "../../actions/callLogOut";
+import { callLogOut, toggleOverpane } from "../../actions/index";
 
 const HeaderWrapper = styled.div`
   background: #374353;
@@ -79,7 +79,7 @@ class Header extends Component {
       <React.Fragment>
         {this.props.loginSuccess ? (
           <HeaderWrapper>
-            <NavLink to="/dashboard"> DashBoard </NavLink>
+            <NavLink to="/dashboard"> Dashboard </NavLink>
             <NavLink to="/favorites"> Favorites </NavLink>
             <Link to="/register">
               <RegisterButton>Refer A Friend</RegisterButton>
@@ -101,9 +101,13 @@ class Header extends Component {
             <Link to="/register">
               <RegisterButton>Register</RegisterButton>
             </Link>
-            <Link to="/login">
-              <LoginButton>Login</LoginButton>
-            </Link>
+            <LoginButton
+              onClick={() => {
+                this.props.toggleOverpane(!this.props.overpane);
+              }}
+            >
+              Login
+            </LoginButton>
           </HeaderWrapper>
         )}
       </React.Fragment>
@@ -117,6 +121,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    callLogOut
+    callLogOut,
+    toggleOverpane
   }
 )(Header);

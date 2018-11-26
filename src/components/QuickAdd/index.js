@@ -41,11 +41,14 @@ const StyledMiniForm = styled.form`
 `;
 
 class QuickAdd extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <StyledMiniForm>
         <AddQuestion placeholder="Quick Add (New Conversation Name...)" />
-        <AddButton>
+        <AddButton onClick={this.props.toggleOverpane}>
           <i className="fas fa-plus-square fa-2x" />
         </AddButton>
       </StyledMiniForm>

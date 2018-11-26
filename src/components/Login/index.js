@@ -2,24 +2,33 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { CustomInput, PrimaryButton } from "../Common";
+import { CustomInput, PrimaryButton, Logo, Overpane } from "../Common";
 import GoogleButton from "../GoogleButton";
-import { callLogIn } from "../../actions/index";
+import { callLogIn, toggleOverpane } from "../../actions/index";
 
 const Main = styled.div`
   display: flex;
   flex-direction: column;
   padding: 5px 0 5px 0;
-  background: #374353;
-  width: 300px;
-  margin: 0 auto;
+  width: 360px;
+  margin: 150px auto;
+  z-index: 2000;
+  border-radius: 10px;
+  padding: 20px;
+  background: #ffffff;
+`;
+
+const Text = styled.span`
+  text-align: center;
+  color: #374353;
+  margin-bottom: 12px;
 `;
 
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   width: 300px;
-  margin: 0 auto;
+  margin: 24px auto 12px;
 `;
 
 const CustomInputTop = styled(CustomInput)`
@@ -30,7 +39,7 @@ const CustomInputTop = styled(CustomInput)`
 const CustomInputBottom = styled(CustomInput)`
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  border-bottom: none;
+  border-top: none;
 `;
 
 const LoginButton = styled(PrimaryButton)`
@@ -62,9 +71,9 @@ class Login extends Component {
     });
   };
 
-  handleLogInSubmit = (e, userInput, history) => {
-    e.preventDefault();
-    this.props.callLogIn(e, userInput, history);
+  handleLogInSubmit = (e, userInput, history, overpane) => {
+    console.log(history, overpane);
+    this.props.callLogIn(e, userInput, history, overpane);
   };
 
   render() {
@@ -72,15 +81,27 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
+    const overpane = !this.props.overpane;
 
-    let history = this.props.history;
+    const history = this.props.history;
     return (
-      <Fragment>
-        <Main>
+      <Overpane
+        overpane={this.props.overpane}
+        onClick={e => {
+          this.props.toggleOverpane(!this.props.overpane);
+        }}
+      >
+        <Main onClick={event => event.stopPropagation()}>
+          <Logo img src="../images/logo.png" />
           <FormWrapper
             method="post"
-            onSubmit={e => {
-              this.handleLogInSubmit(e, userInput, history);
+            onSubmit={(e, history, overpane) => {
+              this.handleLogInSubmit(
+                e,
+                userInput,
+                this.props.history,
+                !this.props.overpane
+              );
             }}
           >
             <CustomInputTop
@@ -99,12 +120,13 @@ class Login extends Component {
               onChange={this.changeHandler}
               value={this.state.password}
             />
-            <LoginButton type="submit">Sign In</LoginButton>
+            <LoginButton type="submit">Log In</LoginButton>
+            <Text>Forgot Your Password?</Text>
           </FormWrapper>
-          <p>- or - </p>
+          <Text>- or -</Text>
           <GoogleButton history={history} />
         </Main>
-      </Fragment>
+      </Overpane>
     );
   }
 }
@@ -115,6 +137,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    callLogIn
+    callLogIn,
+    toggleOverpane
   }
 )(Login);

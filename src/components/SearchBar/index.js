@@ -5,7 +5,8 @@ import styled from "styled-components";
 const SearchWrapper = styled.div`
   grid-column: 2/3;
   grid-row: 2;
-  width: 100%;
+  width: 99%;
+  margin-left: 10px;
   padding: 0.5rem;
   background: #25bea0;
 `;

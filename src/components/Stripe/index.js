@@ -5,7 +5,7 @@ import { PrimaryButton } from "../Common";
 import axios from "axios";
 
 const CustomBtn = styled(PrimaryButton)`
-  background: #25bea0;
+  background: #fabc09;
   color: #ffffff;
   margin-left: 1rem;
   a {

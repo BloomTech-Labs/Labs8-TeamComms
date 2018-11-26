@@ -39,7 +39,7 @@ const FormWrapper = styled.form`
 const Main = styled.div`
   margin: 0 auto;
   padding: 5px 0 5px 0;
-  background: black;
+  background: #374353;
 `;
 
 const CustomInputTop = styled(CustomInput)`
