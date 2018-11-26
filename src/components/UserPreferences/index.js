@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { callUpdate } from "../../actions/index";
+import { connect } from "react-redux";
 import { CustomInput, PrimaryButton } from "../Common";
 import Stripe from "../Stripe";
 
@@ -55,7 +57,8 @@ class UserPref extends Component {
       phoneNumber: "",
       organization: "",
       email: "",
-      premium: false
+      premium: false,
+      notification: ""
     };
   }
 
@@ -63,31 +66,43 @@ class UserPref extends Component {
     // Change below to populate the state with current user data
     // This is what the form will use to auto populate
     this.setState({
-      givenName: "John",
-      familyName: "Doe",
-      displayName: "John Doe",
-      phoneNumber: "",
-      organization: "Lambda School",
-      email: "john.doe@lambda.com",
-      premium: false
+      givenName: this.props.userData.user.name.givenName,
+      familyName: this.props.userData.user.name.familyName,
+      displayName: this.props.userData.user.displayName,
+      phoneNumber: this.props.userData.user.phoneNumber,
+      organization: this.props.userData.user.organization,
+      email: this.props.userData.user.email,
+      premium: this.props.userData.user.premium,
+      notification: this.props.userData.user.notification
     });
   }
 
-  handleUpdate = (e, userInput, history) => {
+  changeHandler = e => {
     e.preventDefault();
-    console.log("Update");
-    console.log(this.state);
+    this.setState({
+      [e.target.name]: e.target.value
+    });
+  };
+
+  handleUpdateSubmit = (e, userInput, history) => {
+    e.preventDefault();
+    console.log(userInput);
+    // this.props.callUpdate(e, userInput, history);
   };
 
   render() {
     const userInput = {
-      givenName: "John",
-      familyName: "Doe",
-      displayName: "John Doe",
-      phoneNumber: 1234567890,
-      organization: "Lambda School",
-      email: "john.doe@lambda.com",
-      premium: false
+      givenName: this.state.givenName,
+      familyName: this.state.familyName,
+      displayName: this.state.displayName,
+      phoneNumber: this.state.phoneNumber,
+      organization: this.state.organization,
+      email: this.state.email,
+      premium: this.state.premium,
+      notification: this.state.notification,
+      curPass: this.state.curPass,
+      newPass1: this.state.newPass1,
+      newPass2: this.state.newPass2
     };
     let history = this.props.history;
     return (
@@ -95,7 +110,7 @@ class UserPref extends Component {
         <Main>
           <FormWrapper
             onSubmit={e => {
-              this.handleUpdate(e, userInput, history);
+              this.handleUpdateSubmit(e, userInput, history);
             }}
           >
             <Group>
@@ -130,7 +145,7 @@ class UserPref extends Component {
               <p>Phone Number: </p>
               <CustomInputNew
                 placeholder="phone number"
-                type="number"
+                type="text"
                 name="phoneNumber"
                 onChange={this.changeHandler}
                 value={this.state.phoneNumber}
@@ -146,7 +161,7 @@ class UserPref extends Component {
             </Group>
             <Group>
               <legend>Reminder Preferences:</legend>
-              <input type="radio" name="email" value="email" checked /> Email
+              Email
               <CustomInputNew
                 placeholder="email address"
                 type="text"
@@ -154,13 +169,47 @@ class UserPref extends Component {
                 onChange={this.changeHandler}
                 value={this.state.email}
               />
-              <input type="radio" name="SMS" value="sms" /> SMS
+              SMS
               <CustomInputNew
                 placeholder="phone number"
                 type="text"
                 name="phoneNumber"
                 onChange={this.changeHandler}
                 value={this.state.phoneNumber}
+              />
+              <select
+                name="notification"
+                onChange={this.changeHandler}
+                value={this.state.notification}
+              >
+                <option value="Email">Email</option>
+                <option value="SMS">SMS</option>
+              </select>
+              <br />
+            </Group>
+            <Group>
+              <legend>Change Password:</legend>
+              <CustomInputNew
+                placeholder="current password"
+                type="text"
+                name="curPass"
+                onChange={this.changeHandler}
+                value={this.state.curPass}
+              />
+              <br />
+              <CustomInputNew
+                placeholder="new password"
+                type="text"
+                name="newPass1"
+                onChange={this.changeHandler}
+                value={this.state.newPass1}
+              />
+              <CustomInputNew
+                placeholder="confirm new password"
+                type="text"
+                name="newPass2"
+                onChange={this.changeHandler}
+                value={this.state.newPass2}
               />
               <br />
             </Group>
@@ -186,4 +235,17 @@ class UserPref extends Component {
   }
 }
 
-export default UserPref;
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    callUpdate
+  }
+)(UserPref);
+
+// Need to have notification preference on user model
+// Finalize the update user function(body, axios req)
+// Add `style={{ background: "#fabc09" }}` to Stripe button
