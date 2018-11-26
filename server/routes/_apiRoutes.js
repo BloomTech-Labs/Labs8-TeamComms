@@ -1,5 +1,4 @@
 const express = require("express");
-
 const userRoutes = require("./userRoutes");
 const authRoutes = require("./authRoutes");
 const stripeRoutes = require("./stripeRoutes");
