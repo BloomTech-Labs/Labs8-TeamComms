@@ -10,6 +10,8 @@ import {
 } from "../Common";
 
 import styled from "styled-components";
+import { Link } from 'react-router-dom'
+
 
 class ConvoList extends Component {
   empty() {
@@ -26,7 +28,9 @@ class ConvoList extends Component {
   card(convo) {
     return (
       <div className="card">
-        <h1>{convo.title}</h1>
+        <Link to={`/conversation/${convo.id}`}>
+          <h1>{convo.title}</h1>
+        </Link>
         <EditButton>
           <i className="fas fa-edit" />
         </EditButton>

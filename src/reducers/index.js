@@ -6,7 +6,9 @@ import {
   LOGOUT_CALLED,
   GOOGLE_LOGIN_CALLED,
   GOOGLE_LOGIN_RETURNED,
-  TOGGLE_OVERPANE
+  TOGGLE_OVERPANE,
+  UPDATE_CALLED,
+  UPDATE_RETURNED
 } from "../actions/types";
 
 export const reducer = (state = null, action) => {
@@ -41,7 +43,15 @@ export const reducer = (state = null, action) => {
       return { ...state, loginSuccess: true, userData: action.payload };
     case TOGGLE_OVERPANE:
       return { ...state, overpane: action.payload };
-
+    case UPDATE_CALLED:
+      return {
+        ...state
+      };
+    case UPDATE_RETURNED:
+      return {
+        ...state,
+        userData: action.payload
+      };
     default:
       return state;
   }

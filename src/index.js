@@ -25,52 +25,62 @@ const initialState = {
   loginSuccess: false,
   conversations: [
     {
+      id: 1,
       title: "Conversation 1",
       description:
         "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
+      id: 2,
       title: "Conversation 2",
       description:
         "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
+      id: 3,
       title: "Conversation 3",
       description:
         "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
+      id: 4,
       title: "Conversation 4",
       description:
         "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
+      id: 5,
       title: "Conversation 5",
       description:
         "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      title: "Conversation 5",
+      id: 6,
+      title: "Conversation 6",
       description:
         "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      title: "Conversation 5",
+      id: 7,
+      title: "Conversation 7",
       description:
         "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      title: "Conversation 5",
+      id: 8,
+      title: "Conversation 8",
       description:
         "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      title: "Conversation 5",
+      id: 9,
+      title: "Conversation 9",
       description:
         "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      title: "Conversation 5",
+      id: 10,
+      title: "Conversation 10",
       description:
         "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     }

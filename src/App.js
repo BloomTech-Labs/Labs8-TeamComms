@@ -12,7 +12,12 @@ import Header from "./components/Header";
 import { Logo, Overpane } from "./components/Common";
 import CreateConvo from "./components/CreateConvo";
 import socketClient from "./components/socketClient";
+
 import { toggleOverpane } from "./actions/index";
+
+import Convo from "./components/Convo";
+import UserPreferences from "./components/UserPreferences";
+
 
 const AppWrapper = styled.div`
   position: absolute;
@@ -77,8 +82,10 @@ class App extends Component {
               path="/missioncontrol"
               component={ScreensMissionControl}
             />
+            <Route exact path="/conversation/:id" component={Convo} />
             <Route exact path="/socketClient" component={socketClient} />
             <Route path="/dashboard/:token?" component={ScreensConvoList} />
+            <Route path="/preferences" component={UserPreferences} />
           </Content>
         </Switch>
         <ScreensLogin />
