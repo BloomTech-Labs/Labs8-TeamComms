@@ -23,66 +23,105 @@ const initialState = {
   loginCalled: false,
   loginReturned: false,
   loginSuccess: false,
-  conversations: [
+  meetings: [
     {
       id: 1,
-      title: "Conversation 1",
+      attendees: ["Austin", "Jameson", "Tristan"],
+      title: "Meeting 1",
       description:
-        "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
+        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
       id: 2,
-      title: "Conversation 2",
+      attendees: ["Austin", "Jameson", "Tristan"],
+      title: "Meeting 2",
       description:
-        "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
+        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
       id: 3,
-      title: "Conversation 3",
+      attendees: ["Austin", "Jameson"],
+      title: "Meeting 3",
       description:
-        "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
+        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
       id: 4,
-      title: "Conversation 4",
+      attendees: ["Jerry", "Eric", "Jeff"],
+      title: "Meeting 4",
       description:
-        "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
+        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
       id: 5,
-      title: "Conversation 5",
+      attendees: ["Erica", "Lily", "Brad"],
+      title: "Meeting 5",
       description:
-        "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
+        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
       id: 6,
-      title: "Conversation 6",
+      attendees: ["Allen", "Vim", "Gary"],
+      title: "Meeting 6",
       description:
-        "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
+        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
       id: 7,
-      title: "Conversation 7",
+      attendees: ["Allen", "Vim", "Gary"],
+      title: "Meeting 7",
       description:
-        "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
+        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
       id: 8,
-      title: "Conversation 8",
+      attendees: ["Allen", "Vim", "Gary"],
+      title: "Meeting 8",
       description:
-        "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
+        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
       id: 9,
-      title: "Conversation 9",
+      attendees: ["Allen", "Vim", "Gary"],
+      title: "Meeting 9",
       description:
-        "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
+        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
       id: 10,
-      title: "Conversation 10",
+      attendees: ["Allen", "Vim", "Gary"],
+      title: "Meeting 10",
       description:
-        "Description lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
+        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
+    }
+  ],
+  questions: [
+    {
+      qid: 1,
+      user: "JJ Ashcraft",
+      name: "Question 1",
+      question: "What planet do we live on?",
+      created_at: Date.now(),
+      answered: false,
+      answered_at: ""
+    },
+    {
+      qid: 2,
+      user: "JJ Ashcraft",
+      name: "Question 2",
+      question: "Are we gonna finish on time?",
+      created_at: Date.now(),
+      answered: false,
+      answered_at: ""
+    },
+    {
+      qid: 3,
+      user: "JJ Ashcraft",
+      name: "Question 3",
+      question: "Who made this?",
+      created_at: Date.now(),
+      answered: false,
+      answered_at: ""
     }
   ]
 };

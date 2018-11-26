@@ -3,8 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import ScreensLanding from "./screens/Landing";
 import ScreensLogin from "./screens/Login";
 import ScreensRegister from "./screens/Register";
-import ScreensMissionControl from "./screens/MissionControl";
-import ScreensConvoList from "./screens/ConvoList";
+import ScreensMeetingList from "./screens/MeetingList";
 import { connect } from "react-redux";
 import "./App.css";
 import styled from "styled-components";
@@ -12,12 +11,11 @@ import Header from "./components/Header";
 import { Logo, Overpane } from "./components/Common";
 import CreateConvo from "./components/CreateConvo";
 import socketClient from "./components/socketClient";
+import Meeting from "./components/Meeting";
 
 import { toggleOverpane } from "./actions/index";
 
-import Convo from "./components/Convo";
 import UserPreferences from "./components/UserPreferences";
-
 
 const AppWrapper = styled.div`
   position: absolute;
@@ -77,14 +75,8 @@ class App extends Component {
                 return <ScreensRegister history={this.props.history} />;
               }}
             />
-            <Route
-              exact
-              path="/missioncontrol"
-              component={ScreensMissionControl}
-            />
-            <Route exact path="/conversation/:id" component={Convo} />
-            <Route exact path="/socketClient" component={socketClient} />
-            <Route path="/dashboard/:token?" component={ScreensConvoList} />
+            <Route exact path="/meeting/:id" component={Meeting} />
+            <Route path="/dashboard/:token?" component={ScreensMeetingList} />
             <Route path="/preferences" component={UserPreferences} />
           </Content>
         </Switch>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import ConvoList from "../../components/ConvoList";
+import MeetingList from "../../components/MeetingList";
 import PropTypes from "prop-types";
 import QuickAdd from "../../components/QuickAdd";
 import SearchBar from "../../components/SearchBar/index";
@@ -15,7 +15,7 @@ const ConvoGrid = styled.div`
   grid-template-rows: 4rem auto auto;
 `;
 
-class ScreensConvoList extends Component {
+class ScreensMeetingList extends Component {
   constructor() {
     super();
     this.state = {
@@ -31,23 +31,18 @@ class ScreensConvoList extends Component {
     }
   }
 
-  toggleOverpane = e => {
-    e.preventDefault();
-    this.setState({ toggleOverpane: !this.state.toggleOverpane });
-  };
-
   render() {
     return (
       <ConvoGrid>
         <EasterEgg />
         <QuickAdd toggleOverpane={this.toggleOverpane} />
         <SearchBar />
-        <ConvoList />
+        <MeetingList />
       </ConvoGrid>
     );
   }
 }
-ScreensConvoList.propTypes = {};
+ScreensMeetingList.propTypes = {};
 
 const mapStateToProps = state => {
   return state;
@@ -55,4 +50,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { callGoogleLogIn }
-)(ScreensConvoList);
+)(ScreensMeetingList);
