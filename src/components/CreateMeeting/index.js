@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
-import { RadioButton } from "primereact/radiobutton";
-import { AutoComplete } from "primereact/autocomplete";
-import { CustomInput, PrimaryButton } from "../Common";
+import { Checkbox } from "primereact/checkbox";
+import { Button } from "primereact/button";
+import { ScrollPanel } from "primereact/scrollpanel";
+import { PrimaryButton } from "../Common";
+import moment from "moment";
 
 const Main = styled.div`
   padding: 5px 0 5px 0;
@@ -12,32 +14,51 @@ const Main = styled.div`
 
 const FormWrapper = styled.form`
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   margin: 0 auto;
   color: white;
 `;
 
 const Group = styled.fieldset`
-  width: 50%;
+  width: 45%;
+  border: 2px groove white;
+  padding: 10px;
+  margin: 10px 15px;
+`;
+const QGroup = styled.fieldset`
+  width: 93%;
   border: 2px groove white;
   padding: 10px;
   margin: 10px 15px;
 `;
 
-const CustomInputSingle = styled(CustomInput)`
-  border-radius: 10px;
+const TextInput = styled(InputText)`
+  width: 100%;
+`;
+const QInput = styled(InputText)`
   width: 90%;
 `;
 
-const RegisterButton = styled(PrimaryButton)`
-  width: 50%;
+const SaveButton = styled(PrimaryButton)`
+  width: 45%;
+  height: 75px;
+  color: white;
+  border-radius: 5px;
+  background: #25bea0;
+  border: 1px solid grey;
+  font-size: 1.5rem;
+  margin: 2% auto;
+  border: none;
+`;
+const NewSaveButton = styled(Button)`
+  width: 45%;
   height: 75px;
   color: white;
   border-radius: 5px;
   background: #25bea0;
   border: 1px solid grey;
   font-size: 28px;
-  margin: 2% 15px;
+  margin: 2% auto;
   border: none;
 `;
 
@@ -45,7 +66,7 @@ const AddButton = styled.button`
   border: none;
   border-radius: 50px;
   padding: 10px;
-  margin: 0 2%;
+  margin: 0 auto%;
   background: #25bea0;
   color: white;
   font-weight: bolder;
@@ -62,17 +83,41 @@ class CreateMeeting extends Component {
     this.state = {
       title: "",
       description: "",
+      day: "",
       start: "",
       end: "",
-      repeat: "",
-      attendees: ["Attendee 1", "Attendee 2"],
+      repeat: false,
+      attendees: ["Tommy Jones", "Alice Smith", "Troy Johnson"],
       attendee: "",
-      questions: ["Question number 1?", "Question number 2?"],
-      notes: [],
-      question: "",
-      create_at: "",
-      creatorId: "",
-      archive: []
+      questions: [
+        {
+          question: "Dummy data or data from a server?",
+          created_at: "1/15/2018",
+          user: "Tommy Jones"
+        },
+        {
+          question: "Is React the superior javascript framework?",
+          created_at: "1/15/2018",
+          user: "Alice Smith"
+        },
+        {
+          question:
+            "What will the world look like after being exposed to Team Communicator?",
+          created_at: "1/15/2018",
+          user: "Tommy Jones"
+        },
+        {
+          question:
+            "This is just one more question to test the scroll. Does the scroll work correctly?",
+          created_at: "1/15/2018",
+          user: "Troy Johnson"
+        }
+      ]
+      // notes: [],
+      // question: "",
+      // create_at: "",
+      // creatorId: "",
+      // archive: []
     };
   }
 
@@ -85,36 +130,46 @@ class CreateMeeting extends Component {
 
   handleNewConvo = (e, userInput, history) => {
     e.preventDefault();
+    const newDate = moment(this.state.start);
+    console.log(newDate.format("M D YYYY, h:mm:ss a Z"));
     console.log(userInput);
   };
 
   addQestions = e => {
     e.preventDefault();
-    const questions = this.state.questions;
-    questions.push(this.state.question);
-    this.setState({ questions, question: "" });
+    if (this.state.question) {
+      const questions = this.state.questions;
+      questions.push(this.state.question);
+      this.setState({ questions, question: "" });
+    } else {
+      alert("Enter a Question");
+    }
   };
 
   addAttendees = e => {
     e.preventDefault();
-    const attendees = this.state.attendees;
-    attendees.push(this.state.attendee);
-    this.setState({ attendees, attendee: "" });
+    if (this.state.attendee) {
+      const attendees = this.state.attendees;
+      attendees.push(this.state.attendee);
+      this.setState({ attendees, attendee: "" });
+    } else {
+      alert("Enter an Attendee");
+    }
   };
 
   render() {
     const userInput = {
-      title: "",
-      description: "",
-      start: "",
-      end: "",
-      repeat: "",
-      attendees: ["Attendee 1", "Attendee 2"],
-      questions: ["Question number 1?", "Question number 2?"],
-      notes: [],
-      create_at: "",
-      creatorId: "",
-      archive: []
+      title: this.state.title,
+      description: this.state.description,
+      start: this.state.start,
+      end: this.state.end,
+      repeat: this.state.repeat,
+      attendees: this.state.attendees,
+      questions: this.state.questions
+      // notes: [],
+      // create_at: "",
+      // creatorId: "",
+      // archive: []
     };
     let history = this.props.history;
     return (
@@ -129,10 +184,10 @@ class CreateMeeting extends Component {
               <legend>Conversation Details:</legend>
               {/* Title */}
               <span className="p-float-label">
-                <InputText
+                <TextInput
                   id="title"
                   name="title"
-                  value={this.state.value}
+                  value={this.state.title}
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="title">Meeting Name</label>
@@ -140,7 +195,7 @@ class CreateMeeting extends Component {
               <br />
               {/* Description */}
               <span className="p-float-label">
-                <InputText
+                <TextInput
                   id="description"
                   name="description"
                   value={this.state.description}
@@ -153,50 +208,48 @@ class CreateMeeting extends Component {
               <span className="p-float-label">
                 <Calendar
                   showTime={true}
+                  hourFormat="12"
                   id="start"
                   name="start"
-                  hourFormat="12"
                   value={this.state.start}
                   onChange={this.changeHandler}
+                  inputClassName="input"
+                  className="datePicker"
                 />
-                <label htmlFor="start">Start Date</label>
+                <label htmlFor="start">Start</label>
               </span>
               <br />
               {/* End */}
               <span className="p-float-label">
                 <Calendar
                   showTime={true}
+                  hourFormat="12"
                   id="end"
                   name="end"
-                  hourFormat="12"
                   value={this.state.end}
                   onChange={this.changeHandler}
+                  inputClassName="input"
+                  className="datePicker"
                 />
-                <label htmlFor="end">End Date</label>
+                <label htmlFor="end">End</label>
               </span>
+              <br />
               {/* Repeat */}
-              <RadioButton
+              <Checkbox
                 inputId="repeat"
-                value="Repeat"
                 name="repeat"
                 onChange={e => this.setState({ repeat: !this.state.repeat })}
                 checked={this.state.repeat === true}
               />
-              <label htmlFor="repeat" className="p-radiobutton-label">
+              <label htmlFor="repeat" className="p-checkbox-label">
                 Repeat
               </label>
             </Group>
             <Group>
               <legend>Attendees:</legend>
-              {/* Attendees List */}
-              <ul>
-                {this.state.attendees.map(attendee => (
-                  <Entry>{attendee}</Entry>
-                ))}
-              </ul>
               {/* Add Attendee */}
               <span className="p-float-label">
-                <InputText
+                <QInput
                   id="attendee"
                   name="attendee"
                   value={this.state.attendee}
@@ -205,24 +258,19 @@ class CreateMeeting extends Component {
                 <label htmlFor="attendee">Add Attendees</label>
                 <AddButton onClick={this.addAttendees}>+</AddButton>
               </span>
-              {/* <AutoComplete
-                value={this.state.attendee}
-                onChange={e => this.setState({ attendee: e.value })}
-                suggestions={this.state.brandSuggestions}
-                completeMethod={this.suggestBrands.bind(this)}
-              /> */}
-            </Group>
-            <Group>
-              <legend>Questions:</legend>
-              {/* Questions List */}
-              <ul>
-                {this.state.questions.map(question => (
-                  <Entry>{question}</Entry>
+              <hr />
+              {/* Attendees List */}
+              <ScrollPanel style={{ width: "100%", height: "150px" }}>
+                {this.state.attendees.map(attendee => (
+                  <Entry>{attendee}</Entry>
                 ))}
-              </ul>
+              </ScrollPanel>
+            </Group>
+            <QGroup>
+              <legend>Questions:</legend>
               {/* Add Question */}
               <span className="p-float-label">
-                <InputText
+                <QInput
                   id="question"
                   name="question"
                   value={this.state.question}
@@ -231,9 +279,27 @@ class CreateMeeting extends Component {
                 <label htmlFor="question">Add Questions</label>
                 <AddButton onClick={this.addQestions}>+</AddButton>
               </span>
-            </Group>
+              <hr />
+              {/* Questions List */}
+              <ScrollPanel style={{ width: "100%", height: "75px" }}>
+                {this.state.questions.map(question => (
+                  <Entry>
+                    {question.question}{" "}
+                    <span style={{ fontStyle: "italic" }}>
+                      Created on: {question.created_at} by {question.user}
+                    </span>
+                  </Entry>
+                ))}
+              </ScrollPanel>
+            </QGroup>
             {/* Save Button */}
-            <RegisterButton type="submit"> Save </RegisterButton>
+            <NewSaveButton
+              label="Save"
+              onClick={e => {
+                this.handleNewConvo(e, userInput, history);
+              }}
+            />
+            <SaveButton type="submit"> Save </SaveButton>
           </FormWrapper>
         </Main>
       </React.Fragment>
