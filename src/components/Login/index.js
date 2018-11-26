@@ -71,9 +71,9 @@ class Login extends Component {
     });
   };
 
-  handleLogInSubmit = (e, userInput, history) => {
-    e.preventDefault();
-    this.props.callLogIn(e, userInput, history);
+  handleLogInSubmit = (e, userInput, history, overpane) => {
+    console.log(history, overpane);
+    this.props.callLogIn(e, userInput, history, overpane);
   };
 
   render() {
@@ -81,8 +81,9 @@ class Login extends Component {
       email: this.state.email,
       password: this.state.password
     };
+    const overpane = !this.props.overpane;
 
-    let history = this.props.history;
+    const history = this.props.history;
     return (
       <Overpane
         overpane={this.props.overpane}
@@ -94,8 +95,13 @@ class Login extends Component {
           <Logo img src="../images/logo.png" />
           <FormWrapper
             method="post"
-            onSubmit={e => {
-              this.handleLogInSubmit(e, userInput, history);
+            onSubmit={(e, history, overpane) => {
+              this.handleLogInSubmit(
+                e,
+                userInput,
+                this.props.history,
+                !this.props.overpane
+              );
             }}
           >
             <CustomInputTop
