@@ -10,14 +10,13 @@ import "./App.css";
 import styled from "styled-components";
 import Header from "./components/Header";
 import { Logo, Overpane } from "./components/Common";
-import CreateConvo from "./components/CreateConvo";
+import CreateMeeting from "./components/CreateMeeting";
 import socketClient from "./components/socketClient";
 
 import { toggleOverpane } from "./actions/index";
 
 import Convo from "./components/Convo";
 import UserPreferences from "./components/UserPreferences";
-
 
 const AppWrapper = styled.div`
   position: absolute;
@@ -86,6 +85,7 @@ class App extends Component {
             <Route exact path="/socketClient" component={socketClient} />
             <Route path="/dashboard/:token?" component={ScreensConvoList} />
             <Route path="/preferences" component={UserPreferences} />
+            <Route path="/createMeeting" component={CreateMeeting} />
           </Content>
         </Switch>
         <ScreensLogin />
