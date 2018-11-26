@@ -111,3 +111,17 @@ export const Overpane = styled.div`
   transition: 250ms cubic-bezier(0.7, 0, 0.3, 1) transform;
   transform: translateY(${props => (props.overpane ? "100%" : "0")});
 `;
+
+export const SubmitButton = styled(PrimaryButton)`
+  width: 250px;
+  height: 50px;
+  color: white;
+  border-radius: 5px;
+  background: #25bea0;
+  border: 1px solid grey;
+  font-size: 16px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: none;
+  margin-left: 10px;
+`;

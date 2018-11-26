@@ -10,10 +10,9 @@ import {
 } from "../Common";
 
 import styled from "styled-components";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 
-
-class ConvoList extends Component {
+class MeetingList extends Component {
   empty() {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -25,11 +24,11 @@ class ConvoList extends Component {
     );
   }
   // Will break this down into a Card component
-  card(convo) {
+  card(meeting) {
     return (
       <div className="card">
-        <Link to={`/conversation/${convo.id}`}>
-          <h1>{convo.title}</h1>
+        <Link to={`/meeting/${meeting.id}`}>
+          <h1>{meeting.title}</h1>
         </Link>
         <EditButton>
           <i className="fas fa-edit" />
@@ -44,7 +43,7 @@ class ConvoList extends Component {
           <i className="fas fa-star" />
         </FavoriteButton>
 
-        <p>{convo.description}</p>
+        <p>{meeting.description}</p>
       </div>
     );
   }
@@ -52,11 +51,11 @@ class ConvoList extends Component {
     return (
       <React.Fragment>
         <div className="list">
-          {this.props.conversations.length === 0
+          {this.props.meetings.length === 0
             ? this.empty()
-            : this.props.conversations.map(convo => {
+            : this.props.meetings.map(meeting => {
                 // Will replace this with a Card component
-                return this.card(convo);
+                return this.card(meeting);
               })}
         </div>
       </React.Fragment>
@@ -67,4 +66,4 @@ class ConvoList extends Component {
 const mapStateToProps = state => {
   return state;
 };
-export default connect(mapStateToProps)(ConvoList);
+export default connect(mapStateToProps)(MeetingList);
