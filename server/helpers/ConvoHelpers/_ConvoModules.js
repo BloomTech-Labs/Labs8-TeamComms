@@ -1,2 +1,4 @@
-module.exports = {convoCreate: require('./convoCreate')};
- 
+module.exports = {
+  convoCreate: require("./convoCreate"),
+  convoRetrieve: require("./convoRetrieve")
+};
