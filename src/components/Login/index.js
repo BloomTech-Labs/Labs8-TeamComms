@@ -2,9 +2,9 @@ import React, { Component, Fragment } from "react";
 
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { CustomInput, PrimaryButton, Logo } from "../Common";
+import { CustomInput, PrimaryButton, Logo, Overpane } from "../Common";
 import GoogleButton from "../GoogleButton";
-import { callLogIn } from "../../actions/index";
+import { callLogIn, toggleOverpane } from "../../actions/index";
 
 const Main = styled.div`
   display: flex;
@@ -84,36 +84,43 @@ class Login extends Component {
 
     let history = this.props.history;
     return (
-      <Main>
-        <Logo img src="../images/logo.png" />
-        <FormWrapper
-          method="post"
-          onSubmit={e => {
-            this.handleLogInSubmit(e, userInput, history);
-          }}
-        >
-          <CustomInputTop
-            placeholder="email"
-            required
-            type="text"
-            onChange={this.changeHandler}
-            name="email"
-            value={this.state.email}
-          />{" "}
-          <CustomInputBottom
-            placeholder="password"
-            required
-            type="password"
-            name="password"
-            onChange={this.changeHandler}
-            value={this.state.password}
-          />
-          <LoginButton type="submit">Sign In</LoginButton>
-          <Text>Forgot Your Password?</Text>
-        </FormWrapper>
-        <Text>- or -</Text>
-        <GoogleButton history={history} />
-      </Main>
+      <Overpane
+        overpane={this.props.overpane}
+        onClick={e => {
+          this.props.toggleOverpane(!this.props.overpane);
+        }}
+      >
+        <Main onClick={event => event.stopPropagation()}>
+          <Logo img src="../images/logo.png" />
+          <FormWrapper
+            method="post"
+            onSubmit={e => {
+              this.handleLogInSubmit(e, userInput, history);
+            }}
+          >
+            <CustomInputTop
+              placeholder="email"
+              required
+              type="text"
+              onChange={this.changeHandler}
+              name="email"
+              value={this.state.email}
+            />{" "}
+            <CustomInputBottom
+              placeholder="password"
+              required
+              type="password"
+              name="password"
+              onChange={this.changeHandler}
+              value={this.state.password}
+            />
+            <LoginButton type="submit">Log In</LoginButton>
+            <Text>Forgot Your Password?</Text>
+          </FormWrapper>
+          <Text>- or -</Text>
+          <GoogleButton history={history} />
+        </Main>
+      </Overpane>
     );
   }
 }
@@ -124,6 +131,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    callLogIn
+    callLogIn,
+    toggleOverpane
   }
 )(Login);

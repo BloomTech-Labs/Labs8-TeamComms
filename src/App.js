@@ -67,13 +67,6 @@ class App extends Component {
           <Content>
             <Route
               exact
-              path="/login"
-              render={props => {
-                return <ScreensLogin history={this.props.history} />;
-              }}
-            />
-            <Route
-              exact
               path="/register"
               render={props => {
                 return <ScreensRegister history={this.props.history} />;
@@ -88,15 +81,7 @@ class App extends Component {
             <Route path="/dashboard/:token?" component={ScreensConvoList} />
           </Content>
         </Switch>
-
-        <Overpane
-          overpane={this.props.overpane}
-          onClick={e => {
-            this.props.toggleOverpane(e, !this.props.overpane);
-          }}
-        >
-          <ScreensLogin />
-        </Overpane>
+        <ScreensLogin />
       </AppWrapper>
     );
   }
