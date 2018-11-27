@@ -20,14 +20,14 @@ const convoSchema = new mongoose.Schema({
     required: true
   },
   description: String,
-  // start_time: {
-  //   type: Date,
-  //   required: true
-  // },
-  // end_time: {
-  //   type: Date,
-  //   required: true
-  // },
+  start_time: {
+    type: Date,
+    required: true
+  },
+  end_time: {
+    type: Date,
+    required: true
+  },
   attendees: [
     {
       type: ObjectId,
