@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { callUpdate } from "../../actions/index";
 import { connect } from "react-redux";
-import { CustomInput, PrimaryButton } from "../Common";
+import { InputText } from "primereact/inputtext";
+import { InputMask } from "primereact/inputmask";
+import { Password } from "primereact/password";
+import { Dropdown } from "primereact/dropdown";
+import { PrimaryButton } from "../Common";
 import Stripe from "../Stripe";
 
 const Main = styled.div`
@@ -28,10 +32,14 @@ const Group = styled.fieldset`
   margin: 10px 0;
 `;
 
-const CustomInputNew = styled(CustomInput)`
+const TextInput = styled(InputText)`
   width: 100%;
-  border-radius: 10px;
-  margin: 15px 0;
+`;
+const MaskInput = styled(InputMask)`
+  width: 100%;
+`;
+const PassInput = styled(Password)`
+  width: 100%;
 `;
 
 const SaveButton = styled(PrimaryButton)`
@@ -58,7 +66,7 @@ class UserPref extends Component {
       organization: "",
       email: "",
       premium: false,
-      notification: ""
+      notification: "email"
     };
   }
 
@@ -105,6 +113,10 @@ class UserPref extends Component {
       newPass2: this.state.newPass2
     };
     let history = this.props.history;
+    const notifyItems = [
+      { label: "Email", value: "email" },
+      { label: "SMS", value: "sms" }
+    ];
     return (
       <React.Fragment>
         <Main>
@@ -115,116 +127,158 @@ class UserPref extends Component {
           >
             <Group>
               <legend>Account Details:</legend>
-              <p>First Name: </p>
-              <CustomInputNew
-                placeholder="first name"
-                required
-                type="text"
-                name="givenName"
-                onChange={this.changeHandler}
-                value={this.state.givenName}
-              />
-              <p>Last Name: </p>
-              <CustomInputNew
-                placeholder="last name"
-                required
-                type="text"
-                name="familyName"
-                onChange={this.changeHandler}
-                value={this.state.familyName}
-              />
-              <p>Display Name: </p>
-              <CustomInputNew
-                placeholder="display name"
-                required
-                type="text"
-                name="displayName"
-                onChange={this.changeHandler}
-                value={this.state.displayName}
-              />
-              <p>Phone Number: </p>
-              <CustomInputNew
-                placeholder="phone number"
-                type="text"
-                name="phoneNumber"
-                onChange={this.changeHandler}
-                value={this.state.phoneNumber}
-              />
-              <p>Organization: </p>
-              <CustomInputNew
-                placeholder="organization"
-                type="text"
-                name="organization"
-                onChange={this.changeHandler}
-                value={this.state.organization}
-              />
+              <br />
+              {/* First Name */}
+              <span className="p-float-label">
+                <TextInput
+                  id="givenName"
+                  name="givenName"
+                  required
+                  value={this.state.givenName}
+                  onChange={this.changeHandler}
+                />
+                <label htmlFor="givenName">First Name</label>
+              </span>
+              <br />
+              {/* Last Name */}
+              <span className="p-float-label">
+                <TextInput
+                  id="familyName"
+                  name="familyName"
+                  required
+                  value={this.state.familyName}
+                  onChange={this.changeHandler}
+                />
+                <label htmlFor="familyName">Last Name</label>
+              </span>
+              <br />
+              {/* Display Name */}
+              <span className="p-float-label">
+                <TextInput
+                  id="displayName"
+                  name="displayName"
+                  required
+                  value={this.state.displayName}
+                  onChange={this.changeHandler}
+                />
+                <label htmlFor="displayName">Display Name</label>
+              </span>
+              <br />
+              {/* Phone Number */}
+              <span className="p-float-label">
+                <MaskInput
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  mask="(999) 999-9999"
+                  value={this.state.phoneNumber}
+                  onChange={this.changeHandler}
+                />
+                <label htmlFor="phoneNumber">Phone Number</label>
+              </span>
+              <br />
+              {/* Organization */}
+              <span className="p-float-label">
+                <TextInput
+                  id="organization"
+                  name="organization"
+                  value={this.state.organization}
+                  onChange={this.changeHandler}
+                />
+                <label htmlFor="organization">Organization</label>
+              </span>
             </Group>
             <Group>
               <legend>Reminder Preferences:</legend>
-              Email
-              <CustomInputNew
-                placeholder="email address"
-                type="text"
-                name="email"
-                onChange={this.changeHandler}
-                value={this.state.email}
-              />
-              SMS
-              <CustomInputNew
-                placeholder="phone number"
-                type="text"
-                name="phoneNumber"
-                onChange={this.changeHandler}
-                value={this.state.phoneNumber}
-              />
-              <select
-                name="notification"
-                onChange={this.changeHandler}
-                value={this.state.notification}
-              >
-                <option value="Email">Email</option>
-                <option value="SMS">SMS</option>
-              </select>
               <br />
+              {/* Email */}
+              <span className="p-float-label">
+                <TextInput
+                  id="email"
+                  name="email"
+                  required
+                  value={this.state.email}
+                  onChange={this.changeHandler}
+                />
+                <label htmlFor="email">Email</label>
+              </span>
+              <br />
+              {/* SMS */}
+              <span className="p-float-label">
+                <MaskInput
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  mask="(999) 999-9999"
+                  value={this.state.phoneNumber}
+                  onChange={this.changeHandler}
+                />
+                <label htmlFor="phoneNumber">Phone Number</label>
+              </span>
+              <br />
+              {/* Notification Pref */}
+              <Dropdown
+                id="notify"
+                name="notification"
+                required
+                value={this.state.notification}
+                options={notifyItems}
+                placeholder="Select"
+                onChange={e => {
+                  this.setState({ notification: e.value });
+                }}
+              />
             </Group>
             <Group>
               <legend>Change Password:</legend>
-              <CustomInputNew
-                placeholder="current password"
-                type="text"
-                name="curPass"
-                onChange={this.changeHandler}
-                value={this.state.curPass}
-              />
               <br />
-              <CustomInputNew
-                placeholder="new password"
-                type="text"
-                name="newPass1"
-                onChange={this.changeHandler}
-                value={this.state.newPass1}
-              />
-              <CustomInputNew
-                placeholder="confirm new password"
-                type="text"
-                name="newPass2"
-                onChange={this.changeHandler}
-                value={this.state.newPass2}
-              />
+              {/* Current Password */}
+              <span className="p-float-label">
+                <PassInput
+                  id="curPass"
+                  name="curPass"
+                  value={this.state.curPass}
+                  onChange={this.changeHandler}
+                />
+                <label htmlFor="curPass">Current Password</label>
+              </span>
               <br />
+              {/* New Password 1 */}
+              <span className="p-float-label">
+                <PassInput
+                  id="newPass1"
+                  name="newPass1"
+                  value={this.state.newPass1}
+                  onChange={this.changeHandler}
+                />
+                <label htmlFor="newPass1">New Password</label>
+              </span>
+              <br />
+              {/* New Password 2 */}
+              <span className="p-float-label">
+                <PassInput
+                  id="newPass2"
+                  name="newPass2"
+                  value={this.state.newPass2}
+                  onChange={this.changeHandler}
+                />
+                <label htmlFor="newPass2">Confirm New Password</label>
+              </span>
             </Group>
             <SaveButton type="submit"> Save </SaveButton>
             <Group>
               <legend>Premium Preferences:</legend>
-              <p>Premium Account: </p>
-              <CustomInputNew
-                placeholder="email address"
-                type="text"
-                name="email"
-                onChange={this.changeHandler}
-                value={this.state.premium}
-                readOnly
-              />
+              <br />
+              {/* Account Type */}
+              <span className="p-float-label">
+                <TextInput
+                  id="premium"
+                  name="premium"
+                  value={this.state.premium ? "Premium" : "Standard"}
+                  onChange={() => {
+                    alert('Use "Go Premium" button below');
+                  }}
+                />
+                <label htmlFor="premium">Account Type</label>
+              </span>
               <br />
               <Stripe />
             </Group>
