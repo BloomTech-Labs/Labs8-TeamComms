@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { callReg } from "../../actions/index";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { CustomInput, PrimaryButton } from "../Common/index";
+import { InputText } from "primereact/inputtext";
+import { Password } from "primereact/password";
+import { PrimaryButton } from "../Common/index";
 
 const RegisterButton = styled(PrimaryButton)`
   width: 300px;
@@ -36,21 +38,21 @@ const FormWrapper = styled.form`
   margin: 0 auto;
 `;
 
+const TextInput = styled(InputText)`
+  width: 100%;
+`;
+const PassInput = styled(Password)`
+  width: 100%;
+`;
+
 const Main = styled.div`
   margin: 0 auto;
   padding: 5px 0 5px 0;
   background: #374353;
 `;
 
-const CustomInputTop = styled(CustomInput)`
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-`;
-
-const CustomInputBottom = styled(CustomInput)`
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border-bottom: none;
+const NSpan = styled.span`
+  width: 50%;
 `;
 
 class Register extends Component {
@@ -114,46 +116,62 @@ class Register extends Component {
               this.handleRegSubmit(e, userInput, history);
             }}
           >
-            <CustomInputTop
-              placeholder="first name"
-              required
-              type="text"
-              name="givenName"
-              onChange={this.changeHandler}
-              value={this.state.givenName}
-            />
-            <CustomInput
-              placeholder="last name"
-              required
-              type="text"
-              name="familyName"
-              onChange={this.changeHandler}
-              value={this.state.familyName}
-            />
-            <CustomInput
-              placeholder="e-mail"
-              required
-              type="text"
-              onChange={this.changeHandler}
-              name="email"
-              value={this.state.email}
-            />
-            <CustomInput
-              placeholder="password"
-              required
-              type="password"
-              name="password1"
-              onChange={this.changeHandler}
-              value={this.state.password1}
-            />
-            <CustomInputBottom
-              placeholder="confirm password"
-              required
-              type="password"
-              name="password2"
-              onChange={this.changeHandler}
-              value={this.state.password2}
-            />
+            <br />
+            {/* First Name */}
+            <NSpan className="p-float-label">
+              <TextInput
+                id="givenName"
+                name="givenName"
+                value={this.state.givenName}
+                onChange={this.changeHandler}
+              />
+              <label htmlFor="givenName">First Name</label>
+            </NSpan>
+            <br />
+            {/* Last Name */}
+            <NSpan className="p-float-label">
+              <TextInput
+                id="familyName"
+                name="familyName"
+                value={this.state.familyName}
+                onChange={this.changeHandler}
+              />
+              <label htmlFor="familyName">Last Name</label>
+            </NSpan>
+            <br />
+            {/* Email */}
+            <NSpan className="p-float-label">
+              <TextInput
+                id="email"
+                name="email"
+                value={this.state.email}
+                onChange={this.changeHandler}
+              />
+              <label htmlFor="email">Email</label>
+            </NSpan>
+            <br />
+            {/* Password 1 */}
+            <NSpan className="p-float-label">
+              <PassInput
+                id="password1"
+                name="password1"
+                value={this.state.password1}
+                onChange={this.changeHandler}
+              />
+              <label htmlFor="password1">Password</label>
+            </NSpan>
+            <br />
+            {/* Password 2 */}
+            <NSpan className="p-float-label">
+              <PassInput
+                id="password2"
+                name="password2"
+                value={this.state.password2}
+                onChange={this.changeHandler}
+              />
+              <label htmlFor="password2">Confirm Password</label>
+            </NSpan>
+            <br />
             <RegisterButton type="submit"> Register </RegisterButton>
           </FormWrapper>
           <SwitchText>
