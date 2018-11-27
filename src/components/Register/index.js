@@ -44,15 +44,14 @@ const TextInput = styled(InputText)`
 const PassInput = styled(Password)`
   width: 100%;
 `;
+const NSpan = styled.span`
+  width: 50%;
+`;
 
 const Main = styled.div`
   margin: 0 auto;
   padding: 5px 0 5px 0;
   background: #374353;
-`;
-
-const NSpan = styled.span`
-  width: 50%;
 `;
 
 class Register extends Component {
@@ -122,6 +121,7 @@ class Register extends Component {
               <TextInput
                 id="givenName"
                 name="givenName"
+                required
                 value={this.state.givenName}
                 onChange={this.changeHandler}
               />
@@ -133,6 +133,7 @@ class Register extends Component {
               <TextInput
                 id="familyName"
                 name="familyName"
+                required
                 value={this.state.familyName}
                 onChange={this.changeHandler}
               />
@@ -144,6 +145,7 @@ class Register extends Component {
               <TextInput
                 id="email"
                 name="email"
+                required
                 value={this.state.email}
                 onChange={this.changeHandler}
               />
@@ -155,6 +157,7 @@ class Register extends Component {
               <PassInput
                 id="password1"
                 name="password1"
+                required
                 value={this.state.password1}
                 onChange={this.changeHandler}
               />
@@ -166,6 +169,7 @@ class Register extends Component {
               <PassInput
                 id="password2"
                 name="password2"
+                required
                 value={this.state.password2}
                 onChange={this.changeHandler}
               />
