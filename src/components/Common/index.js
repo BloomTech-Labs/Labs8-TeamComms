@@ -113,8 +113,8 @@ export const Overpane = styled.div`
 `;
 
 export const SubmitButton = styled(PrimaryButton)`
-  width: 250px;
-  height: 50px;
+  width: 150px;
+  height: 30px;
   color: white;
   border-radius: 5px;
   background: #25bea0;
