@@ -1,5 +1,5 @@
 const express = require("express");
-const passport = require("passport")
+const passport = require("passport");
 const Router = express.Router();
 
 const hlpr = require("../helpers/UserHelpers/_UserModules");
@@ -32,6 +32,11 @@ Router.route("/update").put(hlpr.userEdit);
 
 Router.route("/findbyname/:name").get(hlpr.userFindByName);
 
-Router.route("/retrieve").get(passport.authenticate('jwt',{session: false}), hlpr.userRetrieve);
+Router.route("/allusers").get(hlpr.userAll);
+
+Router.route("/retrieve").get(
+  passport.authenticate("jwt", { session: false }),
+  hlpr.userRetrieve
+);
 
 module.exports = Router;

@@ -3,5 +3,6 @@ module.exports = {
   userLogin: require("./userLogin"),
   userEdit: require("./userEdit"),
   userRetrieve: require("./userRetrieve"),
-  userFindByName: require("./userFindByName")
+  userFindByName: require("./userFindByName"),
+  userAll: require("./userAll")
 };
