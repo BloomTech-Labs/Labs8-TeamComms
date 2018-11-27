@@ -7,7 +7,7 @@ import { Password } from "primereact/password";
 import { PrimaryButton } from "../Common/index";
 
 const RegisterButton = styled(PrimaryButton)`
-  width: 300px;
+  width: 30%;
   height: 75px;
   color: white;
   border-radius: 5px;
@@ -45,7 +45,7 @@ const PassInput = styled(Password)`
   width: 100%;
 `;
 const NSpan = styled.span`
-  width: 50%;
+  width: 40%;
 `;
 
 const Main = styled.div`
