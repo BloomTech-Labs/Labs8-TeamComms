@@ -3,13 +3,15 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import io from "socket.io-client";
 import { loadInitialDataSocket } from "../../actions/index";
-import { Editor } from "primereact/editor";
+// import { Editor } from "primereact/editor";
 import { ListBox } from "primereact/listbox";
 import { Checkbox } from "primereact/checkbox";
 import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import { SubmitButton } from "../Common";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 import("./css.css");
 
@@ -40,19 +42,34 @@ const StyledListQuestions = styled(ListBox)`
   }
 `;
 
+const Title = styled.h1`
+  color: white;
+  font-size: 30px;
+  padding-bottom: 16px;
+`;
+
 const EditorWrapper = styled.div`
   grid-column: 2;
   grid-row: 1/4;
-
+  color: black;
   margin-left: 30px;
-  h1 {
-    color: white;
-    font-size: 30px;
-    padding-bottom: 16px;
-  }
+
   label {
     color: white;
     padding-left: 5px;
+  }
+  strong {
+    font-weight: bold !important;
+  }
+  em {
+    font-style: italic !important;
+  }
+`;
+
+const Editor = styled(ReactQuill)`
+  background: white;
+  .ql-container {
+    height: 300px;
   }
 `;
 const MeetingDetails = styled.div`
@@ -67,6 +84,7 @@ const MeetingDetails = styled.div`
   p {
     color: white;
   }
+  }
 `;
 
 class Meeting extends Component {
@@ -77,15 +95,12 @@ class Meeting extends Component {
       ///
       color: "white",
 
-      text: "",
-
-      textValue: "",
-      chats: []
+      text: ""
     };
 
     //open initial socket connection on local
     //uncomment below to activate local host socket
-    socket = io.connect("http://localhost:3000");
+    socket = io.connect("http://localhost:8080");
     //open initial socket connection on deployed server
 
     //uncomment below to activate heroku socket
@@ -95,39 +110,32 @@ class Meeting extends Component {
 
     //socket.on is the receiver, this updates the text from the server.
 
-    socket.on("update text", text => {
-      this.setState({ text: text });
-    });
-
     // socket.on("chat message");
   }
 
-  // updates state and sends new state to server to distribute to clients with emit
-  changeHandler = e => {
-    this.setState({
-      [e.target.name]: e.target.value
+  componentDidMount() {
+    socket.on("update text", text => {
+      this.setState({ text: text });
     });
-    socket.emit("update text", e.target.value); //sends data to server
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-    socket.emit("update text", this.state.textValue);
-    // socket.on("update text", text => {
-    //   chats.push(text);
-    //   this.setState({ chats, textValue: "" });
-    // });
-  };
-
-  renderHeader() {
-    return (
-      <span className="ql-formats">
-        <button className="ql-bold" aria-label="Bold" />
-        <button className="ql-italic" aria-label="Italic" />
-        <button className="ql-underline" aria-label="Underline" />
-      </span>
-    );
   }
+
+  handleChange = value => {
+    let status = "";
+    if (value.length !== this.state.text.length) {
+      console.log("I am Emitting");
+      socket.emit("update text", value);
+      status = "Changes not saved.";
+    }
+    this.setState({ text: value, savedStatus: status });
+  };
+
+  // updates state and sends new state to server to distribute to clients with emit
+  changeHandler = html => {
+    this.setState({
+      text: html
+    });
+    socket.emit("update text", this.state.text); //sends data to server
+  };
 
   render() {
     const id = this.props.match.params.id;
@@ -179,15 +187,13 @@ class Meeting extends Component {
           filter={true}
         />
         <EditorWrapper>
-          <h1>Meeting Notes</h1>
+          <Title>Meeting Notes</Title>
+
           <Editor
-            style={{ height: "320px" }}
+            theme="snow"
             value={this.state.text}
-            onTextChange={e =>
-              this.setState({ text: e.htmlValue }, e => {
-                socket.emit("update text", this.state.text);
-              })
-            }
+            onChange={this.handleChange}
+            name="text"
           />
 
           <div style={{ display: "inline-block", marginLeft: "20px" }}>
@@ -195,12 +201,7 @@ class Meeting extends Component {
             <label htmlFor="youtube">Upload to Youtube</label>
           </div>
 
-          <div
-            style={{
-              display: "inline-block",
-              marginLeft: "20px"
-            }}
-          >
+          <div style={{ display: "inline-block", marginLeft: "20px" }}>
             <Checkbox inputId="repeat" value="repeat" />
             <label htmlFor="repeat">Schedule a Follow Up Meeting</label>
             <SubmitButton>Finalize Meeting</SubmitButton>
