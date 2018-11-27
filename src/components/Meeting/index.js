@@ -102,11 +102,18 @@ class Meeting extends Component {
     //uncomment below to activate local host socket
     // socket = io.connect("http://localhost:8080");
 
+    // const socket_connect = function(room) {
+    //   return io("localhost:8080/meeting", {
+    //     query: "r_var=" + room
+    //   });
+    // };
+
     const socket_connect = function(room) {
-      return io("localhost:8080/meeting", {
+      return io("https://teamcomm2.herokuapp.com/meeting", {
         query: "r_var=" + room
       });
     };
+
     const id = this.props.match.params.id;
     console.log("meeting id", id);
     socket = socket_connect(id);
