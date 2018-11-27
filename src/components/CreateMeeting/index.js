@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
-import { Button } from "primereact/button";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { PrimaryButton } from "../Common";
 import moment from "moment";
@@ -26,7 +25,7 @@ const Group = styled.fieldset`
   margin: 10px 15px;
 `;
 const QGroup = styled.fieldset`
-  width: 93%;
+  width: 94%;
   border: 2px groove white;
   padding: 10px;
   margin: 10px 15px;
@@ -47,18 +46,7 @@ const SaveButton = styled(PrimaryButton)`
   background: #25bea0;
   border: 1px solid grey;
   font-size: 1.5rem;
-  margin: 2% auto;
-  border: none;
-`;
-const NewSaveButton = styled(Button)`
-  width: 45%;
-  height: 75px;
-  color: white;
-  border-radius: 5px;
-  background: #25bea0;
-  border: 1px solid grey;
-  font-size: 28px;
-  margin: 2% auto;
+  margin: 10px 15px;
   border: none;
 `;
 
@@ -130,9 +118,43 @@ class CreateMeeting extends Component {
 
   handleNewConvo = (e, userInput, history) => {
     e.preventDefault();
-    const newDate = moment(this.state.start);
-    console.log(newDate.format("M D YYYY, h:mm:ss a Z"));
     console.log(userInput);
+    const newDate = moment(this.state.start).format("M D YYYY, h:mm:ss a Z");
+    console.log(newDate);
+    this.setState({
+      title: "",
+      description: "",
+      day: "",
+      start: "",
+      end: "",
+      repeat: false,
+      attendees: ["Tommy Jones", "Alice Smith", "Troy Johnson"],
+      attendee: "",
+      questions: [
+        {
+          question: "Dummy data or data from a server?",
+          created_at: "1/15/2018",
+          user: "Tommy Jones"
+        },
+        {
+          question: "Is React the superior javascript framework?",
+          created_at: "1/15/2018",
+          user: "Alice Smith"
+        },
+        {
+          question:
+            "What will the world look like after being exposed to Team Communicator?",
+          created_at: "1/15/2018",
+          user: "Tommy Jones"
+        },
+        {
+          question:
+            "This is just one more question to test the scroll. Does the scroll work correctly?",
+          created_at: "1/15/2018",
+          user: "Troy Johnson"
+        }
+      ]
+    });
   };
 
   addQestions = e => {
@@ -181,7 +203,7 @@ class CreateMeeting extends Component {
             }}
           >
             <Group>
-              <legend>Conversation Details:</legend>
+              <legend>Meeting Details:</legend>
               {/* Title */}
               <span className="p-float-label">
                 <TextInput
@@ -293,13 +315,8 @@ class CreateMeeting extends Component {
               </ScrollPanel>
             </QGroup>
             {/* Save Button */}
-            <NewSaveButton
-              label="Save"
-              onClick={e => {
-                this.handleNewConvo(e, userInput, history);
-              }}
-            />
-            <SaveButton type="submit"> Save </SaveButton>
+            <SaveButton type="submit"> Save for Later </SaveButton>
+            <SaveButton type="submit"> Save and View </SaveButton>
           </FormWrapper>
         </Main>
       </React.Fragment>
