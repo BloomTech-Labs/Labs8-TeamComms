@@ -32,7 +32,7 @@ Router.route("/update").put(hlpr.userEdit);
 
 Router.route("/findbyname/:name").get(hlpr.userFindByName);
 
-Router.route("/allusers").get(hlpr.userAll);
+Router.route("/allusers").get(passport.authenticate("jwt", {session: false}), hlpr.userAll);
 
 Router.route("/retrieve").get(
   passport.authenticate("jwt", { session: false }),
