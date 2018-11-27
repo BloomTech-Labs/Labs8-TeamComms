@@ -9,6 +9,7 @@ import { Checkbox } from "primereact/checkbox";
 import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import { InputText } from "primereact/inputtext";
 import { SubmitButton } from "../Common";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -16,6 +17,11 @@ import "react-quill/dist/quill.snow.css";
 import("./css.css");
 
 let socket;
+let questionList = [];
+
+const StyledInputText = styled(InputText)`
+  width: 250px;
+`;
 
 const Main = styled.div`
   display: grid;
@@ -94,13 +100,12 @@ class Meeting extends Component {
     this.state = {
       ///
       color: "white",
-
-      text: ""
+      user: "JAshcraft",
+      text: "",
+      users: [],
+      currentQuestion: "",
+      questions: []
     };
-
-    //open initial socket connection on local
-    //uncomment below to activate local host socket
-    // socket = io.connect("http://localhost:8080");
 
     // const socket_connect = function(room) {
     //   return io("localhost:8080/meeting", {
@@ -117,7 +122,13 @@ class Meeting extends Component {
     const id = this.props.match.params.id;
     console.log("meeting id", id);
     socket = socket_connect(id);
-    socket.emit("question", "hello room #" + id);
+    socket.emit(
+      "update-users",
+      this.props.userData.user.displayName
+        ? this.props.userData.user.displayName
+        : this.state.user
+    );
+
     //open initial socket connection on deployed server
 
     //uncomment below to activate heroku socket
@@ -133,6 +144,14 @@ class Meeting extends Component {
   componentDidMount() {
     socket.on("update text", text => {
       this.setState({ text: text });
+    });
+    socket.on("update-users", users => {
+      socket.users = users;
+      console.log(users);
+      this.setState({ users: users });
+    });
+    socket.on("question", questions => {
+      return this.setState({ questions: questions });
     });
   }
 
@@ -158,6 +177,11 @@ class Meeting extends Component {
     socket.emit("update text", this.state.text); //sends data to server
   };
 
+  sendQuestion = e => {
+    e.preventDefault();
+    socket.emit("question", this.state.currentQuestion);
+  };
+
   render() {
     const id = this.props.match.params.id;
     let title;
@@ -176,11 +200,11 @@ class Meeting extends Component {
     });
     console.log(attendeeList);
 
-    let questionList = [];
-    let q = this.props.questions.map(question => {
-      let name = question.name;
-      return questionList.push({ name: name });
-    });
+    // const questionList = [];
+    // let q = this.props.questions.map(question => {
+    //   let name = question.name;
+    //   return questionList.push({ name: name });
+    // });
 
     return (
       <Main>
@@ -198,15 +222,25 @@ class Meeting extends Component {
         </MeetingDetails>
 
         <StyledListQuestions
-          options={questionList}
+          options={this.state.questions}
           optionLabel="name"
           filter={true}
         />
+
         <StyledListAttendees
-          options={attendeeList}
+          options={this.state.users ? this.state.users : attendeeList}
           optionLabel="name"
           filter={true}
         />
+        <form onSubmit={this.sendQuestion}>
+          <StyledInputText
+            value={this.state.currentQuestion}
+            onChange={e => this.setState({ currentQuestion: e.target.value })}
+          />
+          <SubmitButton onClick={this.sendQuestion}>
+            Add A Question
+          </SubmitButton>
+        </form>
         <EditorWrapper>
           <Title>Meeting Notes</Title>
 
