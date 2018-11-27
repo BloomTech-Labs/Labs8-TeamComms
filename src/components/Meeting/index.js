@@ -100,7 +100,17 @@ class Meeting extends Component {
 
     //open initial socket connection on local
     //uncomment below to activate local host socket
-    socket = io.connect("http://localhost:8080");
+    // socket = io.connect("http://localhost:8080");
+
+    const socket_connect = function(room) {
+      return io("localhost:8080/meeting", {
+        query: "r_var=" + room
+      });
+    };
+    const id = this.props.match.params.id;
+    console.log("meeting id", id);
+    socket = socket_connect(id);
+    socket.emit("question", "hello room #" + id);
     //open initial socket connection on deployed server
 
     //uncomment below to activate heroku socket
@@ -117,6 +127,10 @@ class Meeting extends Component {
     socket.on("update text", text => {
       this.setState({ text: text });
     });
+  }
+
+  componentWillUnmount() {
+    socket.disconnect();
   }
 
   handleChange = value => {
