@@ -9,7 +9,7 @@ import "./App.css";
 import styled from "styled-components";
 import Header from "./components/Header";
 import { Logo, Overpane } from "./components/Common";
-import CreateConvo from "./components/CreateConvo";
+import CreateMeeting from "./components/CreateMeeting";
 import socketClient from "./components/socketClient";
 import Meeting from "./components/Meeting";
 
@@ -78,6 +78,7 @@ class App extends Component {
             <Route exact path="/meeting/:id" component={Meeting} />
             <Route path="/dashboard/:token?" component={ScreensMeetingList} />
             <Route path="/preferences" component={UserPreferences} />
+            <Route path="/createMeeting" component={CreateMeeting} />
           </Content>
         </Switch>
         <ScreensLogin />
