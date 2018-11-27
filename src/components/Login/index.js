@@ -1,8 +1,10 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { CustomInput, PrimaryButton, Logo, Overpane } from "../Common";
+import { InputText } from "primereact/inputtext";
+import { Password } from "primereact/password";
+import { PrimaryButton, Logo, Overpane } from "../Common";
 import GoogleButton from "../GoogleButton";
 import { callLogIn, toggleOverpane } from "../../actions/index";
 
@@ -31,15 +33,14 @@ const FormWrapper = styled.form`
   margin: 24px auto 12px;
 `;
 
-const CustomInputTop = styled(CustomInput)`
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+const TextInput = styled(InputText)`
+  width: 100%;
 `;
-
-const CustomInputBottom = styled(CustomInput)`
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  border-top: none;
+const PassInput = styled(Password)`
+  width: 100%;
+`;
+const NSpan = styled.span`
+  width: 100%;
 `;
 
 const LoginButton = styled(PrimaryButton)`
@@ -104,22 +105,31 @@ class Login extends Component {
               );
             }}
           >
-            <CustomInputTop
-              placeholder="email"
-              required
-              type="text"
-              onChange={this.changeHandler}
-              name="email"
-              value={this.state.email}
-            />{" "}
-            <CustomInputBottom
-              placeholder="password"
-              required
-              type="password"
-              name="password"
-              onChange={this.changeHandler}
-              value={this.state.password}
-            />
+            <br />
+            {/* Email */}
+            <NSpan className="p-float-label">
+              <TextInput
+                id="email"
+                name="email"
+                required
+                value={this.state.email}
+                onChange={this.changeHandler}
+              />
+              <label htmlFor="email">Email</label>
+            </NSpan>
+            <br />
+            {/* Password */}
+            <NSpan className="p-float-label">
+              <PassInput
+                id="password"
+                name="password"
+                required
+                value={this.state.password}
+                onChange={this.changeHandler}
+              />
+              <label htmlFor="password">Password</label>
+            </NSpan>
+            <br />
             <LoginButton type="submit">Log In</LoginButton>
             <Text>Forgot Your Password?</Text>
           </FormWrapper>
