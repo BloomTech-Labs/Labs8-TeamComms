@@ -25,71 +25,71 @@ const initialState = {
   loginSuccess: false,
   meetings: [
     {
-      id: 1425235,
-      attendees: ["Austin", "Jameson", "Tristan"],
+      _id: 1425235,
+      invitees: ["Austin", "Jameson", "Tristan"],
       title: "Meeting 1",
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      id: 234234,
-      attendees: ["Austin", "Jameson", "Tristan"],
+      _id: 234234,
+      invitees: ["Austin", "Jameson", "Tristan"],
       title: "Meeting 2",
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      id: 334345345,
-      attendees: ["Austin", "Jameson"],
+      _id: 334345345,
+      invitees: ["Austin", "Jameson"],
       title: "Meeting 3",
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      id: 4,
-      attendees: ["Jerry", "Eric", "Jeff"],
+      _id: 4,
+      invitees: ["Jerry", "Eric", "Jeff"],
       title: "Meeting 4",
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      id: 5,
-      attendees: ["Erica", "Lily", "Brad"],
+      _id: 5,
+      invitees: ["Erica", "Lily", "Brad"],
       title: "Meeting 5",
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      id: 6,
-      attendees: ["Allen", "Vim", "Gary"],
+      _id: 6,
+      invitees: ["Allen", "Vim", "Gary"],
       title: "Meeting 6",
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      id: 7,
-      attendees: ["Allen", "Vim", "Gary"],
+      _id: 7,
+      invitees: ["Allen", "Vim", "Gary"],
       title: "Meeting 7",
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      id: 8,
-      attendees: ["Allen", "Vim", "Gary"],
+      _id: 8,
+      invitees: ["Allen", "Vim", "Gary"],
       title: "Meeting 8",
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      id: 9,
-      attendees: ["Allen", "Vim", "Gary"],
+      _id: 9,
+      invitees: ["Allen", "Vim", "Gary"],
       title: "Meeting 9",
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
     },
     {
-      id: 10,
-      attendees: ["Allen", "Vim", "Gary"],
+      _id: 10,
+      invitees: ["Allen", "Vim", "Gary"],
       title: "Meeting 10",
       description:
         "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."

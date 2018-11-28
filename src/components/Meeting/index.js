@@ -188,11 +188,11 @@ class Meeting extends Component {
     let description;
     const attendeeList = [];
     this.props.meetings.map((meeting, index) => {
-      if (meeting.id == id) {
+      if (meeting._id == id) {
         title = meeting.title;
         description = meeting.description;
 
-        const a = meeting.attendees.map(attendee => {
+        const a = meeting.invitees.map(attendee => {
           let name = attendee;
           return attendeeList.push({ name: name });
         });

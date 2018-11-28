@@ -27,7 +27,7 @@ class MeetingList extends Component {
   card(meeting) {
     return (
       <div className="card">
-        <Link to={`/meeting/${meeting.id}`}>
+        <Link to={`/meeting/${meeting._id}`}>
           <h1>{meeting.title}</h1>
         </Link>
         <EditButton>
