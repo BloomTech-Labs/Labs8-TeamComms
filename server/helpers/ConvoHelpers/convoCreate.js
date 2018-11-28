@@ -8,16 +8,22 @@ const convoCreate = async(req, res) => {
   const newConvo = req.body;
   const start = moment(newConvo.startTime).toDate();
   const end = moment(newConvo.endTime).toDate();
+  const mappedQuestions = newConvo.questions.map(currentQuestion => {
+    return {
+        user: user._id,
+        question: currentQuestion
+      }  
+  });
   try {
     const convo = new Convo(
       {
-      creatorId: user._id,
-      title: newConvo.title,
-      description: newConvo.description,
-      start_time: start,
-      end_time: end,
-      repeat: newConvo.repeat,
-      // questions: 
+        creatorId: user._id,
+        title: newConvo.title,
+        description: newConvo.description,
+        start_time: start,
+        end_time: end,
+        repeat: newConvo.repeat,
+        questions: mappedQuestions
       // attendees: 
       }
     );
