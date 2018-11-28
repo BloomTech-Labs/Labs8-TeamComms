@@ -8,7 +8,9 @@ import {
   GOOGLE_LOGIN_RETURNED,
   TOGGLE_OVERPANE,
   UPDATE_CALLED,
-  UPDATE_RETURNED
+  UPDATE_RETURNED,
+  CREATE_MEETING_CALLED,
+  CREATE_MEETING_RETURNED
 } from "../actions/types";
 
 export const reducer = (state = null, action) => {
@@ -51,6 +53,16 @@ export const reducer = (state = null, action) => {
       return {
         ...state,
         userData: action.payload
+      };
+    case CREATE_MEETING_CALLED:
+      return {
+        ...state
+      };
+    case CREATE_MEETING_RETURNED:
+      let meetings = [...state.meetings, action.payload];
+      return {
+        ...state,
+        meetings: meetings
       };
     default:
       return state;
