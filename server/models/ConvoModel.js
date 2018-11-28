@@ -28,11 +28,13 @@ const convoSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
-  attendees: [
+  invitees: [
     {
-      type: ObjectId,
-      ref: "User"
+      id: {
+        type: ObjectId,
+        ref: "User"
     }
+  }
   ],
   questions: [
     {

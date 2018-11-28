@@ -18,7 +18,17 @@ const convoCreate = async(req, res) => {
         question: currentQuestion
       }  
     });  
-  } 
+  }
+  let mappedInvitees;
+  if (newConvo.invitees) {
+    mappedInvitees = newConvo.invitees.map(currentInvitee => {
+      return {
+        invitees: {
+          id: currentInvitee
+        }        
+      }
+    });
+  }
   try {
     const convo = new Convo(
       {
@@ -28,8 +38,8 @@ const convoCreate = async(req, res) => {
         start_time: start,
         end_time: end,
         repeat: newConvo.repeat,
-        questions: mappedQuestions
-      // attendees: 
+        questions: mappedQuestions,
+        invitees: mappedInvitees
       }
     );
     if (!convo) {
