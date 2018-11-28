@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import { PrimaryButton } from "../Common/index";
+import { PrimaryButton, Overpane, CloseButton } from "../Common";
 
 const RegisterButton = styled(PrimaryButton)`
   width: 30%;

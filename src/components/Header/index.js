@@ -1,13 +1,12 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { PrimaryButton, Logo } from "../Common";
+import { PrimaryButton, Logo, BurgerButton } from "../Common";
 import Stripe from "../Stripe";
 import { callLogOut, toggleOverpane } from "../../actions/index";
 
 const HeaderWrapper = styled.div`
-  background: #374353;
   color: #ffffff;
   display: flex;
   align-items: center;
@@ -27,6 +26,36 @@ const HeaderWrapper = styled.div`
   }
 `;
 
+const Main = styled.div`
+  display: none;
+  @media (min-width: 1024px) {
+    display: flex;
+    height: 5rem;
+    align-items: center;
+    justify-content: flex-end;
+    grid-column: 2;
+    grid-row: 1;
+  }
+`;
+
+const MobileMain = styled.div`
+  @media (min-width: 320px) {
+    display: flex;
+    height: 5rem;
+    align-items: center;
+    justify-content: flex-end;
+    grid-column: 2;
+    grid-row: 1;
+    margin-right: 100px;
+  }
+  @media (min-width: 500px) {
+    margin-right: 0px;
+  }
+  @media (min-width: 1023px) {
+    display: none;
+  }
+`;
+
 const RegisterButton = styled(PrimaryButton)`
   background: #25bea0;
   color: #ffffff;
@@ -34,17 +63,37 @@ const RegisterButton = styled(PrimaryButton)`
     text-decoration: none;
     color: white;
   }
+  margin: 0 auto;
+`;
+
+const MenuOverpane = styled.div`
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #25bea0;
+  padding: 2rem;
+  z-index: 1000;
+  transition: 250ms cubic-bezier(0.7, 0, 0.3, 1) transform;
+  transform: translateY(${props => (props.overpane ? "100%" : "0")});
 `;
 
 const LoginButton = styled(PrimaryButton)`
   background: transparent;
   color: #ffffff;
   border: 1px solid #ffffff;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  width: 100px;
+  margin: 0 auto;
   a {
     text-decoration: none;
     color: white;
+  }
+  @media (min-width: 1024px) {
+    margin: 0 1rem 0 1rem;
   }
 `;
 
@@ -60,57 +109,116 @@ const HeaderText = styled.h1`
 `;
 
 const NavLink = styled(Link)`
-  width: 6rem;
   font-size: 1rem;
   text-decoration: none;
   color: #ffffff;
   cursor: pointer;
+  margin: 0 10px 0 10px;
+  @media (max-width: 1024px) {
+    margin: 0 auto;
+    padding: 20px;
+  }
 `;
 
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      menu: false
+    };
+  }
   // LogOut = () => {
   //   this.props.callLogOut(this.props.history);
   // };
+
+  toggleMenu = () => {
+    this.setState({ menu: !this.state.menu });
+  };
 
   render() {
     const history = this.props.history;
 
     return (
-      <React.Fragment>
-        {this.props.loginSuccess ? (
-          <HeaderWrapper>
-            <NavLink to="/dashboard"> Dashboard </NavLink>
-            <NavLink to="/favorites"> Favorites </NavLink>
-            <Link to="/register">
-              <RegisterButton>Refer A Friend</RegisterButton>
-            </Link>
-            <Stripe />
-            <LoginButton
-              onClick={() => {
-                this.props.callLogOut(history);
-              }}
-            >
-              Logout
-            </LoginButton>
-          </HeaderWrapper>
-        ) : (
-          <HeaderWrapper>
-            <NavLink to="/features"> Features </NavLink>{" "}
-            <NavLink to="/landing#pricing"> Pricing </NavLink>
-            <NavLink to="/about"> About Us </NavLink>
-            <Link to="/register">
-              <RegisterButton>Register</RegisterButton>
-            </Link>
-            <LoginButton
-              onClick={() => {
-                this.props.toggleOverpane(!this.props.overpane);
-              }}
-            >
-              Login
-            </LoginButton>
-          </HeaderWrapper>
-        )}
-      </React.Fragment>
+      <Fragment>
+        <MobileMain>
+          <BurgerButton onClick={this.toggleMenu}>
+            <i class="fas fa-bars" />
+          </BurgerButton>
+          {this.state.menu ? (
+            <MenuOverpane>
+              {this.props.loginSuccess ? (
+                <Fragment>
+                  <NavLink to="/dashboard"> DASHBOARD </NavLink>
+                  <NavLink to="/favorites"> FAVORITES </NavLink>
+                  <Link to="/register">
+                    <RegisterButton>REFER A FRIEND </RegisterButton>
+                  </Link>
+                  <Stripe />
+                  <LoginButton
+                    onClick={() => {
+                      this.props.callLogOut(history);
+                    }}
+                  >
+                    Logout
+                  </LoginButton>
+                </Fragment>
+              ) : (
+                <Fragment>
+                  <NavLink to="/features"> FEATURES </NavLink>{" "}
+                  <NavLink to="/landing#pricing"> PRICING </NavLink>
+                  <NavLink to="/about"> ABOUT US </NavLink>
+                  <NavLink to="/register">
+                    <LoginButton> REGISTER </LoginButton>
+                  </NavLink>
+                  <LoginButton
+                    onClick={() => {
+                      this.props.toggleOverpane(!this.props.overpane);
+                    }}
+                  >
+                    Login
+                  </LoginButton>
+                </Fragment>
+              )}
+            </MenuOverpane>
+          ) : null}
+        </MobileMain>
+
+        <Main>
+          {this.props.loginSuccess ? (
+            <HeaderWrapper>
+              <NavLink to="/dashboard"> DASHBOARD </NavLink>
+              <NavLink to="/favorites"> FAVORITES </NavLink>
+              <Link to="/register">
+                <RegisterButton>REFER A FRIEND </RegisterButton>
+              </Link>
+              <Stripe />
+              <LoginButton
+                onClick={() => {
+                  this.props.callLogOut(history);
+                }}
+              >
+                LOGOUT
+              </LoginButton>
+            </HeaderWrapper>
+          ) : (
+            <HeaderWrapper>
+              <NavLink to="/features">FEATURES</NavLink>
+              <NavLink to="/landing#pricing">PRICING</NavLink>
+              <NavLink to="/about">ABOUT US</NavLink>
+              <Link to="/register">
+                <RegisterButton>REGISTER</RegisterButton>
+              </Link>
+              <LoginButton
+                onClick={() => {
+                  this.props.toggleOverpane(!this.props.overpane);
+                }}
+              >
+                LOGIN
+              </LoginButton>
+            </HeaderWrapper>
+          )}
+        </Main>
+      </Fragment>
     );
   }
 }
