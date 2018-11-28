@@ -4,21 +4,42 @@ const moment = require('moment');
 
 const convoCreate = async(req, res) => {
   const user = req.user;
-  console.log('user, from convoCreate:', user);
   const newConvo = req.body;
   const start = moment(newConvo.startTime).toDate();
   const end = moment(newConvo.endTime).toDate();
+  let mappedQuestions;
+  if (newConvo.questions) {
+    mappedQuestions = newConvo.questions.map(currentQuestion => {
+      return {
+        inquirer: {
+          email: user.email,
+          displayName: user.displayName
+        },
+        question: currentQuestion
+      }  
+    });  
+  }
+  let mappedInvitees;
+  if (newConvo.invitees) {
+    mappedInvitees = newConvo.invitees.map(currentInvitee => {
+      return {
+        invitees: {
+          id: currentInvitee
+        }        
+      }
+    });
+  }
   try {
     const convo = new Convo(
       {
-      creatorId: user._id,
-      title: newConvo.title,
-      description: newConvo.description,
-      start_time: start,
-      end_time: end,
-      repeat: newConvo.repeat,
-      // questions: 
-      // attendees: 
+        creatorId: user._id,
+        title: newConvo.title,
+        description: newConvo.description,
+        start_time: start,
+        end_time: end,
+        repeat: newConvo.repeat,
+        questions: mappedQuestions,
+        invitees: mappedInvitees
       }
     );
     if (!convo) {
