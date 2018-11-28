@@ -114,8 +114,8 @@ class CreateMeeting extends Component {
     const body = {
       title: userInput.title,
       description: userInput.description,
-      startTime: moment(userInput.start).format(),
-      endtime: moment(userInput.end).format(),
+      startTime: moment(userInput.start),
+      endtime: moment(userInput.end),
       repeat: userInput.repeat,
       invitees: userInput.invitees.map(invited => invited.id),
       questions: userInput.questions
