@@ -4,15 +4,18 @@ const moment = require('moment');
 
 const convoCreate = async(req, res) => {
   const user = req.user;
-  console.log('user, from convoCreate:', user);
   const newConvo = req.body;
   const start = moment(newConvo.startTime).toDate();
   const end = moment(newConvo.endTime).toDate();
   const mappedQuestions = newConvo.questions.map(currentQuestion => {
     return {
+      inquirer: {
         user: user._id,
-        question: currentQuestion
-      }  
+        email: user.email,
+        displayName: user.displayName
+      },
+      question: currentQuestion
+    }  
   });
   try {
     const convo = new Convo(

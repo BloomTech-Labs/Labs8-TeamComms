@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const convoSchema = new mongoose.Schema({
   creatorId: {
     type: ObjectId,
-    ref: 'User',
+    ref: "User",
     required: true
   },
   created_at: {
@@ -14,7 +14,7 @@ const convoSchema = new mongoose.Schema({
   repeat: {
     type: Boolean,
     default: false
-  },  
+  },
   title: {
     type: String,
     required: true
@@ -31,15 +31,27 @@ const convoSchema = new mongoose.Schema({
   attendees: [
     {
       type: ObjectId,
-      ref: 'User'
+      ref: "User"
     }
   ],
   questions: [
     {
-      user: {
-      type: ObjectId,
-      ref: 'User',
-      required: true
+      inquirer: {
+        user: {
+          type: ObjectId,
+          ref: "User",
+          required: true
+        },
+        email: {
+          type: String,
+          ref: "User",
+          required: true
+        },
+        displayName: {
+          type: String,
+          ref: "User",
+          required: true
+        }
       },
       question: {
         type: String,
@@ -66,14 +78,26 @@ const convoSchema = new mongoose.Schema({
       notes: String,
       questions: [
         {
-          user: {
-          type: ObjectId,
-          ref: 'User',
-          required: true
+          inquirer: {
+            user: {
+              type: ObjectId,
+              ref: "User",
+              required: true
+            },
+            email: {
+              type: String,
+              ref: "User",
+              required: true
+            },
+            displayName: {
+              type: String,
+              ref: "User",
+              required: true
+            }
           },
           question: {
-          type: String,
-          required: true
+            type: String,
+            required: true
           },
           answered: {
             type: Boolean,
@@ -94,6 +118,6 @@ const convoSchema = new mongoose.Schema({
   ]
 });
 
-const convoModel = mongoose.model('Convo', convoSchema);
+const convoModel = mongoose.model("Convo", convoSchema);
 
 module.exports = convoModel;
