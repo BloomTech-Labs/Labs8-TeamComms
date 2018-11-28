@@ -117,7 +117,7 @@ class CreateMeeting extends Component {
       start: moment(userInput.start).format(),
       end: moment(userInput.end).format(),
       repeat: userInput.repeat,
-      attendees: userInput.attendees,
+      attendees: userInput.attendees.map(attendee => attendee.id),
       questions: userInput.questions
     };
     const header = { Authorization: localStorage.getItem("jwt") };
