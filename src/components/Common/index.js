@@ -29,6 +29,11 @@ export const Logo = styled.img`
   grid-row: 1;
   justify-content: flex-start;
 `;
+
+export const LoginLogo = styled(Logo)`
+  margin-top: 20px;
+`;
+
 export const DeleteButton = styled.button`
   border: none;
   background-color: white;
@@ -41,6 +46,26 @@ export const DeleteButton = styled.button`
   font-size: 14px;
   &:hover {
     color: red !important;
+  }
+`;
+
+export const BurgerButton = styled.div`
+  border: none;
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  z-index: 100000;
+  outline: none;
+  cursor: pointer;
+  background-color: none;
+  color: #ffffff;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  font-size: 35px;
+  margin-right: 20px;
+  &:hover {
+    color: #facc43 !important;
   }
 `;
 
@@ -86,6 +111,27 @@ export const FavoriteButton = styled.button`
   font-size: 14px;
   &:hover {
     color: #25bea0 !important;
+  }
+`;
+
+export const CloseButton = styled.button`
+  border: none;
+  background-color: white;
+  outline: none;
+  cursor: pointer;
+  width: 10px;
+  color: lightgrey;
+  position: relative;
+  top: -15px;
+  right: -310px;
+  font-size: 20px;
+  &:hover {
+    color: #25bea0 !important;
+  }
+  @media (max-width: 400px) {
+    position: absolute;
+    right: 20px;
+    top: 10px;
   }
 `;
 

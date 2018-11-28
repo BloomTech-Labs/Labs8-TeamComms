@@ -4,7 +4,13 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import { PrimaryButton, Logo, Overpane } from "../Common";
+import {
+  PrimaryButton,
+  Logo,
+  Overpane,
+  CloseButton,
+  LoginLogo
+} from "../Common";
 import GoogleButton from "../GoogleButton";
 import { callLogIn, toggleOverpane } from "../../actions/index";
 
@@ -13,11 +19,20 @@ const Main = styled.div`
   flex-direction: column;
   padding: 5px 0 5px 0;
   width: 360px;
-  margin: 150px auto;
+  margin: 100px auto;
   z-index: 2000;
-  border-radius: 10px;
   padding: 20px;
   background: #ffffff;
+  @media (max-width: 400px) {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+  }
 `;
 
 const Text = styled.span`
@@ -93,7 +108,14 @@ class Login extends Component {
         }}
       >
         <Main onClick={event => event.stopPropagation()}>
-          <Logo img src="../images/logo.png" />
+          <CloseButton
+            onClick={e => {
+              this.props.toggleOverpane(!this.props.overpane);
+            }}
+          >
+            <i class="fas fa-times" />
+          </CloseButton>
+          <LoginLogo img src="../images/logo.png" />
           <FormWrapper
             method="post"
             onSubmit={(e, history, overpane) => {
