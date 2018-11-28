@@ -81,8 +81,8 @@ class CreateMeeting extends Component {
       start: "",
       end: "",
       repeat: false,
-      attendees: [],
-      attendee: "",
+      invitees: [],
+      invite: "",
       question: "",
       questions: [],
       users: []
@@ -114,10 +114,10 @@ class CreateMeeting extends Component {
     const body = {
       title: userInput.title,
       description: userInput.description,
-      start: moment(userInput.start).format(),
-      end: moment(userInput.end).format(),
+      startTime: moment(userInput.start).format(),
+      endtime: moment(userInput.end).format(),
       repeat: userInput.repeat,
-      attendees: userInput.attendees.map(attendee => attendee.id),
+      invitees: userInput.invitees.map(invited => invited.id),
       questions: userInput.questions
     };
     const header = { Authorization: localStorage.getItem("jwt") };
@@ -130,9 +130,9 @@ class CreateMeeting extends Component {
       start: "",
       end: "",
       repeat: "",
-      attendees: [],
+      invitees: [],
       questions: [],
-      attendee: "",
+      invited: "",
       question: "",
       userSuggestions: null,
       users: []
@@ -150,14 +150,14 @@ class CreateMeeting extends Component {
     }
   };
 
-  addAttendees = e => {
+  addInvitees = e => {
     e.preventDefault();
-    if (this.state.attendee) {
-      const attendees = this.state.attendees;
-      attendees.push(this.state.attendee);
-      this.setState({ attendees, attendee: "" });
+    if (this.state.invited) {
+      const invitees = this.state.invitees;
+      invitees.push(this.state.invited);
+      this.setState({ invitees, invited: "" });
     } else {
-      alert("Enter an Attendee");
+      alert("Enter an Name");
     }
   };
 
@@ -178,7 +178,7 @@ class CreateMeeting extends Component {
       start: this.state.start,
       end: this.state.end,
       repeat: this.state.repeat,
-      attendees: this.state.attendees,
+      invitees: this.state.invitees,
       questions: this.state.questions
     };
     let history = this.props.history;
@@ -256,26 +256,26 @@ class CreateMeeting extends Component {
               </label>
             </Group>
             <Group>
-              <legend>Attendees:</legend>
-              {/* Add Attendee */}
+              <legend>Invited:</legend>
+              {/* Add Invitees */}
               <AutoInput
-                id="attendee"
-                name="attendee"
-                placeholder="Add Attendees"
-                value={this.state.attendee}
+                id="invited"
+                name="invited"
+                placeholder="Add Invites"
+                value={this.state.invited}
                 field="displayName"
                 style={{ width: "90%" }}
                 inputStyle={{ width: "100%" }}
-                onChange={e => this.setState({ attendee: e.value })}
+                onChange={e => this.setState({ invited: e.value })}
                 suggestions={this.state.userSuggestions}
                 completeMethod={this.suggestUsers.bind(this)}
               />
-              <AddButton onClick={this.addAttendees}>+</AddButton>
+              <AddButton onClick={this.addInvitees}>+</AddButton>
               <hr />
-              {/* Attendees List */}
+              {/* Invitees List */}
               <ScrollPanel style={{ width: "100%", height: "150px" }}>
-                {this.state.attendees.map(attendee => (
-                  <Entry>{attendee.displayName}</Entry>
+                {this.state.invitees.map(invited => (
+                  <Entry>{invited.displayName}</Entry>
                 ))}
               </ScrollPanel>
             </Group>
