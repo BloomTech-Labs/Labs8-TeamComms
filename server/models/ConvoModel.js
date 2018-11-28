@@ -37,19 +37,12 @@ const convoSchema = new mongoose.Schema({
   questions: [
     {
       inquirer: {
-        user: {
-          type: ObjectId,
-          ref: "User",
-          required: true
-        },
         email: {
           type: String,
-          ref: "User",
           required: true
         },
         displayName: {
           type: String,
-          ref: "User",
           required: true
         }
       },
@@ -79,19 +72,12 @@ const convoSchema = new mongoose.Schema({
       questions: [
         {
           inquirer: {
-            user: {
-              type: ObjectId,
-              ref: "User",
-              required: true
-            },
             email: {
               type: String,
-              ref: "User",
               required: true
             },
             displayName: {
               type: String,
-              ref: "User",
               required: true
             }
           },

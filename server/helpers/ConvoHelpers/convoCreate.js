@@ -7,16 +7,18 @@ const convoCreate = async(req, res) => {
   const newConvo = req.body;
   const start = moment(newConvo.startTime).toDate();
   const end = moment(newConvo.endTime).toDate();
-  const mappedQuestions = newConvo.questions.map(currentQuestion => {
-    return {
-      inquirer: {
-        user: user._id,
-        email: user.email,
-        displayName: user.displayName
-      },
-      question: currentQuestion
-    }  
-  });
+  let mappedQuestions;
+  if (newConvo.questions) {
+    mappedQuestions = newConvo.questions.map(currentQuestion => {
+      return {
+        inquirer: {
+          email: user.email,
+          displayName: user.displayName
+        },
+        question: currentQuestion
+      }  
+    });  
+  } 
   try {
     const convo = new Convo(
       {
