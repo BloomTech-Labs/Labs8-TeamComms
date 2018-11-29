@@ -122,7 +122,7 @@ class Login extends Component {
               this.handleLogInSubmit(
                 e,
                 userInput,
-                this.props.history,
+                history,
                 !this.props.overpane
               );
             }}
