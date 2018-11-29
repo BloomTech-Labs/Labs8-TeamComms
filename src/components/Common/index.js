@@ -54,7 +54,7 @@ export const BurgerButton = styled.div`
   position: absolute;
   top: 20px;
   right: 10px;
-  z-index: 100000;
+  z-index: 1100;
   outline: none;
   cursor: pointer;
   background-color: none;
@@ -153,7 +153,7 @@ export const Overpane = styled.div`
   right: 0;
   background-color: rgb(0, 0, 0, 0.6);
   padding: 2rem;
-  z-index: 1000;
+  z-index: 1100;
   transition: 250ms cubic-bezier(0.7, 0, 0.3, 1) transform;
   transform: translateY(${props => (props.overpane ? "100%" : "0")});
 `;
