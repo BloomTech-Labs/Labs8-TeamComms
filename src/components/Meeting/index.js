@@ -33,7 +33,6 @@ const Main = styled.div`
 const StyledListAttendees = styled(ListBox)`
   grid-column: 1;
   grid-row: 2;
-
   &&& {
     width: 500px;
     margin-bottom: 20px;
@@ -59,7 +58,6 @@ const EditorWrapper = styled.div`
   grid-row: 1/4;
   color: black;
   margin-left: 30px;
-
   label {
     color: white;
     padding-left: 5px;
@@ -107,17 +105,17 @@ class Meeting extends Component {
       questions: []
     };
 
-    const socket_connect = function(room) {
-      return io("localhost:8080/meeting", {
-        query: "r_var=" + room
-      });
-    };
-
     // const socket_connect = function(room) {
-    //   return io("https://teamcomm2.herokuapp.com/meeting", {
+    //   return io("localhost:8080/meeting", {
     //     query: "r_var=" + room
     //   });
     // };
+
+    const socket_connect = function(room) {
+      return io("https://teamcomm2.herokuapp.com/meeting", {
+        query: "r_var=" + room
+      });
+    };
 
     const id = this.props.match.params.id;
     console.log("meeting id", id);
@@ -125,8 +123,8 @@ class Meeting extends Component {
     socket.emit(
       "update-users",
       this.props.userData.user.displayName
-        // ? this.props.userData.user.displayName
-        // : this.state.user
+        ? this.props.userData.user.displayName
+        : this.state.user
     );
 
     //open initial socket connection on deployed server
@@ -145,21 +143,13 @@ class Meeting extends Component {
     socket.on("update text", text => {
       this.setState({ text: text });
     });
-    socket.emit(
-      "update-users",
-      this.props.userData.user.displayName
-        // ? this.props.userData.user.displayName
-        // : this.state.user
-    );
     socket.on("update-users", users => {
       socket.users = users;
-      this.setState({ users });
+      console.log(users);
+      this.setState({ users: users });
     });
-    // socket.emit("meeting-init",(users,questions) => {
-
-    // })
     socket.on("question", questions => {
-      return this.setState({ questions });
+      return this.setState({ questions: questions });
     });
   }
 
@@ -191,23 +181,22 @@ class Meeting extends Component {
   };
 
   render() {
-    console.log(this.state.questions)
     const id = this.props.match.params.id;
     let title;
     let description;
     const attendeeList = [];
     this.props.meetings.map((meeting, index) => {
-      if (meeting.id == id) {
+      if (meeting._id == id) {
         title = meeting.title;
         description = meeting.description;
 
-        const a = meeting.attendees.map(attendee => {
+        const a = meeting.invitees.map(attendee => {
           let name = attendee;
           return attendeeList.push({ name: name });
         });
       }
     });
-    console.log("ATT LIST", attendeeList);
+    console.log(attendeeList);
 
     // const questionList = [];
     // let q = this.props.questions.map(question => {
@@ -232,13 +221,13 @@ class Meeting extends Component {
 
         <StyledListQuestions
           options={this.state.questions}
-          optionLabel="question"
+          optionLabel="name"
           filter={true}
         />
 
         <StyledListAttendees
           options={this.state.users ? this.state.users : attendeeList}
-          optionLabel="displayName"
+          optionLabel="name"
           filter={true}
         />
         <form onSubmit={this.sendQuestion}>
