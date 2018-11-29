@@ -2,15 +2,15 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const liveMeetingSchema = new mongoose.Schema({
-  notes: String,
+  notes: { type: String, default: "" },
   questions: [
     {
       socket_id: String,
       question: {
-        type: String,
+        type: String
       },
       displayName: {
-        type: String,
+        type: String
       },
       answered: {
         type: Boolean,
@@ -20,9 +20,6 @@ const liveMeetingSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
       },
-      answered_at: {
-        type: Date
-      }
     }
   ],
   attendees: [
@@ -31,9 +28,15 @@ const liveMeetingSchema = new mongoose.Schema({
       id: String
     }
   ],
+  attended: [
+    {
+      displayName: String,
+      id: String
+    }
+  ],
   meeting: {
     type: ObjectId,
-    ref: "Convo",
+    ref: "Convo"
   }
 });
 
