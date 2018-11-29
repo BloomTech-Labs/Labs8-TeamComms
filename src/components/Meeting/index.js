@@ -33,6 +33,7 @@ const Main = styled.div`
 const StyledListAttendees = styled(ListBox)`
   grid-column: 1;
   grid-row: 2;
+
   &&& {
     width: 500px;
     margin-bottom: 20px;
@@ -58,6 +59,7 @@ const EditorWrapper = styled.div`
   grid-row: 1/4;
   color: black;
   margin-left: 30px;
+
   label {
     color: white;
     padding-left: 5px;
@@ -123,8 +125,8 @@ class Meeting extends Component {
     socket.emit(
       "update-users",
       this.props.userData.user.displayName
-        ? this.props.userData.user.displayName
-        : this.state.user
+        // ? this.props.userData.user.displayName
+        // : this.state.user
     );
 
     //open initial socket connection on deployed server
@@ -143,13 +145,21 @@ class Meeting extends Component {
     socket.on("update text", text => {
       this.setState({ text: text });
     });
+    socket.emit(
+      "update-users",
+      this.props.userData.user.displayName
+        // ? this.props.userData.user.displayName
+        // : this.state.user
+    );
     socket.on("update-users", users => {
       socket.users = users;
-      console.log(users);
-      this.setState({ users: users });
+      this.setState({ users });
     });
+    // socket.emit("meeting-init",(users,questions) => {
+
+    // })
     socket.on("question", questions => {
-      return this.setState({ questions: questions });
+      return this.setState({ questions });
     });
   }
 
@@ -181,22 +191,23 @@ class Meeting extends Component {
   };
 
   render() {
+    console.log(this.state.questions)
     const id = this.props.match.params.id;
     let title;
     let description;
     const attendeeList = [];
     this.props.meetings.map((meeting, index) => {
-      if (meeting._id == id) {
+      if (meeting.id == id) {
         title = meeting.title;
         description = meeting.description;
 
-        const a = meeting.invitees.map(attendee => {
+        const a = meeting.attendees.map(attendee => {
           let name = attendee;
           return attendeeList.push({ name: name });
         });
       }
     });
-    console.log(attendeeList);
+    console.log("ATT LIST", attendeeList);
 
     // const questionList = [];
     // let q = this.props.questions.map(question => {
@@ -221,13 +232,13 @@ class Meeting extends Component {
 
         <StyledListQuestions
           options={this.state.questions}
-          optionLabel="name"
+          optionLabel="question"
           filter={true}
         />
 
         <StyledListAttendees
           options={this.state.users ? this.state.users : attendeeList}
-          optionLabel="name"
+          optionLabel="displayName"
           filter={true}
         />
         <form onSubmit={this.sendQuestion}>
