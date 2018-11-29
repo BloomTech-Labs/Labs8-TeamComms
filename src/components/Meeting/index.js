@@ -9,6 +9,9 @@ import { Checkbox } from "primereact/checkbox";
 import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import { Panel } from "primereact/panel";
+import { TabView, TabPanel } from "primereact/tabview";
+import { ScrollPanel } from "primereact/scrollpanel";
 import { InputText } from "primereact/inputtext";
 import { SubmitButton } from "../Common";
 import ReactQuill from "react-quill";
@@ -20,29 +23,33 @@ let socket;
 let questionList = [];
 
 const StyledInputText = styled(InputText)`
-  width: 250px;
+  width: 70%;
+  height: 35px;
+`;
+
+const QuestionButton = styled(SubmitButton)`
+  font-size: 12px;
 `;
 
 const Main = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 1024px;
+  margin: 0 auto;
 `;
 
 const StyledListAttendees = styled(ListBox)`
-  grid-column: 1;
-  grid-row: 2;
-
   &&& {
-    width: 500px;
+    width: 100%;
     margin-bottom: 20px;
+    border: none;
   }
 `;
 
 const StyledListQuestions = styled(ListBox)`
-  grid-column: 1;
-  grid-row: 3;
   &&& {
-    width: 500px;
+    width: 100%;
+    border: none;
   }
 `;
 
@@ -53,19 +60,19 @@ const Title = styled.h1`
 `;
 
 const EditorWrapper = styled.div`
-  grid-column: 2;
-  grid-row: 1/4;
-  color: black;
+  @media (min-width 300px) {
+    color: black;
 
-  label {
-    color: white;
-    padding-left: 5px;
-  }
-  strong {
-    font-weight: bold !important;
-  }
-  em {
-    font-style: italic !important;
+    label {
+      color: white;
+      padding-left: 5px;
+    }
+    strong {
+      font-weight: bold !important;
+    }
+    em {
+      font-style: italic !important;
+    }
   }
 `;
 
@@ -89,6 +96,22 @@ const MeetingDetails = styled.div`
   }
 `;
 
+const QuestionForm = styled.form`
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
+`;
+
+const CustomTabs = styled(TabPanel)`
+  &&&&&&&&&&&&&&&&&&&&&&&&& {
+    background-color: black;
+  }
+`;
+
 class Meeting extends Component {
   constructor(props) {
     super(props);
@@ -98,9 +121,25 @@ class Meeting extends Component {
       color: "white",
       user: "JAshcraft",
       text: "",
-      users: [],
+      users: [
+        { name: "Buddy Wackit" },
+        { name: "DeeDee Reynolds" },
+        { name: "Dennis Reynolds" },
+        { name: "Mac" }
+      ],
       currentQuestion: "",
-      questions: []
+      questions: [
+        { name: "what are we doing?" },
+        { name: "What is our meeting?" },
+        { name: "what color should we make it?" },
+        { name: "size? shape?" },
+        { name: "size? dude seriously?" },
+        { name: "what are we doing?" },
+        { name: "What is our meeting?" },
+        { name: "what color should we make it?" },
+        { name: "size? shape?" },
+        { name: "size? dude seriously?" }
+      ]
     };
 
     // const socket_connect = function(room) {
@@ -224,50 +263,71 @@ class Meeting extends Component {
             <br />
             Mondays at 8am
           </p>
-          <div>
-            <StyledListQuestions
-              options={this.state.questions}
-              optionLabel="name"
-              filter={true}
-            />
-
-            <StyledListAttendees
-              options={this.state.users ? this.state.users : attendeeList}
-              optionLabel="name"
-              filter={true}
-            />
-          </div>
-          <form onSubmit={this.sendQuestion}>
-            <StyledInputText
-              value={this.state.currentQuestion}
-              onChange={e => this.setState({ currentQuestion: e.target.value })}
-            />
-            <SubmitButton onClick={this.sendQuestion}>
-              Add A Question
-            </SubmitButton>
-          </form>
+          <div />
         </MeetingDetails>
-        <EditorWrapper>
-          <Title>Meeting Notes</Title>
+        <TabView>
+          <CustomTabs header="Attendees">
+            <Panel header="Invited">
+              <StyledListAttendees
+                options={this.state.users}
+                optionLabel="name"
+                filter={true}
+              />
+            </Panel>
+            <Panel header="Current">
+              <StyledListAttendees
+                options={this.state.users}
+                optionLabel="name"
+                filter={true}
+              />
+            </Panel>
+          </CustomTabs>
+          <CustomTabs headerClassName={this.props.className} header="Questions">
+            <ScrollPanel style={{ width: "100%", height: "150px" }}>
+              <StyledListQuestions
+                options={this.state.questions}
+                optionLabel="name"
+              />
+            </ScrollPanel>
+            <QuestionForm onSubmit={this.sendQuestion}>
+              <StyledInputText
+                value={this.state.currentQuestion}
+                onChange={e =>
+                  this.setState({ currentQuestion: e.target.value })
+                }
+              />
+              <QuestionButton onClick={this.sendQuestion}>
+                Add A Question
+              </QuestionButton>
+            </QuestionForm>
+          </CustomTabs>
+          <CustomTabs
+            headerClassName={this.props.className}
+            header="Meeting Notes"
+          >
+            <EditorWrapper>
+              <Title>Meeting Notes</Title>
 
-          <Editor
-            theme="snow"
-            value={this.state.text}
-            onChange={this.handleChange}
-            name="text"
-          />
+              <Editor
+                theme="snow"
+                value={this.state.text}
+                onChange={this.handleChange}
+                name="text"
+              />
 
-          <div style={{ display: "inline-block", marginLeft: "20px" }}>
-            <Checkbox inputId="youtube" value="Upload to Youtube" />
-            <label htmlFor="youtube">Upload to Youtube</label>
-          </div>
+              <div style={{ display: "inline-block", marginLeft: "20px" }}>
+                <Checkbox inputId="youtube" value="Upload to Youtube" />
+                <label htmlFor="youtube">Upload to Youtube</label>
+              </div>
 
-          <div style={{ display: "inline-block", marginLeft: "20px" }}>
-            <Checkbox inputId="repeat" value="repeat" />
-            <label htmlFor="repeat">Schedule a Follow Up Meeting</label>
-            <SubmitButton>Finalize Meeting</SubmitButton>
-          </div>
-        </EditorWrapper>
+              <div style={{ display: "inline-block", marginLeft: "20px" }}>
+                <Checkbox inputId="repeat" value="repeat" />
+                <label htmlFor="repeat">Schedule a Follow Up Meeting</label>
+                <SubmitButton>Finalize Meeting</SubmitButton>
+              </div>
+            </EditorWrapper>
+          </CustomTabs>
+        </TabView>
       </Main>
     );
   }
