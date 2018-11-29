@@ -68,42 +68,11 @@ const convoSchema = new mongoose.Schema({
   notes: String,
   youTube: String,
   zoom: String,
-  archive: [
-    {
-      notes: String,
-      questions: [
-        {
-          inquirer: {
-            email: {
-              type: String,
-              required: true
-            },
-            displayName: {
-              type: String,
-              required: true
-            }
-          },
-          question: {
-            type: String,
-            required: true
-          },
-          answered: {
-            type: Boolean,
-            default: false
-          },
-          created_at: {
-            type: Date,
-            default: Date.now
-          },
-          answered_at: {
-            type: Date
-          }
-        }
-      ],
-      start_time: Date,
-      end_time: Date
-    }
-  ]
+  liveMeeting: {
+    type: ObjectId,
+    ref: 'LiveMeeting'
+  }
+  
 });
 
 const convoModel = mongoose.model("Convo", convoSchema);
