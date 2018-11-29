@@ -121,8 +121,8 @@ class Meeting extends Component {
     socket.emit(
       "update-users",
       this.props.userData.user.displayName
-        ? this.props.userData.user.displayName
-        : this.state.user
+      // ? this.props.userData.user.displayName
+      // : this.state.user
     );
 
     //open initial socket connection on deployed server
@@ -141,13 +141,21 @@ class Meeting extends Component {
     socket.on("update text", text => {
       this.setState({ text: text });
     });
+    socket.emit(
+      "update-users",
+      this.props.userData.user.displayName
+      // ? this.props.userData.user.displayName
+      // : this.state.user
+    );
     socket.on("update-users", users => {
       socket.users = users;
-      console.log(users);
-      this.setState({ users: users });
+      this.setState({ users });
     });
+    // socket.emit("meeting-init",(users,questions) => {
+
+    // })
     socket.on("question", questions => {
-      return this.setState({ questions: questions });
+      return this.setState({ questions });
     });
   }
 
@@ -179,22 +187,23 @@ class Meeting extends Component {
   };
 
   render() {
+    console.log(this.state.questions);
     const id = this.props.match.params.id;
     let title;
     let description;
     const attendeeList = [];
     this.props.meetings.map((meeting, index) => {
-      if (meeting.id == id) {
+      if (meeting._id == id) {
         title = meeting.title;
         description = meeting.description;
 
-        const a = meeting.attendees.map(attendee => {
+        const a = meeting.invitees.map(attendee => {
           let name = attendee;
           return attendeeList.push({ name: name });
         });
       }
     });
-    console.log(attendeeList);
+    console.log("ATT LIST", attendeeList);
 
     // const questionList = [];
     // let q = this.props.questions.map(question => {

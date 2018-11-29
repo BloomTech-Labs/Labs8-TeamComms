@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./convoList.css";
 import { connect } from "react-redux";
-// import dummyData from "./dummyData";
+import { getMeetings } from "../../actions/index";
+
 import {
   EditButton,
   DeleteButton,
@@ -9,10 +10,12 @@ import {
   FavoriteButton
 } from "../Common";
 
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 class MeetingList extends Component {
+  componentWillMount() {
+    this.props.getMeetings();
+  }
   empty() {
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
@@ -27,7 +30,7 @@ class MeetingList extends Component {
   card(meeting) {
     return (
       <div className="card">
-        <Link to={`/meeting/${meeting.id}`}>
+        <Link to={`/meeting/${meeting._id}`}>
           <h1>{meeting.title}</h1>
         </Link>
         <EditButton>
@@ -66,4 +69,7 @@ class MeetingList extends Component {
 const mapStateToProps = state => {
   return state;
 };
-export default connect(mapStateToProps)(MeetingList);
+export default connect(
+  mapStateToProps,
+  { getMeetings }
+)(MeetingList);

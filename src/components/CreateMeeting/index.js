@@ -1,11 +1,15 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { callCreate } from "../../actions/index";
 import styled from "styled-components";
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { ScrollPanel } from "primereact/scrollpanel";
+import { AutoComplete } from "primereact/autocomplete";
 import { PrimaryButton } from "../Common";
 import moment from "moment";
+import axios from "axios";
 
 const Main = styled.div`
   padding: 5px 0 5px 0;
@@ -35,6 +39,9 @@ const TextInput = styled(InputText)`
   width: 100%;
 `;
 const QInput = styled(InputText)`
+  width: 90%;
+`;
+const AutoInput = styled(AutoComplete)`
   width: 90%;
 `;
 
@@ -71,42 +78,27 @@ class CreateMeeting extends Component {
     this.state = {
       title: "",
       description: "",
-      day: "",
       start: "",
       end: "",
       repeat: false,
-      attendees: ["Tommy Jones", "Alice Smith", "Troy Johnson"],
-      attendee: "",
-      questions: [
-        {
-          question: "Dummy data or data from a server?",
-          created_at: "1/15/2018",
-          user: "Tommy Jones"
-        },
-        {
-          question: "Is React the superior javascript framework?",
-          created_at: "1/15/2018",
-          user: "Alice Smith"
-        },
-        {
-          question:
-            "What will the world look like after being exposed to Team Communicator?",
-          created_at: "1/15/2018",
-          user: "Tommy Jones"
-        },
-        {
-          question:
-            "This is just one more question to test the scroll. Does the scroll work correctly?",
-          created_at: "1/15/2018",
-          user: "Troy Johnson"
-        }
-      ]
-      // notes: [],
-      // question: "",
-      // create_at: "",
-      // creatorId: "",
-      // archive: []
+      invitees: [],
+      invite: "",
+      question: "",
+      questions: [],
+      users: []
     };
+  }
+
+  componentDidMount() {
+    axios
+      .get("https://teamcomm2.herokuapp.com/api/users/allusers", {
+        headers: { Authorization: localStorage.getItem("jwt") }
+      })
+      .then(res => {
+        console.log(res.data);
+        this.setState({ users: res.data });
+      })
+      .catch(err => console.log(err));
   }
 
   changeHandler = e => {
@@ -116,44 +108,34 @@ class CreateMeeting extends Component {
     });
   };
 
-  handleNewConvo = (e, userInput, history) => {
+  handleNewConvo = async (e, userInput, history) => {
     e.preventDefault();
     console.log(userInput);
-    const newDate = moment(this.state.start).format("M D YYYY, h:mm:ss a Z");
-    console.log(newDate);
+    const body = {
+      title: userInput.title,
+      description: userInput.description,
+      startTime: moment(userInput.start),
+      endtime: moment(userInput.end),
+      repeat: userInput.repeat,
+      invitees: userInput.invitees.map(invited => invited.id),
+      questions: userInput.questions
+    };
+    const header = { Authorization: localStorage.getItem("jwt") };
+    console.log("Header: ", header);
+    console.log("Body: ", body);
+    this.props.callCreate(e, header, body, history);
     this.setState({
       title: "",
       description: "",
-      day: "",
       start: "",
       end: "",
-      repeat: false,
-      attendees: ["Tommy Jones", "Alice Smith", "Troy Johnson"],
-      attendee: "",
-      questions: [
-        {
-          question: "Dummy data or data from a server?",
-          created_at: "1/15/2018",
-          user: "Tommy Jones"
-        },
-        {
-          question: "Is React the superior javascript framework?",
-          created_at: "1/15/2018",
-          user: "Alice Smith"
-        },
-        {
-          question:
-            "What will the world look like after being exposed to Team Communicator?",
-          created_at: "1/15/2018",
-          user: "Tommy Jones"
-        },
-        {
-          question:
-            "This is just one more question to test the scroll. Does the scroll work correctly?",
-          created_at: "1/15/2018",
-          user: "Troy Johnson"
-        }
-      ]
+      repeat: "",
+      invitees: [],
+      questions: [],
+      invited: "",
+      question: "",
+      userSuggestions: null,
+      users: []
     });
   };
 
@@ -168,16 +150,26 @@ class CreateMeeting extends Component {
     }
   };
 
-  addAttendees = e => {
+  addInvitees = e => {
     e.preventDefault();
-    if (this.state.attendee) {
-      const attendees = this.state.attendees;
-      attendees.push(this.state.attendee);
-      this.setState({ attendees, attendee: "" });
+    if (this.state.invited) {
+      const invitees = this.state.invitees;
+      invitees.push(this.state.invited);
+      this.setState({ invitees, invited: "" });
     } else {
-      alert("Enter an Attendee");
+      alert("Enter an Name");
     }
   };
+
+  suggestUsers(event) {
+    let results = this.state.users.filter(user => {
+      return user.displayName
+        .toLowerCase()
+        .startsWith(event.query.toLowerCase());
+    });
+
+    this.setState({ userSuggestions: results });
+  }
 
   render() {
     const userInput = {
@@ -186,12 +178,8 @@ class CreateMeeting extends Component {
       start: this.state.start,
       end: this.state.end,
       repeat: this.state.repeat,
-      attendees: this.state.attendees,
+      invitees: this.state.invitees,
       questions: this.state.questions
-      // notes: [],
-      // create_at: "",
-      // creatorId: "",
-      // archive: []
     };
     let history = this.props.history;
     return (
@@ -268,23 +256,26 @@ class CreateMeeting extends Component {
               </label>
             </Group>
             <Group>
-              <legend>Attendees:</legend>
-              {/* Add Attendee */}
-              <span className="p-float-label">
-                <QInput
-                  id="attendee"
-                  name="attendee"
-                  value={this.state.attendee}
-                  onChange={this.changeHandler}
-                />
-                <label htmlFor="attendee">Add Attendees</label>
-                <AddButton onClick={this.addAttendees}>+</AddButton>
-              </span>
+              <legend>Invited:</legend>
+              {/* Add Invitees */}
+              <AutoInput
+                id="invited"
+                name="invited"
+                placeholder="Add Invites"
+                value={this.state.invited}
+                field="displayName"
+                style={{ width: "90%" }}
+                inputStyle={{ width: "100%" }}
+                onChange={e => this.setState({ invited: e.value })}
+                suggestions={this.state.userSuggestions}
+                completeMethod={this.suggestUsers.bind(this)}
+              />
+              <AddButton onClick={this.addInvitees}>+</AddButton>
               <hr />
-              {/* Attendees List */}
+              {/* Invitees List */}
               <ScrollPanel style={{ width: "100%", height: "150px" }}>
-                {this.state.attendees.map(attendee => (
-                  <Entry>{attendee}</Entry>
+                {this.state.invitees.map(invited => (
+                  <Entry>{invited.displayName}</Entry>
                 ))}
               </ScrollPanel>
             </Group>
@@ -305,12 +296,7 @@ class CreateMeeting extends Component {
               {/* Questions List */}
               <ScrollPanel style={{ width: "100%", height: "75px" }}>
                 {this.state.questions.map(question => (
-                  <Entry>
-                    {question.question}{" "}
-                    <span style={{ fontStyle: "italic" }}>
-                      Created on: {question.created_at} by {question.user}
-                    </span>
-                  </Entry>
+                  <Entry>{question}</Entry>
                 ))}
               </ScrollPanel>
             </QGroup>
@@ -324,4 +310,9 @@ class CreateMeeting extends Component {
   }
 }
 
-export default CreateMeeting;
+export default connect(
+  null,
+  {
+    callCreate
+  }
+)(CreateMeeting);

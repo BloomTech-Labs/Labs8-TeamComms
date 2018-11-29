@@ -10,6 +10,6 @@ const router = express.Router();
 router.use("/users", userRoutes);
 router.use("/auth", authRoutes);
 router.use("/stripe", stripeRoutes);
-router.use("/convo", passport.authenticate('jwt',{session: false}), convoRoutes);
+router.use("/meeting", passport.authenticate('jwt',{session: false}), convoRoutes);
 
 module.exports = router;
