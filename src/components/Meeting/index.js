@@ -24,10 +24,8 @@ const StyledInputText = styled(InputText)`
 `;
 
 const Main = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: auto auto auto;
-  margin: 30px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const StyledListAttendees = styled(ListBox)`
@@ -58,7 +56,6 @@ const EditorWrapper = styled.div`
   grid-column: 2;
   grid-row: 1/4;
   color: black;
-  margin-left: 30px;
 
   label {
     color: white;
@@ -79,8 +76,7 @@ const Editor = styled(ReactQuill)`
   }
 `;
 const MeetingDetails = styled.div`
-  grid-column: 1;
-  grid-row: 1;
+  display:flex;
   margin: 30px;
   h1 {
     color: orange;
@@ -219,28 +215,29 @@ class Meeting extends Component {
             <br />
             Mondays at 8am
           </p>
+          <div>
+            <StyledListQuestions
+              options={this.state.questions}
+              optionLabel="name"
+              filter={true}
+            />
+
+            <StyledListAttendees
+              options={this.state.users ? this.state.users : attendeeList}
+              optionLabel="name"
+              filter={true}
+            />
+          </div>
+          <form onSubmit={this.sendQuestion}>
+            <StyledInputText
+              value={this.state.currentQuestion}
+              onChange={e => this.setState({ currentQuestion: e.target.value })}
+            />
+            <SubmitButton onClick={this.sendQuestion}>
+              Add A Question
+            </SubmitButton>
+          </form>
         </MeetingDetails>
-
-        <StyledListQuestions
-          options={this.state.questions}
-          optionLabel="name"
-          filter={true}
-        />
-
-        <StyledListAttendees
-          options={this.state.users ? this.state.users : attendeeList}
-          optionLabel="name"
-          filter={true}
-        />
-        <form onSubmit={this.sendQuestion}>
-          <StyledInputText
-            value={this.state.currentQuestion}
-            onChange={e => this.setState({ currentQuestion: e.target.value })}
-          />
-          <SubmitButton onClick={this.sendQuestion}>
-            Add A Question
-          </SubmitButton>
-        </form>
         <EditorWrapper>
           <Title>Meeting Notes</Title>
 
