@@ -132,7 +132,7 @@ class Header extends Component {
   // };
 
   toggleMenu = () => {
-    this.setState({ menu: !this.state.menu });
+    this.setState({ menu: this.props.history.location.state.menu });
   };
 
   render() {
@@ -142,16 +142,28 @@ class Header extends Component {
       <Fragment>
         <MobileMain>
           <BurgerButton onClick={this.toggleMenu}>
-            <i class="fas fa-bars" />
+            <NavLink
+              to={{
+                state: { menu: !this.state.menu }
+              }}
+            >
+              <i class="fas fa-bars" />
+            </NavLink>
           </BurgerButton>
           {this.state.menu ? (
             <MenuOverpane>
               {this.props.loginSuccess ? (
                 <Fragment>
-                  <NavLink to="/dashboard" onClick={this.toggleMenu}>
-                    DASHBOARD
-                  </NavLink>
-                  <NavLink to="/favorites"> FAVORITES </NavLink>
+                  <div onClick={this.toggleMenu}>
+                    <NavLink
+                      to={{
+                        pathname: "/dashboard",
+                        state: { menu: !this.props.history.location.state.menu }
+                      }}
+                    >
+                      DASHBOARD
+                    </NavLink>
+                  </div>
                   <Link to="/register">
                     <RegisterButton>REFER A FRIEND </RegisterButton>
                   </Link>
