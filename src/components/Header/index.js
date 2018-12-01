@@ -148,7 +148,9 @@ class Header extends Component {
             <MenuOverpane>
               {this.props.loginSuccess ? (
                 <Fragment>
-                  <NavLink to="/dashboard"> DASHBOARD </NavLink>
+                  <NavLink to="/dashboard" onClick={this.toggleMenu}>
+                    DASHBOARD
+                  </NavLink>
                   <NavLink to="/favorites"> FAVORITES </NavLink>
                   <Link to="/register">
                     <RegisterButton>REFER A FRIEND </RegisterButton>
@@ -164,7 +166,7 @@ class Header extends Component {
                 </Fragment>
               ) : (
                 <Fragment>
-                  <NavLink to="/features"> FEATURES </NavLink>{" "}
+                  <NavLink to="/features"> FEATURES </NavLink>
                   <NavLink to="/landing#pricing"> PRICING </NavLink>
                   <NavLink to="/about"> ABOUT US </NavLink>
                   <NavLink to="/register">
