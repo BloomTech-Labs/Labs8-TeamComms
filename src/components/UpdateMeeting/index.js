@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+// import { callUpdate } from "../../actions/index";
 import { callCreate } from "../../actions/index";
 import styled from "styled-components";
 import { Calendar } from "primereact/calendar";
@@ -72,7 +73,7 @@ const Entry = styled.li`
   margin: 0 0 10px 0;
 `;
 
-class CreateMeeting extends Component {
+class UpdateMeeting extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -95,10 +96,36 @@ class CreateMeeting extends Component {
         headers: { Authorization: localStorage.getItem("jwt") }
       })
       .then(res => {
-        console.log(res.data);
         this.setState({ users: res.data });
       })
       .catch(err => console.log(err));
+
+    const id = this.props.match.params.id;
+    this.props.meetings.map((meeting, index) => {
+      if (meeting._id === id) {
+        // console.log(
+        //   meeting.invitees.map(invited => {
+        //     let rv = "";
+        //     for (let i = 0; i < this.state.users.length; i++) {
+        //       if (invited._id === this.state.users[i]._id) {
+        //         rv = this.state.users[i];
+        //       }
+        //     }
+        //     return rv;
+        //   })
+        // );
+        this.setState({
+          title: meeting.title,
+          description: meeting.description,
+          start: moment(meeting.start_time).format("MM/DD/YYYY hh:mm A"),
+          end: moment(meeting.end_time).format("MM/DD/YYYY hh:mm A"),
+          repeat: meeting.repeat,
+          invitees: meeting.invitees,
+          questions: meeting.questions
+        });
+      }
+      console.log("State: ", this.state);
+    });
   }
 
   changeHandler = e => {
@@ -108,7 +135,7 @@ class CreateMeeting extends Component {
     });
   };
 
-  handleNewConvo = async (e, userInput, history) => {
+  handleUpdateConvo = async (e, userInput, history) => {
     e.preventDefault();
     console.log(userInput);
     const body = {
@@ -123,7 +150,7 @@ class CreateMeeting extends Component {
     const header = { Authorization: localStorage.getItem("jwt") };
     console.log("Header: ", header);
     console.log("Body: ", body);
-    this.props.callCreate(e, header, body, history);
+    // this.props.callCreate(e, header, body, history);
     this.setState({
       title: "",
       description: "",
@@ -187,7 +214,7 @@ class CreateMeeting extends Component {
         <Main>
           <FormWrapper
             onSubmit={e => {
-              this.handleNewConvo(e, userInput, history);
+              this.handleUpdateConvo(e, userInput, history);
             }}
           >
             <Group>
@@ -263,7 +290,7 @@ class CreateMeeting extends Component {
                 name="invited"
                 placeholder="Add Invites"
                 value={this.state.invited}
-                field="email"
+                field="displayName"
                 style={{ width: "90%" }}
                 inputStyle={{ width: "100%" }}
                 onChange={e => this.setState({ invited: e.value })}
@@ -275,7 +302,7 @@ class CreateMeeting extends Component {
               {/* Invitees List */}
               <ScrollPanel style={{ width: "100%", height: "150px" }}>
                 {this.state.invitees.map(invited => (
-                  <Entry>{invited.displayName}</Entry>
+                  <Entry>{invited._id}</Entry>
                 ))}
               </ScrollPanel>
             </Group>
@@ -310,9 +337,13 @@ class CreateMeeting extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return state;
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   {
     callCreate
   }
-)(CreateMeeting);
+)(UpdateMeeting);

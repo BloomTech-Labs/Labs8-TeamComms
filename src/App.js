@@ -10,6 +10,7 @@ import styled from "styled-components";
 import Header from "./components/Header";
 import { Logo, Overpane } from "./components/Common";
 import CreateMeeting from "./components/CreateMeeting";
+import UpdateMeeting from "./components/UpdateMeeting";
 import socketClient from "./components/socketClient";
 import Meeting from "./components/Meeting";
 
@@ -79,6 +80,7 @@ class App extends Component {
             <Route path="/dashboard/:token?" component={ScreensMeetingList} />
             <Route path="/preferences" component={UserPreferences} />
             <Route path="/createMeeting" component={CreateMeeting} />
+            <Route path="/updateMeeting/:id" component={UpdateMeeting} />
           </Content>
         </Switch>
         <ScreensLogin />

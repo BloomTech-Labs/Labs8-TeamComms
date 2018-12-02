@@ -33,9 +33,11 @@ class MeetingList extends Component {
         <Link to={`/meeting/${meeting._id}`}>
           <h1>{meeting.title}</h1>
         </Link>
-        <EditButton>
-          <i className="fas fa-edit" />
-        </EditButton>
+        <Link to={`/updateMeeting/${meeting._id}`}>
+          <EditButton>
+            <i className="fas fa-edit" />
+          </EditButton>
+        </Link>
         <DeleteButton>
           <i className="fas fa-trash" />
         </DeleteButton>
