@@ -5,7 +5,10 @@ const convoFindById = async (req, res) => {
   const id = req.params.id;
 
   const convo = await Convo.findById(id)
-    .populate("invitees")
+    .populate({
+        path: "invitees",
+        select: '-password'
+    })
     .exec((err, query) => {
       if (err) {
         res.send(err)
