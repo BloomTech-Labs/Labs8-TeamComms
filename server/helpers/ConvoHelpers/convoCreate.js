@@ -35,7 +35,6 @@ const convoCreate = async (req, res) => {
     if (!convo) {
       throw new Error("Convo creation failed!");
     } else {
-      
       let convoExtract = convo.questions.map(q => {
         return {
           question: q.question,
