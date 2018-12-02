@@ -30,11 +30,9 @@ const convoSchema = new mongoose.Schema({
   },
   invitees: [
     {
-      id: {
-        type: ObjectId,
-        ref: "User"
+      type: ObjectId,
+      ref: "User"
     }
-  }
   ],
   questions: [
     {
@@ -70,9 +68,8 @@ const convoSchema = new mongoose.Schema({
   zoom: String,
   liveMeeting: {
     type: ObjectId,
-    ref: 'LiveMeeting'
+    ref: "LiveMeeting"
   }
-  
 });
 
 const convoModel = mongoose.model("Convo", convoSchema);
