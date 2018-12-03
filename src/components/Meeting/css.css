@@ -15,7 +15,7 @@
   border-bottom: 1px solid black;
   height: 20px;
   padding: 10px 0 10px 10px;
-  background-color: rgba(6, 6, 236, .1);
+  background-color: rgba(6, 6, 236, 0.1);
   border-radius: 15px 15px 0 0;
 }
 
@@ -81,4 +81,19 @@
   border: 1px solid black;
   background-color: rgba(37, 37, 245, 0.61);
   outline: none;
+}
+
+.p-tabview-selected {
+  background-color: #25bea0 !important;
+}
+
+.custom .p-scrollpanel-bar {
+  background-color: #25bea0;
+  opacity: 1;
+}
+
+@media (min-width: 800px) {
+  #pr_id_3_header_0 {
+    display: none;
+  }
 }

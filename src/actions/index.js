@@ -1,10 +1,12 @@
 import { callReg } from "./callReg";
 import { callLogIn } from "./callLogIn";
+import { callUpdate } from "./callUpdate";
 import { loadInitialDataSocket } from "./loadInitialDataSocket";
 import { toggleOverpane } from "./toggleOverpane";
 import { callLogOut } from "./callLogOut";
 import { callCreate } from "./callCreate";
 import { getMeetings } from "./getMeetings";
+import { callUpdateMeeting } from "./callUpdateMeeting";
 
 export { callReg } from "./callReg";
 export { callLogIn } from "./callLogIn";
@@ -14,3 +16,4 @@ export { toggleOverpane } from "./toggleOverpane";
 export { callLogOut } from "./callLogOut";
 export { callCreate } from "./callCreate";
 export { getMeetings } from "./getMeetings";
+export { callUpdateMeeting } from "./callUpdateMeeting";

@@ -36,9 +36,11 @@ class MeetingList extends Component {
     return (
       <div className="card">
         <div>
+      <Link to={`/updateMeeting/${meeting._id}`}>
           <EditButton>
             <i className="fas fa-edit" />
           </EditButton>
+</Link>
           <DeleteButton>
             <i className="fas fa-trash" />
           </DeleteButton>
