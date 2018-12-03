@@ -38,16 +38,26 @@ const spacePuns = [
 ];
 
 const EggWrapper = styled.div`
-  grid-column: 1/3;
-  grid-row: 1;
+  flex-basis: 100%;
+
   display: flex;
   background: #374353;
   border-top: 1px solid grey;
   align-items: center;
   justify-content: center;
   color: lightgrey;
+  padding: 20px;
+
   p {
     color: grey;
+    font-style: italic;
+    white-space: nowrap;
+  }
+  @media (max-width: 500px) {
+    flex-direction: column;
+    text-align: center;
+  }
+  span {
     font-style: italic;
   }
 `;
@@ -62,14 +72,20 @@ class EasterEgg extends Component {
     let newRandom = randomNumber;
     return (
       <EggWrapper>
-        Welcome,&nbsp;
-        <DisplayName>
-          {this.props.userData.user
-            ? this.props.userData.user.displayName + "!"
-            : ""}
-        </DisplayName>
+        <div>
+          Welcome,&nbsp;
+          <DisplayName>
+            {this.props.userData.user
+              ? this.props.userData.user.displayName + "!"
+              : ""}
+          </DisplayName>{" "}
+          &nbsp;
+        </div>
         &nbsp;
-        {spacePuns[newRandom][0]} &nbsp; <p>{spacePuns[newRandom][1]}</p>
+        <div>
+          {spacePuns[newRandom][0]} &nbsp;
+          <span>{spacePuns[newRandom][1]}</span>
+        </div>
       </EggWrapper>
     );
   }

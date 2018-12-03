@@ -68,6 +68,9 @@ export const BurgerButton = styled.div`
   &:hover {
     color: #facc43 !important;
   }
+  &&:first-child {
+    font-size: 35px;
+  }
 `;
 
 export const EditButton = styled.button`

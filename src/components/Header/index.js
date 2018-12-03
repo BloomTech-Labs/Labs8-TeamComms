@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { PrimaryButton, Logo, BurgerButton } from "../Common";
+import { PrimaryButton, Logo, BurgerButton, NavLink } from "../Common";
 import Stripe from "../Stripe";
 import { callLogOut, toggleOverpane } from "../../actions/index";
 
@@ -30,7 +30,7 @@ const Main = styled.div`
   display: none;
   @media (min-width: 1024px) {
     display: flex;
-    height: 5rem;
+    height: 6rem;
     align-items: center;
     justify-content: flex-end;
     grid-column: 2;
@@ -106,18 +106,6 @@ const HeaderText = styled.h1`
   margin-left: -10rem;
   font-size: 1rem;
   text-align: center;
-`;
-
-const NavLink = styled(Link)`
-  font-size: 1rem;
-  text-decoration: none;
-  color: #ffffff;
-  cursor: pointer;
-  margin: 0 10px 0 10px;
-  @media (max-width: 1024px) {
-    margin: 0 auto;
-    padding: 20px;
-  }
 `;
 
 class Header extends Component {
