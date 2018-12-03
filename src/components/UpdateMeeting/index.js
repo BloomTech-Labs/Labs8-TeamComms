@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import { callUpdate } from "../../actions/index";
-import { callCreate } from "../../actions/index";
+import { callUpdateMeeting } from "../../actions/index";
 import styled from "styled-components";
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
@@ -91,9 +90,10 @@ class UpdateMeeting extends Component {
   }
 
   componentDidMount() {
+    const token = localStorage.getItem("jwt");
     axios
       .get("https://teamcomm2.herokuapp.com/api/users/allusers", {
-        headers: { Authorization: localStorage.getItem("jwt") }
+        headers: { Authorization: token }
       })
       .then(res => {
         this.setState({ users: res.data });
@@ -101,31 +101,23 @@ class UpdateMeeting extends Component {
       .catch(err => console.log(err));
 
     const id = this.props.match.params.id;
-    this.props.meetings.map((meeting, index) => {
-      if (meeting._id === id) {
-        // console.log(
-        //   meeting.invitees.map(invited => {
-        //     let rv = "";
-        //     for (let i = 0; i < this.state.users.length; i++) {
-        //       if (invited._id === this.state.users[i]._id) {
-        //         rv = this.state.users[i];
-        //       }
-        //     }
-        //     return rv;
-        //   })
-        // );
+    axios
+      .get(`https://teamcomm2.herokuapp.com/api/meeting/findbyid/${id}`, {
+        headers: { Authorization: token }
+      })
+      .then(res => {
+        console.log(res.data);
         this.setState({
-          title: meeting.title,
-          description: meeting.description,
-          start: moment(meeting.start_time).format("MM/DD/YYYY hh:mm A"),
-          end: moment(meeting.end_time).format("MM/DD/YYYY hh:mm A"),
-          repeat: meeting.repeat,
-          invitees: meeting.invitees,
-          questions: meeting.questions
+          title: res.data.title,
+          description: res.data.description,
+          start: moment(res.data.start_time).format("MM/DD/YYYY hh:mm A"),
+          end: moment(res.data.end_time).format("MM/DD/YYYY hh:mm A"),
+          repeat: res.data.repeat,
+          invitees: res.data.invitees,
+          questions: res.data.questions.map(question => question.question)
         });
-      }
-      console.log("State: ", this.state);
-    });
+      })
+      .catch(err => console.log(err));
   }
 
   changeHandler = e => {
@@ -135,7 +127,12 @@ class UpdateMeeting extends Component {
     });
   };
 
-  handleUpdateConvo = async (e, userInput, history) => {
+  saveForLater = (e, userInput, history) => {
+    let dashboard = true;
+    this.handleUpdateConvo(e, userInput, history, dashboard);
+  };
+
+  handleUpdateConvo = async (e, userInput, history, dashboard) => {
     e.preventDefault();
     console.log(userInput);
     const body = {
@@ -150,7 +147,7 @@ class UpdateMeeting extends Component {
     const header = { Authorization: localStorage.getItem("jwt") };
     console.log("Header: ", header);
     console.log("Body: ", body);
-    // this.props.callCreate(e, header, body, history);
+    this.props.callUpdateMeeting(e, header, body, history, dashboard);
     this.setState({
       title: "",
       description: "",
@@ -209,12 +206,13 @@ class UpdateMeeting extends Component {
       questions: this.state.questions
     };
     let history = this.props.history;
+    let dashboard = false;
     return (
       <React.Fragment>
         <Main>
           <FormWrapper
             onSubmit={e => {
-              this.handleUpdateConvo(e, userInput, history);
+              this.handleUpdateConvo(e, userInput, history, dashboard);
             }}
           >
             <Group>
@@ -302,7 +300,7 @@ class UpdateMeeting extends Component {
               {/* Invitees List */}
               <ScrollPanel style={{ width: "100%", height: "150px" }}>
                 {this.state.invitees.map(invited => (
-                  <Entry>{invited._id}</Entry>
+                  <Entry>{invited.displayName}</Entry>
                 ))}
               </ScrollPanel>
             </Group>
@@ -328,7 +326,13 @@ class UpdateMeeting extends Component {
               </ScrollPanel>
             </QGroup>
             {/* Save Button */}
-            <SaveButton type="submit"> Save for Later </SaveButton>
+            <SaveButton
+              onClick={e => {
+                this.saveForLater(e, userInput, history);
+              }}
+            >
+              Save for Later
+            </SaveButton>
             <SaveButton type="submit"> Save and View </SaveButton>
           </FormWrapper>
         </Main>
@@ -344,6 +348,6 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    callCreate
+    callUpdateMeeting
   }
 )(UpdateMeeting);
