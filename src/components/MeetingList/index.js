@@ -63,18 +63,10 @@ class MeetingList extends Component {
     );
   }
   render() {
-    var meetings;
-    if (this.props.searchLength > 0) {
-      return (meetings = this.props.filteredMeetings.map(meeting => {
-        // Will replace this with a Card component
-        return this.card(meeting);
-      }));
-    } else {
-      return (meetings = this.props.meetings.map(meeting => {
-        // Will replace this with a Card component
-        return this.card(meeting);
-      }));
-    }
+    var meetings = this.props.filteredMeetings.map(meeting => {
+      // Will replace this with a Card component
+      return this.card(meeting);
+    });
 
     return (
       <React.Fragment>

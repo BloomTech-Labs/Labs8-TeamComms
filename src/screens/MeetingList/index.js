@@ -30,7 +30,7 @@ class ScreensMeetingList extends Component {
     super(props);
     this.state = {
       filteredMeetings: [],
-      searchLength: 0
+      search: ""
     };
   }
   componentDidMount() {
@@ -42,11 +42,27 @@ class ScreensMeetingList extends Component {
     }
   }
 
-  filtered = (meetings, searchLength) => {
-    this.setState({ filteredMeetings: meetings, searchLength: searchLength });
+  filtered = (meetings, search) => {
+    this.setState({ filteredMeetings: meetings, search: search });
   };
 
   render() {
+    if (this.state.search !== "") {
+      var filtered_meetings = (
+        <MeetingList
+          filteredMeetings={this.state.filteredMeetings}
+          search={this.state.search}
+        />
+      );
+    } else {
+      filtered_meetings = (
+        <MeetingList
+          filteredMeetings={this.props.meetings}
+          search={this.state.search}
+        />
+      );
+    }
+
     return (
       <ConvoGrid>
         <EasterEgg />
@@ -54,10 +70,7 @@ class ScreensMeetingList extends Component {
           <QuickAdd />
           <SearchBar filtered={this.filtered} />
         </FlexBox>
-        <MeetingList
-          filteredMeetings={this.state.filteredMeetings}
-          searchLength={this.state.searchLength}
-        />
+        {filtered_meetings}
       </ConvoGrid>
     );
   }

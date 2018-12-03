@@ -47,8 +47,8 @@ class SearchBar extends Component {
     let filteredMeetings = this.props.meetings.filter(meetings => {
       return meetings.title.includes(this.state.search);
     });
-    if (this.state.search.length === 0) {
-      this.props.filtered(filteredMeetings, this.state.search.length);
+    if (this.state.search.length === "") {
+      this.props.filtered(filteredMeetings, this.state.search);
     }
   }
 
@@ -60,12 +60,9 @@ class SearchBar extends Component {
 
     console.log("filteredMeetings", filteredMeetings);
     console.log("meetings", this.props.meetings);
-    var searchLength = this.state.search.length;
-    if (this.state.search.length === 0) {
-      this.props.filtered(this.props.meetings, searchLength);
-    } else {
-      this.props.filtered(filteredMeetings, searchLength);
-    }
+    var search = this.state.search;
+
+    this.props.filtered(filteredMeetings, e.target.value);
   };
   render() {
     return (
