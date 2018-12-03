@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-// import { callUpdate } from "../../actions/index";
-import { callCreate } from "../../actions/index";
+import { callUpdateMeeting } from "../../actions/index";
 import styled from "styled-components";
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
@@ -128,7 +127,12 @@ class UpdateMeeting extends Component {
     });
   };
 
-  handleUpdateConvo = async (e, userInput, history) => {
+  saveForLater = (e, userInput, history) => {
+    let dashboard = true;
+    this.handleUpdateConvo(e, userInput, history, dashboard);
+  };
+
+  handleUpdateConvo = async (e, userInput, history, dashboard) => {
     e.preventDefault();
     console.log(userInput);
     const body = {
@@ -143,8 +147,7 @@ class UpdateMeeting extends Component {
     const header = { Authorization: localStorage.getItem("jwt") };
     console.log("Header: ", header);
     console.log("Body: ", body);
-    // this.props.callCreate(e, header, body, history);
-    // this.props.callUpdate(e, header, body, history);
+    this.props.callUpdateMeeting(e, header, body, history, dashboard);
     this.setState({
       title: "",
       description: "",
@@ -203,12 +206,13 @@ class UpdateMeeting extends Component {
       questions: this.state.questions
     };
     let history = this.props.history;
+    let dashboard = false;
     return (
       <React.Fragment>
         <Main>
           <FormWrapper
             onSubmit={e => {
-              this.handleUpdateConvo(e, userInput, history);
+              this.handleUpdateConvo(e, userInput, history, dashboard);
             }}
           >
             <Group>
@@ -322,7 +326,13 @@ class UpdateMeeting extends Component {
               </ScrollPanel>
             </QGroup>
             {/* Save Button */}
-            <SaveButton type="submit"> Save for Later </SaveButton>
+            <SaveButton
+              onClick={e => {
+                this.saveForLater(e, userInput, history);
+              }}
+            >
+              Save for Later
+            </SaveButton>
             <SaveButton type="submit"> Save and View </SaveButton>
           </FormWrapper>
         </Main>
@@ -338,7 +348,6 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    callCreate
-    // callUpdate
+    callUpdateMeeting
   }
 )(UpdateMeeting);
