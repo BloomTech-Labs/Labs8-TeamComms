@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { NavLink } from "../Common";
 
 const AddQuestion = styled.input`
   position: relative;
@@ -48,8 +49,10 @@ class QuickAdd extends Component {
     return (
       <StyledMiniForm>
         <AddQuestion placeholder="Quick Add (New Conversation Name...)" />
-        <AddButton onClick={this.props.toggleOverpane}>
-          <i className="fas fa-plus-square fa-2x" />
+        <AddButton>
+          <NavLink to="/createmeeting">
+            <i className="fas fa-plus-square fa-2x" />
+          </NavLink>
         </AddButton>
       </StyledMiniForm>
     );

@@ -7,7 +7,7 @@ import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { AutoComplete } from "primereact/autocomplete";
-import { PrimaryButton } from "../Common";
+import { PrimaryButton, NavLink } from "../Common";
 import moment from "moment";
 import axios from "axios";
 
@@ -108,7 +108,12 @@ class CreateMeeting extends Component {
     });
   };
 
-  handleNewConvo = async (e, userInput, history) => {
+  saveForLater = (e, userInput, history) => {
+    let dashboard = true;
+    this.handleNewConvo(e, userInput, history, dashboard);
+  };
+
+  handleNewConvo = async (e, userInput, history, dashboard) => {
     e.preventDefault();
     console.log(userInput);
     const body = {
@@ -123,7 +128,7 @@ class CreateMeeting extends Component {
     const header = { Authorization: localStorage.getItem("jwt") };
     console.log("Header: ", header);
     console.log("Body: ", body);
-    this.props.callCreate(e, header, body, history);
+    this.props.callCreate(e, header, body, history, dashboard);
     this.setState({
       title: "",
       description: "",
@@ -182,12 +187,13 @@ class CreateMeeting extends Component {
       questions: this.state.questions
     };
     let history = this.props.history;
+    let dashboard = false;
     return (
       <React.Fragment>
         <Main>
           <FormWrapper
             onSubmit={e => {
-              this.handleNewConvo(e, userInput, history);
+              this.handleNewConvo(e, userInput, history, dashboard);
             }}
           >
             <Group>
@@ -301,8 +307,14 @@ class CreateMeeting extends Component {
               </ScrollPanel>
             </QGroup>
             {/* Save Button */}
-            <SaveButton type="submit"> Save for Later </SaveButton>
-            <SaveButton type="submit"> Save and View </SaveButton>
+            <SaveButton
+              onClick={e => {
+                this.saveForLater(e, userInput, history);
+              }}
+            >
+              Save for Later
+            </SaveButton>
+            <SaveButton type="submit">Save and View</SaveButton>
           </FormWrapper>
         </Main>
       </React.Fragment>
