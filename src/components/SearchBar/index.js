@@ -1,14 +1,18 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 // import { CustomInput } from "../Common";
 
 const SearchWrapper = styled.div`
-  grid-column: 2/3;
-  grid-row: 2;
-  width: 99%;
-  margin-left: 10px;
-  padding: 0.5rem;
-  background: #25bea0;
+  width: 100%;
+  padding: 1rem;
+  // background: #25bea0;
+  @media (max-width: 500px) {
+    flex-basis: 100%;
+    margin: 0;
+    height: 35px;
+    padding: 1.5rem;
+  }
 `;
 
 const SearchInput = styled.input`
@@ -22,7 +26,7 @@ const SearchInput = styled.input`
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   outline: none;
-  border: none;
+  border: 1px solid lightgrey;
   color: grey;
   :focus {
     font-family: "Roboto";
@@ -33,13 +37,51 @@ const SearchInput = styled.input`
 `;
 
 class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      search: ""
+    };
+  }
+  componentDidMount() {
+    let filteredMeetings = this.props.meetings.filter(meetings => {
+      return meetings.title.includes(this.state.search);
+    });
+    if (this.state.search.length === 0) {
+      this.props.filtered(filteredMeetings, this.state.search.length);
+    }
+  }
+
+  search = e => {
+    this.setState({ search: e.target.value });
+    let filteredMeetings = this.props.meetings.filter(meetings => {
+      return meetings.title.includes(this.state.search);
+    });
+
+    console.log("filteredMeetings", filteredMeetings);
+    console.log("meetings", this.props.meetings);
+    var searchLength = this.state.search.length;
+    if (this.state.search.length === 0) {
+      this.props.filtered(this.props.meetings, searchLength);
+    } else {
+      this.props.filtered(filteredMeetings, searchLength);
+    }
+  };
   render() {
     return (
       <SearchWrapper>
-        <SearchInput placeholder="&#xf002;" />
+        <SearchInput
+          name="search"
+          value={this.state.search}
+          onChange={this.search}
+          placeholder="&#xf002;"
+        />
       </SearchWrapper>
     );
   }
 }
 
-export default SearchBar;
+const mapStateToProps = state => {
+  return state;
+};
+export default connect(mapStateToProps)(SearchBar);

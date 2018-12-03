@@ -90,6 +90,14 @@ class CreateMeeting extends Component {
   }
 
   componentDidMount() {
+    var passedTitle;
+    if (this.props.history.location.state) {
+      passedTitle = this.props.history.location.state.title;
+      this.setState({ title: passedTitle });
+    } else {
+      passedTitle = "";
+    }
+
     axios
       .get("https://teamcomm2.herokuapp.com/api/users/allusers", {
         headers: { Authorization: localStorage.getItem("jwt") }

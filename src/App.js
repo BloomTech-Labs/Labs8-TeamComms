@@ -29,7 +29,12 @@ const AppWrapper = styled.div`
   color: #374353;
   display: grid;
   grid-template-columns: 15rem auto;
-  grid-template-rows: 5rem 25rem 5rem;
+  grid-template-rows: 6rem 25rem 5rem;
+  @media (min-width: 1200px) {
+    max-width: 1100px;
+    margin: 0 auto;
+    border: 1px solid lightgrey;
+  }
 `;
 
 const FadedLogo = styled(Logo)`
