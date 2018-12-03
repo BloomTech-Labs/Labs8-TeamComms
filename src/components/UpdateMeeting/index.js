@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+// import { callUpdate } from "../../actions/index";
 import { callCreate } from "../../actions/index";
 import styled from "styled-components";
 import { Calendar } from "primereact/calendar";
@@ -7,7 +8,7 @@ import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { AutoComplete } from "primereact/autocomplete";
-import { PrimaryButton, NavLink } from "../Common";
+import { PrimaryButton } from "../Common";
 import moment from "moment";
 import axios from "axios";
 
@@ -72,7 +73,7 @@ const Entry = styled.li`
   margin: 0 0 10px 0;
 `;
 
-class CreateMeeting extends Component {
+class UpdateMeeting extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -95,10 +96,36 @@ class CreateMeeting extends Component {
         headers: { Authorization: localStorage.getItem("jwt") }
       })
       .then(res => {
-        console.log(res.data);
         this.setState({ users: res.data });
       })
       .catch(err => console.log(err));
+
+    const id = this.props.match.params.id;
+    this.props.meetings.map((meeting, index) => {
+      if (meeting._id === id) {
+        // console.log(
+        //   meeting.invitees.map(invited => {
+        //     let rv = "";
+        //     for (let i = 0; i < this.state.users.length; i++) {
+        //       if (invited._id === this.state.users[i]._id) {
+        //         rv = this.state.users[i];
+        //       }
+        //     }
+        //     return rv;
+        //   })
+        // );
+        this.setState({
+          title: meeting.title,
+          description: meeting.description,
+          start: moment(meeting.start_time).format("MM/DD/YYYY hh:mm A"),
+          end: moment(meeting.end_time).format("MM/DD/YYYY hh:mm A"),
+          repeat: meeting.repeat,
+          invitees: meeting.invitees,
+          questions: meeting.questions
+        });
+      }
+      console.log("State: ", this.state);
+    });
   }
 
   changeHandler = e => {
@@ -108,12 +135,7 @@ class CreateMeeting extends Component {
     });
   };
 
-  saveForLater = (e, userInput, history) => {
-    let dashboard = true;
-    this.handleNewConvo(e, userInput, history, dashboard);
-  };
-
-  handleNewConvo = async (e, userInput, history, dashboard) => {
+  handleUpdateConvo = async (e, userInput, history) => {
     e.preventDefault();
     console.log(userInput);
     const body = {
@@ -122,13 +144,13 @@ class CreateMeeting extends Component {
       startTime: moment(userInput.start),
       endtime: moment(userInput.end),
       repeat: userInput.repeat,
-      invitees: userInput.invitees.map(invited => invited._id),
+      invitees: userInput.invitees.map(invited => invited.id),
       questions: userInput.questions
     };
     const header = { Authorization: localStorage.getItem("jwt") };
     console.log("Header: ", header);
     console.log("Body: ", body);
-    this.props.callCreate(e, header, body, history, dashboard);
+    // this.props.callCreate(e, header, body, history);
     this.setState({
       title: "",
       description: "",
@@ -187,13 +209,12 @@ class CreateMeeting extends Component {
       questions: this.state.questions
     };
     let history = this.props.history;
-    let dashboard = false;
     return (
       <React.Fragment>
         <Main>
           <FormWrapper
             onSubmit={e => {
-              this.handleNewConvo(e, userInput, history, dashboard);
+              this.handleUpdateConvo(e, userInput, history);
             }}
           >
             <Group>
@@ -269,7 +290,7 @@ class CreateMeeting extends Component {
                 name="invited"
                 placeholder="Add Invites"
                 value={this.state.invited}
-                field="email"
+                field="displayName"
                 style={{ width: "90%" }}
                 inputStyle={{ width: "100%" }}
                 onChange={e => this.setState({ invited: e.value })}
@@ -281,7 +302,7 @@ class CreateMeeting extends Component {
               {/* Invitees List */}
               <ScrollPanel style={{ width: "100%", height: "150px" }}>
                 {this.state.invitees.map(invited => (
-                  <Entry>{invited.displayName}</Entry>
+                  <Entry>{invited._id}</Entry>
                 ))}
               </ScrollPanel>
             </Group>
@@ -307,14 +328,8 @@ class CreateMeeting extends Component {
               </ScrollPanel>
             </QGroup>
             {/* Save Button */}
-            <SaveButton
-              onClick={e => {
-                this.saveForLater(e, userInput, history);
-              }}
-            >
-              Save for Later
-            </SaveButton>
-            <SaveButton type="submit">Save and View</SaveButton>
+            <SaveButton type="submit"> Save for Later </SaveButton>
+            <SaveButton type="submit"> Save and View </SaveButton>
           </FormWrapper>
         </Main>
       </React.Fragment>
@@ -322,9 +337,13 @@ class CreateMeeting extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return state;
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   {
     callCreate
   }
-)(CreateMeeting);
+)(UpdateMeeting);
