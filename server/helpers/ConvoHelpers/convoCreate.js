@@ -54,6 +54,23 @@ const convoCreate = async (req, res) => {
       user.created_meetings.push(convo._id);
 
       await convo.save();
+
+      await Convo.findById(convo._id)
+        .populate({
+          path: "invitees",
+          select: "meetings"
+        })
+        .exec((err, query) => {
+          if (err) {
+            throw new Error(err);
+          } else {
+            query.invitees.forEach(async invitee => {
+              invitee.meetings.push(convo._id);
+              await invitee.save();
+            });
+          }
+        });
+
       await liveMeeting.save();
       await user.save();
 
