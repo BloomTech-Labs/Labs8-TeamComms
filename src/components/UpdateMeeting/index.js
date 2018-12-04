@@ -135,9 +135,10 @@ class UpdateMeeting extends Component {
   handleUpdateConvo = async (e, userInput, history, dashboard, id) => {
     e.preventDefault();
     console.log(userInput);
-    let inviteeCheck = (userInput.invitees.length > 0)
-      ? userInput.invitees.map(invited => invited._id)
-      : [];
+    let inviteeCheck =
+      userInput.invitees.length > 0
+        ? userInput.invitees.map(invited => invited._id)
+        : [];
     const body = {
       title: userInput.title,
       description: userInput.description,
@@ -167,7 +168,7 @@ class UpdateMeeting extends Component {
     });
   };
 
-  addQestions = e => {
+  addQuestions = e => {
     e.preventDefault();
     if (this.state.question) {
       const questions = this.state.questions;
@@ -320,7 +321,7 @@ class UpdateMeeting extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="question">Add Questions</label>
-                <AddButton onClick={this.addQestions}>+</AddButton>
+                <AddButton onClick={this.addQuestions}>+</AddButton>
               </span>
               <hr />
               {/* Questions List */}

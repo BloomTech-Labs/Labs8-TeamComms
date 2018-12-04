@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./convoList.css";
 import { connect } from "react-redux";
-import { getMeetings } from "../../actions/index";
+import { getMeetings, callDeleteMeeting } from "../../actions/index";
 import styled from "styled-components";
 
 import {
@@ -33,15 +33,21 @@ class MeetingList extends Component {
   }
   // Will break this down into a Card component
   card(meeting) {
+    const history = this.props.history;
+    const header = { Authorization: localStorage.getItem("jwt") };
     return (
       <div className="card">
         <div>
-      <Link to={`/updateMeeting/${meeting._id}`}>
-          <EditButton>
-            <i className="fas fa-edit" />
-          </EditButton>
-</Link>
-          <DeleteButton>
+          <Link to={`/updateMeeting/${meeting._id}`}>
+            <EditButton>
+              <i className="fas fa-edit" />
+            </EditButton>
+          </Link>
+          <DeleteButton
+            onClick={e => {
+              this.props.callDeleteMeeting(e, header, meeting._id, history);
+            }}
+          >
             <i className="fas fa-trash" />
           </DeleteButton>
           <ShareButton>
@@ -85,5 +91,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { getMeetings }
+  { getMeetings, callDeleteMeeting }
 )(MeetingList);
