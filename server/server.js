@@ -10,14 +10,25 @@ const passportSetup = require("./services/passport-setup");
 const apiRoutes = require("./routes/_apiRoutes");
 
 const server = express();
-// let allowedOrigins = ["http:/localhost:8080", "https://team-comm.netlify.com/"];
+let allowedOrigins = ["http:/localhost:3000", "https://team-comm.netlify.com/"];
+
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (allowedOrigins.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
 server.use(cors());
 server.options("*", cors());
 server.use(function(req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://team-comm.netlify.com",
-  );
+
+  var origin = req.headers.origin;
+  if (allowedOrigins.indexOf(origin) > -1) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
