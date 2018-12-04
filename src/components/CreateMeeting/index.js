@@ -21,18 +21,22 @@ const FormWrapper = styled.form`
   margin: 0 auto;
   color: white;
 `;
-
 const Group = styled.fieldset`
   width: 45%;
   border: 2px groove white;
-  padding: 10px;
+  border-radius: 5px;
+  padding: 0 10px 20px 10px;
   margin: 10px 15px;
 `;
 const QGroup = styled.fieldset`
   width: 94%;
   border: 2px groove white;
+  border-radius: 5px;
   padding: 10px;
   margin: 10px 15px;
+`;
+const NewSpan = styled.span`
+  margin: 20px 0;
 `;
 
 const TextInput = styled(InputText)`
@@ -43,11 +47,12 @@ const QInput = styled(InputText)`
 `;
 const AutoInput = styled(AutoComplete)`
   width: 90%;
+  margin-top: 10px;
 `;
 
 const SaveButton = styled(PrimaryButton)`
   width: 45%;
-  height: 75px;
+  height: 65px;
   color: white;
   border-radius: 5px;
   background: #25bea0;
@@ -56,12 +61,11 @@ const SaveButton = styled(PrimaryButton)`
   margin: 10px 15px;
   border: none;
 `;
-
 const AddButton = styled.button`
   border: none;
   border-radius: 50px;
   padding: 10px;
-  margin: 0 auto%;
+  margin: 0 auto;
   background: #25bea0;
   color: white;
   font-weight: bolder;
@@ -207,7 +211,7 @@ class CreateMeeting extends Component {
             <Group>
               <legend>Meeting Details:</legend>
               {/* Title */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <TextInput
                   id="title"
                   name="title"
@@ -215,10 +219,10 @@ class CreateMeeting extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="title">Meeting Name</label>
-              </span>
-              <br />
+              </NewSpan>
+
               {/* Description */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <TextInput
                   id="description"
                   name="description"
@@ -226,10 +230,10 @@ class CreateMeeting extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="description">Description</label>
-              </span>
-              <br />
+              </NewSpan>
+
               {/* Start */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <Calendar
                   showTime={true}
                   hourFormat="12"
@@ -241,10 +245,10 @@ class CreateMeeting extends Component {
                   className="datePicker"
                 />
                 <label htmlFor="start">Start</label>
-              </span>
-              <br />
+              </NewSpan>
+
               {/* End */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <Calendar
                   showTime={true}
                   hourFormat="12"
@@ -256,8 +260,8 @@ class CreateMeeting extends Component {
                   className="datePicker"
                 />
                 <label htmlFor="end">End</label>
-              </span>
-              <br />
+              </NewSpan>
+
               {/* Repeat */}
               <Checkbox
                 inputId="repeat"
