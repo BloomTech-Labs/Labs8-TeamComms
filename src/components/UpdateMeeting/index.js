@@ -21,18 +21,25 @@ const FormWrapper = styled.form`
   margin: 0 auto;
   color: white;
 `;
-
 const Group = styled.fieldset`
   width: 45%;
   border: 2px groove white;
-  padding: 10px;
+  border-radius: 5px;
+  padding: 0 10px 20px 10px;
   margin: 10px 15px;
 `;
 const QGroup = styled.fieldset`
   width: 94%;
   border: 2px groove white;
-  padding: 10px;
+  border-radius: 5px;
+  padding: 0 10px 20px 10px;
   margin: 10px 15px;
+`;
+const NewSpan = styled.span`
+  margin: 20px 0;
+`;
+const QSpan = styled.span`
+  margin-top: 20px;
 `;
 
 const TextInput = styled(InputText)`
@@ -47,7 +54,7 @@ const AutoInput = styled(AutoComplete)`
 
 const SaveButton = styled(PrimaryButton)`
   width: 45%;
-  height: 75px;
+  height: 65px;
   color: white;
   border-radius: 5px;
   background: #25bea0;
@@ -56,12 +63,11 @@ const SaveButton = styled(PrimaryButton)`
   margin: 10px 15px;
   border: none;
 `;
-
 const AddButton = styled.button`
   border: none;
   border-radius: 50px;
   padding: 10px;
-  margin: 0 auto%;
+  margin: 0 auto;
   background: #25bea0;
   color: white;
   font-weight: bolder;
@@ -223,7 +229,7 @@ class UpdateMeeting extends Component {
             <Group>
               <legend>Meeting Details:</legend>
               {/* Title */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <TextInput
                   id="title"
                   name="title"
@@ -231,10 +237,9 @@ class UpdateMeeting extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="title">Meeting Name</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* Description */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <TextInput
                   id="description"
                   name="description"
@@ -242,10 +247,9 @@ class UpdateMeeting extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="description">Description</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* Start */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <Calendar
                   showTime={true}
                   hourFormat="12"
@@ -257,10 +261,9 @@ class UpdateMeeting extends Component {
                   className="datePicker"
                 />
                 <label htmlFor="start">Start</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* End */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <Calendar
                   showTime={true}
                   hourFormat="12"
@@ -272,8 +275,7 @@ class UpdateMeeting extends Component {
                   className="datePicker"
                 />
                 <label htmlFor="end">End</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* Repeat */}
               <Checkbox
                 inputId="repeat"
@@ -288,19 +290,21 @@ class UpdateMeeting extends Component {
             <Group>
               <legend>Invited:</legend>
               {/* Add Invitees */}
-              <AutoInput
-                id="invited"
-                name="invited"
-                placeholder="Add Invites"
-                value={this.state.invited}
-                field="displayName"
-                style={{ width: "90%" }}
-                inputStyle={{ width: "100%" }}
-                onChange={e => this.setState({ invited: e.value })}
-                suggestions={this.state.userSuggestions}
-                completeMethod={this.suggestUsers.bind(this)}
-              />
-              <AddButton onClick={this.addInvitees}>+</AddButton>
+              <QSpan className="p-float-label">
+                <AutoInput
+                  id="invited"
+                  name="invited"
+                  value={this.state.invited}
+                  field="displayName"
+                  style={{ width: "90%" }}
+                  inputStyle={{ width: "100%" }}
+                  onChange={e => this.setState({ invited: e.value })}
+                  suggestions={this.state.userSuggestions}
+                  completeMethod={this.suggestUsers.bind(this)}
+                />
+                <label htmlFor="invited">Add Invites</label>
+                <AddButton onClick={this.addInvitees}>+</AddButton>
+              </QSpan>
               <hr />
               {/* Invitees List */}
               <ScrollPanel style={{ width: "100%", height: "150px" }}>
@@ -312,7 +316,7 @@ class UpdateMeeting extends Component {
             <QGroup>
               <legend>Questions:</legend>
               {/* Add Question */}
-              <span className="p-float-label">
+              <QSpan className="p-float-label">
                 <QInput
                   id="question"
                   name="question"
@@ -321,7 +325,7 @@ class UpdateMeeting extends Component {
                 />
                 <label htmlFor="question">Add Questions</label>
                 <AddButton onClick={this.addQestions}>+</AddButton>
-              </span>
+              </QSpan>
               <hr />
               {/* Questions List */}
               <ScrollPanel style={{ width: "100%", height: "75px" }}>
