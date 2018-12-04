@@ -10,7 +10,7 @@ const passportSetup = require("./services/passport-setup");
 const apiRoutes = require("./routes/_apiRoutes");
 
 const server = express();
-let allowedOrigins = ["http:/localhost:8080", "https://team-comm.netlify.com/"];
+// let allowedOrigins = ["http:/localhost:8080", "https://team-comm.netlify.com/"];
 
 server.options("*", cors());
 
