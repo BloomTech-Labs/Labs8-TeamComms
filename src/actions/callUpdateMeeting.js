@@ -1,11 +1,11 @@
 import axios from "axios";
 import { MEETING_UPDATE_CALLED, MEETING_UPDATE_RETURNED } from "./types";
 
-export const callUpdateMeeting = (e, header, body, history, dashboard) => {
+export const callUpdateMeeting = (e, header, body, history, dashboard, id) => {
   e.preventDefault();
-
-  const promise = axios.post(
-    "https://teamcomm2.herokuapp.com/api/meeting/update",
+  console.log("id: ", id);
+  const promise = axios.put(
+    `https://teamcomm2.herokuapp.com/api/meeting/update/${id}`,
     body,
     { headers: header }
   );

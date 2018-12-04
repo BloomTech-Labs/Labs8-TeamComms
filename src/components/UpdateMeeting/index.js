@@ -127,12 +127,12 @@ class UpdateMeeting extends Component {
     });
   };
 
-  saveForLater = (e, userInput, history) => {
+  saveForLater = (e, userInput, history, id) => {
     let dashboard = true;
-    this.handleUpdateConvo(e, userInput, history, dashboard);
+    this.handleUpdateConvo(e, userInput, history, dashboard, id);
   };
 
-  handleUpdateConvo = async (e, userInput, history, dashboard) => {
+  handleUpdateConvo = async (e, userInput, history, dashboard, id) => {
     e.preventDefault();
     console.log(userInput);
     const body = {
@@ -140,14 +140,14 @@ class UpdateMeeting extends Component {
       description: userInput.description,
       startTime: moment(userInput.start),
       endtime: moment(userInput.end),
-      repeat: userInput.repeat,
-      invitees: userInput.invitees.map(invited => invited.id),
-      questions: userInput.questions
+      repeat: userInput.repeat
+      // invitees: userInput.invitees.map(invited => invited._id),
+      // questions: userInput.questions
     };
     const header = { Authorization: localStorage.getItem("jwt") };
     console.log("Header: ", header);
     console.log("Body: ", body);
-    this.props.callUpdateMeeting(e, header, body, history, dashboard);
+    this.props.callUpdateMeeting(e, header, body, history, dashboard, id);
     this.setState({
       title: "",
       description: "",
@@ -207,12 +207,13 @@ class UpdateMeeting extends Component {
     };
     let history = this.props.history;
     let dashboard = false;
+    const id = this.props.match.params.id;
     return (
       <React.Fragment>
         <Main>
           <FormWrapper
             onSubmit={e => {
-              this.handleUpdateConvo(e, userInput, history, dashboard);
+              this.handleUpdateConvo(e, userInput, history, dashboard, id);
             }}
           >
             <Group>
@@ -328,7 +329,7 @@ class UpdateMeeting extends Component {
             {/* Save Button */}
             <SaveButton
               onClick={e => {
-                this.saveForLater(e, userInput, history);
+                this.saveForLater(e, userInput, history, id);
               }}
             >
               Save for Later
