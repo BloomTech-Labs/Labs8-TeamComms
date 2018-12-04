@@ -1,7 +1,7 @@
 const Convo = require("../../models/ConvoModel"); //Model
 
 const convoDelete = async (req, res) => {
-  let id = req.body;
+  let id = req.params.id;
   await Convo.findByIdAndRemove(id, (err, meeting) => {
     if (err) return res.status(500).send(err);
 
