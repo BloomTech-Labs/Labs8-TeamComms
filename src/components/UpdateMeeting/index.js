@@ -32,11 +32,14 @@ const QGroup = styled.fieldset`
   width: 94%;
   border: 2px groove white;
   border-radius: 5px;
-  padding: 10px;
+  padding: 0 10px 20px 10px;
   margin: 10px 15px;
 `;
 const NewSpan = styled.span`
   margin: 20px 0;
+`;
+const QSpan = styled.span`
+  margin-top: 20px;
 `;
 
 const TextInput = styled(InputText)`
@@ -47,7 +50,6 @@ const QInput = styled(InputText)`
 `;
 const AutoInput = styled(AutoComplete)`
   width: 90%;
-  margin-top: 10px;
 `;
 
 const SaveButton = styled(PrimaryButton)`
@@ -284,19 +286,21 @@ class UpdateMeeting extends Component {
             <Group>
               <legend>Invited:</legend>
               {/* Add Invitees */}
-              <AutoInput
-                id="invited"
-                name="invited"
-                placeholder="Add Invites"
-                value={this.state.invited}
-                field="displayName"
-                style={{ width: "90%" }}
-                inputStyle={{ width: "100%" }}
-                onChange={e => this.setState({ invited: e.value })}
-                suggestions={this.state.userSuggestions}
-                completeMethod={this.suggestUsers.bind(this)}
-              />
-              <AddButton onClick={this.addInvitees}>+</AddButton>
+              <QSpan className="p-float-label">
+                <AutoInput
+                  id="invited"
+                  name="invited"
+                  value={this.state.invited}
+                  field="displayName"
+                  style={{ width: "90%" }}
+                  inputStyle={{ width: "100%" }}
+                  onChange={e => this.setState({ invited: e.value })}
+                  suggestions={this.state.userSuggestions}
+                  completeMethod={this.suggestUsers.bind(this)}
+                />
+                <label htmlFor="invited">Add Invites</label>
+                <AddButton onClick={this.addInvitees}>+</AddButton>
+              </QSpan>
               <hr />
               {/* Invitees List */}
               <ScrollPanel style={{ width: "100%", height: "150px" }}>
@@ -308,7 +312,7 @@ class UpdateMeeting extends Component {
             <QGroup>
               <legend>Questions:</legend>
               {/* Add Question */}
-              <span className="p-float-label">
+              <QSpan className="p-float-label">
                 <QInput
                   id="question"
                   name="question"
@@ -317,7 +321,7 @@ class UpdateMeeting extends Component {
                 />
                 <label htmlFor="question">Add Questions</label>
                 <AddButton onClick={this.addQestions}>+</AddButton>
-              </span>
+              </QSpan>
               <hr />
               {/* Questions List */}
               <ScrollPanel style={{ width: "100%", height: "75px" }}>
