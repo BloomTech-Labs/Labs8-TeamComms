@@ -135,15 +135,19 @@ class UpdateMeeting extends Component {
   handleUpdateConvo = async (e, userInput, history, dashboard, id) => {
     e.preventDefault();
     console.log(userInput);
+    let inviteeCheck = (userInput.invitees.length > 0)
+      ? userInput.invitees.map(invited => invited._id)
+      : [];
     const body = {
       title: userInput.title,
       description: userInput.description,
       startTime: moment(userInput.start),
       endtime: moment(userInput.end),
-      repeat: userInput.repeat
-      // invitees: userInput.invitees.map(invited => invited._id),
-      // questions: userInput.questions
+      repeat: userInput.repeat,
+      invitees: inviteeCheck,
+      questions: userInput.questions
     };
+
     const header = { Authorization: localStorage.getItem("jwt") };
     console.log("Header: ", header);
     console.log("Body: ", body);
