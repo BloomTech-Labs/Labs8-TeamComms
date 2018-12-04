@@ -16,7 +16,7 @@ server.options("*", cors());
 server.use(function(req, res, next) {
   res.header(
     "Access-Control-Allow-Origin",
-    "https://team-comm.netlify.com/",
+    "https://team-comm.netlify.com",
   );
   res.header(
     "Access-Control-Allow-Headers",
