@@ -10,16 +10,27 @@ import { callGoogleLogIn } from "../../actions/callGoogleLogIn";
 
 //this screen should return components necessary to build the convo list page.
 const ConvoGrid = styled.div`
-  display: grid;
-  grid-template-columns: 20rem auto;
-  grid-template-rows: 4rem auto auto;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+`;
+const FlexBox = styled.div`
+  display: flex;
+  width: 100%;
+  background: #f0f0f0;
+  border: 1px solid lightgrey;
+  @media (max-width: 500px) {
+    flex-direction: column;
+    padding-top: 1rem;
+  }
 `;
 
 class ScreensMeetingList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      toggleOverpane: true
+      filteredMeetings: [],
+      search: ""
     };
   }
   componentDidMount() {
@@ -31,13 +42,35 @@ class ScreensMeetingList extends Component {
     }
   }
 
+  filtered = (meetings, search) => {
+    this.setState({ filteredMeetings: meetings, search: search });
+  };
+
   render() {
+    if (this.state.search !== "") {
+      var filtered_meetings = (
+        <MeetingList
+          filteredMeetings={this.state.filteredMeetings}
+          search={this.state.search}
+        />
+      );
+    } else {
+      filtered_meetings = (
+        <MeetingList
+          filteredMeetings={this.props.meetings}
+          search={this.state.search}
+        />
+      );
+    }
+
     return (
       <ConvoGrid>
         <EasterEgg />
-        <QuickAdd toggleOverpane={this.toggleOverpane} />
-        <SearchBar />
-        <MeetingList />
+        <FlexBox>
+          <QuickAdd />
+          <SearchBar filtered={this.filtered} />
+        </FlexBox>
+        {filtered_meetings}
       </ConvoGrid>
     );
   }

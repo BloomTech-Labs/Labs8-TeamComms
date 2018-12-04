@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { callCreate } from "../../actions/index";
+import { callUpdateMeeting } from "../../actions/index";
 import styled from "styled-components";
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { AutoComplete } from "primereact/autocomplete";
-import { PrimaryButton, NavLink } from "../Common";
+import { PrimaryButton } from "../Common";
 import moment from "moment";
 import axios from "axios";
 
@@ -72,7 +72,7 @@ const Entry = styled.li`
   margin: 0 0 10px 0;
 `;
 
-class CreateMeeting extends Component {
+class UpdateMeeting extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -90,21 +90,32 @@ class CreateMeeting extends Component {
   }
 
   componentDidMount() {
-    var passedTitle;
-    if (this.props.history.location.state) {
-      passedTitle = this.props.history.location.state.title;
-      this.setState({ title: passedTitle });
-    } else {
-      passedTitle = "";
-    }
-
+    const token = localStorage.getItem("jwt");
     axios
       .get("https://teamcomm2.herokuapp.com/api/users/allusers", {
-        headers: { Authorization: localStorage.getItem("jwt") }
+        headers: { Authorization: token }
+      })
+      .then(res => {
+        this.setState({ users: res.data });
+      })
+      .catch(err => console.log(err));
+
+    const id = this.props.match.params.id;
+    axios
+      .get(`https://teamcomm2.herokuapp.com/api/meeting/findbyid/${id}`, {
+        headers: { Authorization: token }
       })
       .then(res => {
         console.log(res.data);
-        this.setState({ users: res.data });
+        this.setState({
+          title: res.data.title,
+          description: res.data.description,
+          start: moment(res.data.start_time).format("MM/DD/YYYY hh:mm A"),
+          end: moment(res.data.end_time).format("MM/DD/YYYY hh:mm A"),
+          repeat: res.data.repeat,
+          invitees: res.data.invitees,
+          questions: res.data.questions.map(question => question.question)
+        });
       })
       .catch(err => console.log(err));
   }
@@ -116,12 +127,12 @@ class CreateMeeting extends Component {
     });
   };
 
-  saveForLater = (e, userInput, history) => {
+  saveForLater = (e, userInput, history, id) => {
     let dashboard = true;
-    this.handleNewConvo(e, userInput, history, dashboard);
+    this.handleUpdateConvo(e, userInput, history, dashboard, id);
   };
 
-  handleNewConvo = async (e, userInput, history, dashboard) => {
+  handleUpdateConvo = async (e, userInput, history, dashboard, id) => {
     e.preventDefault();
     console.log(userInput);
     const body = {
@@ -129,14 +140,14 @@ class CreateMeeting extends Component {
       description: userInput.description,
       startTime: moment(userInput.start),
       endtime: moment(userInput.end),
-      repeat: userInput.repeat,
-      invitees: userInput.invitees.map(invited => invited._id),
-      questions: userInput.questions
+      repeat: userInput.repeat
+      // invitees: userInput.invitees.map(invited => invited._id),
+      // questions: userInput.questions
     };
     const header = { Authorization: localStorage.getItem("jwt") };
     console.log("Header: ", header);
     console.log("Body: ", body);
-    this.props.callCreate(e, header, body, history, dashboard);
+    this.props.callUpdateMeeting(e, header, body, history, dashboard, id);
     this.setState({
       title: "",
       description: "",
@@ -196,12 +207,13 @@ class CreateMeeting extends Component {
     };
     let history = this.props.history;
     let dashboard = false;
+    const id = this.props.match.params.id;
     return (
       <React.Fragment>
         <Main>
           <FormWrapper
             onSubmit={e => {
-              this.handleNewConvo(e, userInput, history, dashboard);
+              this.handleUpdateConvo(e, userInput, history, dashboard, id);
             }}
           >
             <Group>
@@ -277,7 +289,7 @@ class CreateMeeting extends Component {
                 name="invited"
                 placeholder="Add Invites"
                 value={this.state.invited}
-                field="email"
+                field="displayName"
                 style={{ width: "90%" }}
                 inputStyle={{ width: "100%" }}
                 onChange={e => this.setState({ invited: e.value })}
@@ -317,12 +329,12 @@ class CreateMeeting extends Component {
             {/* Save Button */}
             <SaveButton
               onClick={e => {
-                this.saveForLater(e, userInput, history);
+                this.saveForLater(e, userInput, history, id);
               }}
             >
               Save for Later
             </SaveButton>
-            <SaveButton type="submit">Save and View</SaveButton>
+            <SaveButton type="submit"> Save and View </SaveButton>
           </FormWrapper>
         </Main>
       </React.Fragment>
@@ -330,9 +342,13 @@ class CreateMeeting extends Component {
   }
 }
 
+const mapStateToProps = state => {
+  return state;
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   {
-    callCreate
+    callUpdateMeeting
   }
-)(CreateMeeting);
+)(UpdateMeeting);

@@ -16,11 +16,20 @@ import { InputText } from "primereact/inputtext";
 import { SubmitButton } from "../Common";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import axios from "axios";
 
 import("./css.css");
 
 let socket;
-let questionList = [];
+
+const AttendeeScroll = styled(ScrollPanel)`
+  display: none;
+  @media (min-width: 800px) {
+    display: block;
+    margin: 0 20px;
+    }
+  }
+`;
 
 const StyledInputText = styled(InputText)`
   width: 70%;
@@ -36,6 +45,13 @@ const Main = styled.div`
   flex-direction: column;
   max-width: 1024px;
   margin: 0 auto;
+  @media (min-width: 500px) {
+    flex-direction: row;
+  }
+`;
+
+const StyledTabView = styled(TabView)`
+  width: 100%;
 `;
 
 const StyledListAttendees = styled(ListBox)`
@@ -106,42 +122,25 @@ const QuestionForm = styled.form`
   }
 `;
 
-const CustomTabs = styled(TabPanel)`
-  &&&&&&&&&&&&&&&&&&&&&&&&& {
-    background-color: black;
-  }
-`;
+const CustomTabs = styled(TabPanel)``;
+
+const AttendeeTab = styled(TabPanel)``;
 
 class Meeting extends Component {
   constructor(props) {
     super(props);
+
     const { dispatch } = this.props;
+    this.attendeetab = React.createRef();
     this.state = {
-      ///
       color: "white",
       user: "JAshcraft",
       text: "",
-      users: [
-        { name: "Buddy Wackit" },
-        { name: "DeeDee Reynolds" },
-        { name: "Dennis Reynolds" },
-        { name: "Mac" }
-      ],
+      users: [],
       currentQuestion: "",
-      questions: [
-        { name: "what are we doing?" },
-        { name: "What is our meeting?" },
-        { name: "what color should we make it?" },
-        { name: "size? shape?" },
-        { name: "size? dude seriously?" },
-        { name: "what are we doing?" },
-        { name: "What is our meeting?" },
-        { name: "what color should we make it?" },
-        { name: "size? shape?" },
-        { name: "size? dude seriously?" }
-      ]
+      questions: [],
+      meeting: {}
     };
-
     // const socket_connect = function(room) {
     //   return io("localhost:8080/meeting", {
     //     query: "r_var=" + room
@@ -153,49 +152,45 @@ class Meeting extends Component {
         query: "r_var=" + room
       });
     };
-
     const id = this.props.match.params.id;
-    console.log("meeting id", id);
     socket = socket_connect(id);
-    socket.emit(
-      "update-users",
-      this.props.userData.user.displayName
-      // ? this.props.userData.user.displayName
-      // : this.state.user
-    );
 
-    //open initial socket connection on deployed server
+    socket.emit("update-users", this.props.userData.user.displayName);
 
-    //uncomment below to activate heroku socket
-    // socket = io.connect("https://teamcomm2.herokuapp.com:8080");
-    //dispatch socket to redux(not doing anything yet)
-    // dispatch(loadInitialDataSocket(socket));
-
-    //socket.on is the receiver, this updates the text from the server.
-
-    // socket.on("chat message");
-  }
-
-  componentDidMount() {
-    socket.on("update text", text => {
-      this.setState({ text: text });
-    });
-    socket.emit(
-      "update-users",
-      this.props.userData.user.displayName
-      // ? this.props.userData.user.displayName
-      // : this.state.user
-    );
     socket.on("update-users", users => {
-      socket.users = users;
-      this.setState({ users });
+      console.log(users);
+      return this.setState({ users });
     });
-    // socket.emit("meeting-init",(users,questions) => {
 
-    // })
+    socket.on("update text", text => {
+      return this.setState({ text });
+    });
+
     socket.on("question", questions => {
       return this.setState({ questions });
     });
+  }
+
+  componentDidMount() {
+    socket.emit("update-users", this.props.userData.user.displayName);
+    let header = { Authorization: localStorage.getItem("jwt") };
+    axios
+      .get(
+        `https://teamcomm2.herokuapp.com/api/meeting/findbyid/${
+          this.props.match.params.id
+        }`,
+        { headers: header }
+      )
+      .then(res => {
+        this.setState({
+          meeting: {
+            invitees: res.data.invitees,
+            title: res.data.title,
+            description: res.data.description,
+            startTime: res.data.start_time
+          }
+        });
+      });
   }
 
   componentWillUnmount() {
@@ -203,13 +198,10 @@ class Meeting extends Component {
   }
 
   handleChange = value => {
-    let status = "";
     if (value.length !== this.state.text.length) {
-      console.log("I am Emitting");
       socket.emit("update text", value);
-      status = "Changes not saved.";
     }
-    this.setState({ text: value, savedStatus: status });
+    this.setState({ text: value });
   };
 
   // updates state and sends new state to server to distribute to clients with emit
@@ -226,32 +218,12 @@ class Meeting extends Component {
   };
 
   render() {
-    console.log(this.state.questions);
     const id = this.props.match.params.id;
-    let title;
-    let description;
-    const attendeeList = [];
-    this.props.meetings.map((meeting, index) => {
-      if (meeting._id == id) {
-        title = meeting.title;
-        description = meeting.description;
-
-        const a = meeting.invitees.map(attendee => {
-          let name = attendee;
-          return attendeeList.push({ name: name });
-        });
-      }
-    });
-    console.log("ATT LIST", attendeeList);
-
-    // const questionList = [];
-    // let q = this.props.questions.map(question => {
-    //   let name = question.name;
-    //   return questionList.push({ name: name });
-    // });
+    let title = this.state.meeting.title;
+    let description = this.state.meeting.description;
 
     return (
-      <Main>
+      <Fragment>
         <MeetingDetails>
           <h1>Title: {title}</h1>
           <p>
@@ -265,70 +237,107 @@ class Meeting extends Component {
           </p>
           <div />
         </MeetingDetails>
-        <TabView>
-          <CustomTabs header="Attendees">
+
+        <Main>
+          <AttendeeScroll
+            ref={this.attendeetab}
+            style={{ width: "25%", height: "500px", background: "white" }}
+          >
             <Panel header="Invited">
               <StyledListAttendees
-                options={this.state.users}
-                optionLabel="name"
+                options={this.state.meeting.invitees}
+                optionLabel="displayName"
                 filter={true}
+                className={this.props.className}
               />
             </Panel>
             <Panel header="Current">
               <StyledListAttendees
+                id={Math.random()}
                 options={this.state.users}
-                optionLabel="name"
+                optionLabel="displayName"
                 filter={true}
+                className={this.props.className}
               />
             </Panel>
-          </CustomTabs>
-          <CustomTabs headerClassName={this.props.className} header="Questions">
-            <ScrollPanel style={{ width: "100%", height: "150px" }}>
-              <StyledListQuestions
-                options={this.state.questions}
-                optionLabel="name"
-              />
-            </ScrollPanel>
-            <QuestionForm onSubmit={this.sendQuestion}>
-              <StyledInputText
-                value={this.state.currentQuestion}
-                onChange={e =>
-                  this.setState({ currentQuestion: e.target.value })
-                }
-              />
-              <QuestionButton onClick={this.sendQuestion}>
-                Add A Question
-              </QuestionButton>
-            </QuestionForm>
-          </CustomTabs>
-          <CustomTabs
-            headerClassName={this.props.className}
-            header="Meeting Notes"
-          >
-            <EditorWrapper>
-              <Title>Meeting Notes</Title>
+          </AttendeeScroll>
+          <StyledTabView>
+            <AttendeeTab
+              className="p-tabview-selected"
+              headerClassName={this.props.headerClassName}
+              header="Attendees"
+            >
+              <Panel header="Invited">
+                <StyledListAttendees
+                  id={Math.random()}
+                  options={this.state.meeting.invitees}
+                  optionLabel="displayName"
+                  filter={true}
+                />
+              </Panel>
+              <Panel header="Current">
+                <StyledListAttendees
+                  optionId={Math.random()}
+                  options={this.state.users}
+                  optionLabel="displayName"
+                  filter={true}
+                />
+              </Panel>
+            </AttendeeTab>
+            <CustomTabs
+              headerClassName={this.props.className}
+              header="Questions"
+            >
+              <ScrollPanel
+                style={{ width: "100%", height: "150px" }}
+                className="custom"
+              >
+                <StyledListQuestions
+                  options={this.state.questions}
+                  optionLabel="question"
+                  className="custom"
+                />
+              </ScrollPanel>
+              <QuestionForm onSubmit={this.sendQuestion}>
+                <StyledInputText
+                  value={this.state.currentQuestion}
+                  onChange={e =>
+                    this.setState({ currentQuestion: e.target.value })
+                  }
+                />
+                <QuestionButton onClick={this.sendQuestion}>
+                  Add A Question
+                </QuestionButton>
+              </QuestionForm>
+            </CustomTabs>
+            <CustomTabs
+              headerClassName={this.props.className}
+              header="Meeting Notes"
+            >
+              <EditorWrapper>
+                <Title>Meeting Notes</Title>
+                <Editor
+                  theme="snow"
+                  value={this.state.text}
+                  onChange={this.handleChange}
+                  name="text"
+                />
 
-              <Editor
-                theme="snow"
-                value={this.state.text}
-                onChange={this.handleChange}
-                name="text"
-              />
+                <div style={{ display: "inline-block", marginLeft: "20px" }}>
+                  <Checkbox inputId="youtube" value="Upload to Youtube" />
+                  <label htmlFor="youtube">Upload to Youtube</label>
+                </div>
 
-              <div style={{ display: "inline-block", marginLeft: "20px" }}>
-                <Checkbox inputId="youtube" value="Upload to Youtube" />
-                <label htmlFor="youtube">Upload to Youtube</label>
-              </div>
-
-              <div style={{ display: "inline-block", marginLeft: "20px" }}>
-                <Checkbox inputId="repeat" value="repeat" />
-                <label htmlFor="repeat">Schedule a Follow Up Meeting</label>
-                <SubmitButton>Finalize Meeting</SubmitButton>
-              </div>
-            </EditorWrapper>
-          </CustomTabs>
-        </TabView>
-      </Main>
+                <div style={{ display: "inline-block", marginLeft: "20px" }}>
+                  <Checkbox inputId="repeat" value="repeat" />
+                  <label htmlFor="repeat">Schedule a Follow Up Meeting</label>
+                  <SubmitButton>Finalize Meeting</SubmitButton>
+                </div>
+              </EditorWrapper>
+            </CustomTabs>
+          </StyledTabView>
+        </Main>
+      </Fragment>
     );
   }
 }

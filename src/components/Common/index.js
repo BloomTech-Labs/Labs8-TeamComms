@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const PrimaryButton = styled.button`
   border: none;
@@ -66,6 +67,9 @@ export const BurgerButton = styled.div`
   margin-right: 20px;
   &:hover {
     color: #facc43 !important;
+  }
+  &&:first-child {
+    font-size: 35px;
   }
 `;
 
@@ -170,4 +174,16 @@ export const SubmitButton = styled(PrimaryButton)`
   margin-bottom: 1rem;
   border: none;
   margin-left: 10px;
+`;
+
+export const NavLink = styled(Link)`
+  font-size: 1rem;
+  text-decoration: none;
+  color: #ffffff;
+  cursor: pointer;
+  margin: 0 10px 0 10px;
+  @media (max-width: 1024px) {
+    margin: 0 auto;
+    padding: 20px;
+  }
 `;

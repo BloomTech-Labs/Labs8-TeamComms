@@ -12,7 +12,9 @@ import {
   CREATE_MEETING_CALLED,
   CREATE_MEETING_RETURNED,
   GET_MEETING_CALLED,
-  GET_MEETING_RETURNED
+  GET_MEETING_RETURNED,
+  MEETING_UPDATE_CALLED,
+  MEETING_UPDATE_RETURNED
 } from "../actions/types";
 
 export const reducer = (state = null, action) => {
@@ -73,6 +75,15 @@ export const reducer = (state = null, action) => {
       return {
         ...state,
         meetings: action.payload
+      };
+    case MEETING_UPDATE_CALLED:
+      return {
+        ...state
+      };
+    case MEETING_UPDATE_RETURNED:
+      return {
+        ...state,
+        meetings: [...state.meetings, action.payload]
       };
     default:
       return state;

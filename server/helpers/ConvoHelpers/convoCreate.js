@@ -20,16 +20,6 @@ const convoCreate = async (req, res) => {
       };
     });
   }
-  let mappedInvitees;
-  if (newConvo.invitees) {
-    mappedInvitees = newConvo.invitees.map(currentInvitee => {
-      return {
-        invitees: {
-          id: currentInvitee
-        }
-      };
-    });
-  }
   try {
     const convo = new Convo({
       creatorId: user._id,
@@ -39,13 +29,12 @@ const convoCreate = async (req, res) => {
       end_time: end,
       repeat: newConvo.repeat,
       questions: mappedQuestions,
-      invitees: mappedInvitees
+      invitees: newConvo.invitees
     });
 
     if (!convo) {
       throw new Error("Convo creation failed!");
     } else {
-      
       let convoExtract = convo.questions.map(q => {
         return {
           question: q.question,
@@ -65,6 +54,23 @@ const convoCreate = async (req, res) => {
       user.created_meetings.push(convo._id);
 
       await convo.save();
+
+      await Convo.findById(convo._id)
+        .populate({
+          path: "invitees",
+          select: "meetings"
+        })
+        .exec((err, query) => {
+          if (err) {
+            throw new Error(err);
+          } else {
+            query.invitees.forEach(async invitee => {
+              invitee.meetings.push(convo._id);
+              await invitee.save();
+            });
+          }
+        });
+
       await liveMeeting.save();
       await user.save();
 

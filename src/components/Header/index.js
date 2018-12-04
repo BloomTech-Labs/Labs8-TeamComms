@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { PrimaryButton, Logo, BurgerButton } from "../Common";
+import { PrimaryButton, Logo, BurgerButton, NavLink } from "../Common";
 import Stripe from "../Stripe";
 import { callLogOut, toggleOverpane } from "../../actions/index";
 
@@ -30,7 +30,7 @@ const Main = styled.div`
   display: none;
   @media (min-width: 1024px) {
     display: flex;
-    height: 5rem;
+    height: 6rem;
     align-items: center;
     justify-content: flex-end;
     grid-column: 2;
@@ -108,18 +108,6 @@ const HeaderText = styled.h1`
   text-align: center;
 `;
 
-const NavLink = styled(Link)`
-  font-size: 1rem;
-  text-decoration: none;
-  color: #ffffff;
-  cursor: pointer;
-  margin: 0 10px 0 10px;
-  @media (max-width: 1024px) {
-    margin: 0 auto;
-    padding: 20px;
-  }
-`;
-
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -132,7 +120,7 @@ class Header extends Component {
   // };
 
   toggleMenu = () => {
-    this.setState({ menu: !this.state.menu });
+    this.setState({ menu: this.props.history.location.state.menu });
   };
 
   render() {
@@ -142,14 +130,28 @@ class Header extends Component {
       <Fragment>
         <MobileMain>
           <BurgerButton onClick={this.toggleMenu}>
-            <i class="fas fa-bars" />
+            <NavLink
+              to={{
+                state: { menu: !this.state.menu }
+              }}
+            >
+              <i class="fas fa-bars" />
+            </NavLink>
           </BurgerButton>
           {this.state.menu ? (
             <MenuOverpane>
               {this.props.loginSuccess ? (
                 <Fragment>
-                  <NavLink to="/dashboard"> DASHBOARD </NavLink>
-                  <NavLink to="/favorites"> FAVORITES </NavLink>
+                  <div onClick={this.toggleMenu}>
+                    <NavLink
+                      to={{
+                        pathname: "/dashboard",
+                        state: { menu: !this.props.history.location.state.menu }
+                      }}
+                    >
+                      DASHBOARD
+                    </NavLink>
+                  </div>
                   <Link to="/register">
                     <RegisterButton>REFER A FRIEND </RegisterButton>
                   </Link>
@@ -164,7 +166,7 @@ class Header extends Component {
                 </Fragment>
               ) : (
                 <Fragment>
-                  <NavLink to="/features"> FEATURES </NavLink>{" "}
+                  <NavLink to="/features"> FEATURES </NavLink>
                   <NavLink to="/landing#pricing"> PRICING </NavLink>
                   <NavLink to="/about"> ABOUT US </NavLink>
                   <NavLink to="/register">

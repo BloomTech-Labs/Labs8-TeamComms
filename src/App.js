@@ -10,6 +10,7 @@ import styled from "styled-components";
 import Header from "./components/Header";
 import { Logo, Overpane } from "./components/Common";
 import CreateMeeting from "./components/CreateMeeting";
+import UpdateMeeting from "./components/UpdateMeeting";
 import socketClient from "./components/socketClient";
 import Meeting from "./components/Meeting";
 
@@ -29,7 +30,12 @@ const AppWrapper = styled.div`
   color: #374353;
   display: grid;
   grid-template-columns: 15rem auto;
-  grid-template-rows: 5rem 25rem 5rem;
+  grid-template-rows: 6rem 25rem 5rem;
+  @media (min-width: 1200px) {
+    max-width: 1100px;
+    margin: 0 auto;
+    border: 1px solid lightgrey;
+  }
 `;
 
 const FadedLogo = styled(Logo)`
@@ -79,6 +85,7 @@ class App extends Component {
             <Route path="/dashboard/:token?" component={ScreensMeetingList} />
             <Route path="/preferences" component={UserPreferences} />
             <Route path="/createMeeting" component={CreateMeeting} />
+            <Route path="/updateMeeting/:id" component={UpdateMeeting} />
           </Content>
         </Switch>
         <ScreensLogin />
