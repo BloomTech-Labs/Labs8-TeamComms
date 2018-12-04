@@ -9,4 +9,6 @@ Router.route('/create').post(hlpr.convoCreate);
 
 Router.route('/retrieve').get(hlpr.convoRetrieve)
 
+Router.route("/delete/:id").post(hlpr.convoDelete);
+
 module.exports = Router;
