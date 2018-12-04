@@ -11,7 +11,7 @@ const apiRoutes = require("./routes/_apiRoutes");
 
 const server = express();
 // let allowedOrigins = ["http:/localhost:8080", "https://team-comm.netlify.com/"];
-
+server.use(cors());
 server.options("*", cors());
 
 let app = server.listen(process.env.PORT || 8080, () => {
