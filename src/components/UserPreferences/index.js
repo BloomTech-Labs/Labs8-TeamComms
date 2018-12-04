@@ -28,8 +28,13 @@ const Group = styled.fieldset`
   flex-wrap: wrap;
   width: 50%;
   border: 2px groove white;
-  padding: 10px;
+  border-radius: 5px;
+  padding: 0 10px;
   margin: 10px 0;
+`;
+
+const NewSpan = styled.span`
+  margin: 25px 0;
 `;
 
 const TextInput = styled(InputText)`
@@ -42,17 +47,27 @@ const PassInput = styled(Password)`
   width: 100%;
 `;
 
+const NewDropdown = styled(Dropdown)`
+  margin-bottom: 25px;
+`;
+
 const SaveButton = styled(PrimaryButton)`
   width: 50%;
-  height: 75px;
+  height: 50px;
   color: white;
   border-radius: 5px;
   background: #25bea0;
   border: 1px solid grey;
-  font-size: 28px;
+  font-size: 1.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
   border: none;
+`;
+const Spacer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 25px;
 `;
 
 class UserPref extends Component {
@@ -127,9 +142,8 @@ class UserPref extends Component {
           >
             <Group>
               <legend>Account Details:</legend>
-              <br />
               {/* First Name */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <TextInput
                   id="givenName"
                   name="givenName"
@@ -138,10 +152,9 @@ class UserPref extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="givenName">First Name</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* Last Name */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <TextInput
                   id="familyName"
                   name="familyName"
@@ -150,10 +163,9 @@ class UserPref extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="familyName">Last Name</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* Display Name */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <TextInput
                   id="displayName"
                   name="displayName"
@@ -162,10 +174,9 @@ class UserPref extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="displayName">Display Name</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* Phone Number */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <MaskInput
                   id="phoneNumber"
                   name="phoneNumber"
@@ -174,10 +185,9 @@ class UserPref extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="phoneNumber">Phone Number</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* Organization */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <TextInput
                   id="organization"
                   name="organization"
@@ -185,13 +195,12 @@ class UserPref extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="organization">Organization</label>
-              </span>
+              </NewSpan>
             </Group>
             <Group>
               <legend>Reminder Preferences:</legend>
-              <br />
               {/* Email */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <TextInput
                   id="email"
                   name="email"
@@ -200,10 +209,9 @@ class UserPref extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="email">Email</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* SMS */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <MaskInput
                   id="phoneNumber"
                   name="phoneNumber"
@@ -212,10 +220,9 @@ class UserPref extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="phoneNumber">Phone Number</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* Notification Pref */}
-              <Dropdown
+              <NewDropdown
                 id="notify"
                 name="notification"
                 required
@@ -229,9 +236,8 @@ class UserPref extends Component {
             </Group>
             <Group>
               <legend>Change Password:</legend>
-              <br />
               {/* Current Password */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <PassInput
                   id="curPass"
                   name="curPass"
@@ -239,10 +245,9 @@ class UserPref extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="curPass">Current Password</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* New Password 1 */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <PassInput
                   id="newPass1"
                   name="newPass1"
@@ -250,10 +255,9 @@ class UserPref extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="newPass1">New Password</label>
-              </span>
-              <br />
+              </NewSpan>
               {/* New Password 2 */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <PassInput
                   id="newPass2"
                   name="newPass2"
@@ -261,14 +265,13 @@ class UserPref extends Component {
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="newPass2">Confirm New Password</label>
-              </span>
+              </NewSpan>
             </Group>
             <SaveButton type="submit"> Save </SaveButton>
             <Group>
               <legend>Premium Preferences:</legend>
-              <br />
               {/* Account Type */}
-              <span className="p-float-label">
+              <NewSpan className="p-float-label">
                 <TextInput
                   id="premium"
                   name="premium"
@@ -278,9 +281,10 @@ class UserPref extends Component {
                   }}
                 />
                 <label htmlFor="premium">Account Type</label>
-              </span>
-              <br />
-              <Stripe />
+              </NewSpan>
+              <Spacer>
+                <Stripe />
+              </Spacer>
             </Group>
           </FormWrapper>
         </Main>
