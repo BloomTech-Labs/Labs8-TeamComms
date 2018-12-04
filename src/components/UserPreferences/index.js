@@ -22,7 +22,6 @@ const FormWrapper = styled.form`
   padding: 15px;
   color: white;
 `;
-
 const Group = styled.fieldset`
   display: flex;
   flex-wrap: wrap;
@@ -32,7 +31,6 @@ const Group = styled.fieldset`
   padding: 0 10px;
   margin: 10px 0;
 `;
-
 const NewSpan = styled.span`
   margin: 25px 0;
 `;
