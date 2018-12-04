@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
+const User = require("../models/UserModel"); //Model
 
 const convoSchema = new mongoose.Schema({
   creatorId: {
@@ -70,6 +71,11 @@ const convoSchema = new mongoose.Schema({
     type: ObjectId,
     ref: "LiveMeeting"
   }
+});
+
+convoSchema.pre("remove", function(next) {
+  this.model(User).remove({ meetings: this._id }, next);
+  next();
 });
 
 const convoModel = mongoose.model("Convo", convoSchema);

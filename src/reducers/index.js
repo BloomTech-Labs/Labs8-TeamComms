@@ -14,7 +14,9 @@ import {
   GET_MEETING_CALLED,
   GET_MEETING_RETURNED,
   MEETING_UPDATE_CALLED,
-  MEETING_UPDATE_RETURNED
+  MEETING_UPDATE_RETURNED,
+  DELETE_MEETING_CALLED,
+  DELETE_MEETING_RETURNED
 } from "../actions/types";
 
 export const reducer = (state = null, action) => {
@@ -84,6 +86,19 @@ export const reducer = (state = null, action) => {
       return {
         ...state,
         meetings: [...state.meetings, action.payload]
+      };
+    case DELETE_MEETING_CALLED:
+      return {
+        ...state
+      };
+    case DELETE_MEETING_RETURNED:
+      let updatedMeetings = state.meetings.filter(meeting => {
+        return meeting._id !== action.payload;
+      });
+      console.log(updatedMeetings);
+      return {
+        ...state,
+        meetings: [...state.meetings, updatedMeetings]
       };
     default:
       return state;
