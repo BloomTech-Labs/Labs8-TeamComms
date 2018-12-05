@@ -8,18 +8,30 @@ const convoUpdate = async (req, res) => {
   const id = req.params.id;
 
   try {
-    let questionExtract;
-    if (newConvo.questions) {
-      questionExtract = newConvo.questions.map(q => {
+    let mappedQuestions = [];
+    if (newConvo.questions.length > 0) {
+      mappedQuestions = newConvo.questions.map(currentQuestion => {
         return {
-          question: q.question,
-          displayName: q.inquirer.displayName,
-          answered: q.answered,
-          created_at: q.created_at
+          inquirer: {
+            email: user.email,
+            displayName: user.displayName
+          },
+          question: currentQuestion
         };
       });
     }
 
+    let questionExtract = [];
+    if (mappedQuestions.length > 0) {
+      questionExtract = mappedQuestions.map(q => {
+        return {
+          question: q.question,
+          displayName: q.inquirer.displayName
+          // answered: q.answered,
+          // created_at: q.created_at
+        };
+      });
+    }
     await LiveMeeting.findOneAndUpdate(
       { meeting: id },
       { questions: questionExtract },
@@ -32,21 +44,7 @@ const convoUpdate = async (req, res) => {
       }
     );
 
-    let mappedQuestions;
-    if (newConvo.questions) {
-      mappedQuestions = newConvo.questions.map(currentQuestion => {
-        return {
-          inquirer: {
-            email: user.email,
-            displayName: user.displayName
-          },
-          question: currentQuestion
-        };
-      });
-    }
-
-    console.log(newConvo);
-    await Convo.findByIdAndUpdate(
+    const convo = await Convo.findByIdAndUpdate(
       id,
       {
         creatorId: user._id,
@@ -66,8 +64,8 @@ const convoUpdate = async (req, res) => {
         }
       }
     );
-    if (newConvo.invitees.length > 0) {
-      await Convo.findById(id)
+    if (convo.invitees.length > 0) {
+      await Convo.findById(convo._id)
         .populate({
           path: "invitees",
           select: "meetings"
@@ -77,7 +75,6 @@ const convoUpdate = async (req, res) => {
             throw new Error(err);
           } else {
             query.invitees.forEach(async invitee => {
-              console.log(invitee);
               if (invitee.meetings.includes(id) === true) {
                 invitee.meetings.push(id);
                 await invitee.save();
