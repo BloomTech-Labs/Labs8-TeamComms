@@ -1,27 +1,27 @@
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-
 const userSchema = new mongoose.Schema({
   googleId: String,
   stripeId: String,
+  zoomId: String,
   displayName: {
     type: String,
-    required: [true, 'displayName is required!']
+    required: [true, "displayName is required!"]
   },
   name: {
-    familyName: {type: String, required: [true, "familyName is required!"]},
-    givenName: {type: String, required: [true, "givenName is required!"]},
+    familyName: { type: String, required: [true, "familyName is required!"] },
+    givenName: { type: String, required: [true, "givenName is required!"] }
   },
   password: {
-    type: String,
+    type: String
   },
   phone_number: {
-    type: String,
-  }, 
+    type: String
+  },
   email: {
     type: String,
-    required: [true, 'User email is required!'],
+    required: [true, "User email is required!"],
     lowercase: true,
     validate: {
       isAsync: true,
@@ -65,15 +65,19 @@ const userSchema = new mongoose.Schema({
   meetings: [
     {
       type: ObjectId,
-      ref: 'Convo'
+      ref: "Convo"
     }
   ],
   created_meetings: [
     {
       type: ObjectId,
-      ref: 'Convo'
+      ref: "Convo"
     }
-  ]
+  ],
+  notificationPref: {
+    type: String,
+    default: "Email"
+  }
 });
 
 const userModel = mongoose.model("User", userSchema); // users collection
