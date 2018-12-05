@@ -93,12 +93,12 @@ export const reducer = (state = null, action) => {
       };
     case DELETE_MEETING_RETURNED:
       let updatedMeetings = state.meetings.filter(meeting => {
-        return meeting._id !== action.payload;
+        return meeting._id !== action.payload.id;
       });
-      console.log(updatedMeetings);
+      console.log("updated meetings", updatedMeetings);
       return {
         ...state,
-        meetings: [...state.meetings, updatedMeetings]
+        meetings: updatedMeetings
       };
     default:
       return state;
