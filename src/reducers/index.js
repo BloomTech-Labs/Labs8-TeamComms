@@ -22,19 +22,25 @@ import {
 export const reducer = (state = null, action) => {
   switch (action.type) {
     case REG_CALLED:
-      return { ...state, registrationCalled: true };
+      return { ...state, registrationCalled: true, loading: true };
     case REG_RETURNED:
       return {
         ...state,
         registrationSuccess: true,
         loginSuccess: true,
-        userData: action.payload
+        userData: action.payload,
+        loading: false
       };
 
     case LOGIN_CALLED:
-      return { ...state, loginCalled: true };
+      return { ...state, loginCalled: true, loading: true };
     case LOGIN_RETURNED:
-      return { ...state, loginSuccess: true, userData: action.payload };
+      return {
+        ...state,
+        loginSuccess: true,
+        userData: action.payload,
+        loading: false
+      };
     case LOGOUT_CALLED:
       return {
         ...state,
@@ -43,53 +49,68 @@ export const reducer = (state = null, action) => {
         registrationSuccess: false,
         loginCalled: false,
         loginReturned: false,
-        loginSuccess: false
+        loginSuccess: false,
+        loading: false
       };
     case GOOGLE_LOGIN_CALLED:
-      return { ...state, loginCalled: true };
+      return { ...state, loginCalled: true, loading: true };
     case GOOGLE_LOGIN_RETURNED:
-      return { ...state, loginSuccess: true, userData: action.payload };
+      return {
+        ...state,
+        loginSuccess: true,
+        userData: action.payload,
+        loading: false
+      };
     case TOGGLE_OVERPANE:
       return { ...state, overpane: action.payload };
     case UPDATE_CALLED:
       return {
-        ...state
+        ...state,
+        loading: true
       };
     case UPDATE_RETURNED:
       return {
         ...state,
-        userData: action.payload
+        userData: action.payload,
+        loading: false
       };
     case CREATE_MEETING_CALLED:
       return {
-        ...state
+        ...state,
+        loading: true
       };
     case CREATE_MEETING_RETURNED:
       return {
         ...state,
-        meetings: [...state.meetings, action.payload]
+        meetings: [...state.meetings, action.payload],
+        loading: false
       };
     case GET_MEETING_CALLED:
       return {
-        ...state
+        ...state,
+        loading: true
       };
     case GET_MEETING_RETURNED:
       return {
         ...state,
-        meetings: action.payload
+        meetings: action.payload,
+        loading: false
       };
     case MEETING_UPDATE_CALLED:
       return {
-        ...state
+        ...state,
+        loading: true
       };
     case MEETING_UPDATE_RETURNED:
       return {
         ...state,
-        meetings: [...state.meetings, action.payload]
+        meetings: [...state.meetings, action.payload],
+        loading: false
       };
     case DELETE_MEETING_CALLED:
       return {
-        ...state
+        ...state,
+        loading: true
       };
     case DELETE_MEETING_RETURNED:
       let updatedMeetings = state.meetings.filter(meeting => {
@@ -98,7 +119,8 @@ export const reducer = (state = null, action) => {
       console.log("updated meetings", updatedMeetings);
       return {
         ...state,
-        meetings: updatedMeetings
+        meetings: updatedMeetings,
+        loading: false
       };
     default:
       return state;
