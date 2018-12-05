@@ -3,6 +3,7 @@ export { callLogIn } from "./callLogIn";
 export { callUpdate } from "./callUpdate";
 export { loadInitialDataSocket } from "./loadInitialDataSocket";
 export { toggleOverpane } from "./toggleOverpane";
+export { toggleMobileMenu } from "./toggleMobileMenu";
 export { callLogOut } from "./callLogOut";
 export { callCreate } from "./callCreate";
 export { getMeetings } from "./getMeetings";

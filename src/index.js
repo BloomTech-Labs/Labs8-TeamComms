@@ -29,13 +29,24 @@ const initialState = {
   loginReturned: false,
   loginSuccess: false,
   loginError: false,
+  mobileMenu: false,
   meetings: [],
   questions: []
 };
 
 const persistConfig = {
   key: "root",
-  storage
+  storage: storage,
+  blacklist: [
+    "overpane",
+    "mobileMenu",
+    "regError",
+    "meetingError",
+    "loginError",
+    "meetingsLoading",
+    "userDataLoading",
+    "loginLoading"
+  ]
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
