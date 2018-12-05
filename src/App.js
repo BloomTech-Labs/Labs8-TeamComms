@@ -64,21 +64,9 @@ class App extends Component {
           path="/"
           render={props =>
             this.props.logInSuccess ? (
-              <Redirect
-                history={props.history}
-                to={{
-                  pathname: "/dashboard",
-                  state: { menu: !this.props.history.location.state.menu }
-                }}
-              />
+              <Redirect history={props.history} to="/dashboard" />
             ) : (
-              <Redirect
-                history={props.history}
-                to={{
-                  pathname: "/landing",
-                  state: { menu: !this.props.history.location.state.menu }
-                }}
-              />
+              <Redirect history={props.history} to="/landing" />
             )
           }
         />
