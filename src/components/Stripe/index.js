@@ -33,7 +33,7 @@ const Stripe = () => {
     <StripeCheckout
       label="Go Premium" //Original button
       name="Team Communicator"
-      description="Premium Account"
+      description="Use same email as Team Comm acct"
       panelLabel="Go Premium" //Submit button
       amount={999} //Amount in cents $9.99
       billingAddress={false} //Turn on to collect address *recommended(false for testing)
