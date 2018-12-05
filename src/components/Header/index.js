@@ -156,7 +156,7 @@ class Header extends Component {
                   <Link to="/register">
                     <RegisterButton>REFER A FRIEND </RegisterButton>
                   </Link>
-                  <Stripe />
+                  {this.props.userData.user.premium ? null : <Stripe />}
                   <LoginButton
                     onClick={() => {
                       this.props.callLogOut(history);
@@ -194,7 +194,7 @@ class Header extends Component {
               <Link to="/register">
                 <RegisterButton>REFER A FRIEND </RegisterButton>
               </Link>
-              <Stripe />
+              {this.props.userData.user.premium ? null : <Stripe />}
               <LoginButton
                 onClick={() => {
                   this.props.callLogOut(history);

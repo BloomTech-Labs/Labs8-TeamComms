@@ -8,3 +8,4 @@ export { callCreate } from "./callCreate";
 export { getMeetings } from "./getMeetings";
 export { callUpdateMeeting } from "./callUpdateMeeting";
 export { callDeleteMeeting } from "./callDeleteMeeting";
+export { premiumChange } from "./premiumChange";
