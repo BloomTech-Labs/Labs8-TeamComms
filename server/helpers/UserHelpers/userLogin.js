@@ -27,7 +27,8 @@ const userLogin = async (req, res) => {
           phone_number: user.phone_number,
           organization: user.organization,
           premium: user.premium,
-          is_active: user.is_active
+          is_active: user.is_active,
+          notificationPref: user.notificationPref
         }
       });
     }
