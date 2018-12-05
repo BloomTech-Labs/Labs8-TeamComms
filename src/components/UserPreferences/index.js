@@ -75,11 +75,14 @@ class UserPref extends Component {
       givenName: "",
       familyName: "",
       displayName: "",
-      phoneNumber: "",
+      phone_number: "",
       organization: "",
       email: "",
       premium: false,
-      notification: "email"
+      notificationPref: "",
+      oldPw: "",
+      newPw: "",
+      newPw2: ""
     };
   }
 
@@ -90,11 +93,14 @@ class UserPref extends Component {
       givenName: this.props.userData.user.name.givenName,
       familyName: this.props.userData.user.name.familyName,
       displayName: this.props.userData.user.displayName,
-      phoneNumber: this.props.userData.user.phoneNumber,
+      phone_number: this.props.userData.user.phone_number || "",
       organization: this.props.userData.user.organization,
       email: this.props.userData.user.email,
       premium: this.props.userData.user.premium,
-      notification: this.props.userData.user.notification
+      notificationPref: this.props.userData.user.notificationPref || "email",
+      oldPw: "",
+      newPw: "",
+      newPw2: ""
     });
   }
 
@@ -108,22 +114,38 @@ class UserPref extends Component {
   handleUpdateSubmit = (e, userInput, history) => {
     e.preventDefault();
     console.log(userInput);
-    // this.props.callUpdate(e, userInput, history);
+    if (userInput.notificationPref === undefined) {
+      alert("Please choose notification type");
+      return;
+    }
+    if (!userInput.oldPw && !userInput.newPw) {
+      // If no changes to password remove field from userInput
+      delete userInput.oldPw;
+      delete userInput.newPw;
+      this.props.callUpdate(e, userInput, history);
+    } else if (userInput.newPw !== userInput.newPw2) {
+      // If passwords dont match alert user
+      alert("New passwords do not match");
+    } else {
+      this.props.callUpdate(e, userInput, history);
+      this.this.setState({ oldPw: "", newPw: "", newPw2: "" });
+    }
   };
 
   render() {
     const userInput = {
-      givenName: this.state.givenName,
-      familyName: this.state.familyName,
+      name: {
+        givenName: this.state.givenName,
+        familyName: this.state.familyName
+      },
       displayName: this.state.displayName,
-      phoneNumber: this.state.phoneNumber,
+      phone_number: this.state.phone_number,
       organization: this.state.organization,
       email: this.state.email,
-      premium: this.state.premium,
-      notification: this.state.notification,
-      curPass: this.state.curPass,
-      newPass1: this.state.newPass1,
-      newPass2: this.state.newPass2
+      notificationPref: this.state.notificationPref,
+      oldPw: this.state.oldPw,
+      newPw: this.state.newPw,
+      newPw2: this.state.newPw2
     };
     let history = this.props.history;
     const notifyItems = [
@@ -177,9 +199,9 @@ class UserPref extends Component {
               <NewSpan className="p-float-label">
                 <MaskInput
                   id="phoneNumber"
-                  name="phoneNumber"
+                  name="phone_number"
                   mask="(999) 999-9999"
-                  value={this.state.phoneNumber}
+                  value={this.state.phone_number}
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="phoneNumber">Phone Number</label>
@@ -212,9 +234,9 @@ class UserPref extends Component {
               <NewSpan className="p-float-label">
                 <MaskInput
                   id="phoneNumber"
-                  name="phoneNumber"
+                  name="phone_number"
                   mask="(999) 999-9999"
-                  value={this.state.phoneNumber}
+                  value={this.state.phone_number}
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="phoneNumber">Phone Number</label>
@@ -222,13 +244,13 @@ class UserPref extends Component {
               {/* Notification Pref */}
               <NewDropdown
                 id="notify"
-                name="notification"
+                name="notificationPref"
                 required
-                value={this.state.notification}
+                value={this.state.notificationPref}
                 options={notifyItems}
                 placeholder="Select"
                 onChange={e => {
-                  this.setState({ notification: e.value });
+                  this.setState({ notificationPref: e.value });
                 }}
               />
             </Group>
@@ -238,8 +260,8 @@ class UserPref extends Component {
               <NewSpan className="p-float-label">
                 <PassInput
                   id="curPass"
-                  name="curPass"
-                  value={this.state.curPass}
+                  name="oldPw"
+                  value={this.state.oldPw}
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="curPass">Current Password</label>
@@ -248,8 +270,8 @@ class UserPref extends Component {
               <NewSpan className="p-float-label">
                 <PassInput
                   id="newPass1"
-                  name="newPass1"
-                  value={this.state.newPass1}
+                  name="newPw"
+                  value={this.state.newPw}
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="newPass1">New Password</label>
@@ -258,33 +280,33 @@ class UserPref extends Component {
               <NewSpan className="p-float-label">
                 <PassInput
                   id="newPass2"
-                  name="newPass2"
-                  value={this.state.newPass2}
+                  name="newPw2"
+                  value={this.state.newPw2}
                   onChange={this.changeHandler}
                 />
                 <label htmlFor="newPass2">Confirm New Password</label>
               </NewSpan>
             </Group>
             <SaveButton type="submit"> Save </SaveButton>
-            <Group>
-              <legend>Premium Preferences:</legend>
-              {/* Account Type */}
-              <NewSpan className="p-float-label">
-                <TextInput
-                  id="premium"
-                  name="premium"
-                  value={this.state.premium ? "Premium" : "Standard"}
-                  onChange={() => {
-                    alert('Use "Go Premium" button below');
-                  }}
-                />
-                <label htmlFor="premium">Account Type</label>
-              </NewSpan>
-              <Spacer>
-                <Stripe />
-              </Spacer>
-            </Group>
           </FormWrapper>
+          <Group>
+            <legend>Premium Preferences:</legend>
+            {/* Account Type */}
+            <NewSpan className="p-float-label">
+              <TextInput
+                id="premium"
+                name="premium"
+                value={this.state.premium ? "Premium" : "Standard"}
+                onChange={() => {
+                  alert('Use "Go Premium" button below');
+                }}
+              />
+              <label htmlFor="premium">Account Type</label>
+            </NewSpan>
+            <Spacer>
+              <Stripe />
+            </Spacer>
+          </Group>
         </Main>
       </React.Fragment>
     );
