@@ -1,6 +1,8 @@
 import React from "react";
 import StripeCheckout from "react-stripe-checkout";
 import styled from "styled-components";
+import { premiumChange } from "../../actions/index";
+import { connect } from "react-redux";
 import { PrimaryButton } from "../Common";
 import axios from "axios";
 
@@ -14,7 +16,7 @@ const CustomBtn = styled(PrimaryButton)`
   }
 `;
 
-const Stripe = () => {
+const Stripe = props => {
   const onToken = token => {
     // Stripe token is generated automatically and passed as props to this function
     // We make an call to an endpoint on our server and send the token
@@ -22,6 +24,7 @@ const Stripe = () => {
       .post("https://teamcomm2.herokuapp.com/api/stripe/payment", { token })
       .then(response => {
         console.log(response);
+        props.premiumChange();
         alert("Payment Success");
       })
       .catch(error => {
@@ -46,4 +49,13 @@ const Stripe = () => {
   );
 };
 
-export default Stripe;
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    premiumChange
+  }
+)(Stripe);

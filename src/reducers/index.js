@@ -18,7 +18,8 @@ import {
   MEETING_UPDATE_CALLED,
   MEETING_UPDATE_RETURNED,
   DELETE_MEETING_CALLED,
-  DELETE_MEETING_RETURNED
+  DELETE_MEETING_RETURNED,
+  PREMIUM_CHANGE
 } from "../actions/types";
 
 export const reducer = (state = null, action) => {
@@ -133,6 +134,10 @@ export const reducer = (state = null, action) => {
       });
       console.log("updated meetings", updatedMeetings);
       return { ...state, meetings: updatedMeetings, meetingsLoading: false };
+    case PREMIUM_CHANGE:
+      const user = state.userData.user;
+      user.premium = action.payload;
+      return { ...state, userData: user };
     default:
       return state;
   }
