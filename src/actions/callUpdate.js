@@ -3,10 +3,11 @@ import { UPDATE_CALLED, UPDATE_RETURNED } from "./types";
 
 export const callUpdate = (e, userData, history) => {
   e.preventDefault();
-
+  const header = { Authorization: localStorage.getItem("jwt") };
   const promise = axios.put(
     "https://teamcomm2.herokuapp.com/api/users/update",
-    userData
+    userData,
+    { headers: header }
   );
 
   return function(dispatch) {
@@ -15,6 +16,7 @@ export const callUpdate = (e, userData, history) => {
     });
     promise
       .then(res => {
+        console.log("******", res);
         dispatch({
           type: UPDATE_RETURNED,
           payload: res.data
@@ -24,7 +26,7 @@ export const callUpdate = (e, userData, history) => {
       })
       .catch(err =>
         console.log({
-          "Axios-Error": err.data
+          "Axios-Error": err
         })
       );
   };
