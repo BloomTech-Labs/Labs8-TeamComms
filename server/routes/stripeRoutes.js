@@ -23,7 +23,7 @@ Router.route("/payment").post(async (req, res) => {
       source: req.body.token.id,
       plan: process.env.STRIPE_PLAN_ID
     })
-    .catch(err => console.log(err));
+    .catch(err => res.send(err));
   // Add the stripeID and premium status to user
   await User.findOneAndUpdate(
     { email: req.body.token.email },

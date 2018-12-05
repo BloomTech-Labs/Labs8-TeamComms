@@ -280,9 +280,11 @@ class UserPref extends Component {
                 />
                 <label htmlFor="premium">Account Type</label>
               </NewSpan>
-              <Spacer>
-                <Stripe />
-              </Spacer>
+              {this.props.userData.user.premium ? null : (
+                <Spacer>
+                  <Stripe />
+                </Spacer>
+              )}
             </Group>
           </FormWrapper>
         </Main>
