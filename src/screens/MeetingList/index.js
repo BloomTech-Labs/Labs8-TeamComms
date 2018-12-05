@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import MeetingList from "../../components/MeetingList";
-import PropTypes from "prop-types";
 import QuickAdd from "../../components/QuickAdd";
 import SearchBar from "../../components/SearchBar/index";
 import styled from "styled-components";

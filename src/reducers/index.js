@@ -1,8 +1,10 @@
 import {
   REG_CALLED,
   REG_RETURNED,
+  REG_ERROR,
   LOGIN_CALLED,
   LOGIN_RETURNED,
+  LOGIN_ERROR,
   LOGOUT_CALLED,
   GOOGLE_LOGIN_CALLED,
   GOOGLE_LOGIN_RETURNED,
@@ -22,19 +24,45 @@ import {
 export const reducer = (state = null, action) => {
   switch (action.type) {
     case REG_CALLED:
-      return { ...state, registrationCalled: true };
+      return { ...state, registrationCalled: true, loginLoading: true };
     case REG_RETURNED:
       return {
         ...state,
         registrationSuccess: true,
         loginSuccess: true,
-        userData: action.payload
+        userData: action.payload,
+        loginLoading: false
+      };
+    case REG_ERROR:
+      return {
+        ...state,
+        registrationSuccess: false,
+        regError: true,
+        loginLoading: false
       };
 
     case LOGIN_CALLED:
-      return { ...state, loginCalled: true };
+      return {
+        ...state,
+        loginCalled: true,
+        loginLoading: true,
+        loginError: false
+      };
     case LOGIN_RETURNED:
-      return { ...state, loginSuccess: true, userData: action.payload };
+      return {
+        ...state,
+        loginSuccess: true,
+        userData: action.payload,
+        loginLoading: false,
+        loginError: false
+      };
+    case LOGIN_ERROR:
+      return {
+        ...state,
+        loginSuccess: false,
+        loginLoading: false,
+        loginError: true
+      };
     case LOGOUT_CALLED:
       return {
         ...state,
@@ -43,63 +71,68 @@ export const reducer = (state = null, action) => {
         registrationSuccess: false,
         loginCalled: false,
         loginReturned: false,
-        loginSuccess: false
+        loginSuccess: false,
+        loginLoading: false,
+        loginError: false,
+        userDataLoading: false,
+        meetingsLoading: false
       };
     case GOOGLE_LOGIN_CALLED:
-      return { ...state, loginCalled: true };
+      return { ...state, loginCalled: true, loginLoading: true };
     case GOOGLE_LOGIN_RETURNED:
-      return { ...state, loginSuccess: true, userData: action.payload };
+      return {
+        ...state,
+        loginSuccess: true,
+        userData: action.payload,
+        loginLoading: false
+      };
     case TOGGLE_OVERPANE:
       return { ...state, overpane: action.payload };
     case UPDATE_CALLED:
       return {
-        ...state
+        ...state,
+        userDataLoading: true
       };
     case UPDATE_RETURNED:
-      return {
-        ...state,
-        userData: action.payload
-      };
+      return { ...state, userData: action.payload, userDataLoading: false };
     case CREATE_MEETING_CALLED:
       return {
-        ...state
+        ...state,
+        meetingsLoading: true
       };
     case CREATE_MEETING_RETURNED:
       return {
         ...state,
-        meetings: [...state.meetings, action.payload]
+        meetings: [...state.meetings, action.payload],
+        meetignsLoading: false
       };
     case GET_MEETING_CALLED:
       return {
-        ...state
+        ...state,
+        meetingsLoading: true
       };
     case GET_MEETING_RETURNED:
       return {
         ...state,
-        meetings: action.payload
+        meetings: action.payload,
+        meetingsLoading: false
       };
     case MEETING_UPDATE_CALLED:
-      return {
-        ...state
-      };
+      return { ...state, meetingsLoading: true };
     case MEETING_UPDATE_RETURNED:
       return {
         ...state,
-        meetings: [...state.meetings, action.payload]
+        meetings: [...state.meetings, action.payload],
+        meetingsLoading: false
       };
     case DELETE_MEETING_CALLED:
-      return {
-        ...state
-      };
+      return { ...state, meetingsLoading: true };
     case DELETE_MEETING_RETURNED:
       let updatedMeetings = state.meetings.filter(meeting => {
-        return meeting._id !== action.payload;
+        return meeting._id !== action.payload.id;
       });
-      console.log(updatedMeetings);
-      return {
-        ...state,
-        meetings: [...state.meetings, updatedMeetings]
-      };
+      console.log("updated meetings", updatedMeetings);
+      return { ...state, meetings: updatedMeetings, meetingsLoading: false };
     default:
       return state;
   }

@@ -187,3 +187,14 @@ export const NavLink = styled(Link)`
     padding: 20px;
   }
 `;
+
+export const SpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 10000;
+`;

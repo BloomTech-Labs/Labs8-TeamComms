@@ -1,6 +1,6 @@
 import axios from "axios";
 import { GOOGLE_LOGIN_CALLED, GOOGLE_LOGIN_RETURNED } from "./types";
-import history from "../history";
+// import history from "../history";
 
 export const callGoogleLogIn = (history, token) => {
   let bearerToken = `Bearer ${token}`;
@@ -23,7 +23,7 @@ export const callGoogleLogIn = (history, token) => {
       })
       .catch(err => {
         console.log({ "Axios-Error": err });
-        history.push('/login')
+        history.push("/login");
       });
   };
 };

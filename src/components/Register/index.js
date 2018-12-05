@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import { PrimaryButton, Overpane, CloseButton } from "../Common";
+import { PrimaryButton, SpinnerWrapper } from "../Common";
+import { ProgressSpinner } from "primereact/progressspinner";
+import { Message } from "primereact/message";
 
 const Main = styled.div`
   margin: 0 auto;
@@ -50,7 +52,7 @@ const RegisterButton = styled(PrimaryButton)`
   margin-bottom: 15px;
   border: none;
 `;
-const SwitchLink = styled.p`
+const SwitchLink = styled.a`
   color: white;
   cursor: pointer;
 `;
@@ -115,6 +117,11 @@ class Register extends Component {
 
     return (
       <React.Fragment>
+        {this.props.loginLoading ? (
+          <SpinnerWrapper>
+            <ProgressSpinner />
+          </SpinnerWrapper>
+        ) : null}
         <Main>
           <FormWrapper
             method="post"
@@ -159,6 +166,13 @@ class Register extends Component {
                 />
                 <label htmlFor="email">Email</label>
               </NSpan>
+
+              {this.props.regError ? (
+                <Message
+                  severity="error"
+                  text="This email address is already registered."
+                />
+              ) : null}
               <br />
               {/* Password 1 */}
               <NSpan className="p-float-label">

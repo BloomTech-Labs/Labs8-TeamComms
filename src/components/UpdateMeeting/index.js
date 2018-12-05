@@ -328,7 +328,6 @@ class UpdateMeeting extends Component {
                 <AddButton onClick={this.addQuestions}>+</AddButton>
               </QSpan>
 
-
               <hr />
               {/* Questions List */}
               <ScrollPanel style={{ width: "100%", height: "75px" }}>

@@ -18,7 +18,6 @@ export const callDeleteMeeting = (e, header, id, history) => {
     promise
       .then(res => {
         console.log(res);
-
         dispatch({
           type: DELETE_MEETING_RETURNED,
           payload: res.data

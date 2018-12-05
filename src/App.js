@@ -8,10 +8,9 @@ import { connect } from "react-redux";
 import "./App.css";
 import styled from "styled-components";
 import Header from "./components/Header";
-import { Logo, Overpane } from "./components/Common";
+import { Logo } from "./components/Common";
 import CreateMeeting from "./components/CreateMeeting";
 import UpdateMeeting from "./components/UpdateMeeting";
-import socketClient from "./components/socketClient";
 import Meeting from "./components/Meeting";
 
 import { toggleOverpane } from "./actions/index";
@@ -48,11 +47,11 @@ const Content = styled.div`
   grid-row: 2;
 `;
 
-const Footer = styled.div`
-  grid-column: 2;
-  grid-row: 4;
-  background: black;
-`;
+// const Footer = styled.div`
+//   grid-column: 2;
+//   grid-row: 4;
+//   background: black;
+// `;
 
 class App extends Component {
   render() {

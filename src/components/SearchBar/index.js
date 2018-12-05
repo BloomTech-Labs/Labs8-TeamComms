@@ -60,7 +60,6 @@ class SearchBar extends Component {
 
     console.log("filteredMeetings", filteredMeetings);
     console.log("meetings", this.props.meetings);
-    var search = this.state.search;
 
     this.props.filtered(filteredMeetings, e.target.value);
   };
