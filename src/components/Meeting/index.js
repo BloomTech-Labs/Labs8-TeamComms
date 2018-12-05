@@ -252,7 +252,6 @@ class Meeting extends Component {
             </Panel>
             <Panel header="Current">
               <StyledListAttendees
-                id={Math.random()}
                 options={this.state.users}
                 optionLabel="displayName"
                 filter={true}
@@ -268,7 +267,6 @@ class Meeting extends Component {
             >
               <Panel header="Invited">
                 <StyledListAttendees
-                  id={Math.random()}
                   options={this.state.meeting.invitees}
                   optionLabel="displayName"
                   filter={true}
@@ -276,7 +274,6 @@ class Meeting extends Component {
               </Panel>
               <Panel header="Current">
                 <StyledListAttendees
-                  optionId={Math.random()}
                   options={this.state.users}
                   optionLabel="displayName"
                   filter={true}
