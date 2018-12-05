@@ -16,13 +16,11 @@ export const callUpdate = (e, userData, history) => {
     });
     promise
       .then(res => {
-        console.log("******", res);
         dispatch({
           type: UPDATE_RETURNED,
           payload: res.data
         });
         alert("User Preferences Updated");
-        console.log("Updated Info", res.data);
       })
       .catch(err =>
         console.log({
