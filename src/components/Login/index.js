@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
+import history from "../../history";
 import {
   PrimaryButton,
   Overpane,
@@ -109,10 +110,10 @@ class Login extends Component {
     };
     const overpane = !this.props.overpane;
 
-    const history = this.props.history;
     console.log("login history object", history);
     return (
       <Overpane
+        history={history}
         overpane={overpane}
         onClick={e => {
           this.props.toggleOverpane(!this.props.overpane);

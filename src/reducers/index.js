@@ -9,6 +9,7 @@ import {
   GOOGLE_LOGIN_CALLED,
   GOOGLE_LOGIN_RETURNED,
   TOGGLE_OVERPANE,
+  TOGGLE_MOBILE_MENU,
   UPDATE_CALLED,
   UPDATE_RETURNED,
   CREATE_MEETING_CALLED,
@@ -88,6 +89,8 @@ export const reducer = (state = null, action) => {
       };
     case TOGGLE_OVERPANE:
       return { ...state, overpane: action.payload };
+    case TOGGLE_MOBILE_MENU:
+      return { ...state, mobileMenu: action.payload };
     case UPDATE_CALLED:
       return {
         ...state,
