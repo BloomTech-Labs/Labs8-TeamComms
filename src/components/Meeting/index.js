@@ -158,7 +158,6 @@ class Meeting extends Component {
     socket.emit("update-users", this.props.userData.user.displayName);
 
     socket.on("update-users", users => {
-      console.log(users);
       return this.setState({ users });
     });
 
@@ -253,7 +252,6 @@ class Meeting extends Component {
             </Panel>
             <Panel header="Current">
               <StyledListAttendees
-                id={Math.random()}
                 options={this.state.users}
                 optionLabel="displayName"
                 filter={true}
@@ -269,7 +267,6 @@ class Meeting extends Component {
             >
               <Panel header="Invited">
                 <StyledListAttendees
-                  id={Math.random()}
                   options={this.state.meeting.invitees}
                   optionLabel="displayName"
                   filter={true}
@@ -277,7 +274,6 @@ class Meeting extends Component {
               </Panel>
               <Panel header="Current">
                 <StyledListAttendees
-                  optionId={Math.random()}
                   options={this.state.users}
                   optionLabel="displayName"
                   filter={true}
