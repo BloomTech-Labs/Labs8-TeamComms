@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import { PrimaryButton, Overpane, CloseButton } from "../Common";
+import { PrimaryButton } from "../Common";
 
 const Main = styled.div`
   margin: 0 auto;

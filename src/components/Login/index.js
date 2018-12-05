@@ -4,13 +4,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import {
-  PrimaryButton,
-  Logo,
-  Overpane,
-  CloseButton,
-  LoginLogo
-} from "../Common";
+import { PrimaryButton, Overpane, CloseButton, LoginLogo } from "../Common";
 import GoogleButton from "../GoogleButton";
 import { callLogIn, toggleOverpane } from "../../actions/index";
 
@@ -103,7 +97,7 @@ class Login extends Component {
     const history = this.props.history;
     return (
       <Overpane
-        overpane={this.props.overpane}
+        overpane={overpane}
         onClick={e => {
           this.props.toggleOverpane(!this.props.overpane);
         }}
@@ -114,7 +108,7 @@ class Login extends Component {
               this.props.toggleOverpane(!this.props.overpane);
             }}
           >
-            <i class="fas fa-times" />
+            <i className="fas fa-times" />
           </CloseButton>
           <LoginLogo img src="../images/logo.png" />
           <FormWrapper

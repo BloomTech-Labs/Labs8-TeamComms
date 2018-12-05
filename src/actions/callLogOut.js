@@ -1,4 +1,3 @@
-import axios from "axios";
 import { LOGOUT_CALLED } from "./types";
 
 export const callLogOut = history => {

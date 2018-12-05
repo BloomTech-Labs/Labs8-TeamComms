@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import { PrimaryButton, Logo, BurgerButton, NavLink } from "../Common";
+import { PrimaryButton, BurgerButton, NavLink } from "../Common";
 import Stripe from "../Stripe";
 import { callLogOut, toggleOverpane } from "../../actions/index";
 
@@ -97,16 +97,16 @@ const LoginButton = styled(PrimaryButton)`
   }
 `;
 
-const HeaderText = styled.h1`
-  pointer-events: none;
-  position: absolute;
-  margin: 0;
-  left: 50%;
-  width: 20rem;
-  margin-left: -10rem;
-  font-size: 1rem;
-  text-align: center;
-`;
+// const HeaderText = styled.h1`
+//   pointer-events: none;
+//   position: absolute;
+//   margin: 0;
+//   left: 50%;
+//   width: 20rem;
+//   margin-left: -10rem;
+//   font-size: 1rem;
+//   text-align: center;
+// `;
 
 class Header extends Component {
   constructor(props) {
@@ -135,7 +135,7 @@ class Header extends Component {
                 state: { menu: !this.state.menu }
               }}
             >
-              <i class="fas fa-bars" />
+              <i className="fas fa-bars" />
             </NavLink>
           </BurgerButton>
           {this.state.menu ? (

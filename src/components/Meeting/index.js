@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import io from "socket.io-client";
-import { loadInitialDataSocket } from "../../actions/index";
+// import { loadInitialDataSocket } from "../../actions/index";
 // import { Editor } from "primereact/editor";
 import { ListBox } from "primereact/listbox";
 import { Checkbox } from "primereact/checkbox";
@@ -130,7 +130,7 @@ class Meeting extends Component {
   constructor(props) {
     super(props);
 
-    const { dispatch } = this.props;
+    // const { dispatch } = this.props;
     this.attendeetab = React.createRef();
     this.state = {
       color: "white",
@@ -218,7 +218,7 @@ class Meeting extends Component {
   };
 
   render() {
-    const id = this.props.match.params.id;
+    // const id = this.props.match.params.id;
     let title = this.state.meeting.title;
     let description = this.state.meeting.description;
 

@@ -1,14 +1,3 @@
-import { callReg } from "./callReg";
-import { callLogIn } from "./callLogIn";
-import { callUpdate } from "./callUpdate";
-import { loadInitialDataSocket } from "./loadInitialDataSocket";
-import { toggleOverpane } from "./toggleOverpane";
-import { callLogOut } from "./callLogOut";
-import { callCreate } from "./callCreate";
-import { getMeetings } from "./getMeetings";
-import { callUpdateMeeting } from "./callUpdateMeeting";
-import { callDeleteMeeting } from "./callDeleteMeeting";
-
 export { callReg } from "./callReg";
 export { callLogIn } from "./callLogIn";
 export { callUpdate } from "./callUpdate";
