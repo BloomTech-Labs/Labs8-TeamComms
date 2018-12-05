@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import { getMeetings, callDeleteMeeting } from "../../actions/index";
 import styled from "styled-components";
 import { ProgressSpinner } from "primereact/progressspinner";
-
 import {
   EditButton,
   DeleteButton,
   ShareButton,
-  FavoriteButton
+  FavoriteButton,
+  SpinnerWrapper
 } from "../Common";
 
 import { Link } from "react-router-dom";
@@ -79,15 +79,14 @@ class MeetingList extends Component {
 
     return (
       <Fragment>
-        {this.props.loading ? (
-          <Fragment>
+        {this.props.meetingsLoading ? (
+          <SpinnerWrapper>
             <ProgressSpinner />
-          </Fragment>
-        ) : (
-          <div className="list">
-            {this.props.meetings.length === 0 ? this.empty() : meetings}
-          </div>
-        )}
+          </SpinnerWrapper>
+        ) : null}
+        <div className="list">
+          {this.props.meetings.length === 0 ? this.empty() : meetings}
+        </div>
       </Fragment>
     );
   }

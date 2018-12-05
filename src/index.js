@@ -17,114 +17,20 @@ const logger = createLogger({
 
 const initialState = {
   userData: {},
-  loading: false,
+  meetingsLoading: false,
+  userDataLoading: false,
+  meetingError: false,
   overpane: false,
   registrationCalled: false,
   registrationSuccess: false,
+  regError: false,
   loginCalled: false,
+  loginLoading: false,
   loginReturned: false,
   loginSuccess: false,
-  meetings: [
-    {
-      _id: 1425235,
-      invitees: ["Austin", "Jameson", "Tristan"],
-      title: "Meeting 1",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
-    },
-    {
-      _id: 234234,
-      invitees: ["Austin", "Jameson", "Tristan"],
-      title: "Meeting 2",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
-    },
-    {
-      _id: 334345345,
-      invitees: ["Austin", "Jameson"],
-      title: "Meeting 3",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
-    },
-    {
-      _id: 4,
-      invitees: ["Jerry", "Eric", "Jeff"],
-      title: "Meeting 4",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
-    },
-    {
-      _id: 5,
-      invitees: ["Erica", "Lily", "Brad"],
-      title: "Meeting 5",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
-    },
-    {
-      _id: 6,
-      invitees: ["Allen", "Vim", "Gary"],
-      title: "Meeting 6",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
-    },
-    {
-      _id: 7,
-      invitees: ["Allen", "Vim", "Gary"],
-      title: "Meeting 7",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
-    },
-    {
-      _id: 8,
-      invitees: ["Allen", "Vim", "Gary"],
-      title: "Meeting 8",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
-    },
-    {
-      _id: 9,
-      invitees: ["Allen", "Vim", "Gary"],
-      title: "Meeting 9",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
-    },
-    {
-      _id: 10,
-      invitees: ["Allen", "Vim", "Gary"],
-      title: "Meeting 10",
-      description:
-        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum lacinia sapien nec laoreet. Nullam fermentum tristique mauris, dictum mattis est bibendum quis."
-    }
-  ],
-  questions: [
-    {
-      qid: 1,
-      user: "JJ Ashcraft",
-      name: "Question 1",
-      question: "What planet do we live on?",
-      created_at: Date.now(),
-      answered: false,
-      answered_at: ""
-    },
-    {
-      qid: 2,
-      user: "JJ Ashcraft",
-      name: "Question 2",
-      question: "Are we gonna finish on time?",
-      created_at: Date.now(),
-      answered: false,
-      answered_at: ""
-    },
-    {
-      qid: 3,
-      user: "JJ Ashcraft",
-      name: "Question 3",
-      question: "Who made this?",
-      created_at: Date.now(),
-      answered: false,
-      answered_at: ""
-    }
-  ]
+  loginError: false,
+  meetings: [],
+  questions: []
 };
 
 const persistConfig = {

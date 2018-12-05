@@ -125,6 +125,7 @@ class Header extends Component {
 
   render() {
     const history = this.props.history;
+    console.log("header history object", history);
 
     return (
       <Fragment>

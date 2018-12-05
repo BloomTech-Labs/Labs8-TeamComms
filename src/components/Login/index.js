@@ -1,10 +1,17 @@
-import React, { Component } from "react";
-
+import React, { Component, Fragment } from "react";
+import { ProgressSpinner } from "primereact/progressspinner";
+import { Message } from "primereact/message";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import { PrimaryButton, Overpane, CloseButton, LoginLogo } from "../Common";
+import {
+  PrimaryButton,
+  Overpane,
+  CloseButton,
+  LoginLogo,
+  SpinnerWrapper
+} from "../Common";
 import GoogleButton from "../GoogleButton";
 import { callLogIn, toggleOverpane } from "../../actions/index";
 
@@ -83,8 +90,16 @@ class Login extends Component {
   };
 
   handleLogInSubmit = (e, userInput, history, overpane) => {
-    console.log(history, overpane);
+    console.log("history, overpane", history, overpane);
     this.props.callLogIn(e, userInput, history, overpane);
+  };
+
+  showError = () => {
+    this.messages.show({
+      severity: "error",
+      summary: "Error Message",
+      detail: "Username or Password Incorrect."
+    });
   };
 
   render() {
@@ -95,6 +110,7 @@ class Login extends Component {
     const overpane = !this.props.overpane;
 
     const history = this.props.history;
+    console.log("login history object", history);
     return (
       <Overpane
         overpane={overpane}
@@ -102,6 +118,11 @@ class Login extends Component {
           this.props.toggleOverpane(!this.props.overpane);
         }}
       >
+        {this.props.loginLoading ? (
+          <SpinnerWrapper>
+            <ProgressSpinner />
+          </SpinnerWrapper>
+        ) : null}
         <Main onClick={event => event.stopPropagation()}>
           <CloseButton
             onClick={e => {
@@ -113,7 +134,7 @@ class Login extends Component {
           <LoginLogo img src="../images/logo.png" />
           <FormWrapper
             method="post"
-            onSubmit={(e, history, overpane) => {
+            onSubmit={e => {
               this.handleLogInSubmit(
                 e,
                 userInput,
@@ -122,6 +143,12 @@ class Login extends Component {
               );
             }}
           >
+            {this.props.loginError ? (
+              <Message
+                severity="error"
+                text="Username or Password Incorrect."
+              />
+            ) : null}
             <br />
             {/* Email */}
             <NSpan className="p-float-label">
@@ -141,6 +168,7 @@ class Login extends Component {
                 id="password"
                 name="password"
                 required
+                feedback={false}
                 value={this.state.password}
                 onChange={this.changeHandler}
               />
