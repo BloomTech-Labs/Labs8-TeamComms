@@ -6,6 +6,7 @@ const convoUpdate = async (req, res) => {
   const user = req.user;
   const newConvo = req.body;
   const id = req.params.id;
+  console.log("user", req.user);
 
   try {
     let mappedQuestions = [];
@@ -83,7 +84,7 @@ const convoUpdate = async (req, res) => {
           }
         });
     }
-    res.status(201).send(newConvo);
+    return res.status(201).send(newConvo);
   } catch (err) {
     res.status(400).send(err);
   }

@@ -11,4 +11,6 @@ Router.route("/retrieve").get(hlpr.convoRetrieve);
 
 Router.route("/findbyid/:id").get(hlpr.convoFindById);
 
+Router.route("/delete/:id").delete(hlpr.convoDelete);
+
 module.exports = Router;

@@ -56,6 +56,7 @@ const PassInput = styled(Password)`
 `;
 const NSpan = styled.span`
   width: 100%;
+  margin-top: 10px;
 `;
 
 const LoginButton = styled(PrimaryButton)`

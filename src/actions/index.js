@@ -7,6 +7,7 @@ import { callLogOut } from "./callLogOut";
 import { callCreate } from "./callCreate";
 import { getMeetings } from "./getMeetings";
 import { callUpdateMeeting } from "./callUpdateMeeting";
+import { callDeleteMeeting } from "./callDeleteMeeting";
 
 export { callReg } from "./callReg";
 export { callLogIn } from "./callLogIn";
@@ -17,3 +18,4 @@ export { callLogOut } from "./callLogOut";
 export { callCreate } from "./callCreate";
 export { getMeetings } from "./getMeetings";
 export { callUpdateMeeting } from "./callUpdateMeeting";
+export { callDeleteMeeting } from "./callDeleteMeeting";
