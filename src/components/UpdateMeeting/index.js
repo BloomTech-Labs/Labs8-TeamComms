@@ -326,7 +326,8 @@ class UpdateMeeting extends Component {
                 />
                 <label htmlFor="question">Add Questions</label>
                 <AddButton onClick={this.addQuestions}>+</AddButton>
-              </span>
+              </QSpan>
+
 
               <hr />
               {/* Questions List */}

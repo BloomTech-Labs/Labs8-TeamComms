@@ -33,6 +33,7 @@ module.exports = async function(io) {
     //get username from userData, attach it to socket
     //push it to users array
     //send new array back to client
+    
     socket.on("update-users", async displayName => {
       liveMeeting.attendees.push({
         displayName: displayName,
