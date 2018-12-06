@@ -1,6 +1,7 @@
 import axios from "axios";
 import { GET_MEETING_CALLED, GET_MEETING_RETURNED } from "./types";
 
+
 export const getMeetings = () => {
   const header = { Authorization: localStorage.getItem("jwt") };
   const promise = axios.get(
