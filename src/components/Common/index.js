@@ -176,7 +176,7 @@ export const SubmitButton = styled(PrimaryButton)`
   margin-left: 10px;
 `;
 
-export const NavLink = styled(Link)`
+export const NavLink = styled.p`
   font-size: 1rem;
   text-decoration: none;
   color: #ffffff;
@@ -197,4 +197,25 @@ export const SpinnerWrapper = styled.div`
   width: 100%;
   position: absolute;
   z-index: 10000;
+`;
+
+export const Ul = styled.ul`
+  width: 18rem;
+  margin-left: 2rem;
+`;
+export const Li = styled.li`
+  font: 200 1rem/1.5 Helvetica, Verdana, sans-serif;
+
+  margin: 1rem;
+  transition: background-color 0.3s ease;
+
+  :hover {
+    // background-color: #25bea0;
+    p {
+      opacity: 1;
+    }
+  }
+  :last-child {
+    border: none;
+  }
 `;

@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import { PrimaryButton, SpinnerWrapper } from "../Common";
+import { PrimaryButton, SpinnerWrapper, Ul, Li } from "../Common";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 
@@ -123,6 +123,16 @@ class Register extends Component {
           </SpinnerWrapper>
         ) : null}
         <Main>
+          <p>
+            Team Communicator helps keep your remote team stay in sync by
+            managing your meetings in the cloud.
+          </p>
+          <Ul>
+            <Li> Track your Team's Questions and Meeting Notes</Li>
+            <Li> Upload Directly to Youtube </Li>
+            <Li> Quickly Transcribe Your Video's</Li>
+            <Li> Send Transcription's Via E-Mail</Li>
+          </Ul>
           <FormWrapper
             method="post"
             onSubmit={e => {

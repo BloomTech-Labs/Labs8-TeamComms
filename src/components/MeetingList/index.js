@@ -7,7 +7,7 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { SpinnerWrapper } from "../Common";
 
 import { Link } from "react-router-dom";
-import MeetingCard from "../Card";
+import MeetingCard from "../MeetingCard";
 
 class MeetingList extends Component {
   componentDidMount() {

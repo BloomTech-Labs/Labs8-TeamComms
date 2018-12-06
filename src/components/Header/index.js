@@ -143,9 +143,15 @@ class Header extends Component {
                 <Fragment>
                   <div>
                     <NavLink
-                      to={{
-                        pathname: "/dashboard"
+                      onClick={() => {
+                        this.props.toggleMobileMenu(
+                          !this.props.mobileMenu,
+                          "/dashboard"
+                        );
                       }}
+                      // to={{
+                      //   pathname: "/dashboard"
+                      // }}
                     >
                       DASHBOARD
                     </NavLink>
@@ -164,7 +170,16 @@ class Header extends Component {
                 </Fragment>
               ) : (
                 <Fragment>
-                  <NavLink to="/features"> FEATURES </NavLink>
+                  <NavLink
+                    onClick={() => {
+                      this.props.toggleMobileMenu(
+                        !this.props.mobileMenu,
+                        "/features"
+                      );
+                    }}
+                  >
+                    FEATURES
+                  </NavLink>
                   <NavLink to="/landing#pricing"> PRICING </NavLink>
                   <NavLink to="/about"> ABOUT US </NavLink>
                   <NavLink to="/register">
@@ -186,7 +201,17 @@ class Header extends Component {
         <Main>
           {this.props.loginSuccess ? (
             <HeaderWrapper>
-              <NavLink to="/dashboard"> DASHBOARD </NavLink>
+              <NavLink
+                onClick={() => {
+                  this.props.toggleMobileMenu(
+                    this.props.mobileMenu,
+                    "/dashboard"
+                  );
+                }}
+              >
+                {" "}
+                DASHBOARD{" "}
+              </NavLink>
               <NavLink to="/favorites"> FAVORITES </NavLink>
               <Link to="/register">
                 <RegisterButton>REFER A FRIEND </RegisterButton>
