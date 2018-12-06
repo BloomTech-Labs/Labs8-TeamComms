@@ -128,6 +128,7 @@ class CreateMeeting extends Component {
       start: "",
       end: "",
       repeat: false,
+      createZoom: false,
       invitees: [],
       invited: "",
       invite: "",
@@ -177,8 +178,9 @@ class CreateMeeting extends Component {
       title: userInput.title,
       description: userInput.description,
       startTime: moment(userInput.start),
-      endtime: moment(userInput.end),
+      endTime: moment(userInput.end),
       repeat: userInput.repeat,
+      createZoom: userInput.createZoom,
       invitees: userInput.invitees.map(invited => invited._id),
       questions: userInput.questions
     };
@@ -192,6 +194,7 @@ class CreateMeeting extends Component {
       start: "",
       end: "",
       repeat: "",
+      createZoom: "",
       invitees: [],
       questions: [],
       invited: "",
@@ -249,6 +252,7 @@ class CreateMeeting extends Component {
       start: this.state.start,
       end: this.state.end,
       repeat: this.state.repeat,
+      createZoom: this.state.createZoom,
       invitees: this.state.invitees,
       questions: this.state.questions
     };
@@ -325,6 +329,19 @@ class CreateMeeting extends Component {
                   Repeat
                 </label>
               </NewSpan>
+            {/* ZOOM! */}
+              <NewSpan>
+                <Checkbox
+                  inputId="createZoom"
+                  name="createZoom"
+                  onChange={e => this.setState({ createZoom: !this.state.createZoom })}
+                  checked={this.state.createZoom === true}
+                />
+                <label htmlFor="createZoom" className="p-checkbox-label">
+                  Create ZOOM Meeting!
+                </label>
+              </NewSpan>
+
             </Group>
 
             <Group>
