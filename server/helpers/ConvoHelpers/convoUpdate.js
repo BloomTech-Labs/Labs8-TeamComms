@@ -76,8 +76,8 @@ const convoUpdate = async (req, res) => {
             throw new Error(err);
           } else {
             query.invitees.forEach(async invitee => {
-              if (invitee.meetings.includes(id) === true) {
-                invitee.meetings.push(id);
+              if (invitee.meetings.includes(convo._id) === false) {
+                invitee.meetings.push(convo._id);
                 await invitee.save();
               }
             });
