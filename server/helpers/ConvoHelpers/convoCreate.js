@@ -44,7 +44,7 @@ const convoCreate = async (req, res) => {
 
   try {
 
-    // zoom api call if requested from user
+    // zoom api call if requested from user 
     if (newConvo.createZoom === true) {
       // there is an optional param accepted to callZoomAPI() 
         // to create new zoom meeting
