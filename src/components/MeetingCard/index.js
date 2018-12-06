@@ -1,7 +1,7 @@
 import history from "../../history";
+import { connect } from "react-redux";
 import React, { Component } from "react";
 import "./convoList.css";
-import { connect } from "react-redux";
 import { getMeetings, callDeleteMeeting } from "../../actions/index";
 import styled from "styled-components";
 import { ProgressSpinner } from "primereact/progressspinner";
@@ -43,12 +43,12 @@ class MeetingCard extends Component {
           >
             <i className="fas fa-trash" />
           </DeleteButton>
-          <ShareButton>
+          {/* <ShareButton>
             <i className="fas fa-share" />
           </ShareButton>
           <FavoriteButton>
             <i className="fas fa-star" />
-          </FavoriteButton>
+          </FavoriteButton> */}
         </div>
         <div>
           <Link to={`/meeting/${this.props.meeting._id}`}>
@@ -63,4 +63,10 @@ class MeetingCard extends Component {
   }
 }
 
-export default MeetingCard;
+const mapStateToProps = state => {
+  return state;
+};
+export default connect(
+  mapStateToProps,
+  { callDeleteMeeting }
+)(MeetingCard);

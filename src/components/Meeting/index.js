@@ -25,6 +25,24 @@ import("./css.css");
 
 let socket;
 
+const Group = styled.fieldset`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45%;
+  border: 2px groove white;
+  border-radius: 5px;
+  padding: 0 10px 20px 10px;
+  margin: 10px 15px;
+  legend {
+    padding: 8px;
+  }
+  @media (max-width: 800px) {
+    flex-direction: column;
+    width: 90%;
+  }
+`;
+
 const StyledChart = styled(Chart)`
   margin-bottom: 10px;
 `;
@@ -119,10 +137,15 @@ const Editor = styled(ReactQuill)`
 const MeetingDetails = styled.div`
   display:flex;
   margin: 30px;
+  justify-content: center;
+  align-items: center;
   h1 {
-    color: orange;
+    color: #ffffff;
     font-size: 20px;
-    padding-top: 16px;
+  }
+  h2 {
+    color: #facc43;
+    font-size: 20px;
   }
   p {
     color: white;
@@ -253,7 +276,7 @@ class Meeting extends Component {
         {
           data: [
             this.state.users ? this.state.users.length : 0,
-            this.state.meeting.invitees ? this.state.meeting.invitees.length : 0
+            this.meeting.invitees ? this.meeting.invitees.length : 0
           ],
           backgroundColor: ["#facc43", "#25BEA0"]
           // hoverBackgroundColor: [
@@ -265,22 +288,15 @@ class Meeting extends Component {
       ]
     };
     // const id = this.props.match.params.id;
-    let title = this.state.meeting.title;
-    let description = this.state.meeting.description;
+    let title = this.meeting.title;
+    let description = this.meeting.description;
 
     return (
       <Fragment>
         <MeetingDetails>
-          <h1>Title: {this.meeting.title}</h1>
-          <p>
-            <br />
-            {this.meeting.description}
-          </p>
-          <h1>Schedule:</h1>
-          <p>
-            <br />
-            Mondays at 8am
-          </p>
+          <h1>Meeting Details: &nbsp;</h1> <h2>{this.meeting.title}</h2>
+          &nbsp;
+          <p>{this.meeting.description}</p>
           <div />
         </MeetingDetails>
 
@@ -292,8 +308,7 @@ class Meeting extends Component {
             <StyledChart type="pie" data={data} />
             <Panel header="Invited">
               <StyledListAttendees
-                dataKey={true}
-                options={this.state.meeting.invitees}
+                options={this.meeting.invitees}
                 optionLabel="displayName"
                 filter={true}
                 className={this.props.className}
@@ -393,11 +408,13 @@ class Meeting extends Component {
             </CustomTabs>
           </StyledMobileTabView>
 
-          <StyledTabView
-            activeIndex={this.state.activeIndex}
-            onTabChange={e => this.setState({ activeIndex: e.index })}
-            renderActiveOnly={false}
-          >
+          <StyledTabView>
+            {/* // activeIndex=
+            // {this.state.activeIndex}
+            // // onTabChange=
+            // {e => this.setState({ activeIndex: e.index })}
+            // // renderActiveOnly=
+            // {false} */}
             <CustomTabs
               headerClassName={this.props.className}
               header="Questions"
@@ -437,19 +454,11 @@ class Meeting extends Component {
                   name="text"
                 />
 
-                <div style={{ display: "inline-block", marginLeft: "20px" }}>
-                  <FileUpload
-                    name="youtube"
-                    url="./upload"
-                    mode="basic"
-                    auto={true}
-                  />
+                {/* <div style={{ display: "inline-block", marginLeft: "20px" }}>
                   <label htmlFor="youtube">Upload to Youtube</label>
-                </div>
+                </div> */}
 
                 <div style={{ display: "inline-block", marginLeft: "20px" }}>
-                  <Checkbox inputId="repeat" value="repeat" />
-                  <label htmlFor="repeat">Schedule a Follow Up Meeting</label>
                   {this.confirm ? (
                     <SubmitButton
                       style={{ width: "200px" }}
@@ -461,7 +470,7 @@ class Meeting extends Component {
                     <SubmitButton
                       style={{ backgroundColor: "gray", width: "200px" }}
                     >
-                      See Creator
+                      Creator Only
                     </SubmitButton>
                   )}
                 </div>

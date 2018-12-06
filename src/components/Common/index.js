@@ -186,6 +186,9 @@ export const NavLink = styled.p`
     margin: 0 auto;
     padding: 20px;
   }
+  @media (max-width: 800px) {
+    margin: 0 auto;
+  }
 `;
 
 export const SpinnerWrapper = styled.div`
