@@ -17,6 +17,9 @@ import history from "../../history";
 const Description = styled.p`
   color: lightgrey;
 `;
+import { SpinnerWrapper } from "../Common";
+import { Link } from "react-router-dom";
+import MeetingCard from "../MeetingCard";
 
 class MeetingList extends Component {
   componentDidMount() {
@@ -90,10 +93,10 @@ class MeetingList extends Component {
       </div>
     );
   }
+
   render() {
     var meetings = this.props.filteredMeetings.map(meeting => {
-      // Will replace this with a Card component
-      return this.card(meeting);
+      return <MeetingCard key={Math.random()} meeting={meeting} />;
     });
 
     return (

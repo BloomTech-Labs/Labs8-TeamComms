@@ -11,6 +11,32 @@ import {
 } from "../../actions/index";
 import history from "../../history";
 
+const TextLink = styled(Link)`
+  @media (min-width: 800px) {
+    margin-right: 10px;
+    text-align: center;
+    color: white;
+    &:hover {
+      color: lightgrey;
+    }
+  }
+`;
+
+export const MenuLink = styled.p`
+  font-size: 1rem;
+  text-decoration: none;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: center;
+  @media (min-width: 800px) {
+    margin-right: 10px;
+    color: white;
+    &:hover {
+      color: lightgrey;
+    }
+  }
+`;
+
 const HeaderWrapper = styled.div`
   color: #ffffff;
   display: flex;
@@ -48,10 +74,9 @@ const MobileMain = styled.div`
     display: flex;
     height: 5rem;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: center;
     grid-column: 2;
     grid-row: 1;
-    margin-right: 100px;
   }
   @media (min-width: 500px) {
     margin-right: 0px;
@@ -141,18 +166,30 @@ class Header extends Component {
             <MenuOverpane>
               {this.props.loginSuccess ? (
                 <Fragment>
-                  <div>
-                    <NavLink
-                      to={{
-                        pathname: "/dashboard"
-                      }}
-                    >
-                      DASHBOARD
-                    </NavLink>
-                  </div>
-                  <Link to="/register">
+                  <MenuLink
+                    onClick={() => {
+                      this.props.toggleMobileMenu(
+                        !this.props.mobileMenu,
+                        "/dashboard"
+                      );
+                    }}
+                  >
+                    DASHBOARD
+                  </MenuLink>
+
+                  <NavLink
+                    onClick={() => {
+                      this.props.toggleMobileMenu(
+                        !this.props.mobileMenu,
+                        "/preferences"
+                      );
+                    }}
+                  >
+                    PREFERENCES
+                  </NavLink>
+                  {/* <Link to="/register">
                     <RegisterButton>REFER A FRIEND </RegisterButton>
-                  </Link>
+                  </Link> */}
                   {this.props.userData.user.premium ? null : <Stripe />}
                   <LoginButton
                     onClick={() => {
@@ -164,12 +201,21 @@ class Header extends Component {
                 </Fragment>
               ) : (
                 <Fragment>
-                  <NavLink to="/features"> FEATURES </NavLink>
-                  <NavLink to="/landing#pricing"> PRICING </NavLink>
-                  <NavLink to="/about"> ABOUT US </NavLink>
-                  <NavLink to="/register">
-                    <LoginButton> REGISTER </LoginButton>
+                  <NavLink
+                    onClick={() => {
+                      this.props.toggleMobileMenu(
+                        !this.props.mobileMenu,
+                        "/features"
+                      );
+                    }}
+                  >
+                    FEATURES
                   </NavLink>
+                  <Link to="/landing#pricing"> PRICING </Link>
+                  <Link to="/about"> ABOUT US </Link>
+                  <Link to="/register">
+                    <LoginButton> REGISTER </LoginButton>
+                  </Link>
                   <LoginButton
                     onClick={() => {
                       this.props.toggleOverpane(!this.props.overpane);
@@ -186,8 +232,17 @@ class Header extends Component {
         <Main>
           {this.props.loginSuccess ? (
             <HeaderWrapper>
-              <NavLink to="/dashboard"> DASHBOARD </NavLink>
-              <NavLink to="/favorites"> FAVORITES </NavLink>
+              <NavLink
+                onClick={() => {
+                  this.props.toggleMobileMenu(
+                    this.props.mobileMenu,
+                    "/dashboard"
+                  );
+                }}
+              >
+                DASHBOARD
+              </NavLink>
+              <TextLink to="/preferences">PREFERENCES</TextLink>
               <Link to="/register">
                 <RegisterButton>REFER A FRIEND </RegisterButton>
               </Link>
@@ -202,9 +257,9 @@ class Header extends Component {
             </HeaderWrapper>
           ) : (
             <HeaderWrapper>
-              <NavLink to="/features">FEATURES</NavLink>
+              {/* <NavLink to="/features">FEATURES</NavLink>
               <NavLink to="/landing#pricing">PRICING</NavLink>
-              <NavLink to="/about">ABOUT US</NavLink>
+              <NavLink to="/about">ABOUT US</NavLink> */}
               <Link to="/register">
                 <RegisterButton>REGISTER</RegisterButton>
               </Link>

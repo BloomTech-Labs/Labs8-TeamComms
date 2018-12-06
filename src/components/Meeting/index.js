@@ -9,6 +9,7 @@ import { Checkbox } from "primereact/checkbox";
 import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
+import { FileUpload } from "primereact/fileupload";
 import { Panel } from "primereact/panel";
 import { TabView, TabPanel } from "primereact/tabview";
 import { ScrollPanel } from "primereact/scrollpanel";
@@ -17,10 +18,34 @@ import { SubmitButton } from "../Common";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
+import { Chart } from "primereact/chart";
+//adding chart value to compare invitees count to attendees count
 
 import("./css.css");
 
 let socket;
+
+const Group = styled.fieldset`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45%;
+  border: 2px groove white;
+  border-radius: 5px;
+  padding: 0 10px 20px 10px;
+  margin: 10px 15px;
+  legend {
+    padding: 8px;
+  }
+  @media (max-width: 800px) {
+    flex-direction: column;
+    width: 90%;
+  }
+`;
+
+const StyledChart = styled(Chart)`
+  margin-bottom: 10px;
+`;
 
 const AttendeeScroll = styled(ScrollPanel)`
   display: none;
@@ -45,13 +70,24 @@ const Main = styled.div`
   flex-direction: column;
   max-width: 1024px;
   margin: 0 auto;
-  @media (min-width: 500px) {
+  @media (min-width: 800px) {
     flex-direction: row;
   }
 `;
 
 const StyledTabView = styled(TabView)`
   width: 100%;
+  display: block;
+  @media (max-width: 800px) {
+    display: none;
+  }
+`;
+
+const StyledMobileTabView = styled(TabView)`
+  width: 100%;
+  @media (min-width: 500px) {
+    display: none;
+  }
 `;
 
 const StyledListAttendees = styled(ListBox)`
@@ -101,10 +137,15 @@ const Editor = styled(ReactQuill)`
 const MeetingDetails = styled.div`
   display:flex;
   margin: 30px;
+  justify-content: center;
+  align-items: center;
   h1 {
-    color: orange;
+    color: #ffffff;
     font-size: 20px;
-    padding-top: 16px;
+  }
+  h2 {
+    color: #facc43;
+    font-size: 20px;
   }
   p {
     color: white;
@@ -134,6 +175,9 @@ class Meeting extends Component {
     const { dispatch } = this.props;
     this.attendeetab = React.createRef();
     this.state = {
+      activeIndex: 2,
+      color: "white",
+      user: "JAshcraft",
       text: "",
       users: [],
       currentQuestion: "",
@@ -217,7 +261,7 @@ class Meeting extends Component {
   sendQuestion = e => {
     e.preventDefault();
     socket.emit("question", this.state.currentQuestion);
-    this.setState({currentQuestion: ""})
+    this.setState({ currentQuestion: "" });
   };
 
   finalizeMeeting = e => {
@@ -226,19 +270,33 @@ class Meeting extends Component {
   };
 
   render() {
+    const data = {
+      labels: ["attendees", "invitees"],
+      datasets: [
+        {
+          data: [
+            this.state.users ? this.state.users.length : 0,
+            this.meeting.invitees ? this.meeting.invitees.length : 0
+          ],
+          backgroundColor: ["#facc43", "#25BEA0"]
+          // hoverBackgroundColor: [
+          //     "#FF6384",
+          //     "#36A2EB",
+
+          // ]
+        }
+      ]
+    };
+    // const id = this.props.match.params.id;
+    let title = this.meeting.title;
+    let description = this.meeting.description;
+
     return (
       <Fragment>
         <MeetingDetails>
-          <h1>Title: {this.meeting.title}</h1>
-          <p>
-            <br />
-            {this.meeting.description}
-          </p>
-          <h1>Schedule:</h1>
-          <p>
-            <br />
-            Mondays at 8am
-          </p>
+          <h1>Meeting Details: &nbsp;</h1> <h2>{this.meeting.title}</h2>
+          &nbsp;
+          <p>{this.meeting.description}</p>
           <div />
         </MeetingDetails>
 
@@ -247,6 +305,7 @@ class Meeting extends Component {
             ref={this.attendeetab}
             style={{ width: "25%", height: "500px", background: "white" }}
           >
+            <StyledChart type="pie" data={data} />
             <Panel header="Invited">
               <StyledListAttendees
                 options={this.meeting.invitees}
@@ -264,12 +323,18 @@ class Meeting extends Component {
               />
             </Panel>
           </AttendeeScroll>
-          <StyledTabView>
+
+          <StyledMobileTabView
+            activeIndex={this.state.activeIndex}
+            onTabChange={e => this.setState({ activeIndex: e.index })}
+            renderActiveOnly={false}
+          >
             <AttendeeTab
               className="p-tabview-selected"
               headerClassName={this.props.headerClassName}
               header="Attendees"
             >
+              <StyledChart type="pie" data={data} />
               <Panel header="Invited">
                 <StyledListAttendees
                   options={this.meeting.invitees}
@@ -325,13 +390,75 @@ class Meeting extends Component {
                 />
 
                 <div style={{ display: "inline-block", marginLeft: "20px" }}>
-                  <Checkbox inputId="youtube" value="Upload to Youtube" />
+                  <FileUpload
+                    name="youtube"
+                    url="./upload"
+                    mode="basic"
+                    auto={true}
+                  />
                   <label htmlFor="youtube">Upload to Youtube</label>
                 </div>
 
                 <div style={{ display: "inline-block", marginLeft: "20px" }}>
                   <Checkbox inputId="repeat" value="repeat" />
                   <label htmlFor="repeat">Schedule a Follow Up Meeting</label>
+                  <SubmitButton>Finalize Meeting</SubmitButton>
+                </div>
+              </EditorWrapper>
+            </CustomTabs>
+          </StyledMobileTabView>
+
+          <StyledTabView>
+            {/* // activeIndex=
+            // {this.state.activeIndex}
+            // // onTabChange=
+            // {e => this.setState({ activeIndex: e.index })}
+            // // renderActiveOnly=
+            // {false} */}
+            <CustomTabs
+              headerClassName={this.props.className}
+              header="Questions"
+            >
+              <ScrollPanel
+                style={{ width: "100%", height: "150px" }}
+                className="custom"
+              >
+                <StyledListQuestions
+                  options={this.state.questions}
+                  optionLabel="question"
+                  className="custom"
+                />
+              </ScrollPanel>
+              <QuestionForm onSubmit={this.sendQuestion}>
+                <StyledInputText
+                  value={this.state.currentQuestion}
+                  onChange={e =>
+                    this.setState({ currentQuestion: e.target.value })
+                  }
+                />
+                <QuestionButton onClick={this.sendQuestion}>
+                  Add A Question
+                </QuestionButton>
+              </QuestionForm>
+            </CustomTabs>
+            <CustomTabs
+              headerClassName={this.props.className}
+              header="Meeting Notes"
+            >
+              <EditorWrapper>
+                <Title>Meeting Notes</Title>
+                <Editor
+                  theme="snow"
+                  value={this.state.text}
+                  onChange={this.handleChange}
+                  name="text"
+                />
+
+                {/* <div style={{ display: "inline-block", marginLeft: "20px" }}>
+                  <label htmlFor="youtube">Upload to Youtube</label>
+                </div> */}
+
+                <div style={{ display: "inline-block", marginLeft: "20px" }}>
                   {this.confirm ? (
                     <SubmitButton
                       style={{ width: "200px" }}
@@ -343,7 +470,7 @@ class Meeting extends Component {
                     <SubmitButton
                       style={{ backgroundColor: "gray", width: "200px" }}
                     >
-                      See Creator
+                      Creator Only
                     </SubmitButton>
                   )}
                 </div>
