@@ -134,8 +134,6 @@ class Meeting extends Component {
     const { dispatch } = this.props;
     this.attendeetab = React.createRef();
     this.state = {
-      color: "white",
-      user: "JAshcraft",
       text: "",
       users: [],
       currentQuestion: "",
