@@ -9,79 +9,95 @@ module.exports = async function(io) {
     let room = socket.handshake["query"]["r_var"]; //creates a room with the query string sent over by the client
     socket.join(room);
     let liveMeeting = await LiveMeeting.findOne({ meeting: room });
-    let attendees = liveMeeting.attendees;
-    mtg.to(room).emit("question", liveMeeting.questions);
+    if (!mtg.adapter.rooms[room].questions) {
+      mtg.adapter.rooms[room].questions = liveMeeting.questions;
+    }
+    if (mtg.adapter.rooms[room].text) {
+      mtg.to(room).emit("update text", mtg.adapter.rooms[room].text);
+    }
+    mtg.to(room).emit("question", mtg.adapter.rooms[room].questions);
 
-    socket.on("update text", async text => {
+    socket.on("update text", text => {
       //can we update the content of the database here? TODO
+      mtg.adapter.rooms[room].text = text;
       mtg.to(room).emit("update text", text); //updates text to only the individuals currently in the room id of the /meeting namespace
     });
 
-    socket.on("question", async function(question) {
-      liveMeeting.questions.push({
+    socket.on("question", function(question) {
+      mtg.adapter.rooms[room].questions.push({
         question: question,
         socket_id: socket.id,
         displayName: socket.displayName
       });
-
-      await liveMeeting.save((err, confirm) => {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(confirm);
-          mtg.to(room).emit("question", liveMeeting.questions);
-        }
-      });
+      mtg.to(room).emit("question", mtg.adapter.rooms[room].questions);
     });
-
     //get username from userData, attach it to socket
     //push it to users array
     //send new array back to client
+    socket.on("update-users", displayName => {
+      console.log(mtg.adapter.rooms[room].length);
+      if (mtg.adapter.rooms[room].length === 1) {
+        mtg.adapter.rooms[room].attended = []
+        mtg.adapter.rooms[room].users = [];
+        mtg.adapter.rooms[room].users.push({
+          displayName: displayName,
+          id: socket.id
+        });
+        mtg.adapter.rooms[room].attended.push({
+          displayName: displayName,
+          id: socket.id
+        });
+      } else {
+        mtg.adapter.rooms[room].attended.push({
+          displayName: displayName,
+          id: socket.id
+        });
+        mtg.adapter.rooms[room].users.push({
+          displayName: displayName,
+          id: socket.id
+        });
+      }
 
-    socket.on("update-users", async displayName => {
-      attendees.push({
-        displayName: displayName,
-        id: socket.id
-      });
-      await LiveMeeting.findByIdAndUpdate(
-        liveMeeting._id,
-        { attendees: attendees },
-        (err, meeting) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log("UPDATE USERS UPDATE SUCCESS", meeting);
-            console.log("ATTENDEES INSIDE UPDATE USERS", attendees)
-            mtg.to(room).emit("update-users", attendees);
-          }
-        }
-      );
+      console.log(mtg.adapter.rooms[room].users);
+      mtg.to(room).emit("update-users", mtg.adapter.rooms[room].users);
     });
 
     //get id from socket disconnect
     //filter out that socket
     //send new array back to client
-    socket.on("disconnect", async () => {
-      console.log(attendees)
-      attendees = attendees.filter(user => {
-        return user.id !== socket.id;
-      });
-      console.log("ATTENDEES", attendees)
-      await LiveMeeting.findByIdAndUpdate(
-        liveMeeting._id,
-        { attendees: attendees },
-        (err, meeting) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log("DISCONNECT UPDATE SUCCESS", meeting);
-            mtg.to(room).emit("update-users", attendees);
-            console.log("user disconnected");
-          }
-        }
-      );
+    socket.on("disconnect", () => {
+      console.log("DC", mtg.adapter.rooms[room]);
+      let newList;
+      if (mtg.adapter.rooms[room]) {
+        mtg.adapter.rooms[room].users = mtg.adapter.rooms[room].users.filter(user => {
+          return user.id !== socket.id;
+        });
+        newList = mtg.adapter.rooms[room].users;
+      } else {
+        newList = [];
+      }
+      console.log("NEW LIST", newList);
+      mtg.to(room).emit("update-users", newList);
     });
 
-    // mtg.to(room).emit("update-users", attendees);
+    socket.on("finalize", async () => {
+      console.log(liveMeeting._id);
+      await LiveMeeting.findByIdAndUpdate(
+        liveMeeting._id,
+        {
+          questions: mtg.adapter.rooms[room].questions,
+          notes: mtg.adapter.rooms[room].text,
+          attended: mtg.adapter.rooms[room].attended
+        },
+        { new: true }
+      ).exec((err, confirm) => {
+        if (err) {
+          console.log(err);
+        } else {
+          mtg.to(room).emit("finalize")
+          console.log(confirm);
+        }
+      });
+    });
   });
 };

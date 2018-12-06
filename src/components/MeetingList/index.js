@@ -18,7 +18,7 @@ const Description = styled.p`
 `;
 
 class MeetingList extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.getMeetings();
   }
   empty() {
