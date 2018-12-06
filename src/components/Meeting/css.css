@@ -92,8 +92,9 @@
   opacity: 1;
 }
 
-@media (min-width: 800px) {
+/* @media (min-width: 800px) {
   #pr_id_3_header_0 {
     display: none;
   }
-}
+
+} */

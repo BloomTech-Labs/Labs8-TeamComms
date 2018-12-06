@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { Ul, Li } from "../../components/Common";
 
 //this screen should return components necessary to build the landing page.
 
@@ -40,27 +41,6 @@ const LandingImage = styled.img`
   grid-column: 2;
   grid-row: 1;
   max-width: 1000px;
-`;
-
-const Ul = styled.ul`
-  width: 18rem;
-  margin-left: 2rem;
-`;
-const Li = styled.li`
-  font: 200 1rem/1.5 Helvetica, Verdana, sans-serif;
-
-  margin: 1rem;
-  transition: background-color 0.3s ease;
-
-  :hover {
-    // background-color: #25bea0;
-    p {
-      opacity: 1;
-    }
-  }
-  :last-child {
-    border: none;
-  }
 `;
 
 const Email = styled.input`

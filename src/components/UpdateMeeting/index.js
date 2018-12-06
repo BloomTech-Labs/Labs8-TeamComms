@@ -10,33 +10,58 @@ import { AutoComplete } from "primereact/autocomplete";
 import { PrimaryButton } from "../Common";
 import moment from "moment";
 import axios from "axios";
+import { Message } from "primereact/message";
 
 const Main = styled.div`
-  padding: 5px 0 5px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const FormWrapper = styled.form`
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
-  color: white;
+  background-color: white;
+  align-items: center;
+  justify-content: center;
 `;
 const Group = styled.fieldset`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 45%;
   border: 2px groove white;
   border-radius: 5px;
   padding: 0 10px 20px 10px;
   margin: 10px 15px;
+  legend {
+    padding: 8px;
+  }
+  @media (max-width: 800px) {
+    flex-direction: column;
+    width: 90%;
+  }
 `;
 const QGroup = styled.fieldset`
-  width: 94%;
+  width: 83%;
   border: 2px groove white;
   border-radius: 5px;
   padding: 0 10px 20px 10px;
-  margin: 10px 15px;
+  // margin: 10px 15px;
+  legend {
+    padding: 8px;
+  }
+  @media (max-width: 800px) {
+    flex-direction: column;
+    width: 90%;
+  }
 `;
 const NewSpan = styled.span`
   margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
 `;
 const QSpan = styled.span`
   margin-top: 20px;
@@ -47,9 +72,22 @@ const TextInput = styled(InputText)`
 `;
 const QInput = styled(InputText)`
   width: 90%;
+  &&& {
+    margin-top: 20px;
+    input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
 `;
 const AutoInput = styled(AutoComplete)`
   width: 90%;
+  &&& {
+    input {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+  }
 `;
 
 const SaveButton = styled(PrimaryButton)`
@@ -63,11 +101,13 @@ const SaveButton = styled(PrimaryButton)`
   margin: 10px 15px;
   border: none;
 `;
+
 const AddButton = styled.button`
   border: none;
-  border-radius: 50px;
-  padding: 10px;
-  margin: 0 auto;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 10px 10px 10px 10px;
+  height: 31px;
   background: #25bea0;
   color: white;
   font-weight: bolder;
@@ -76,6 +116,7 @@ const AddButton = styled.button`
 
 const Entry = styled.li`
   margin: 0 0 10px 0;
+  color: black;
 `;
 
 class UpdateMeeting extends Component {
@@ -88,6 +129,7 @@ class UpdateMeeting extends Component {
       end: "",
       repeat: false,
       invitees: [],
+      invited: "",
       invite: "",
       question: "",
       questions: [],
@@ -187,12 +229,21 @@ class UpdateMeeting extends Component {
 
   addInvitees = e => {
     e.preventDefault();
-    if (this.state.invited) {
+    var possible;
+    if (this.state.userSuggestions) {
+      // const possible = this.state.userSuggestions.filter(user => {
+      //   return Object.values(user).includes(this.state.invited);
+      possible = this.state.userSuggestions;
+    }
+
+    console.log("usersug", this.state.userSuggestions);
+    console.log("possible", possible);
+    if (possible.includes(this.state.invited)) {
       const invitees = this.state.invitees;
       invitees.push(this.state.invited);
       this.setState({ invitees, invited: "" });
     } else {
-      alert("Enter an Name");
+      alert("User does not exist.");
     }
   };
 
@@ -224,33 +275,35 @@ class UpdateMeeting extends Component {
         <Main>
           <FormWrapper
             onSubmit={e => {
-              this.handleUpdateConvo(e, userInput, history, dashboard, id);
+              this.handleNewConvo(e, userInput, history, dashboard, id);
             }}
           >
             <Group>
               <legend>Meeting Details:</legend>
               {/* Title */}
-              <NewSpan className="p-float-label">
+              <NewSpan>
                 <TextInput
                   id="title"
                   name="title"
                   value={this.state.title}
                   onChange={this.changeHandler}
+                  placeholder="Meeting Name"
                 />
-                <label htmlFor="title">Meeting Name</label>
               </NewSpan>
+
               {/* Description */}
-              <NewSpan className="p-float-label">
+              <NewSpan className="">
                 <TextInput
                   id="description"
                   name="description"
                   value={this.state.description}
                   onChange={this.changeHandler}
+                  placeholder="Description"
                 />
-                <label htmlFor="description">Description</label>
               </NewSpan>
+
               {/* Start */}
-              <NewSpan className="p-float-label">
+              <NewSpan className="">
                 <Calendar
                   showTime={true}
                   hourFormat="12"
@@ -260,11 +313,9 @@ class UpdateMeeting extends Component {
                   onChange={this.changeHandler}
                   inputClassName="input"
                   className="datePicker"
+                  placeholder="Start"
                 />
-                <label htmlFor="start">Start</label>
-              </NewSpan>
-              {/* End */}
-              <NewSpan className="p-float-label">
+
                 <Calendar
                   showTime={true}
                   hourFormat="12"
@@ -274,77 +325,88 @@ class UpdateMeeting extends Component {
                   onChange={this.changeHandler}
                   inputClassName="input"
                   className="datePicker"
+                  placeholder="End"
                 />
-                <label htmlFor="end">End</label>
               </NewSpan>
+
               {/* Repeat */}
-              <Checkbox
-                inputId="repeat"
-                name="repeat"
-                onChange={e => this.setState({ repeat: !this.state.repeat })}
-                checked={this.state.repeat === true}
-              />
-              <label htmlFor="repeat" className="p-checkbox-label">
-                Repeat
-              </label>
+              <NewSpan>
+                <Checkbox
+                  inputId="repeat"
+                  name="repeat"
+                  onChange={e => this.setState({ repeat: !this.state.repeat })}
+                  checked={this.state.repeat === true}
+                />
+                <label htmlFor="repeat" className="p-checkbox-label">
+                  Repeat
+                </label>
+              </NewSpan>
             </Group>
+
             <Group>
               <legend>Invited:</legend>
               {/* Add Invitees */}
-              <QSpan className="p-float-label">
+              <QSpan className="">
                 <AutoInput
                   id="invited"
                   name="invited"
                   value={this.state.invited}
-                  field="displayName"
+                  field="email"
                   style={{ width: "90%" }}
                   inputStyle={{ width: "100%" }}
                   onChange={e => this.setState({ invited: e.value })}
                   suggestions={this.state.userSuggestions}
                   completeMethod={this.suggestUsers.bind(this)}
+                  placeholder="Add Invitees"
+                  onSubmit={this.addInvitees}
                 />
-                <label htmlFor="invited">Add Invites</label>
                 <AddButton onClick={this.addInvitees}>+</AddButton>
               </QSpan>
-              <hr />
+
               {/* Invitees List */}
-              <ScrollPanel style={{ width: "100%", height: "150px" }}>
-                {this.state.invitees.map(invited => (
-                  <Entry>{invited.displayName}</Entry>
-                ))}
+              <ScrollPanel
+                style={{ width: "100%", height: "150px", marginTop: "20px" }}
+              >
+                {this.state.invitees.map(invited => {
+                  return <Entry>{invited.displayName}</Entry>;
+                })}
               </ScrollPanel>
             </Group>
-            <QGroup>
+            <QGroup onSubmit={this.addQuestions}>
               <legend>Questions:</legend>
               {/* Add Question */}
-              <QSpan className="p-float-label">
+              <QSpan className="">
                 <QInput
                   id="question"
                   name="question"
                   value={this.state.question}
                   onChange={this.changeHandler}
+                  placeholder="Add Questions"
                 />
-                <label htmlFor="question">Add Questions</label>
+
                 <AddButton onClick={this.addQuestions}>+</AddButton>
               </QSpan>
 
-              <hr />
               {/* Questions List */}
-              <ScrollPanel style={{ width: "100%", height: "75px" }}>
+              <ScrollPanel
+                style={{ width: "100%", height: "75px", marginTop: "20px" }}
+              >
                 {this.state.questions.map(question => (
                   <Entry>{question}</Entry>
                 ))}
               </ScrollPanel>
             </QGroup>
             {/* Save Button */}
-            <SaveButton
-              onClick={e => {
-                this.saveForLater(e, userInput, history, id);
-              }}
-            >
-              Save for Later
-            </SaveButton>
-            <SaveButton type="submit"> Save and View </SaveButton>
+            <NewSpan>
+              <SaveButton
+                onClick={e => {
+                  this.saveForLater(e, userInput, history, id);
+                }}
+              >
+                Save for Later
+              </SaveButton>
+              <SaveButton type="submit">Save and View</SaveButton>
+            </NewSpan>
           </FormWrapper>
         </Main>
       </React.Fragment>
@@ -352,12 +414,8 @@ class UpdateMeeting extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return state;
-};
-
 export default connect(
-  mapStateToProps,
+  null,
   {
     callUpdateMeeting
   }
