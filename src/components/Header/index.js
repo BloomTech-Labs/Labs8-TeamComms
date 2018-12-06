@@ -150,6 +150,16 @@ class Header extends Component {
                       DASHBOARD
                     </NavLink>
                   </div>
+                  <NavLink
+                    onClick={() => {
+                      this.props.toggleMobileMenu(
+                        !this.props.mobileMenu,
+                        "/preferences"
+                      );
+                    }}
+                  >
+                    PREFERENCES
+                  </NavLink>
                   <Link to="/register">
                     <RegisterButton>REFER A FRIEND </RegisterButton>
                   </Link>
@@ -187,7 +197,16 @@ class Header extends Component {
           {this.props.loginSuccess ? (
             <HeaderWrapper>
               <NavLink to="/dashboard"> DASHBOARD </NavLink>
-              <NavLink to="/favorites"> FAVORITES </NavLink>
+              <NavLink
+                onClick={() => {
+                  this.props.toggleMobileMenu(
+                    this.props.mobileMenu,
+                    "/preferences"
+                  );
+                }}
+              >
+                PREFERENCES
+              </NavLink>
               <Link to="/register">
                 <RegisterButton>REFER A FRIEND </RegisterButton>
               </Link>
