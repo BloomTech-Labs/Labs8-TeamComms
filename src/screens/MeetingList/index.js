@@ -5,7 +5,6 @@ import SearchBar from "../../components/SearchBar/index";
 import styled from "styled-components";
 import EasterEgg from "../../components/EasterEgg";
 import { connect } from "react-redux";
-import { callGoogleLogIn } from "../../actions/callGoogleLogIn";
 
 //this screen should return components necessary to build the convo list page.
 const ConvoGrid = styled.div`
@@ -32,14 +31,7 @@ class ScreensMeetingList extends Component {
       search: ""
     };
   }
-  componentDidMount() {
-    if (this.props.match.params.token && !localStorage.getItem("jwt")) {
-      this.props.callGoogleLogIn(
-        this.props.history,
-        this.props.match.params.token
-      );
-    }
-  }
+  componentDidMount() {}
 
   filtered = (meetings, search) => {
     this.setState({ filteredMeetings: meetings, search: search });
@@ -49,6 +41,7 @@ class ScreensMeetingList extends Component {
     if (this.state.search !== "") {
       var filtered_meetings = (
         <MeetingList
+          token={this.props.match.params.token}
           filteredMeetings={this.state.filteredMeetings}
           search={this.state.search}
         />
@@ -56,6 +49,7 @@ class ScreensMeetingList extends Component {
     } else {
       filtered_meetings = (
         <MeetingList
+          token={this.props.match.params.token}
           filteredMeetings={this.props.meetings}
           search={this.state.search}
         />
@@ -79,7 +73,4 @@ ScreensMeetingList.propTypes = {};
 const mapStateToProps = state => {
   return state;
 };
-export default connect(
-  mapStateToProps,
-  { callGoogleLogIn }
-)(ScreensMeetingList);
+export default connect(mapStateToProps)(ScreensMeetingList);

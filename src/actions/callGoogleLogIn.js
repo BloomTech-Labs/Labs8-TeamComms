@@ -20,6 +20,7 @@ export const callGoogleLogIn = (history, token) => {
         localStorage.setItem("jwt", bearerToken);
         dispatch({ type: GOOGLE_LOGIN_RETURNED, payload: res.data });
         history.push("/dashboard");
+        window.location.reload()
       })
       .catch(err => {
         console.log({ "Axios-Error": err });

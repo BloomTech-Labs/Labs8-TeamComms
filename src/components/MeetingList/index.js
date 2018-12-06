@@ -11,16 +11,34 @@ import {
   FavoriteButton,
   SpinnerWrapper
 } from "../Common";
-
+import { callGoogleLogIn } from "../../actions/callGoogleLogIn";
 import { Link } from "react-router-dom";
-
+import history from "../../history";
 const Description = styled.p`
   color: lightgrey;
 `;
 
 class MeetingList extends Component {
   componentDidMount() {
-    this.props.getMeetings();
+    //token from screen-MeetingList component
+    if (this.props.token && !localStorage.getItem("jwt")) {
+      this.props.callGoogleLogIn(history, this.props.token)
+    }
+    else{
+      this.props.getMeetings();
+    }
+    // let promise = new Promise((resolve, reject) => {
+    //   if (this.props.token && !localStorage.getItem("jwt")) {
+    //      resolve(this.props.callGoogleLogIn(history, this.props.token));
+    //   } else {
+    //     console.log("1", promise);
+    //     resolve(this.props.getMeetings());
+    //   }
+    // });
+    // console.log("2", promise);
+    // promise.then(() => {
+    //   this.props.getMeetings();
+    // });
   }
   empty() {
     return (
@@ -32,6 +50,7 @@ class MeetingList extends Component {
       </div>
     );
   }
+
   // Will break this down into a Card component
   card(meeting) {
     const history = this.props.history;
@@ -97,5 +116,5 @@ const mapStateToProps = state => {
 };
 export default connect(
   mapStateToProps,
-  { getMeetings, callDeleteMeeting }
+  { getMeetings, callDeleteMeeting, callGoogleLogIn }
 )(MeetingList);
