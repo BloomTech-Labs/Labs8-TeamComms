@@ -2,8 +2,29 @@ const User = require("../../models/UserModel"); //Model
 const Convo = require("../../models/ConvoModel"); //Model
 const LiveMeeting = require("../../models/LiveMeetingModel");
 const moment = require("moment");
+const callZoomAPI = require("../Zoom/zoomCreate");
 
 const convoCreate = async (req, res) => {
+  // default error code set to 'internal server error'
+  let errorStatusCode = 500;
+  //req checking
+  if (
+    !req.body.title 
+    ||
+    !req.body.description 
+    ||
+    !req.body.startTime 
+    ||
+    !req.body.endTime 
+    ||
+    !req.user._id
+  ) {
+    errorStatusCode = 400; // bad request
+    res.status(errorStatusCode).end();
+    return;
+  }
+  
+  //
   const user = req.user;
   const newConvo = req.body;
   const start = moment(newConvo.startTime).toDate();
@@ -20,7 +41,34 @@ const convoCreate = async (req, res) => {
       };
     });
   }
+
   try {
+    
+    // zoom
+    let createdZoomMeeting = {
+      meetingId: "",
+      url: ""
+    };
+
+    // zoom api call if requested from user 
+    if (newConvo.createZoom === true) {
+
+      // to create a new zoom meeting
+      const zoomApiData = await callZoomAPI(newConvo);
+      // error 
+      if (zoomApiData.status !== 201) {
+        errorStatusCode = 502; // bad gateway // zoom api error
+        throw new Error("zoom api err");
+      }
+      // filtered return data for db
+        // zoom meetingId not currently saved in model
+      createdZoomMeeting = {
+        meetingId: zoomApiData.data.join_url,
+        url: zoomApiData.data.join_url      
+      }
+    }
+
+    
     const convo = new Convo({
       creatorId: user._id,
       title: newConvo.title,
@@ -29,10 +77,12 @@ const convoCreate = async (req, res) => {
       end_time: end,
       repeat: newConvo.repeat,
       questions: mappedQuestions,
-      invitees: newConvo.invitees
+      invitees: newConvo.invitees,
+      zoom: createdZoomMeeting.url
     });
 
     if (!convo) {
+      errorStatusCode = 501; // not implemented
       throw new Error("Convo creation failed!");
     } else {
       let convoExtract = convo.questions.map(q => {
@@ -44,6 +94,7 @@ const convoCreate = async (req, res) => {
         };
       });
 
+      //
       const liveMeeting = new LiveMeeting({
         questions: convoExtract,
         meeting: convo._id
@@ -62,6 +113,7 @@ const convoCreate = async (req, res) => {
         })
         .exec((err, query) => {
           if (err) {
+            errorStatusCode = 404; // not found
             throw new Error(err);
           } else {
             query.invitees.forEach(async invitee => {
@@ -76,8 +128,9 @@ const convoCreate = async (req, res) => {
 
       res.status(201).send(convo);
     }
+
   } catch (err) {
-    res.status(400).send(err);
+    res.status(errorStatusCode).send(err);
   }
 };
 module.exports = convoCreate;

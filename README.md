@@ -245,6 +245,38 @@ To delete a User, use the above `Edit User` endpoint and change `active: false`.
 
 ---
 
+##Zoom Api
+
+> hitting zoom api from postman  
+https://medium.com/zoom-developer-blog/using-zoom-apis-version-2-with-postman-3fba79dcdf2e  
+
+>create meeting schema  
+https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meetingcreate  
+
+>create zoom jwt token online https://jwt.io/  
+![Alt text](.\public\images\createZoomJwtOnline.png "img");  
+
+>zoom enterprise accounts breakdown  
+https://developer.zoom.us/blog/a-brief-look-at-zoom-account-structures/  
+
+
+api intro  
+https://zoom.github.io/api/?shell#introduction  
+
+webhooks  
+https://developer.zoom.us/docs/webhooks/  
+
+dev site  
+https://developer.zoom.us/  
+
+zoom sample app  
+https://github.com/zoom/data-visualization-sample-app  
+
+
+
+
+---
+
 ## How to test the software
 
 ## Known issues
