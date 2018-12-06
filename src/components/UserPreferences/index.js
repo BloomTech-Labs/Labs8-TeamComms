@@ -29,7 +29,8 @@ const Group = styled.fieldset`
   border: 2px groove white;
   border-radius: 5px;
   padding: 0 10px;
-  margin: 10px 0;
+  margin: 10px auto;
+  color: white;
 `;
 const NewSpan = styled.span`
   margin: 25px 0;
@@ -303,9 +304,11 @@ class UserPref extends Component {
               />
               <label htmlFor="premium">Account Type</label>
             </NewSpan>
-            <Spacer>
-              <Stripe />
-            </Spacer>
+            {this.props.userData.user.premium ? null : (
+              <Spacer>
+                <Stripe />
+              </Spacer>
+            )}
           </Group>
         </Main>
       </React.Fragment>

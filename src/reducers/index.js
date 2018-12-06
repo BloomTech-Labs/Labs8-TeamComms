@@ -98,7 +98,8 @@ export const reducer = (state = null, action) => {
         userDataLoading: true
       };
     case UPDATE_RETURNED:
-      return { ...state, userData: action.payload, userDataLoading: false };
+      const payload = Object.assign({}, state.userData, action.payload);
+      return { ...state, userData: payload, userDataLoading: false };
     case CREATE_MEETING_CALLED:
       return {
         ...state,
@@ -137,10 +138,14 @@ export const reducer = (state = null, action) => {
       });
       console.log("updated meetings", updatedMeetings);
       return { ...state, meetings: updatedMeetings, meetingsLoading: false };
+    // case PREMIUM_CHANGE:
+    //   const userData = state.userData;
+    //   userData.user.premium = action.payload;
+    //   return { ...state, userData: userData };
     case PREMIUM_CHANGE:
-      const user = state.userData.user;
-      user.premium = action.payload;
-      return { ...state, userData: user };
+      return Object.assign({}, state.userData.user, {
+        premium: action.payload
+      });
     default:
       return state;
   }
