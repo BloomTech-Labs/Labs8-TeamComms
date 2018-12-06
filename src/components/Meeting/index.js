@@ -129,18 +129,17 @@ const AttendeeTab = styled(TabPanel)``;
 class Meeting extends Component {
   constructor(props) {
     super(props);
-
-    // const { dispatch } = this.props;
+    this.meeting = {};
+    this.confirm = false;
+    const { dispatch } = this.props;
     this.attendeetab = React.createRef();
     this.state = {
-      color: "white",
-      user: "JAshcraft",
       text: "",
       users: [],
       currentQuestion: "",
-      questions: [],
-      meeting: {}
+      questions: []
     };
+
     // const socket_connect = function(room) {
     //   return io("localhost:8080/meeting", {
     //     query: "r_var=" + room
@@ -155,12 +154,9 @@ class Meeting extends Component {
     const id = this.props.match.params.id;
     socket = socket_connect(id);
 
-    socket.emit("update-users", this.props.userData.user.displayName);
-
     socket.on("update-users", users => {
       return this.setState({ users });
     });
-
     socket.on("update text", text => {
       return this.setState({ text });
     });
@@ -168,10 +164,13 @@ class Meeting extends Component {
     socket.on("question", questions => {
       return this.setState({ questions });
     });
+    socket.on("finalize", () => {
+      alert("Meeting has ended");
+      this.props.history.push("/dashboard");
+    });
   }
 
   componentDidMount() {
-    socket.emit("update-users", this.props.userData.user.displayName);
     let header = { Authorization: localStorage.getItem("jwt") };
     axios
       .get(
@@ -181,14 +180,18 @@ class Meeting extends Component {
         { headers: header }
       )
       .then(res => {
-        this.setState({
-          meeting: {
-            invitees: res.data.invitees,
-            title: res.data.title,
-            description: res.data.description,
-            startTime: res.data.start_time
-          }
-        });
+        this.meeting = {
+          _id: res.data._id,
+          invitees: res.data.invitees,
+          title: res.data.title,
+          description: res.data.description,
+          startTime: res.data.start_time,
+          creatorId: res.data.creatorId._id
+        };
+        if (this.props.userData.user.id === this.meeting.creatorId) {
+          this.confirm = true;
+        }
+        socket.emit("update-users", this.props.userData.user.displayName);
       });
   }
 
@@ -214,20 +217,22 @@ class Meeting extends Component {
   sendQuestion = e => {
     e.preventDefault();
     socket.emit("question", this.state.currentQuestion);
+    this.setState({currentQuestion: ""})
+  };
+
+  finalizeMeeting = e => {
+    e.preventDefault();
+    socket.emit("finalize");
   };
 
   render() {
-    // const id = this.props.match.params.id;
-    let title = this.state.meeting.title;
-    let description = this.state.meeting.description;
-
     return (
       <Fragment>
         <MeetingDetails>
-          <h1>Title: {title}</h1>
+          <h1>Title: {this.meeting.title}</h1>
           <p>
             <br />
-            {description}
+            {this.meeting.description}
           </p>
           <h1>Schedule:</h1>
           <p>
@@ -244,7 +249,7 @@ class Meeting extends Component {
           >
             <Panel header="Invited">
               <StyledListAttendees
-                options={this.state.meeting.invitees}
+                options={this.meeting.invitees}
                 optionLabel="displayName"
                 filter={true}
                 className={this.props.className}
@@ -267,7 +272,7 @@ class Meeting extends Component {
             >
               <Panel header="Invited">
                 <StyledListAttendees
-                  options={this.state.meeting.invitees}
+                  options={this.meeting.invitees}
                   optionLabel="displayName"
                   filter={true}
                 />
@@ -327,7 +332,20 @@ class Meeting extends Component {
                 <div style={{ display: "inline-block", marginLeft: "20px" }}>
                   <Checkbox inputId="repeat" value="repeat" />
                   <label htmlFor="repeat">Schedule a Follow Up Meeting</label>
-                  <SubmitButton>Finalize Meeting</SubmitButton>
+                  {this.confirm ? (
+                    <SubmitButton
+                      style={{ width: "200px" }}
+                      onClick={this.finalizeMeeting}
+                    >
+                      Finalize Meeting
+                    </SubmitButton>
+                  ) : (
+                    <SubmitButton
+                      style={{ backgroundColor: "gray", width: "200px" }}
+                    >
+                      See Creator
+                    </SubmitButton>
+                  )}
                 </div>
               </EditorWrapper>
             </CustomTabs>
