@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Register from "../../components/Register";
-import PropTypes from "prop-types";
 
 //this screen should return components necessary to build the landing page.
 

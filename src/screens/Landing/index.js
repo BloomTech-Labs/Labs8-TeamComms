@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import Register from "../../components/Register";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 
 //this screen should return components necessary to build the landing page.
 
@@ -50,12 +48,12 @@ const Ul = styled.ul`
 `;
 const Li = styled.li`
   font: 200 1rem/1.5 Helvetica, Verdana, sans-serif;
-  border-bottom: 1px solid #ccc;
+
   margin: 1rem;
   transition: background-color 0.3s ease;
 
   :hover {
-    background-color: #25bea0;
+    // background-color: #25bea0;
     p {
       opacity: 1;
     }
@@ -102,20 +100,27 @@ class ScreensLanding extends Component {
           Your Remote Meetings Just Got Easier.
           <p>
             Team Communicator helps keep your remote team stay in sync by
-            managing your meetings in the cloud. <br />
-            <br />
-            <Ul>
-              <Li> Track your Team 's Questions</Li>
-              <Li> Upload Directly to Youtube </Li>
-              <Li> Quickly Transcribe Your Video 's</Li>
-              <Li> Send Transcription 's Via E-Mail</Li>
-            </Ul>
+            managing your meetings in the cloud.
           </p>
+          <Ul>
+            <Li> Track your Team's Questions and Meeting Notes</Li>
+            <Li> Upload Directly to Youtube </Li>
+            <Li> Quickly Transcribe Your Video's</Li>
+            <Li> Send Transcription's Via E-Mail</Li>
+          </Ul>
           <StyledMiniForm action="">
-            <Email placeholder="e-mail" required type="text" name="username" />
+            <Email
+              placeholder="e-mail"
+              required
+              type="text"
+              name="username"
+              autoFocus
+            />
             <RegisterButton> GO! </RegisterButton>
           </StyledMiniForm>
-          <LittleP> 14 - Day Free Trial.No Credit Card Required. </LittleP>
+          <LittleP>
+            Try for free, no strings (or credit cards) attached.
+          </LittleP>
         </JumboTron>
         <LandingImage src="./images/landingimage2.jpg" />
       </StyledGrid>

@@ -1,8 +1,14 @@
 import axios from "axios";
-import { LOGIN_CALLED, LOGIN_RETURNED, TOGGLE_OVERPANE } from "./types";
+import {
+  LOGIN_CALLED,
+  LOGIN_RETURNED,
+  LOGIN_ERROR,
+  TOGGLE_OVERPANE
+} from "./types";
 // import history from '../history';
 
 export const callLogIn = (e, userInput, history, overpane) => {
+  console.log("history", history);
   e.preventDefault();
   const credentials = {
     email: userInput.email,
@@ -24,6 +30,9 @@ export const callLogIn = (e, userInput, history, overpane) => {
         dispatch({ type: TOGGLE_OVERPANE, payload: overpane });
         history.push("/dashboard");
       })
-      .catch(err => console.log({ "Axios-Error": err }));
+      .catch(err => {
+        console.log({ "Axios-Error": err });
+        dispatch({ type: LOGIN_ERROR });
+      });
   };
 };

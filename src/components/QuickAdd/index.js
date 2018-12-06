@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { NavLink } from "../Common";
+// import { NavLink } from "../Common";
 import { Link } from "react-router-dom";
+import history from "../../history";
 
 const AddQuestion = styled.input`
   position: relative;
@@ -68,9 +69,19 @@ class QuickAdd extends Component {
   changeHandler = e => {
     this.setState({ title: e.target.value });
   };
+
+  createMeeting = e => {
+    e.preventDefault();
+    history.push({ pathname: "/createmeeting", search: this.state.title });
+  };
+
   render() {
     return (
-      <StyledMiniForm>
+      <StyledMiniForm
+        onSubmit={e => {
+          this.createMeeting(e);
+        }}
+      >
         <AddQuestion
           name="title"
           value={this.state.title}
@@ -83,7 +94,7 @@ class QuickAdd extends Component {
           <ButtonNavLink
             to={{
               pathname: "/createmeeting",
-              state: { title: this.state.title }
+              search: this.state.title
             }}
           >
             <i className="fas fa-plus-square fa-2x" />

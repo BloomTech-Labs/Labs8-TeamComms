@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Login from "../../components/Login";
-import PropTypes from "prop-types";
 
 //this screen should return components necessary to build the login
 

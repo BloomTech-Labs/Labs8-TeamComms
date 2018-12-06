@@ -3,10 +3,11 @@ import { UPDATE_CALLED, UPDATE_RETURNED } from "./types";
 
 export const callUpdate = (e, userData, history) => {
   e.preventDefault();
-
+  const header = { Authorization: localStorage.getItem("jwt") };
   const promise = axios.put(
     "https://teamcomm2.herokuapp.com/api/users/update",
-    userData
+    userData,
+    { headers: header }
   );
 
   return function(dispatch) {
@@ -20,11 +21,10 @@ export const callUpdate = (e, userData, history) => {
           payload: res.data
         });
         alert("User Preferences Updated");
-        console.log("Updated Info", res.data);
       })
       .catch(err =>
         console.log({
-          "Axios-Error": err.data
+          "Axios-Error": err
         })
       );
   };
