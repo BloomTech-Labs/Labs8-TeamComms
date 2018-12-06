@@ -163,6 +163,7 @@ class Register extends Component {
                   required
                   value={this.state.email}
                   onChange={this.changeHandler}
+                  keyfilter="email"
                 />
                 <label htmlFor="email">Email</label>
               </NSpan>
