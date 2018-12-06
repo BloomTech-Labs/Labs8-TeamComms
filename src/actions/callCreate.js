@@ -5,7 +5,7 @@ export const callCreate = (e, header, body, history, dashboard) => {
   e.preventDefault();
 
   const promise = axios.post(
-    "http://localhost:8080/api/meeting/create",
+    "https://teamcomm2.herokuapp.com/api/meeting/create",
     body,
     { headers: header }
   );
