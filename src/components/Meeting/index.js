@@ -238,9 +238,13 @@ class Meeting extends Component {
   sendQuestion = e => {
     e.preventDefault();
     socket.emit("question", this.state.currentQuestion);
-    this.setState({currentQuestion: ""})
+    this.setState({ currentQuestion: "" });
   };
 
+  finalizeMeeting = e => {
+    e.preventDefault();
+    socket.emit("finalize");
+  };
 
   render() {
     const data = {
@@ -263,12 +267,6 @@ class Meeting extends Component {
     // const id = this.props.match.params.id;
     let title = this.state.meeting.title;
     let description = this.state.meeting.description;
-
-  finalizeMeeting = e => {
-    e.preventDefault();
-    socket.emit("finalize");
-  };
-
 
     return (
       <Fragment>
@@ -294,7 +292,6 @@ class Meeting extends Component {
             <StyledChart type="pie" data={data} />
             <Panel header="Invited">
               <StyledListAttendees
-
                 dataKey={true}
                 options={this.state.meeting.invitees}
                 optionLabel="displayName"
