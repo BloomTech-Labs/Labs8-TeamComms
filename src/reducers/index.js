@@ -9,6 +9,7 @@ import {
   GOOGLE_LOGIN_CALLED,
   GOOGLE_LOGIN_RETURNED,
   TOGGLE_OVERPANE,
+  TOGGLE_MOBILE_MENU,
   UPDATE_CALLED,
   UPDATE_RETURNED,
   CREATE_MEETING_CALLED,
@@ -18,7 +19,8 @@ import {
   MEETING_UPDATE_CALLED,
   MEETING_UPDATE_RETURNED,
   DELETE_MEETING_CALLED,
-  DELETE_MEETING_RETURNED
+  DELETE_MEETING_RETURNED,
+  PREMIUM_CHANGE
 } from "../actions/types";
 
 export const reducer = (state = null, action) => {
@@ -88,6 +90,8 @@ export const reducer = (state = null, action) => {
       };
     case TOGGLE_OVERPANE:
       return { ...state, overpane: action.payload };
+    case TOGGLE_MOBILE_MENU:
+      return { ...state, mobileMenu: action.payload };
     case UPDATE_CALLED:
       return {
         ...state,
@@ -133,6 +137,10 @@ export const reducer = (state = null, action) => {
       });
       console.log("updated meetings", updatedMeetings);
       return { ...state, meetings: updatedMeetings, meetingsLoading: false };
+    case PREMIUM_CHANGE:
+      const user = state.userData.user;
+      user.premium = action.payload;
+      return { ...state, userData: user };
     default:
       return state;
   }

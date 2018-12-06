@@ -4,7 +4,12 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { PrimaryButton, BurgerButton, NavLink } from "../Common";
 import Stripe from "../Stripe";
-import { callLogOut, toggleOverpane } from "../../actions/index";
+import {
+  callLogOut,
+  toggleOverpane,
+  toggleMobileMenu
+} from "../../actions/index";
+import history from "../../history";
 
 const HeaderWrapper = styled.div`
   color: #ffffff;
@@ -112,42 +117,34 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      menu: false
+      mobileMenu: false
     };
   }
   // LogOut = () => {
   //   this.props.callLogOut(this.props.history);
   // };
 
-  toggleMenu = () => {
-    this.setState({ menu: this.props.history.location.state.menu });
-  };
-
   render() {
-    const history = this.props.history;
     console.log("header history object", history);
 
     return (
       <Fragment>
         <MobileMain>
-          <BurgerButton onClick={this.toggleMenu}>
-            <NavLink
-              to={{
-                state: { menu: !this.state.menu }
-              }}
-            >
-              <i className="fas fa-bars" />
-            </NavLink>
+          <BurgerButton
+            onClick={() => {
+              this.props.toggleMobileMenu(!this.props.mobileMenu);
+            }}
+          >
+            <i className="fas fa-bars" />
           </BurgerButton>
-          {this.state.menu ? (
+          {this.props.mobileMenu ? (
             <MenuOverpane>
               {this.props.loginSuccess ? (
                 <Fragment>
-                  <div onClick={this.toggleMenu}>
+                  <div>
                     <NavLink
                       to={{
-                        pathname: "/dashboard",
-                        state: { menu: !this.props.history.location.state.menu }
+                        pathname: "/dashboard"
                       }}
                     >
                       DASHBOARD
@@ -156,7 +153,7 @@ class Header extends Component {
                   <Link to="/register">
                     <RegisterButton>REFER A FRIEND </RegisterButton>
                   </Link>
-                  <Stripe />
+                  {this.props.userData.user.premium ? null : <Stripe />}
                   <LoginButton
                     onClick={() => {
                       this.props.callLogOut(history);
@@ -194,7 +191,7 @@ class Header extends Component {
               <Link to="/register">
                 <RegisterButton>REFER A FRIEND </RegisterButton>
               </Link>
-              <Stripe />
+              {this.props.userData.user.premium ? null : <Stripe />}
               <LoginButton
                 onClick={() => {
                   this.props.callLogOut(history);
@@ -233,6 +230,7 @@ export default connect(
   mapStateToProps,
   {
     callLogOut,
-    toggleOverpane
+    toggleOverpane,
+    toggleMobileMenu
   }
 )(Header);

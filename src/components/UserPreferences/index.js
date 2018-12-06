@@ -323,7 +323,3 @@ export default connect(
     callUpdate
   }
 )(UserPref);
-
-// Need to have notification preference on user model
-// Finalize the update user function(body, axios req)
-// Add `style={{ background: "#fabc09" }}` to Stripe button
