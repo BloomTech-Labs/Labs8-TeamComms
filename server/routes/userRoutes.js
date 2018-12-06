@@ -28,7 +28,10 @@ Router.route("/login").post(hlpr.userLogin);
     Req - username, email, phone_number, oldPw, newPw
     Res - Token, {username, email, phone_number, organization} 
 */
-Router.route("/update").put(hlpr.userEdit);
+Router.route("/update").put(
+  passport.authenticate("jwt", { session: false }),
+  hlpr.userEdit
+);
 
 Router.route("/findbyname/:name").get(hlpr.userFindByName);
 
