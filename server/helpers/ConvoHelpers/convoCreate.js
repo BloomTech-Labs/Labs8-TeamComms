@@ -45,7 +45,10 @@ const convoCreate = async (req, res) => {
   try {
     
     // zoom
-    let createdZoomMeeting;
+    let createdZoomMeeting = {
+      meetingId: "",
+      url: ""
+    };
 
     // zoom api call if requested from user 
     if (newConvo.createZoom === true) {
@@ -65,7 +68,7 @@ const convoCreate = async (req, res) => {
       }
     }
 
-    //
+    
     const convo = new Convo({
       creatorId: user._id,
       title: newConvo.title,
@@ -126,9 +129,7 @@ const convoCreate = async (req, res) => {
       res.status(201).send(convo);
     }
 
-    //
   } catch (err) {
-    // console.log('catch:', err);
     res.status(errorStatusCode).send(err);
   }
 };
