@@ -35,7 +35,7 @@ module.exports = async function(io) {
     //push it to users array
     //send new array back to client
     socket.on("update-users", displayName => {
-      console.log(mtg.adapter.rooms[room].length);
+
       if (mtg.adapter.rooms[room].length === 1) {
         mtg.adapter.rooms[room].attended = []
         mtg.adapter.rooms[room].users = [];
@@ -58,7 +58,6 @@ module.exports = async function(io) {
         });
       }
 
-      console.log(mtg.adapter.rooms[room].users);
       mtg.to(room).emit("update-users", mtg.adapter.rooms[room].users);
     });
 
@@ -66,7 +65,6 @@ module.exports = async function(io) {
     //filter out that socket
     //send new array back to client
     socket.on("disconnect", () => {
-      console.log("DC", mtg.adapter.rooms[room]);
       let newList;
       if (mtg.adapter.rooms[room]) {
         mtg.adapter.rooms[room].users = mtg.adapter.rooms[room].users.filter(user => {
@@ -76,12 +74,10 @@ module.exports = async function(io) {
       } else {
         newList = [];
       }
-      console.log("NEW LIST", newList);
       mtg.to(room).emit("update-users", newList);
     });
 
     socket.on("finalize", async () => {
-      console.log(liveMeeting._id);
       await LiveMeeting.findByIdAndUpdate(
         liveMeeting._id,
         {
@@ -95,7 +91,6 @@ module.exports = async function(io) {
           console.log(err);
         } else {
           mtg.to(room).emit("finalize")
-          console.log(confirm);
         }
       });
     });
