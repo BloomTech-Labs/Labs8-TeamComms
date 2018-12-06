@@ -43,19 +43,25 @@ const convoCreate = async (req, res) => {
   }
 
   try {
+    
+    // zoom
+    let createdZoomMeeting;
 
     // zoom api call if requested from user 
     if (newConvo.createZoom === true) {
-      // there is an optional param accepted to callZoomAPI() 
-        // to create new zoom meeting
-          // can be either a valid zoom-user's email or zoom userID
-            // EX: callZoomAPI(zoomId_orEmail) 
-      const zoomApiData = await callZoomAPI();
-      // console.log('here', zoomApiData.data.join_url);
-      // console.log('here', zoomApiData.status);
+
+      // to create a new zoom meeting
+      const zoomApiData = await callZoomAPI(newConvo);
+      // error 
       if (zoomApiData.status !== 201) {
         errorStatusCode = 502; // bad gateway // zoom api error
         throw new Error("zoom api err");
+      }
+      // filtered return data for db
+        // zoom meetingId not currently saved in model
+      createdZoomMeeting = {
+        meetingId: zoomApiData.data.join_url,
+        url: zoomApiData.data.join_url      
       }
     }
 
@@ -68,7 +74,8 @@ const convoCreate = async (req, res) => {
       end_time: end,
       repeat: newConvo.repeat,
       questions: mappedQuestions,
-      invitees: newConvo.invitees
+      invitees: newConvo.invitees,
+      zoom: createdZoomMeeting.url
     });
 
     if (!convo) {

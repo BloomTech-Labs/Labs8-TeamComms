@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, Link } from "react-router-dom";
 import ScreensLanding from "./screens/Landing";
 import ScreensLogin from "./screens/Login";
 import ScreensRegister from "./screens/Register";
@@ -57,7 +57,9 @@ class App extends Component {
   render() {
     return (
       <AppWrapper history={this.props.history}>
-        <FadedLogo src="../images/logo.png" width="190x" height="60px" />
+        <Link to="/">
+          <FadedLogo src="../images/logo.png" width="190x" height="60px" />
+        </Link>
         <Header history={this.props.history} />
         <Route
           exact

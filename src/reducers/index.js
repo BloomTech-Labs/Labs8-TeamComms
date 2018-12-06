@@ -108,7 +108,7 @@ export const reducer = (state = null, action) => {
       return {
         ...state,
         meetings: [...state.meetings, action.payload],
-        meetignsLoading: false
+        meetingsLoading: false
       };
     case GET_MEETING_CALLED:
       return {

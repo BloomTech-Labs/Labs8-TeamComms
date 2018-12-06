@@ -1,24 +1,37 @@
 const axios = require('axios');
 
 const generateZoomToken = require('../../validation/generateZoomToken');
+      
+// there is an optional param built to accept (zoomId_orEmail)  
+    // USER MUST BE ON THE MASTER ZOOM ACCOUNT, ENTERPRISE ONLY 
+      // :'(
 
+const zoomCreate = async (newConvo, zoomId_orEmail) => {
 
-// can a passed in a valid zoomId OR zoomEmail
-// or defaults to below (JJ's zoom dev account)
-
-
-
-const zoomCreate = async (zoomId_orEmail) => {
   console.log('zoomApiCalled');
+
+  // defaults to (JJ's zoom dev account), if no argument.
   if (!zoomId_orEmail) {
     zoomId_orEmail = 'Mu72CHUtTty-hVOk3Hlc9g';
   }
+
   const zoomToken = generateZoomToken();
   // console.log('zoomToken', zoomToken);
-  const data = { type: 1 };
+
+  const body = {     
+      type: 2,
+      start_time: newConvo.startTime,
+      topic: newConvo.title,
+      agenda: newConvo.description,
+      settings: {
+        join_before_host: true,
+        mute_upon_entry: true      
+    }
+  };
+  
   const promise = axios.post(
     `https://api.zoom.us/v2/users/${zoomId_orEmail}/meetings`,
-    data,
+    body,
     {
       headers: { Authorization: `Bearer ${zoomToken}` }
     }
