@@ -269,7 +269,7 @@ class Meeting extends Component {
     socket.emit("finalize");
   };
 
-  render() {
+
     return (
       <Fragment>
         <MeetingDetails>
