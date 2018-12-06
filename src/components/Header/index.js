@@ -146,9 +146,9 @@ class Header extends Component {
                       onClick={() => {
                         this.props.toggleMobileMenu(
                           !this.props.mobileMenu,
-                          "/dashboard");
+                          "/dashboard"
+                        );
                       }}
-
                     >
                       DASHBOARD
                     </NavLink>
@@ -216,12 +216,9 @@ class Header extends Component {
                   );
                 }}
               >
-           
                 DASHBOARD
               </NavLink>
-              <Link to="/preferences")>
-                PREFERENCES
-              </NavLink>
+              <Link to="/preferences">PREFERENCES</Link>
               <Link to="/register">
                 <RegisterButton>REFER A FRIEND </RegisterButton>
               </Link>
@@ -236,9 +233,9 @@ class Header extends Component {
             </HeaderWrapper>
           ) : (
             <HeaderWrapper>
-//               <NavLink to="/features">FEATURES</NavLink>
-//               <NavLink to="/landing#pricing">PRICING</NavLink>
-//               <NavLink to="/about">ABOUT US</NavLink>
+              // <NavLink to="/features">FEATURES</NavLink>
+              // <NavLink to="/landing#pricing">PRICING</NavLink>
+              // <NavLink to="/about">ABOUT US</NavLink>
               <Link to="/register">
                 <RegisterButton>REGISTER</RegisterButton>
               </Link>
