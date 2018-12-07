@@ -71,7 +71,8 @@ class Register extends Component {
       password1: "",
       password2: "",
       givenName: "",
-      familyName: ""
+      familyName: "",
+      validEmail: true
     };
   }
 
@@ -84,6 +85,15 @@ class Register extends Component {
     this.setState({
       [e.target.name]: e.target.value
     });
+  };
+
+  validateEmail = (e, email) => {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (re.test(email)) {
+      this.setState({ email: e.target.value, validEmail: true });
+    } else {
+      this.setState({ email: e.target.value, validEmail: false });
+    }
   };
 
   handleRegSubmit = (e, userInput, history) => {
@@ -123,16 +133,18 @@ class Register extends Component {
           </SpinnerWrapper>
         ) : null}
         <Main>
-          <p>
-            Team Communicator helps keep your remote team stay in sync by
-            managing your meetings in the cloud.
-          </p>
-          <Ul>
-            <Li> Track your Team's Questions and Meeting Notes</Li>
-            <Li> Upload Directly to Youtube </Li>
-            <Li> Quickly Transcribe Your Video's</Li>
-            <Li> Send Transcription's Via E-Mail</Li>
-          </Ul>
+          <div>
+            <p>
+              Team Communicator helps keep your remote team stay in sync by
+              managing your meetings in the cloud.
+            </p>
+            <Ul>
+              <Li> Track your Team's Questions and Meeting Notes</Li>
+              <Li> Upload Directly to Youtube </Li>
+              <Li> Quickly Transcribe Your Video's</Li>
+              <Li> Send Transcription's Via E-Mail</Li>
+            </Ul>
+          </div>
           <FormWrapper
             method="post"
             onSubmit={e => {
@@ -142,40 +154,47 @@ class Register extends Component {
             <Group>
               <br />
               {/* First Name */}
-              <NSpan className="p-float-label">
+              <NSpan className="">
                 <TextInput
                   id="givenName"
                   name="givenName"
                   required
                   value={this.state.givenName}
                   onChange={this.changeHandler}
+                  placeholder="First Name"
                 />
-                <label htmlFor="givenName">First Name</label>
               </NSpan>
               <br />
               {/* Last Name */}
-              <NSpan className="p-float-label">
+              <NSpan className="">
                 <TextInput
                   id="familyName"
                   name="familyName"
                   required
                   value={this.state.familyName}
                   onChange={this.changeHandler}
+                  placeholder="Last Name"
                 />
-                <label htmlFor="familyName">Last Name</label>
               </NSpan>
               <br />
               {/* Email */}
-              <NSpan className="p-float-label">
+              <NSpan className="">
                 <TextInput
                   id="email"
                   name="email"
                   required
                   value={this.state.email}
-                  onChange={this.changeHandler}
-                  keyfilter="email"
+                  onChange={e => {
+                    this.validateEmail(e, this.state.email);
+                  }}
+                  placeholder="E-mail"
                 />
-                <label htmlFor="email">Email</label>
+                {this.state.validEmail ? null : (
+                  <Message
+                    severity="error"
+                    text="Enter a valid e-mail address."
+                  />
+                )}
               </NSpan>
 
               {this.props.regError ? (
@@ -186,27 +205,27 @@ class Register extends Component {
               ) : null}
               <br />
               {/* Password 1 */}
-              <NSpan className="p-float-label">
+              <NSpan className="">
                 <PassInput
                   id="password1"
                   name="password1"
                   required
                   value={this.state.password1}
                   onChange={this.changeHandler}
+                  placeholder="Password"
                 />
-                <label htmlFor="password1">Password</label>
               </NSpan>
               <br />
               {/* Password 2 */}
-              <NSpan className="p-float-label">
+              <NSpan className="">
                 <PassInput
                   id="password2"
                   name="password2"
                   required
                   value={this.state.password2}
                   onChange={this.changeHandler}
+                  placeholder="Confirm Password"
                 />
-                <label htmlFor="password2">Confirm Password</label>
               </NSpan>
               <br />
               <RegisterButton type="submit"> Register </RegisterButton>

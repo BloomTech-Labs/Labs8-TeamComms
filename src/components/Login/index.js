@@ -79,7 +79,8 @@ class Login extends Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      validEmail: true
     };
   }
 
@@ -101,6 +102,15 @@ class Login extends Component {
       summary: "Error Message",
       detail: "Username or Password Incorrect."
     });
+  };
+
+  validateEmail = (e, email) => {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (re.test(email)) {
+      this.setState({ email: e.target.value, validEmail: true });
+    } else {
+      this.setState({ email: e.target.value, validEmail: false });
+    }
   };
 
   render() {
@@ -152,19 +162,27 @@ class Login extends Component {
             ) : null}
             <br />
             {/* Email */}
-            <NSpan className="p-float-label">
+            <NSpan className="">
               <TextInput
                 id="email"
                 name="email"
                 required
-                value={this.state.email}
-                onChange={this.changeHandler}
+                value={this.state.email} // onChange={this.changeHandler}
+                placeholder="E-mail"
+                onChange={e => {
+                  this.validateEmail(e, this.state.email);
+                }}
               />
-              <label htmlFor="email">Email</label>
+              {this.state.validEmail ? null : (
+                <Message
+                  severity="error"
+                  text="Enter a valid e-mail address."
+                />
+              )}
             </NSpan>
             <br />
             {/* Password */}
-            <NSpan className="p-float-label">
+            <NSpan className="">
               <PassInput
                 id="password"
                 name="password"
@@ -172,8 +190,8 @@ class Login extends Component {
                 feedback={false}
                 value={this.state.password}
                 onChange={this.changeHandler}
+                placeholder="Password"
               />
-              <label htmlFor="password">Password</label>
             </NSpan>
             <br />
             <LoginButton type="submit">Log In</LoginButton>
