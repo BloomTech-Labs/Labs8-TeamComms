@@ -181,7 +181,8 @@ class Meeting extends Component {
       text: "",
       users: [],
       currentQuestion: "",
-      questions: []
+      questions: [],
+      zoom: ""
     };
 
     // const socket_connect = function(room) {
@@ -230,7 +231,8 @@ class Meeting extends Component {
           title: res.data.title,
           description: res.data.description,
           startTime: res.data.start_time,
-          creatorId: res.data.creatorId._id
+          creatorId: res.data.creatorId._id,
+          zoom: res.data.zoom
         };
         if (this.props.userData.user.id === this.meeting.creatorId) {
           this.confirm = true;
@@ -296,7 +298,7 @@ class Meeting extends Component {
         <MeetingDetails>
           <h1>Meeting Details: &nbsp;</h1> <h2>{this.meeting.title}</h2>
           &nbsp;
-          <p>{this.meeting.description}</p>
+          <p>{this.meeting.zoom}</p>
           <div />
         </MeetingDetails>
 
