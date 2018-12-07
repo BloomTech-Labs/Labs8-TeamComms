@@ -287,9 +287,6 @@ class Meeting extends Component {
         }
       ]
     };
-    // const id = this.props.match.params.id;
-    let title = this.meeting.title;
-    let description = this.meeting.description;
 
     return (
       <Fragment>
