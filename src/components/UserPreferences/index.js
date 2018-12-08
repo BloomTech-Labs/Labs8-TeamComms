@@ -12,6 +12,7 @@ import Stripe from "../Stripe";
 const Main = styled.div`
   padding: 5px 0 5px 0;
   margin: 0 auto;
+  background-color: white;
 `;
 
 const FormWrapper = styled.form`
@@ -20,7 +21,7 @@ const FormWrapper = styled.form`
   align-items: center;
   margin: 0 auto;
   padding: 15px;
-  color: white;
+  background-color: white;
 `;
 const Group = styled.fieldset`
   display: flex;
@@ -30,7 +31,10 @@ const Group = styled.fieldset`
   border-radius: 5px;
   padding: 0 10px;
   margin: 10px auto;
-  color: white;
+  background: white;
+  legend {
+    padding: 8px;
+  }
 `;
 const NewSpan = styled.span`
   margin: 25px 0;
