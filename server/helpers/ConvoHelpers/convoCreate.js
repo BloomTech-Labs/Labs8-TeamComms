@@ -129,7 +129,7 @@ const convoCreate = async (req, res) => {
             sendEmail(
               callback,
               "jj@jjashcraft.com",
-              convo.invitees,
+              newConvo.invitees,
               "Test Subject",
               "Text Content",
               `<p style="font-size: 32px;">You've been invited to a new meeting!</p> Zoom: ' ${
