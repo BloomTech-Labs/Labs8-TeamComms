@@ -4,7 +4,6 @@ const LiveMeeting = require("../../models/LiveMeetingModel");
 const moment = require("moment");
 const callZoomAPI = require("../Zoom/zoomCreate");
 const sendEmail = require("../SendGrid/sendGrid");
-const async = require("async");
 
 const convoCreate = async (req, res) => {
   // default error code set to 'internal server error'
@@ -121,36 +120,15 @@ const convoCreate = async (req, res) => {
       await liveMeeting.save();
       await user.save();
 
-      const sg = require("sendgrid")(process.env.SENDGRID_KEY);
-
-      async.parallel(
-        [
-          function(callback) {
-            sendEmail(
-              callback,
-              "jj@jjashcraft.com",
-              newConvo.invitees,
-              "Test Subject",
-              "Text Content",
-              `<p style="font-size: 32px;">You've been invited to a new meeting!</p> Zoom: ' ${
-                convo.zoom
-              }`
-            );
-          }
-        ],
-        function(err, results) {
-          res.send({
-            status: 201,
-            success: true,
-            message: "Emails sent",
-            successfulEmails: results[0].successfulEmails,
-            errorEmails: results[0].errorEmails,
-            convo
-          });
-        }
+      await sendEmail(
+        user.email,
+        convo.title,
+        start,
+        newConvo.questions,
+        convo.zoom
       );
 
-      // res.status(201).send(convo);
+      res.status(201).send(convo);
     }
   } catch (err) {
     res.status(errorStatusCode).send(err);
