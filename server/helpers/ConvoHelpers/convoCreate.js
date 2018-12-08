@@ -3,27 +3,24 @@ const Convo = require("../../models/ConvoModel"); //Model
 const LiveMeeting = require("../../models/LiveMeetingModel");
 const moment = require("moment");
 const callZoomAPI = require("../Zoom/zoomCreate");
+const sendEmail = require("../SendGrid/sendGrid");
 
 const convoCreate = async (req, res) => {
   // default error code set to 'internal server error'
   let errorStatusCode = 500;
   //req checking
   if (
-    !req.body.title 
-    ||
-    !req.body.description 
-    ||
-    !req.body.startTime 
-    ||
-    !req.body.endTime 
-    ||
+    !req.body.title ||
+    !req.body.description ||
+    !req.body.startTime ||
+    !req.body.endTime ||
     !req.user._id
   ) {
     errorStatusCode = 400; // bad request
     res.status(errorStatusCode).end();
     return;
   }
-  
+
   //
   const user = req.user;
   const newConvo = req.body;
@@ -43,32 +40,29 @@ const convoCreate = async (req, res) => {
   }
 
   try {
-    
     // zoom
     let createdZoomMeeting = {
       meetingId: "",
       url: ""
     };
 
-    // zoom api call if requested from user 
+    // zoom api call if requested from user
     if (newConvo.createZoom === true) {
-
       // to create a new zoom meeting
       const zoomApiData = await callZoomAPI(newConvo);
-      // error 
+      // error
       if (zoomApiData.status !== 201) {
         errorStatusCode = 502; // bad gateway // zoom api error
         throw new Error("zoom api err");
       }
       // filtered return data for db
-        // zoom meetingId not currently saved in model
+      // zoom meetingId not currently saved in model
       createdZoomMeeting = {
         meetingId: zoomApiData.data.join_url,
-        url: zoomApiData.data.join_url      
-      }
+        url: zoomApiData.data.join_url
+      };
     }
 
-    
     const convo = new Convo({
       creatorId: user._id,
       title: newConvo.title,
@@ -126,9 +120,16 @@ const convoCreate = async (req, res) => {
       await liveMeeting.save();
       await user.save();
 
+      await sendEmail(
+        user.email,
+        convo.title,
+        start,
+        newConvo.questions,
+        convo.zoom
+      );
+
       res.status(201).send(convo);
     }
-
   } catch (err) {
     res.status(errorStatusCode).send(err);
   }
