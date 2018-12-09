@@ -100,10 +100,11 @@ const convoCreate = async (req, res) => {
 
       await convo.save();
 
+      let inviteeEmails = [];
       await Convo.findById(convo._id)
         .populate({
           path: "invitees",
-          select: "meetings"
+          select: "meetings email"
         })
         .exec((err, query) => {
           if (err) {
@@ -112,6 +113,7 @@ const convoCreate = async (req, res) => {
           } else {
             query.invitees.forEach(async invitee => {
               invitee.meetings.push(convo._id);
+              inviteeEmails.push(invitee.email);
               await invitee.save();
             });
           }
@@ -120,14 +122,15 @@ const convoCreate = async (req, res) => {
       await liveMeeting.save();
       await user.save();
 
-      await sendEmail(
+      let emailConfirm = await sendEmail(
         user.email,
+        inviteeEmails,
         convo.title,
         start,
         newConvo.questions,
         convo.zoom
       );
-
+      console.error("Error with send email confirmation:", emailConfirm);
       res.status(201).send(convo);
     }
   } catch (err) {
