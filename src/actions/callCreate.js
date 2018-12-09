@@ -4,7 +4,7 @@ import { CREATE_MEETING_CALLED, CREATE_MEETING_RETURNED } from "./types";
 export const callCreate = (e, header, body, history, dashboard) => {
   e.preventDefault();
 
-  const promise = axios.post("http://localhost:8080/api/meeting/create", body, {
+  const promise = axios.post("https://teamcomm2.herokuapp.com/api/meeting/create", body, {
     headers: header
   });
 
