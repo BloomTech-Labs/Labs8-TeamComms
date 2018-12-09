@@ -10,7 +10,6 @@ class ServerError {
   }
 }
 
-
 async function sendEmail(
   email,
   inviteeEmails,
@@ -39,12 +38,12 @@ async function sendEmail(
       let errCheck = await sg
         .send(message)
         .then(res => {
-          return "Success";
+          console.log("Email Sent");
         })
         .catch(err => {
           return err;
         });
-      if (errCheck !== "Success") {
+      if (errCheck) {
         throw new ServerError(errCheck.code, errCheck.message);
       }
     } else {
@@ -69,12 +68,12 @@ async function sendEmail(
       let errCheck = await sg
         .send(emails)
         .then(res => {
-          return "Success";
+          console.log("Emails Sent");
         })
         .catch(err => {
           return err;
         });
-      if (errCheck !== "Success") {
+      if (errCheck) {
         throw new ServerError(errCheck.code, errCheck.message);
       }
     }

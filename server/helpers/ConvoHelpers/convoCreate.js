@@ -122,7 +122,7 @@ const convoCreate = async (req, res) => {
       await liveMeeting.save();
       await user.save();
 
-      let emailConfirm = await sendEmail(
+      let emailErr = await sendEmail(
         user.email,
         inviteeEmails,
         convo.title,
@@ -130,7 +130,9 @@ const convoCreate = async (req, res) => {
         newConvo.questions,
         convo.zoom
       );
-      console.error("Error with send email confirmation:", emailConfirm);
+      if (emailErr) {
+        console.error("Error with send email confirmation:", emailErr);
+      }
       res.status(201).send(convo);
     }
   } catch (err) {
