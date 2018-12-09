@@ -61,7 +61,7 @@ async function sendEmail(
           from: "team-communicator@teamcommunicator.com",
           subject: "Invited to New Meeting at Team Communicator!",
           text: "an email from team comm",
-          html: `<p style="font-size: 32px;">You were invited to a new meeting with Teamm communcator! ${meetingTitle}
+          html: `<p style="font-size: 32px;">You were invited to a new meeting with Teamm communicator! ${meetingTitle}
           starts at ${startTime}. Zoom Link: ' ${zoomLink}</p><br/> <h2>Questions to review prior to meeting: </h2><br/><ul>${questionsHtml}</ul>`
         }
       ];
