@@ -90,6 +90,7 @@
 .custom .p-scrollpanel-bar {
   background-color: #25bea0;
   opacity: 1;
+
 }
 
 /* @media (min-width: 800px) {
@@ -98,3 +99,21 @@
   }
 
 } */
+
+.tabcustom {
+  width: 80%;
+}
+
+.p-tabview-panel {
+  width: 100%;
+}
+
+.p-tabview {
+  width: 80%;
+}
+
+@media(max-width: 768px) {
+  .p-tabview {
+    width: 100%;
+  }
+}

@@ -222,3 +222,21 @@ export const Li = styled.li`
     border: none;
   }
 `;
+
+export const Group = styled.fieldset`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45%;
+  border: 2px groove white;
+  border-radius: 5px;
+  padding: 0 10px 20px 10px;
+  margin: 10px 15px;
+  legend {
+    padding: 8px;
+  }
+  @media (max-width: 800px) {
+    flex-direction: column;
+    width: 90%;
+  }
+`;
