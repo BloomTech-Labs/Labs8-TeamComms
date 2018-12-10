@@ -303,6 +303,7 @@ class Meeting extends Component {
         </MeetingDetails>
 
         <Main>
+          <Group>Test</Group>
           <AttendeeScroll
             ref={this.attendeetab}
             style={{ width: "25%", height: "500px", background: "white" }}
