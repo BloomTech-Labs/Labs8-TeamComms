@@ -10,24 +10,47 @@ import { Message } from "primereact/message";
 
 const Main = styled.div`
   margin: 0 auto;
+  display: flex;
   padding: 5px 0 5px 0;
-  background: #374353;
+  background: #fff;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 0;
+  }
+`;
+
+const H2 = styled.h2`
+  font-size: 2rem;
+  padding: 5% 10%;
+  font-weight: bold;
 `;
 
 const FormWrapper = styled.form`
   display: flex;
+  width: 50%;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
+  justify-content: center;
+  background: #fff;
+  margin: 5%;
+  @media (max-width: 768px) {
+    width: 100%;
+    margin: 0 auto;
+  }
 `;
 const Group = styled.fieldset`
   display: flex;
   flex-wrap: wrap;
-  width: 50%;
+  width: 100%;
   border: 2px groove white;
   border-radius: 5px;
-  padding: 0 10px;
-  margin: 10px 0;
+  padding: 5%;
+  margin: 5%;
+  @media (max-width: 768px) {
+    width: 80%;
+    margin: 0;
+    padding: 0 5%;
+  }
 `;
 const NSpan = styled.span`
   margin-top: 20px;
@@ -53,7 +76,7 @@ const RegisterButton = styled(PrimaryButton)`
   border: none;
 `;
 const SwitchLink = styled.a`
-  color: white;
+  color: #25bea0;
   cursor: pointer;
 `;
 const SwitchText = styled.p`
@@ -133,18 +156,14 @@ class Register extends Component {
           </SpinnerWrapper>
         ) : null}
         <Main>
-          <div>
-            <p>
-              Team Communicator helps keep your remote team stay in sync by
-              managing your meetings in the cloud.
-            </p>
+          <FormWrapper>
+            <H2>Team Communicator keeps your remote team in sync.</H2>
             <Ul>
-              <Li> Track your Team's Questions and Meeting Notes</Li>
-              <Li> Upload Directly to Youtube </Li>
-              <Li> Quickly Transcribe Your Video's</Li>
-              <Li> Send Transcription's Via E-Mail</Li>
+              <Li> Schedule Zoom Meetings </Li>
+              <Li> Track Your Team Meeting Questions/Notes </Li>
+              <Li> Collaborate on documents in real-time </Li>
             </Ul>
-          </div>
+          </FormWrapper>
           <FormWrapper
             method="post"
             onSubmit={e => {
@@ -230,11 +249,14 @@ class Register extends Component {
               <br />
               <RegisterButton type="submit"> Register </RegisterButton>
             </Group>
+
+            <SwitchText>
+              Already Registered ?
+              <SwitchLink onClick={this.switchToLogin}>
+                &nbsp; Login.
+              </SwitchLink>
+            </SwitchText>
           </FormWrapper>
-          <SwitchText>
-            Already Registered ?
-            <SwitchLink onClick={this.switchToLogin}>&nbsp; Login.</SwitchLink>
-          </SwitchText>
         </Main>
       </React.Fragment>
     );

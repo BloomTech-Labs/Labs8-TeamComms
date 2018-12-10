@@ -3,8 +3,11 @@ import styled from "styled-components";
 import { Pie } from "react-chartjs-2";
 
 const StyledChartWrapper = styled.div`
-  margin-bottom: 10px;
+  display: flex;
+  margin: 10px auto;
   width: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 class StyledChart extends React.PureComponent {
@@ -18,7 +21,11 @@ class StyledChart extends React.PureComponent {
   render() {
     return (
       <StyledChartWrapper>
-        <Pie data={this.props.data} />
+        <Pie
+          responsive={false}
+          data={this.props.data}
+          options={{ maintainAspectRatio: false }}
+        />
       </StyledChartWrapper>
     );
   }

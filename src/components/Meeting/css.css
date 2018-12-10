@@ -93,6 +93,10 @@
 
 }
 
+.custom .p-scrollpanel-bar-x {
+  display: none;
+}
+
 /* @media (min-width: 800px) {
   #pr_id_3_header_0 {
     display: none;
@@ -110,10 +114,56 @@
 
 .p-tabview {
   width: 80%;
+  margin-top: 20px;
 }
 
 @media(max-width: 768px) {
+
+
   .p-tabview {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+
+td {
+  overflow-wrap: break-word;
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+.attendee .p-scrollpanel-wrapper {
+
+  width: 80%;
+  background: #fff;
+
+}
+
+.p-scrollpanel {
+
+  width: 60%;
+  background: #fff;
+
+}
+
+@media (max-width: 768px) {
+  .attendee .p-scrollpanel {
+
+    width: 100%;
+    background: #fff;
+
+  }
+
+  .p-scrollpanel {
+
+    width: 100%;
+    background: #fff;
+
+  }
+
+  .invited {
     width: 100%;
   }
 }
