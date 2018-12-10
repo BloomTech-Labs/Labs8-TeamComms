@@ -33,12 +33,18 @@ class MeetingCard extends Component {
           </Link>
           <DeleteButton
             onClick={e => {
-              this.props.callDeleteMeeting(
-                e,
-                header,
-                this.props.meeting._id,
-                history
-              );
+              if (
+                window.confirm(
+                  "Are you sure you want to delete this item? Cannot be undone."
+                )
+              ) {
+                this.props.callDeleteMeeting(
+                  e,
+                  header,
+                  this.props.meeting._id,
+                  history
+                );
+              }
             }}
           >
             <i className="fas fa-trash" />
