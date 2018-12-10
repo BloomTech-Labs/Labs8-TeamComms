@@ -57,15 +57,21 @@ class App extends Component {
   render() {
     return (
       <AppWrapper history={this.props.history}>
-        <Link to="/">
-          <FadedLogo src="../images/logo.png" width="190x" height="60px" />
-        </Link>
+        {this.props.loginSuccess ? (
+          <Link to="/dashboard">
+            <FadedLogo src="../images/logo.png" width="190x" height="60px" />
+          </Link>
+        ) : (
+          <Link to="/landing">
+            <FadedLogo src="../images/logo.png" width="190x" height="60px" />
+          </Link>
+        )}
         <Header history={this.props.history} />
         <Route
           exact
           path="/"
           render={props =>
-            this.props.logInSuccess ? (
+            this.props.loginSuccess ? (
               <Redirect history={props.history} to="/dashboard" />
             ) : (
               <Redirect history={props.history} to="/landing" />
