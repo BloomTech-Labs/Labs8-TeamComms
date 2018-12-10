@@ -14,42 +14,21 @@ import { Panel } from "primereact/panel";
 import { TabView, TabPanel } from "primereact/tabview";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { InputText } from "primereact/inputtext";
-import { SubmitButton } from "../Common";
+import { SubmitButton, Group } from "../Common";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { Chart } from "primereact/chart";
-//adding chart value to compare invitees count to attendees count
+import StyledChart from "../Chart/";
+//adding chart value to compare invitees count to attendees
 
 import("./css.css");
 
 let socket;
 
-const Group = styled.fieldset`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 45%;
-  border: 2px groove white;
-  border-radius: 5px;
-  padding: 0 10px 20px 10px;
-  margin: 10px 15px;
-  legend {
-    padding: 8px;
-  }
-  @media (max-width: 800px) {
-    flex-direction: column;
-    width: 90%;
-  }
-`;
-
-const StyledChart = styled(Chart)`
-  margin-bottom: 10px;
-`;
-
 const AttendeeScroll = styled(ScrollPanel)`
   display: none;
-  @media (min-width: 800px) {
+  @media (min-width: 768px) {
     display: block;
     margin: 0 20px;
     }
@@ -68,24 +47,27 @@ const QuestionButton = styled(SubmitButton)`
 const Main = styled.div`
   display: flex;
   flex-direction: column;
-  max-width: 1024px;
-  margin: 0 auto;
-  @media (min-width: 800px) {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  @media (min-width: 768px) {
     flex-direction: row;
+    width: 80%;
+    margin: 0 auto;
   }
 `;
 
 const StyledTabView = styled(TabView)`
-  width: 100%;
+  width: 80%;
   display: block;
-  @media (max-width: 800px) {
+  @media (max-width: 768px) {
     display: none;
   }
 `;
 
 const StyledMobileTabView = styled(TabView)`
   width: 100%;
-  @media (min-width: 500px) {
+  @media (min-width: 768px) {
     display: none;
   }
 `;
@@ -100,9 +82,17 @@ const StyledListAttendees = styled(ListBox)`
 
 const StyledListQuestions = styled(ListBox)`
   &&& {
+    white-space: pre-wrap;
     width: 100%;
     border: none;
+    overflow-x: hidden;
   }
+`;
+
+const ListItem = styled.p`
+  white-space: pre-wrap;
+  max-width: 100%;
+  border: none;
 `;
 
 const Title = styled.h1`
@@ -163,7 +153,12 @@ const QuestionForm = styled.form`
   }
 `;
 
-const CustomTabs = styled(TabPanel)``;
+const CustomTabs = styled(TabPanel)`
+  width: 80%;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
 
 const AttendeeTab = styled(TabPanel)``;
 
@@ -271,6 +266,14 @@ class Meeting extends Component {
     socket.emit("finalize");
   };
 
+  listTemplate(option) {
+    return (
+      <div className="p-clearfix">
+        <ListItem>{option.question}</ListItem>
+      </div>
+    );
+  }
+
   render() {
     const data = {
       labels: ["attendees", "invitees"],
@@ -300,11 +303,12 @@ class Meeting extends Component {
         </MeetingDetails>
 
         <Main>
+          <Group>Test</Group>
           <AttendeeScroll
             ref={this.attendeetab}
             style={{ width: "25%", height: "500px", background: "white" }}
           >
-            <StyledChart type="pie" data={data} />
+            <StyledChart data={data} />
             <Panel header="Invited">
               <StyledListAttendees
                 options={this.meeting.invitees}
@@ -333,7 +337,8 @@ class Meeting extends Component {
               headerClassName={this.props.headerClassName}
               header="Attendees"
             >
-              <StyledChart type="pie" data={data} />
+              <StyledChart data={data} />
+
               <Panel header="Invited">
                 <StyledListAttendees
                   options={this.meeting.invitees}
@@ -354,13 +359,14 @@ class Meeting extends Component {
               header="Questions"
             >
               <ScrollPanel
-                style={{ width: "100%", height: "150px" }}
+                style={{ maxWidth: "100%", height: "150px" }}
                 className="custom"
               >
                 <StyledListQuestions
                   options={this.state.questions}
                   optionLabel="question"
                   className="custom"
+                  itemTemplate={this.listTemplate}
                 />
               </ScrollPanel>
               <QuestionForm onSubmit={this.sendQuestion}>
@@ -389,12 +395,12 @@ class Meeting extends Component {
                 />
 
                 <div style={{ display: "inline-block", marginLeft: "20px" }}>
-                  <FileUpload
+                  {/* <FileUpload
                     name="youtube"
                     url="./upload"
                     mode="basic"
                     auto={true}
-                  />
+                  /> */}
                   <label htmlFor="youtube">Upload to Youtube</label>
                 </div>
 
@@ -407,7 +413,7 @@ class Meeting extends Component {
             </CustomTabs>
           </StyledMobileTabView>
 
-          <StyledTabView>
+          <StyledTabView className="tabcustom">
             {/* // activeIndex=
             // {this.state.activeIndex}
             // // onTabChange=
@@ -417,6 +423,7 @@ class Meeting extends Component {
             <CustomTabs
               headerClassName={this.props.className}
               header="Questions"
+              contentClassName="tabcustom"
             >
               <ScrollPanel
                 style={{ width: "100%", height: "150px" }}
