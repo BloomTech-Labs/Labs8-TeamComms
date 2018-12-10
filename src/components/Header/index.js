@@ -55,6 +55,12 @@ const HeaderWrapper = styled.div`
 
   button:active {
   }
+
+  @media (min-width: 800px) {
+    span {
+      margin: 0 0 0 15px;
+    }
+  }
 `;
 
 const Main = styled.div`
@@ -110,6 +116,9 @@ const MenuOverpane = styled.div`
   z-index: 1000;
   transition: 250ms cubic-bezier(0.7, 0, 0.3, 1) transform;
   transform: translateY(${props => (props.overpane ? "100%" : "0")});
+  span {
+    margin: 0 auto 25px auto;
+  }
 `;
 
 const LoginButton = styled(PrimaryButton)`
