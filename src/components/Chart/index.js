@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { Pie } from "react-chartjs-2";
 
@@ -10,14 +10,7 @@ const StyledChartWrapper = styled.div`
   align-items: center;
 `;
 
-class StyledChart extends React.PureComponent {
-  // componentShouldUpdate(nextProps, nextState) {
-  //   if (nextProps.data !== this.props.data) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+class StyledChart extends PureComponent {
   render() {
     return (
       <StyledChartWrapper>
