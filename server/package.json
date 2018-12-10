@@ -2,7 +2,7 @@
   "name": "server",
   "version": "1.0.0",
   "engines": {
-    "yarn": "1.12.1",
+    "yarn": "^1.12.1",
     "node": "10.13.0"
   },
   "main": "index.js",
