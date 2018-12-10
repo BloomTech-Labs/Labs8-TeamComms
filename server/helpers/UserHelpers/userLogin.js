@@ -1,9 +1,11 @@
 const User = require("../../models/UserModel"); //Model
 const generateToken = require("../../validation/generateToken");
 const hashedPassword = require("../../validation/hashedPassword");
+const ServerError = require("../../validation/ErrorHandling/ServerError");
 
-const userLogin = async (req, res) => {
+const userLogin = async (req, res, next) => {
   const creds = req.body;
+
   try {
     //Input - Password from request body
     //Output - Returns hashed password to be checked with username in database
@@ -15,7 +17,7 @@ const userLogin = async (req, res) => {
     });
 
     if (!user) {
-      throw new Error("Invalid Credentials");
+      throw new ServerError(401, "Invalid Credentials");
     } else {
       res.status(200).send({
         token: `Bearer ${generateToken(user)}`,
@@ -33,7 +35,7 @@ const userLogin = async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(401).send(err.message);
+    next({ code: err.code, message: err.message });
   }
 };
 

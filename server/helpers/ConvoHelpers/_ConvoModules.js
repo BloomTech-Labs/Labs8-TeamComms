@@ -2,6 +2,6 @@ module.exports = {
   convoCreate: require("./convoCreate"),
   convoRetrieve: require("./convoRetrieve"),
   convoUpdate: require("./convoUpdate"),
-  convoDelete: require("./ConvoDelete"),
+  convoDelete: require("./convoDelete"),
   convoFindById: require("./convoFindById")
 };

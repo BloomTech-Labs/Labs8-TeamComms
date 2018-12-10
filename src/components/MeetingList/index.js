@@ -20,6 +20,7 @@ const AddButton = styled.button`
   outline: none;
   padding-left: 0;
   margin-left: 0;
+  cursor: pointer;
   i {
     color: #f0f0f0;
     background: none;
@@ -30,9 +31,9 @@ const ButtonNavLink = styled(Link)`
   font-size: 1rem;
   text-decoration: none;
   color: #ffffff;
-  cursor: pointer;
   padding-left: 0;
   margin-left: 0;
+  cursor: pointer;
 `;
 
 class MeetingList extends Component {

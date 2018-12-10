@@ -3,6 +3,7 @@ const helmet = require("helmet");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const dotenv = require("dotenv");
+const errorHandler = require("./validation/ErrorHandling/errorHandler");
 var express = require("express");
 dotenv.config();
 const passport = require("passport");
@@ -11,44 +12,8 @@ const apiRoutes = require("./routes/_apiRoutes");
 
 const server = express();
 
-
-// server.use(function(req, res, next) {
-
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-
-//   //intercepts OPTIONS method
-//   if ('OPTIONS' === req.method) {
-//     //respond with 200
-//     res.sendStatus(200);
-//   }
-//   else {
-//   //move on
-//     next();
-//   }
-// });
-
 server.use(cors());
 server.options("*", cors());
-
-// server.options(
-//   "*",
-//   cors({
-//     origin: "http://localhost:3000",
-//     optionsSuccessStatus: 200,
-//     credentials: false,
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     allowedHeaders: [
-//       "Content-Type",
-//       "x-access-token",
-//       "Authorization",
-//       "Origin",
-//       "X-Requested-With",
-//       "Accept"
-//     ]
-//   })
-// );
 
 let app = server.listen(process.env.PORT || 8080, () => {
   console.log(`\n=== Web API Listening on http://localhost:8080... *.* ===\n`);
@@ -72,5 +37,6 @@ mongoose
   .catch(err => console.log(err.message));
 
 server.use("/api", apiRoutes);
+server.use(errorHandler);
 
 module.exports = server;
