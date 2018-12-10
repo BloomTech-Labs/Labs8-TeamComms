@@ -29,13 +29,8 @@ export const callReg = (e, credentials, history) => {
           "Axios-Error": err
         });
         console.log(err);
-        if (
-          err.response.data ===
-          "User validation failed: email: The email address is already taken!"
-        ) {
-          dispatch({
-            type: REG_ERROR
-          });
+        if (err.message === "Check credentials") {
+          dispatch({ type: REG_ERROR });
         }
       });
   };
