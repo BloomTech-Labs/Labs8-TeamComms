@@ -302,6 +302,9 @@ class CreateMeeting extends Component {
                   inputClassName="input"
                   className="datePicker"
                   placeholder="Start"
+                  touchUI={true}
+                  readOnlyInput={true}
+                  minDate={moment().toDate()}
                 />
 
                 <Calendar
@@ -314,6 +317,9 @@ class CreateMeeting extends Component {
                   inputClassName="input"
                   className="datePicker"
                   placeholder="End"
+                  touchUI={true}
+                  readOnlyInput={true}
+                  minDate={moment().toDate()}
                 />
               </NewSpan>
 
@@ -329,19 +335,20 @@ class CreateMeeting extends Component {
                   Repeat
                 </label>
               </NewSpan>
-            {/* ZOOM! */}
+              {/* ZOOM! */}
               <NewSpan>
                 <Checkbox
                   inputId="createZoom"
                   name="createZoom"
-                  onChange={e => this.setState({ createZoom: !this.state.createZoom })}
+                  onChange={e =>
+                    this.setState({ createZoom: !this.state.createZoom })
+                  }
                   checked={this.state.createZoom === true}
                 />
                 <label htmlFor="createZoom" className="p-checkbox-label">
                   Create ZOOM Meeting!
                 </label>
               </NewSpan>
-
             </Group>
 
             <Group>

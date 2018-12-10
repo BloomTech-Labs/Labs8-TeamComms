@@ -314,6 +314,9 @@ class UpdateMeeting extends Component {
                   inputClassName="input"
                   className="datePicker"
                   placeholder="Start"
+                  touchUI={true}
+                  readOnlyInput={true}
+                  minDate={moment().toDate()}
                 />
 
                 <Calendar
@@ -326,6 +329,9 @@ class UpdateMeeting extends Component {
                   inputClassName="input"
                   className="datePicker"
                   placeholder="End"
+                  touchUI={true}
+                  readOnlyInput={true}
+                  minDate={moment().toDate()}
                 />
               </NewSpan>
 
