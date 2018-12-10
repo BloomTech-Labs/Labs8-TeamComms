@@ -3,7 +3,7 @@ const Convo = require("../../models/ConvoModel"); //Model
 const LiveMeeting = require("../../models/LiveMeetingModel");
 const moment = require("moment");
 const callZoomAPI = require("../Zoom/zoomCreate");
-const sendEmail = require("../SendGrid/sendGrid");
+const sendEmail = require("../../services/sendGrid");
 
 const convoCreate = async (req, res) => {
   // default error code set to 'internal server error'
