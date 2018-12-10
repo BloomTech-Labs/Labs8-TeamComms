@@ -9,8 +9,6 @@ import axios from "axios";
 const CustomBtn = styled(PrimaryButton)`
   background: #fabc09;
   color: #ffffff;
-  margin-left: 1rem;
-
   a {
     text-decoration: none;
     color: white;
