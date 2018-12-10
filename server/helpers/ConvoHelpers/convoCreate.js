@@ -3,7 +3,7 @@ const Convo = require("../../models/ConvoModel"); //Model
 const LiveMeeting = require("../../models/LiveMeetingModel");
 const moment = require("moment");
 const callZoomAPI = require("../Zoom/zoomCreate");
-const sendEmail = require("../SendGrid/sendGrid");
+const sendEmail = require("../../services/sendGrid");
 
 const convoCreate = async (req, res) => {
   // default error code set to 'internal server error'
@@ -100,10 +100,11 @@ const convoCreate = async (req, res) => {
 
       await convo.save();
 
+      let inviteeEmails = [];
       await Convo.findById(convo._id)
         .populate({
           path: "invitees",
-          select: "meetings"
+          select: "meetings email"
         })
         .exec((err, query) => {
           if (err) {
@@ -112,6 +113,7 @@ const convoCreate = async (req, res) => {
           } else {
             query.invitees.forEach(async invitee => {
               invitee.meetings.push(convo._id);
+              inviteeEmails.push(invitee.email);
               await invitee.save();
             });
           }
@@ -120,14 +122,17 @@ const convoCreate = async (req, res) => {
       await liveMeeting.save();
       await user.save();
 
-      await sendEmail(
+      let emailErr = await sendEmail(
         user.email,
+        inviteeEmails,
         convo.title,
         start,
         newConvo.questions,
         convo.zoom
       );
-
+      if (emailErr) {
+        console.error("Error with send email confirmation:", emailErr);
+      }
       res.status(201).send(convo);
     }
   } catch (err) {
