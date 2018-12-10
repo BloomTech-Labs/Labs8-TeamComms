@@ -20,19 +20,30 @@ import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import { Chart } from "primereact/chart";
 import StyledChart from "../Chart/";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+
 //adding chart value to compare invitees count to attendees
 
 import("./css.css");
 
 let socket;
 
+const FinalizeButton = styled(SubmitButton)`
+  margin: 20px 0 20px 0;
+`;
+
 const AttendeeScroll = styled(ScrollPanel)`
-  display: none;
+display: flex;
+ justify-content: center;
+ align-items: center;
+ flex-direction: column;
   @media (min-width: 768px) {
-    display: block;
+   
     margin: 0 20px;
     }
   }
+
 `;
 
 const StyledInputText = styled(InputText)`
@@ -102,31 +113,39 @@ const Title = styled.h1`
 `;
 
 const EditorWrapper = styled.div`
-  @media (min-width 300px) {
-    color: black;
-
-    label {
-      color: white;
-      padding-left: 5px;
-    }
-    strong {
-      font-weight: bold !important;
-    }
-    em {
-      font-style: italic !important;
-    }
+  color: black;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  label {
+    color: white;
+    padding-left: 5px;
+  }
+  strong {
+    font-weight: bold !important;
+  }
+  em {
+    font-style: italic !important;
   }
 `;
 
 const Editor = styled(ReactQuill)`
   background: white;
+  width: 100%;
   .ql-container {
-    height: 300px;
+    height: 320px;
+    @media (max-width: 500px) {
+      height: 20vh;
+    }
   }
 `;
 const MeetingDetails = styled.div`
   display:flex;
-  margin: 30px;
+  width: 78%;
+  margin: 0;
+  margin-left: 11.75%;
   justify-content: center;
   align-items: center;
   h1 {
@@ -140,6 +159,10 @@ const MeetingDetails = styled.div`
   p {
     color: white;
   }
+  }
+  @media(max-width:768px) {
+    width: 100%;
+    margin-left: 0;
   }
 `;
 
@@ -160,17 +183,15 @@ const CustomTabs = styled(TabPanel)`
   }
 `;
 
-const AttendeeTab = styled(TabPanel)``;
-
 class Meeting extends Component {
   constructor(props) {
     super(props);
     this.meeting = {};
     this.confirm = false;
     const { dispatch } = this.props;
-    this.attendeetab = React.createRef();
+
     this.state = {
-      activeIndex: 2,
+      activeIndex: 1,
       color: "white",
       user: "JAshcraft",
       text: "",
@@ -293,28 +314,48 @@ class Meeting extends Component {
       ]
     };
 
+    const meetingDetails = [
+      {
+        title: this.meeting.title,
+        zoom: this.meeting.zoom,
+        startTime: this.meeting.startTime
+      }
+    ];
+
     return (
       <Fragment>
         <MeetingDetails>
-          <h1>Meeting Details: &nbsp;</h1> <h2>{this.meeting.title}</h2>
+          <DataTable
+            value={meetingDetails}
+            responsive={true}
+            header="Meeting Details"
+          >
+            <Column
+              field="title"
+              header="Title"
+              style={{ whiteSpace: "wrap" }}
+            />
+
+            <Column field="startTime" header="Start Time" />
+            <Column field="zoom" header="Zoom Link" />
+          </DataTable>
+          {/* <h2>{this.meeting.title}</h2>
           &nbsp;
           <p>{this.meeting.zoom}</p>
-          <div />
+          <div /> */}
         </MeetingDetails>
 
         <Main>
-          <Group>Test</Group>
-          <AttendeeScroll
-            ref={this.attendeetab}
-            style={{ width: "25%", height: "500px", background: "white" }}
+          <AttendeeScroll // style={{ width: "25%", height: "500px", background: "white" }}
+            className="attendee"
           >
             <StyledChart data={data} />
-            <Panel header="Invited">
+            <Panel header="Invited" className="invited">
               <StyledListAttendees
                 options={this.meeting.invitees}
                 optionLabel="displayName"
                 filter={true}
-                className={this.props.className}
+                className="invited"
               />
             </Panel>
             <Panel header="Current">
@@ -330,30 +371,7 @@ class Meeting extends Component {
           <StyledMobileTabView
             activeIndex={this.state.activeIndex}
             onTabChange={e => this.setState({ activeIndex: e.index })}
-            renderActiveOnly={false}
           >
-            <AttendeeTab
-              className="p-tabview-selected"
-              headerClassName={this.props.headerClassName}
-              header="Attendees"
-            >
-              <StyledChart data={data} />
-
-              <Panel header="Invited">
-                <StyledListAttendees
-                  options={this.meeting.invitees}
-                  optionLabel="displayName"
-                  filter={true}
-                />
-              </Panel>
-              <Panel header="Current">
-                <StyledListAttendees
-                  options={this.state.users}
-                  optionLabel="displayName"
-                  filter={true}
-                />
-              </Panel>
-            </AttendeeTab>
             <CustomTabs
               headerClassName={this.props.className}
               header="Questions"
@@ -386,7 +404,6 @@ class Meeting extends Component {
               header="Meeting Notes"
             >
               <EditorWrapper>
-                <Title>Meeting Notes</Title>
                 <Editor
                   theme="snow"
                   value={this.state.text}
@@ -394,21 +411,7 @@ class Meeting extends Component {
                   name="text"
                 />
 
-                <div style={{ display: "inline-block", marginLeft: "20px" }}>
-                  {/* <FileUpload
-                    name="youtube"
-                    url="./upload"
-                    mode="basic"
-                    auto={true}
-                  /> */}
-                  <label htmlFor="youtube">Upload to Youtube</label>
-                </div>
-
-                <div style={{ display: "inline-block", marginLeft: "20px" }}>
-                  <Checkbox inputId="repeat" value="repeat" />
-                  <label htmlFor="repeat">Schedule a Follow Up Meeting</label>
-                  <SubmitButton>Finalize Meeting</SubmitButton>
-                </div>
+                <FinalizeButton>Finalize Meeting</FinalizeButton>
               </EditorWrapper>
             </CustomTabs>
           </StyledMobileTabView>
@@ -452,7 +455,6 @@ class Meeting extends Component {
               header="Meeting Notes"
             >
               <EditorWrapper>
-                <Title>Meeting Notes</Title>
                 <Editor
                   theme="snow"
                   value={this.state.text}
@@ -460,26 +462,20 @@ class Meeting extends Component {
                   name="text"
                 />
 
-                {/* <div style={{ display: "inline-block", marginLeft: "20px" }}>
-                  <label htmlFor="youtube">Upload to Youtube</label>
-                </div> */}
-
-                <div style={{ display: "inline-block", marginLeft: "20px" }}>
-                  {this.confirm ? (
-                    <SubmitButton
-                      style={{ width: "200px" }}
-                      onClick={this.finalizeMeeting}
-                    >
-                      Finalize Meeting
-                    </SubmitButton>
-                  ) : (
-                    <SubmitButton
-                      style={{ backgroundColor: "gray", width: "200px" }}
-                    >
-                      Creator Only
-                    </SubmitButton>
-                  )}
-                </div>
+                {this.confirm ? (
+                  <FinalizeButton
+                    style={{ width: "200px" }}
+                    onClick={this.finalizeMeeting}
+                  >
+                    Finalize Meeting
+                  </FinalizeButton>
+                ) : (
+                  <FinalizeButton
+                    style={{ backgroundColor: "gray", width: "200px" }}
+                  >
+                    Creator Only
+                  </FinalizeButton>
+                )}
               </EditorWrapper>
             </CustomTabs>
           </StyledTabView>

@@ -203,14 +203,13 @@ export const SpinnerWrapper = styled.div`
 `;
 
 export const Ul = styled.ul`
-  width: 18rem;
   margin-left: 2rem;
 `;
 export const Li = styled.li`
-  font: 200 1rem/1.5 Helvetica, Verdana, sans-serif;
+  font: sans-serif;
 
   margin: 1rem;
-  transition: background-color 0.3s ease;
+  padding: 1%;
 
   :hover {
     // background-color: #25bea0;
