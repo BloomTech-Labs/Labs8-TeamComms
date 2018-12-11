@@ -25,6 +25,9 @@ const AddButton = styled.button`
     color: #25bea0;
     background: none;
   }
+  i:hover {
+    color: #374353;
+  }
 `;
 const ButtonNavLink = styled(Link)`
   width: 100%
