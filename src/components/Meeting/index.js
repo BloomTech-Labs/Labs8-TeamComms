@@ -461,20 +461,12 @@ class Meeting extends Component {
                   name="text"
                 />
 
-                {this.confirm ? (
-                  <FinalizeButton
-                    style={{ width: "200px" }}
-                    onClick={this.finalizeMeeting}
-                  >
-                    Save
-                  </FinalizeButton>
-                ) : (
-                  <FinalizeButton
-                    style={{ backgroundColor: "gray", width: "200px" }}
-                  >
-                    Creator Only
-                  </FinalizeButton>
-                )}
+                <FinalizeButton
+                  style={{ width: "200px" }}
+                  onClick={this.finalizeMeeting}
+                >
+                  Save
+                </FinalizeButton>
               </EditorWrapper>
             </CustomTabs>
           </StyledTabView>
