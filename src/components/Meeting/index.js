@@ -232,8 +232,7 @@ class Meeting extends Component {
       return this.setState({ questions });
     });
     socket.on("finalize", () => {
-      alert("Meeting has ended");
-      this.props.history.push("/dashboard");
+      alert("Meeting has been saved!");
     });
   }
 
@@ -421,7 +420,7 @@ class Meeting extends Component {
                   name="text"
                 />
 
-                <FinalizeButton>Finalize Meeting</FinalizeButton>
+                <FinalizeButton>Save</FinalizeButton>
               </EditorWrapper>
             </CustomTabs>
           </StyledMobileTabView>
@@ -477,7 +476,7 @@ class Meeting extends Component {
                     style={{ width: "200px" }}
                     onClick={this.finalizeMeeting}
                   >
-                    Finalize Meeting
+                    Save
                   </FinalizeButton>
                 ) : (
                   <FinalizeButton
