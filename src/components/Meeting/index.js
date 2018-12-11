@@ -105,6 +105,12 @@ const ListItem = styled.p`
   max-width: 100%;
   border: none;
 `;
+const dimText = styled.p`
+  text-align: center;
+  color: grey;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+`;
 
 const Title = styled.h1`
   color: white;
@@ -191,7 +197,7 @@ class Meeting extends Component {
     const { dispatch } = this.props;
 
     this.state = {
-      activeIndex: 1,
+      activeIndex: 0,
       color: "white",
       user: "JAshcraft",
       text: "",
@@ -346,9 +352,10 @@ class Meeting extends Component {
         </MeetingDetails>
 
         <Main>
-          <AttendeeScroll // style={{ width: "25%", height: "500px", background: "white" }}
-            className="attendee"
-          >
+          <AttendeeScroll className="attendee">
+            {" "}
+            // style=
+            {{ width: "25%", height: "500px", background: "white" }}
             <StyledChart data={data} />
             <Panel header="Invited" className="invited">
               <StyledListAttendees
@@ -404,6 +411,10 @@ class Meeting extends Component {
               header="Meeting Notes"
             >
               <EditorWrapper>
+                <dimText>
+                  Collaborate with your team in the notes section below. Any
+                  active User can contribute.
+                </dimText>
                 <Editor
                   theme="snow"
                   value={this.state.text}
