@@ -24,9 +24,10 @@ const AddButton = styled.button`
   i {
     color: #25bea0;
     background: none;
-  }
-  i:hover {
-    color: #374353;
+    transition: 0.25s;
+    &:hover {
+      color: #374353;
+    }
   }
 `;
 const ButtonNavLink = styled(Link)`
