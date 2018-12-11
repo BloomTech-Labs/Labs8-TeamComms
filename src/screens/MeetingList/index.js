@@ -58,20 +58,14 @@ class ScreensMeetingList extends Component {
     }
 
     return (
-      <Fragment>
-        {this.props.loginSuccess ? (
-          <ConvoGrid>
-            <EasterEgg />
-            <FlexBox>
-              <QuickAdd />
-              <SearchBar filtered={this.filtered} />
-            </FlexBox>
-            {filtered_meetings}
-          </ConvoGrid>
-        ) : (
-          <Redirect to="/landing" />
-        )}
-      </Fragment>
+      <ConvoGrid>
+        <EasterEgg />
+        <FlexBox>
+          <QuickAdd />
+          <SearchBar filtered={this.filtered} />
+        </FlexBox>
+        {filtered_meetings}
+      </ConvoGrid>
     );
   }
 }
