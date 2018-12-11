@@ -1,0 +1,18 @@
+.calendar-overrideStart {
+  top: -150px !important;
+  left: 185px !important;
+}
+.calendar-overrideEnd {
+  top: -150px !important;
+  left: 185px !important;  
+}
+@media (max-width: 800px) {
+  .calendar-overrideStart {
+    top: 30px !important;
+    left: 0px !important;
+  }
+  .calendar-overrideEnd {
+    top: 30px !important;
+    left: -150px !important;  
+  }  
+}
