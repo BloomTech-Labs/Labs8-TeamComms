@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { callReg } from "../../actions/index";
+import { callReg, toggleOverpane } from "../../actions/index";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
@@ -252,7 +252,12 @@ class Register extends Component {
 
             <SwitchText>
               Already Registered ?
-              <SwitchLink onClick={this.switchToLogin}>
+              {/* <SwitchLink onClick={this.switchToLogin}>
+                &nbsp; Login.
+              </SwitchLink> */}
+              <SwitchLink onClick={() => {
+                  this.props.toggleOverpane(!this.props.overpane);
+                }}>
                 &nbsp; Login.
               </SwitchLink>
             </SwitchText>
@@ -269,6 +274,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    callReg
+    callReg,
+    toggleOverpane
   }
 )(Register);
