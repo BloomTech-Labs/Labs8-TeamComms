@@ -3,7 +3,7 @@ import Register from "../../components/Register";
 
 //this screen should return components necessary to build the landing page.
 
-class ScreensLanding extends Component {
+class ScreensRegister extends Component {
   render(props) {
     return (
       <React.Fragment>
@@ -12,6 +12,6 @@ class ScreensLanding extends Component {
     );
   }
 }
-ScreensLanding.propTypes = {};
+ScreensRegister.propTypes = {};
 
-export default ScreensLanding;
+export default ScreensRegister;

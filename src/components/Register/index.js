@@ -7,22 +7,60 @@ import { Password } from "primereact/password";
 import { PrimaryButton, SpinnerWrapper, Ul, Li } from "../Common";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
+import { Lightbox } from "primereact/lightbox";
 
 const Main = styled.div`
   margin: 0 auto;
   display: flex;
-  padding: 5px 0 5px 0;
+
+  // padding: 5px 0 5px 0;
   background: #fff;
   @media (max-width: 768px) {
     flex-direction: column;
     padding: 0;
   }
 `;
+const LandingImage = styled.img`
+  max-width: 100%;
+  cursor: pointer;
+  @media (max-width: 768px) {
+    margin-top: 20px;
+    max-width: 75%;
+  }
+`;
+
+const VidContainer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  transition: all 0.2s ease;
+  align-items: center;
+  &:hover .playicon {
+    opacity: 1;
+    color: #25bea0;
+  }
+`;
+
+const PlayIcon = styled.div`
+  position: absolute;
+  transition: all 0.2s ease;
+  opacity: 0;
+
+  .playicon {
+  }
+`;
 
 const H2 = styled.h2`
-  font-size: 2rem;
-  padding: 5% 10%;
-  font-weight: bold;
+  font-size: 1.75rem;
+  padding: 0 10%;
+  font-weight: 900;
+  text-align: center;
+  margin-top: 0;
+`;
+const Paragraph = styled.p`
+  font-size: 1rem;
+  padding: 2% 10%;
+  line-height: 1.25;
 `;
 
 const FormWrapper = styled.form`
@@ -157,12 +195,31 @@ class Register extends Component {
         ) : null}
         <Main>
           <FormWrapper>
+            <Lightbox type="content">
+              <a>
+                <VidContainer>
+                  <LandingImage src="../images/front1000.png" />
+
+                  <PlayIcon className="playicon">
+                    <i class="fas fa-play fa-5x" />
+                  </PlayIcon>
+                </VidContainer>
+              </a>
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/renWQ14-NzI"
+                frameBorder="0"
+                allowFullScreen
+              />
+            </Lightbox>
+
             <H2>Team Communicator keeps your remote team in sync.</H2>
-            <Ul>
-              <Li> Schedule Zoom Meetings </Li>
-              <Li> Track Your Team Meeting Questions/Notes </Li>
-              <Li> Collaborate on documents in real-time </Li>
-            </Ul>
+            <Paragraph>
+              Schedule zoom meetings, track your priority questions, and
+              collaborate on meeting notes in real-time. When your team is light
+              years apart, we still keep you connected.
+            </Paragraph>
           </FormWrapper>
           <FormWrapper
             method="post"

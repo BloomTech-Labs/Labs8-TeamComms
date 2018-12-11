@@ -1,5 +1,10 @@
 import axios from "axios";
-import { REG_CALLED, REG_RETURNED, REG_ERROR } from "./types";
+import {
+  REG_CALLED,
+  REG_RETURNED,
+  REG_ERROR,
+  REG_ERROR_UNKNOWN
+} from "./types";
 // import history from "../history";
 
 export const callReg = (e, credentials, history) => {
@@ -31,6 +36,10 @@ export const callReg = (e, credentials, history) => {
         console.log(err);
         if (err.message === "Check credentials") {
           dispatch({ type: REG_ERROR });
+        } else {
+          dispatch({ type: REG_ERROR_UNKNOWN });
+          alert("Unknown error. Please check your connection and try again.");
+          history.push("/register");
         }
       });
   };

@@ -353,9 +353,8 @@ class Meeting extends Component {
 
         <Main>
           <AttendeeScroll className="attendee">
-            {" "}
-            // style=
-            {{ width: "25%", height: "500px", background: "white" }}
+            {/* // style=
+            {{ width: "25%", height: "500px", background: "white" }} */}
             <StyledChart data={data} />
             <Panel header="Invited" className="invited">
               <StyledListAttendees

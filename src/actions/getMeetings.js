@@ -1,6 +1,10 @@
 import axios from "axios";
-import { GET_MEETING_CALLED, GET_MEETING_RETURNED } from "./types";
-
+import {
+  GET_MEETING_CALLED,
+  GET_MEETING_RETURNED,
+  GET_MEETING_ERROR
+} from "./types";
+import history from "../history";
 
 export const getMeetings = () => {
   const header = { Authorization: localStorage.getItem("jwt") };
@@ -22,5 +26,7 @@ export const getMeetings = () => {
         });
       })
       .catch(err => console.log(err));
+    dispatch({ type: GET_MEETING_ERROR, payload: [] });
+    history.push("/dashboard");
   };
 };

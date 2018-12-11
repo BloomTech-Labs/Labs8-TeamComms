@@ -33,6 +33,7 @@ export const callLogIn = (e, userInput, history, overpane) => {
       .catch(err => {
         console.log({ "Axios-Error": err });
         dispatch({ type: LOGIN_ERROR });
+        history.push("/landing");
       });
   };
 };
