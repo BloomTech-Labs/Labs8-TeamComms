@@ -16,11 +16,13 @@ import {
   CREATE_MEETING_RETURNED,
   GET_MEETING_CALLED,
   GET_MEETING_RETURNED,
+  GET_MEETING_ERROR,
   MEETING_UPDATE_CALLED,
   MEETING_UPDATE_RETURNED,
   DELETE_MEETING_CALLED,
   DELETE_MEETING_RETURNED,
-  PREMIUM_CHANGE
+  PREMIUM_CHANGE,
+  REG_ERROR_UNKNOWN
 } from "../actions/types";
 
 export const reducer = (state = null, action) => {
@@ -40,6 +42,14 @@ export const reducer = (state = null, action) => {
         ...state,
         registrationSuccess: false,
         regError: true,
+        loginLoading: false
+      };
+
+    case REG_ERROR_UNKNOWN:
+      return {
+        ...state,
+        registrationSuccess: false,
+        regError: false,
         loginLoading: false
       };
 
@@ -93,18 +103,12 @@ export const reducer = (state = null, action) => {
     case TOGGLE_MOBILE_MENU:
       return { ...state, mobileMenu: action.payload };
     case UPDATE_CALLED:
-      return {
-        ...state,
-        userDataLoading: true
-      };
+      return { ...state, userDataLoading: true };
     case UPDATE_RETURNED:
       const payload = Object.assign({}, state.userData, action.payload);
       return { ...state, userData: payload, userDataLoading: false };
     case CREATE_MEETING_CALLED:
-      return {
-        ...state,
-        meetingsLoading: true
-      };
+      return { ...state, meetingsLoading: true };
     case CREATE_MEETING_RETURNED:
       return {
         ...state,
@@ -112,15 +116,15 @@ export const reducer = (state = null, action) => {
         meetingsLoading: false
       };
     case GET_MEETING_CALLED:
-      return {
-        ...state,
-        meetingsLoading: true
-      };
+      return { ...state, meetingsLoading: true };
     case GET_MEETING_RETURNED:
+      return { ...state, meetings: action.payload, meetingsLoading: false };
+    case GET_MEETING_ERROR:
       return {
         ...state,
-        meetings: action.payload,
-        meetingsLoading: false
+        meetings: [],
+        meetingsLoading: false,
+        meetingError: true
       };
     case MEETING_UPDATE_CALLED:
       return { ...state, meetingsLoading: true };

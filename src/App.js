@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect, Link } from "react-router-dom";
-import ScreensLanding from "./screens/Landing";
 import ScreensLogin from "./screens/Login";
 import ScreensRegister from "./screens/Register";
+import ScreensLanding from "./screens/Landing";
 import ScreensMeetingList from "./screens/MeetingList";
 import { connect } from "react-redux";
 import "./App.css";
@@ -79,8 +79,8 @@ class App extends Component {
           }
         />
         <Switch>
-          <Route exact path="/landing" component={ScreensLanding} />
           <Content>
+            <Route exact path="/landing" component={ScreensLanding} />
             <Route
               exact
               path="/register"

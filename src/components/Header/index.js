@@ -78,11 +78,9 @@ const Main = styled.div`
 const MobileMain = styled.div`
   @media (min-width: 320px) {
     display: flex;
-    height: 5rem;
+    height: 100%;
     align-items: center;
     justify-content: center;
-    grid-column: 2;
-    grid-row: 1;
   }
   @media (min-width: 500px) {
     margin-right: 0px;
@@ -106,13 +104,13 @@ const MenuOverpane = styled.div`
   position: fixed;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   background: #25bea0;
-  padding: 2rem;
   z-index: 1000;
   transition: 250ms cubic-bezier(0.7, 0, 0.3, 1) transform;
   transform: translateY(${props => (props.overpane ? "100%" : "0")});
