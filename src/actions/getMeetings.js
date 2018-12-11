@@ -26,7 +26,6 @@ export const getMeetings = () => {
         });
       })
       .catch(err => console.log(err));
-    dispatch({ type: GET_MEETING_ERROR, payload: [] });
-    history.push("/dashboard");
+    dispatch({ type: GET_MEETING_ERROR });
   };
 };
