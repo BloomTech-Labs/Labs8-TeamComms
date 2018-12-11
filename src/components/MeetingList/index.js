@@ -22,8 +22,11 @@ const AddButton = styled.button`
   margin-left: 0;
   cursor: pointer;
   i {
-    color: #f0f0f0;
+    color: #25bea0;
     background: none;
+  }
+  i:hover {
+    color: #374353;
   }
 `;
 const ButtonNavLink = styled(Link)`
