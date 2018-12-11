@@ -256,7 +256,6 @@ class Register extends Component {
               {/* Email */}
               <NSpan className="">
                 <TextInput
-                  id="email"
                   name="email"
                   required
                   value={this.state.email}

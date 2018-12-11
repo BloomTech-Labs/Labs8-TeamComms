@@ -24,7 +24,6 @@ export const callGoogleLogIn = (history, token) => {
       })
       .catch(err => {
         console.log({ "Axios-Error": err });
-        history.push("/login");
       });
   };
 };
