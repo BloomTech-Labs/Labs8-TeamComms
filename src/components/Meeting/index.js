@@ -207,17 +207,17 @@ class Meeting extends Component {
       zoom: ""
     };
 
-    // const socket_connect = function(room) {
-    //   return io("localhost:8080/meeting", {
-    //     query: "r_var=" + room
-    //   });
-    // };
-
     const socket_connect = function(room) {
-      return io("https://teamcomm2.herokuapp.com/meeting", {
+      return io("localhost:8080/meeting", {
         query: "r_var=" + room
       });
     };
+
+    // const socket_connect = function(room) {
+    //   return io("https://teamcomm2.herokuapp.com/meeting", {
+    //     query: "r_var=" + room
+    //   });
+    // };
     const id = this.props.match.params.id;
     socket = socket_connect(id);
 
@@ -225,7 +225,9 @@ class Meeting extends Component {
       return this.setState({ users });
     });
     socket.on("update text", text => {
-      return this.setState({ text });
+      setTimeout(() => {
+        return this.setState({ text });
+      }, 1000);
     });
 
     socket.on("question", questions => {
@@ -268,18 +270,18 @@ class Meeting extends Component {
 
   handleChange = value => {
     if (value.length !== this.state.text.length) {
-      socket.emit("update text", value);
+        socket.emit("update text", value);
     }
     this.setState({ text: value });
   };
 
-  // updates state and sends new state to server to distribute to clients with emit
-  changeHandler = html => {
-    this.setState({
-      text: html
-    });
-    socket.emit("update text", this.state.text); //sends data to server
-  };
+  // // updates state and sends new state to server to distribute to clients with emit
+  // changeHandler = html => {
+  //   this.setState({
+  //     text: html
+  //   });
+  //   socket.emit("update text", this.state.text); //sends data to server
+  // };
 
   sendQuestion = e => {
     e.preventDefault();
