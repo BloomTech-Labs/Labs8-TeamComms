@@ -5,26 +5,21 @@ import io from "socket.io-client";
 // import { loadInitialDataSocket } from "../../actions/index";
 // import { Editor } from "primereact/editor";
 import { ListBox } from "primereact/listbox";
-import { Checkbox } from "primereact/checkbox";
 import "primereact/resources/themes/nova-light/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
-import { FileUpload } from "primereact/fileupload";
 import { Panel } from "primereact/panel";
 import { TabView, TabPanel } from "primereact/tabview";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { InputText } from "primereact/inputtext";
-import { SubmitButton, Group } from "../Common";
+import { SubmitButton } from "../Common";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
-import { Chart } from "primereact/chart";
 import StyledChart from "../Chart/";
 // import { DataTable } from "primereact/datatable";
 // import { Column } from "primereact/column";
 import moment from "moment";
-
-//adding chart value to compare invitees count to attendees
 
 import("./css.css");
 
@@ -113,12 +108,6 @@ const dimText = styled.p`
   overflow-wrap: break-word;
 `;
 
-const Title = styled.h1`
-  color: white;
-  font-size: 30px;
-  padding-bottom: 16px;
-`;
-
 const EditorWrapper = styled.div`
   color: black;
   display: flex;
@@ -194,7 +183,7 @@ class Meeting extends Component {
     super(props);
     this.meeting = {};
     const { dispatch } = this.props;
-    this.confirm = true;
+ 
     this.buffer = 0;
     this.state = {
       activeIndex: 0,
@@ -344,22 +333,7 @@ class Meeting extends Component {
 
     return (
       <Fragment>
-        
-        {/* <MeetingDetails>
-          <DataTable
-            value={meetingDetails}
-            responsive={true}
-            header="Meeting Details"
-          >
-            <Column
-              field="title"
-              header="Title"
-              style={{ whiteSpace: "wrap" }}
-            />
-            <Column field="startTime" header="Start Time" />
-            <Column field="zoom" header="Zoom Link" />
-          </DataTable>{" "}
-        </MeetingDetails> */}
+     
         <MeetingDetailTable>
         <table className='top-table'> 
         <caption><h1>MEETING DETAILS</h1></caption>       

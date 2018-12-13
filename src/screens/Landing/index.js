@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Register from "../../components/Register";
-import styled from "styled-components";
 
 //this screen should return components necessary to build the landing page.
 

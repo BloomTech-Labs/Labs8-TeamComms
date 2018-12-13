@@ -1,11 +1,10 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import MeetingList from "../../components/MeetingList";
 import QuickAdd from "../../components/QuickAdd";
 import SearchBar from "../../components/SearchBar/index";
 import styled from "styled-components";
 import EasterEgg from "../../components/EasterEgg";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 
 //this screen should return components necessary to build the convo list page.
 const ConvoGrid = styled.div`

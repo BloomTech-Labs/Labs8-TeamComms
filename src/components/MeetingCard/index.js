@@ -2,15 +2,13 @@ import history from "../../history";
 import { connect } from "react-redux";
 import React, { Component } from "react";
 import "./convoList.css";
-import { getMeetings, callDeleteMeeting } from "../../actions/index";
+import { callDeleteMeeting } from "../../actions/index";
 import styled from "styled-components";
-import { ProgressSpinner } from "primereact/progressspinner";
 import {
   EditButton,
-  DeleteButton,
-  ShareButton,
-  FavoriteButton,
-  SpinnerWrapper
+  DeleteButton
+  // ShareButton,
+  // FavoriteButton,
 } from "../Common";
 
 import { Link } from "react-router-dom";

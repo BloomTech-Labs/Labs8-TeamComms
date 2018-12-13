@@ -134,17 +134,6 @@ const LoginButton = styled(PrimaryButton)`
   }
 `;
 
-// const HeaderText = styled.h1`
-//   pointer-events: none;
-//   position: absolute;
-//   margin: 0;
-//   left: 50%;
-//   width: 20rem;
-//   margin-left: -10rem;
-//   font-size: 1rem;
-//   text-align: center;
-// `;
-
 class Header extends Component {
   constructor(props) {
     super(props);
@@ -157,8 +146,6 @@ class Header extends Component {
   // };
 
   render() {
-    console.log("header history object", history);
-
     return (
       <Fragment>
         <MobileMain>

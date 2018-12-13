@@ -10,8 +10,7 @@ import { AutoComplete } from "primereact/autocomplete";
 import { PrimaryButton } from "../Common";
 import moment from "moment";
 import axios from "axios";
-import { Message } from "primereact/message";
-import './createMeeting.css'
+import "./createMeeting.css";
 // import { listenerCount } from "cluster";
 
 const Main = styled.div`
@@ -62,7 +61,6 @@ const QGroup = styled.fieldset`
     width: 90%;
     margin: 0px;
     padding: 0px;
-
   }
 `;
 const NewSpan = styled.span`
@@ -128,7 +126,6 @@ const Entry = styled.li`
   color: black;
 `;
 
-
 class CreateMeeting extends Component {
   constructor(props) {
     super(props);
@@ -163,7 +160,6 @@ class CreateMeeting extends Component {
         headers: { Authorization: localStorage.getItem("jwt") }
       })
       .then(res => {
-        console.log(res.data);
         this.setState({ users: res.data });
       })
       .catch(err => console.log(err));
@@ -183,42 +179,43 @@ class CreateMeeting extends Component {
 
   handleNewConvo = async (e, userInput, history, dashboard) => {
     e.preventDefault();
-    if (!userInput.title || !userInput.description || !userInput.start || !userInput.end) {
-      alert('Required fields are Title, Description, Start, End');
+    if (
+      !userInput.title ||
+      !userInput.description ||
+      !userInput.start ||
+      !userInput.end
+    ) {
+      alert("Required fields are Title, Description, Start, End");
       return;
     } else {
-    console.log(!userInput);
-    const body = {
-      title: userInput.title,
-      description: userInput.description,
-      startTime: moment(userInput.start),
-      endTime: moment(userInput.end),
-      repeat: userInput.repeat,
-      createZoom: userInput.createZoom,
-      invitees: userInput.invitees.map(invited => invited._id),
-      questions: userInput.questions
-    };
-    const header = { Authorization: localStorage.getItem("jwt") };
-    console.log("Header: ", header);
-    console.log("Body: ", body);
-    this.props.callCreate(e, header, body, history, dashboard);
-    this.setState({
-      title: "",
-      description: "",
-      start: "",
-      end: "",
-      repeat: "",
-      createZoom: "",
-      invitees: [],
-      questions: [],
-      invited: "",
-      question: "",
-      userSuggestions: null,
-      users: []
-    });
+      const body = {
+        title: userInput.title,
+        description: userInput.description,
+        startTime: moment(userInput.start),
+        endTime: moment(userInput.end),
+        repeat: userInput.repeat,
+        createZoom: userInput.createZoom,
+        invitees: userInput.invitees.map(invited => invited._id),
+        questions: userInput.questions
+      };
+      const header = { Authorization: localStorage.getItem("jwt") };
+      this.props.callCreate(e, header, body, history, dashboard);
+      this.setState({
+        title: "",
+        description: "",
+        start: "",
+        end: "",
+        repeat: "",
+        createZoom: "",
+        invitees: [],
+        questions: [],
+        invited: "",
+        question: "",
+        userSuggestions: null,
+        users: []
+      });
+    }
   };
-};
-  
 
   addQuestions = e => {
     e.preventDefault();
@@ -239,9 +236,6 @@ class CreateMeeting extends Component {
       //   return Object.values(user).includes(this.state.invited);
       possible = this.state.userSuggestions;
     }
-
-    console.log("usersug", this.state.userSuggestions);
-    console.log("possible", possible);
     if (possible.includes(this.state.invited)) {
       const invitees = this.state.invitees;
       invitees.push(this.state.invited);
@@ -320,10 +314,9 @@ class CreateMeeting extends Component {
                   inputClassName="input"
                   className="datePicker"
                   placeholder="Start"
-                  // touchUI={true}
-                  // readOnlyInput={true}
+                  readOnlyInput={true}
                   minDate={moment().toDate()}
-                  panelClassName={'calendar-overrideStart'}
+                  panelClassName={"calendar-overrideStart"}
                 />
 
                 <Calendar
@@ -336,15 +329,14 @@ class CreateMeeting extends Component {
                   inputClassName="input"
                   className="datePicker"
                   placeholder="End"
-                  // touchUI={true}
-                  // readOnlyInput={true}
+                  readOnlyInput={true}
                   minDate={moment().toDate()}
-                  panelClassName={'calendar-overrideEnd'}
+                  panelClassName={"calendar-overrideEnd"}
                 />
               </NewSpan>
 
               {/* Repeat */}
-                {/* <Checkbox
+              {/* <Checkbox
                   inputId="repeat"
                   name="repeat"
                   onChange={e => this.setState({ repeat: !this.state.repeat })}
@@ -353,10 +345,10 @@ class CreateMeeting extends Component {
                 <label htmlFor="repeat" className="p-checkbox-label">
                   Repeat
                 </label> */}
-                
+
               {/* ZOOM! */}
               <div>
-              <Checkbox
+                <Checkbox
                   inputId="createZoom"
                   name="createZoom"
                   onChange={e =>
@@ -410,7 +402,6 @@ class CreateMeeting extends Component {
                   onChange={this.changeHandler}
                   placeholder="Add Questions"
                 />
-
                 <AddButton onClick={this.addQuestions}>+</AddButton>
               </QSpan>
 

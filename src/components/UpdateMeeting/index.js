@@ -10,7 +10,6 @@ import { AutoComplete } from "primereact/autocomplete";
 import { PrimaryButton } from "../Common";
 import moment from "moment";
 import axios from "axios";
-import { Message } from "primereact/message";
 
 const Main = styled.div`
   display: flex;
@@ -154,7 +153,6 @@ class UpdateMeeting extends Component {
         headers: { Authorization: token }
       })
       .then(res => {
-        console.log(res.data);
         this.setState({
           title: res.data.title,
           description: res.data.description,
@@ -182,7 +180,6 @@ class UpdateMeeting extends Component {
 
   handleUpdateConvo = async (e, userInput, history, dashboard, id) => {
     e.preventDefault();
-    console.log(userInput);
     let inviteeCheck =
       userInput.invitees.length > 0
         ? userInput.invitees.map(invited => invited._id)
@@ -198,8 +195,6 @@ class UpdateMeeting extends Component {
     };
 
     const header = { Authorization: localStorage.getItem("jwt") };
-    console.log("Header: ", header);
-    console.log("Body: ", body);
     this.props.callUpdateMeeting(e, header, body, history, dashboard, id);
     this.setState({
       title: "",
@@ -236,8 +231,6 @@ class UpdateMeeting extends Component {
       possible = this.state.userSuggestions;
     }
 
-    console.log("usersug", this.state.userSuggestions);
-    console.log("possible", possible);
     if (possible.includes(this.state.invited)) {
       const invitees = this.state.invitees;
       invitees.push(this.state.invited);
