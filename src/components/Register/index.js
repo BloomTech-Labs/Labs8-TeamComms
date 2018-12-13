@@ -133,7 +133,9 @@ class Register extends Component {
       password2: "",
       givenName: "",
       familyName: "",
-      validEmail: true
+      validEmail: true,
+      validPassword1: true,
+      validPassword2: true
     };
   }
 
@@ -149,11 +151,40 @@ class Register extends Component {
   };
 
   validateEmail = (e, email) => {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (re.test(email)) {
-      this.setState({ email: e.target.value, validEmail: true });
+    if (email.length > 0 || e.target.blur) {
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (re.test(email)) {
+        this.setState({ email: e.target.value, validEmail: true });
+      } else {
+        this.setState({ email: e.target.value, validEmail: false });
+      }
     } else {
-      this.setState({ email: e.target.value, validEmail: false });
+      this.setState({ email: e.target.value, validEmail: true });
+    }
+  };
+
+  validatePassword1 = (e, password1) => {
+    if (e.target.blur) {
+      var re = /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/;
+
+      if (re.test(password1)) {
+        this.setState({ password1: e.target.value, validPassword1: true });
+      } else {
+        this.setState({ password1: e.target.value, validPassword1: false });
+      }
+    }
+  };
+
+  validatePassword2 = (e, password2) => {
+    if (e.target.blur) {
+      var re = /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/;
+      let match1 = re.test(password2);
+      let match2 = this.state.password1 === this.state.password2 ? true : false;
+      if (match1 && match2) {
+        this.setState({ password2: e.target.value, validPassword2: true });
+      } else {
+        this.setState({ password2: e.target.value, validPassword2: false });
+      }
     }
   };
 
@@ -286,7 +317,9 @@ class Register extends Component {
                   name="password1"
                   required
                   value={this.state.password1}
-                  onChange={this.changeHandler}
+                  onChange={e => {
+                    this.validatePassword1(e, this.state.password1);
+                  }}
                   placeholder="Password"
                 />
               </NSpan>
@@ -298,7 +331,9 @@ class Register extends Component {
                   name="password2"
                   required
                   value={this.state.password2}
-                  onChange={this.changeHandler}
+                  onChange={e => {
+                    this.validatePassword2(e, this.state.password2);
+                  }}
                   placeholder="Confirm Password"
                 />
               </NSpan>
