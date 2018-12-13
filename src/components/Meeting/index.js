@@ -194,6 +194,7 @@ class Meeting extends Component {
     super(props);
     this.meeting = {};
     const { dispatch } = this.props;
+    this.confirm = true;
     this.buffer = 0;
     this.state = {
       activeIndex: 0,
@@ -234,8 +235,8 @@ class Meeting extends Component {
     socket.on("finalize", () => {
       alert("Meeting has been saved!");
     });
-  
-}
+    
+  }
   componentDidMount() {
     let header = { Authorization: localStorage.getItem("jwt") };
     axios

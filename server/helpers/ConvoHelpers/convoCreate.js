@@ -4,42 +4,42 @@ const LiveMeeting = require("../../models/LiveMeetingModel");
 const moment = require("moment");
 const callZoomAPI = require("../Zoom/zoomCreate");
 const sendEmail = require("../../services/sendGrid");
+const ServerError = require("../../validation/ErrorHandling/ServerError");
 
-const convoCreate = async (req, res) => {
-  // default error code set to 'internal server error'
-  let errorStatusCode = 500;
+const convoCreate = async (req, res, next) => {
   //req checking
-  if (
-    !req.body.title ||
-    !req.body.description ||
-    !req.body.startTime ||
-    !req.body.endTime ||
-    !req.user._id
-  ) {
-    errorStatusCode = 400; // bad request
-    res.status(errorStatusCode).end();
-    return;
-  }
-
-  //
-  const user = req.user;
-  const newConvo = req.body;
-  const start = moment(newConvo.startTime).toDate();
-  const end = moment(newConvo.endTime).toDate();
-  let mappedQuestions;
-  if (newConvo.questions) {
-    mappedQuestions = newConvo.questions.map(currentQuestion => {
-      return {
-        inquirer: {
-          email: user.email,
-          displayName: user.displayName
-        },
-        question: currentQuestion
-      };
-    });
-  }
-
   try {
+    if (
+      !req.body.title ||
+      !req.body.description ||
+      !req.body.startTime ||
+      !req.body.endTime ||
+      !req.user._id
+    ) {
+      throw new ServerError(
+        400,
+        "Please provide title, description, startTime, endTime"
+      );
+    }
+
+    //
+    const user = req.user;
+    const newConvo = req.body;
+    const start = moment(newConvo.startTime).toDate();
+    const end = moment(newConvo.endTime).toDate();
+    let mappedQuestions;
+    if (newConvo.questions) {
+      mappedQuestions = newConvo.questions.map(currentQuestion => {
+        return {
+          inquirer: {
+            email: user.email,
+            displayName: user.displayName
+          },
+          question: currentQuestion
+        };
+      });
+    }
+
     // zoom
     let createdZoomMeeting = {
       meetingId: "",
@@ -52,8 +52,7 @@ const convoCreate = async (req, res) => {
       const zoomApiData = await callZoomAPI(newConvo);
       // error
       if (zoomApiData.status !== 201) {
-        errorStatusCode = 502; // bad gateway // zoom api error
-        throw new Error("zoom api err");
+        throw new ServerError(502, "Zoom api error");
       }
       // filtered return data for db
       // zoom meetingId not currently saved in model
@@ -76,8 +75,7 @@ const convoCreate = async (req, res) => {
     });
 
     if (!convo) {
-      errorStatusCode = 501; // not implemented
-      throw new Error("Convo creation failed!");
+      throw new ServerError(501, "Convo creation failed");
     } else {
       let convoExtract = convo.questions.map(q => {
         return {
@@ -108,8 +106,7 @@ const convoCreate = async (req, res) => {
         })
         .exec((err, query) => {
           if (err) {
-            errorStatusCode = 404; // not found
-            throw new Error(err);
+            next({ code: 404, message: err.message });
           } else {
             query.invitees.forEach(async invitee => {
               invitee.meetings.push(convo._id);
@@ -136,7 +133,7 @@ const convoCreate = async (req, res) => {
       res.status(201).send(convo);
     }
   } catch (err) {
-    res.status(errorStatusCode).send(err);
+    next({ code: err.code, message: err.message });
   }
 };
 module.exports = convoCreate;
