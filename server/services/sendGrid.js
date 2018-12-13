@@ -1,14 +1,7 @@
 const sg = require("@sendgrid/mail");
 const dotenv = require("dotenv").config();
-
+const ServerError = require("../validation/ErrorHandling/ServerError")
 sg.setApiKey(process.env.SENDGRID_KEY);
-
-class ServerError {
-  constructor(code, message) {
-    this.code = code;
-    this.message = message;
-  }
-}
 
 async function sendEmail(
   email,

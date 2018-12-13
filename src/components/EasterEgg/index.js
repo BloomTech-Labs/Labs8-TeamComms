@@ -21,7 +21,7 @@ const spacePuns = [
     "What should you does if you see an aggressive alien?",
     "Give it some space."
   ],
-  ["What should you do if you see an green alien?", "Wait until it's ripe."],
+  ["What should you do if you see a green alien?", "Wait until it's ripe."],
   ["Why did the star get arrested?", "Because it was a shooting star."],
   ["If athletes get 'Athletes foot' what do astronauts get?", "Missile Toe."][
     ("How do you know when the moon is gone my broke?",

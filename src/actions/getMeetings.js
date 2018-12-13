@@ -4,7 +4,6 @@ import {
   GET_MEETING_RETURNED,
   GET_MEETING_ERROR
 } from "./types";
-import history from "../history";
 
 export const getMeetings = () => {
   const header = { Authorization: localStorage.getItem("jwt") };

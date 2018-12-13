@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { callReg } from "../../actions/index";
+import { callReg, toggleOverpane } from "../../actions/index";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import { PrimaryButton, SpinnerWrapper, Ul, Li } from "../Common";
+import { PrimaryButton, SpinnerWrapper } from "../Common";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { Lightbox } from "primereact/lightbox";
@@ -190,7 +190,6 @@ class Register extends Component {
 
   handleRegSubmit = (e, userInput, history) => {
     e.preventDefault();
-    console.log(userInput);
     if (userInput.password1 === userInput.password2) {
       const credentials = {
         email: userInput.email,
@@ -237,6 +236,7 @@ class Register extends Component {
                 </VidContainer>
               </a>
               <iframe
+                title="demo"
                 width="560"
                 height="315"
                 src="https://www.youtube.com/embed/renWQ14-NzI"
@@ -343,7 +343,14 @@ class Register extends Component {
 
             <SwitchText>
               Already Registered ?
-              <SwitchLink onClick={this.switchToLogin}>
+              {/* <SwitchLink onClick={this.switchToLogin}>
+                &nbsp; Login.
+              </SwitchLink> */}
+              <SwitchLink
+                onClick={() => {
+                  this.props.toggleOverpane(!this.props.overpane);
+                }}
+              >
                 &nbsp; Login.
               </SwitchLink>
             </SwitchText>
@@ -360,6 +367,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    callReg
+    callReg,
+    toggleOverpane
   }
 )(Register);

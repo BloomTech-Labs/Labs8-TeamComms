@@ -10,7 +10,8 @@ import { AutoComplete } from "primereact/autocomplete";
 import { PrimaryButton } from "../Common";
 import moment from "moment";
 import axios from "axios";
-import { Message } from "primereact/message";
+import "./createMeeting.css";
+// import { listenerCount } from "cluster";
 
 const Main = styled.div`
   display: flex;
@@ -41,7 +42,9 @@ const Group = styled.fieldset`
   }
   @media (max-width: 800px) {
     flex-direction: column;
-    width: 90%;
+    width: 60%;
+    margin: 0px;
+    padding: 0px;
   }
 `;
 const QGroup = styled.fieldset`
@@ -56,6 +59,8 @@ const QGroup = styled.fieldset`
   @media (max-width: 800px) {
     flex-direction: column;
     width: 90%;
+    margin: 0px;
+    padding: 0px;
   }
 `;
 const NewSpan = styled.span`
@@ -91,7 +96,8 @@ const AutoInput = styled(AutoComplete)`
 `;
 
 const SaveButton = styled(PrimaryButton)`
-  width: 45%;
+  // width: 45%;
+  width: 200px;
   height: 65px;
   color: white;
   border-radius: 5px;
@@ -100,6 +106,7 @@ const SaveButton = styled(PrimaryButton)`
   font-size: 1.5rem;
   margin: 10px 15px;
   border: none;
+  letter-spacing: 0.1em;
 `;
 
 const AddButton = styled.button`
@@ -153,7 +160,6 @@ class CreateMeeting extends Component {
         headers: { Authorization: localStorage.getItem("jwt") }
       })
       .then(res => {
-        console.log(res.data);
         this.setState({ users: res.data });
       })
       .catch(err => console.log(err));
@@ -173,35 +179,42 @@ class CreateMeeting extends Component {
 
   handleNewConvo = async (e, userInput, history, dashboard) => {
     e.preventDefault();
-    console.log(userInput);
-    const body = {
-      title: userInput.title,
-      description: userInput.description,
-      startTime: moment(userInput.start),
-      endTime: moment(userInput.end),
-      repeat: userInput.repeat,
-      createZoom: userInput.createZoom,
-      invitees: userInput.invitees.map(invited => invited._id),
-      questions: userInput.questions
-    };
-    const header = { Authorization: localStorage.getItem("jwt") };
-    console.log("Header: ", header);
-    console.log("Body: ", body);
-    this.props.callCreate(e, header, body, history, dashboard);
-    this.setState({
-      title: "",
-      description: "",
-      start: "",
-      end: "",
-      repeat: "",
-      createZoom: "",
-      invitees: [],
-      questions: [],
-      invited: "",
-      question: "",
-      userSuggestions: null,
-      users: []
-    });
+    if (
+      !userInput.title ||
+      !userInput.description ||
+      !userInput.start ||
+      !userInput.end
+    ) {
+      alert("Required fields are Title, Description, Start, End");
+      return;
+    } else {
+      const body = {
+        title: userInput.title,
+        description: userInput.description,
+        startTime: moment(userInput.start),
+        endTime: moment(userInput.end),
+        repeat: userInput.repeat,
+        createZoom: userInput.createZoom,
+        invitees: userInput.invitees.map(invited => invited._id),
+        questions: userInput.questions
+      };
+      const header = { Authorization: localStorage.getItem("jwt") };
+      this.props.callCreate(e, header, body, history, dashboard);
+      this.setState({
+        title: "",
+        description: "",
+        start: "",
+        end: "",
+        repeat: "",
+        createZoom: "",
+        invitees: [],
+        questions: [],
+        invited: "",
+        question: "",
+        userSuggestions: null,
+        users: []
+      });
+    }
   };
 
   addQuestions = e => {
@@ -223,9 +236,6 @@ class CreateMeeting extends Component {
       //   return Object.values(user).includes(this.state.invited);
       possible = this.state.userSuggestions;
     }
-
-    console.log("usersug", this.state.userSuggestions);
-    console.log("possible", possible);
     if (possible.includes(this.state.invited)) {
       const invitees = this.state.invitees;
       invitees.push(this.state.invited);
@@ -276,6 +286,7 @@ class CreateMeeting extends Component {
                   value={this.state.title}
                   onChange={this.changeHandler}
                   placeholder="Meeting Name"
+                  required={true}
                 />
               </NewSpan>
 
@@ -287,6 +298,7 @@ class CreateMeeting extends Component {
                   value={this.state.description}
                   onChange={this.changeHandler}
                   placeholder="Description"
+                  required={true}
                 />
               </NewSpan>
 
@@ -296,15 +308,15 @@ class CreateMeeting extends Component {
                   showTime={true}
                   hourFormat="12"
                   id="start"
-                  name="start"
+                  name={"start"}
                   value={this.state.start}
                   onChange={this.changeHandler}
                   inputClassName="input"
                   className="datePicker"
                   placeholder="Start"
-                  touchUI={true}
                   readOnlyInput={true}
                   minDate={moment().toDate()}
+                  panelClassName={"calendar-overrideStart"}
                 />
 
                 <Calendar
@@ -317,15 +329,14 @@ class CreateMeeting extends Component {
                   inputClassName="input"
                   className="datePicker"
                   placeholder="End"
-                  touchUI={true}
                   readOnlyInput={true}
                   minDate={moment().toDate()}
+                  panelClassName={"calendar-overrideEnd"}
                 />
               </NewSpan>
 
               {/* Repeat */}
-              <NewSpan>
-                <Checkbox
+              {/* <Checkbox
                   inputId="repeat"
                   name="repeat"
                   onChange={e => this.setState({ repeat: !this.state.repeat })}
@@ -333,10 +344,10 @@ class CreateMeeting extends Component {
                 />
                 <label htmlFor="repeat" className="p-checkbox-label">
                   Repeat
-                </label>
-              </NewSpan>
+                </label> */}
+
               {/* ZOOM! */}
-              <NewSpan>
+              <div>
                 <Checkbox
                   inputId="createZoom"
                   name="createZoom"
@@ -348,7 +359,7 @@ class CreateMeeting extends Component {
                 <label htmlFor="createZoom" className="p-checkbox-label">
                   Create ZOOM Meeting!
                 </label>
-              </NewSpan>
+              </div>
             </Group>
 
             <Group>
@@ -391,7 +402,6 @@ class CreateMeeting extends Component {
                   onChange={this.changeHandler}
                   placeholder="Add Questions"
                 />
-
                 <AddButton onClick={this.addQuestions}>+</AddButton>
               </QSpan>
 
@@ -411,9 +421,9 @@ class CreateMeeting extends Component {
                   this.saveForLater(e, userInput, history);
                 }}
               >
-                Save for Later
+                Save
               </SaveButton>
-              <SaveButton type="submit">Save and View</SaveButton>
+              <SaveButton type="submit">Save & View</SaveButton>
             </NewSpan>
           </FormWrapper>
         </Main>
