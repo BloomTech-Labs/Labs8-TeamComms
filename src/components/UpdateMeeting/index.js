@@ -275,7 +275,7 @@ class UpdateMeeting extends Component {
         <Main>
           <FormWrapper
             onSubmit={e => {
-              this.handleNewConvo(e, userInput, history, dashboard, id);
+              this.handleUpdateConvo(e, userInput, history, dashboard, id);
             }}
           >
             <Group>
