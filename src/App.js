@@ -92,7 +92,7 @@ class App extends Component {
             <Route path="/dashboard/:token?" component={ScreensMeetingList} />
             <Route path="/preferences" component={UserPreferences} />
             <Route path="/updateMeeting/:id" component={UpdateMeeting} />
-            <Route path="createMeeting" component={CreateMeeting} />
+            <Route path="/createMeeting" component={CreateMeeting} />
           </Content>
         </Switch>
         <ScreensLogin />
