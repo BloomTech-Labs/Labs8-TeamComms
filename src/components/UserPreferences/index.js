@@ -118,7 +118,6 @@ class UserPref extends Component {
 
   handleUpdateSubmit = (e, userInput, history) => {
     e.preventDefault();
-    console.log(userInput);
     if (userInput.notificationPref === undefined) {
       alert("Please choose notification type");
       return;

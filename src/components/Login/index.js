@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { connect } from "react-redux";
@@ -92,7 +92,6 @@ class Login extends Component {
   };
 
   handleLogInSubmit = (e, userInput, history, overpane) => {
-    console.log("history, overpane", history, overpane);
     this.props.callLogIn(e, userInput, history, overpane);
   };
 
@@ -120,7 +119,6 @@ class Login extends Component {
     };
     const overpane = !this.props.overpane;
 
-    console.log("login history object", history);
     return (
       <Overpane
         history={history}

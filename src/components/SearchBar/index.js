@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-// import { CustomInput } from "../Common";
 
 const SearchWrapper = styled.div`
   width: 100%;
@@ -57,9 +56,6 @@ class SearchBar extends Component {
     let filteredMeetings = this.props.meetings.filter(meetings => {
       return meetings.title.includes(this.state.search);
     });
-
-    console.log("filteredMeetings", filteredMeetings);
-    console.log("meetings", this.props.meetings);
 
     this.props.filtered(filteredMeetings, e.target.value);
   };
