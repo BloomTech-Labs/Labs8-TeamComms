@@ -232,7 +232,7 @@ class Register extends Component {
                   <LandingImage src="../images/front1000.png" />
 
                   <PlayIcon className="playicon">
-                    <i class="fas fa-play fa-5x" />
+                    <i className="fas fa-play fa-5x" />
                   </PlayIcon>
                 </VidContainer>
               </a>

@@ -124,7 +124,6 @@ class Login extends Component {
     };
     const overpane = !this.props.overpane;
 
-    console.log("login history object", history);
     return (
       <Overpane
         history={history}

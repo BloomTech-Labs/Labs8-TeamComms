@@ -3,9 +3,10 @@ node_js:
   - "10.13.0"
 services:
   - mongodb
+script:
+  - yarn build
 cache:
   directories: -node_modules
-sudo: false
 
 # deploy:
 #   provider: heroku
