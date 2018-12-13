@@ -104,11 +104,15 @@ class Login extends Component {
   };
 
   validateEmail = (e, email) => {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (re.test(email)) {
-      this.setState({ email: e.target.value, validEmail: true });
+    if (email.length > 0 || e.target.blur) {
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if (re.test(email)) {
+        this.setState({ email: e.target.value, validEmail: true });
+      } else {
+        this.setState({ email: e.target.value, validEmail: false });
+      }
     } else {
-      this.setState({ email: e.target.value, validEmail: false });
+      this.setState({ email: e.target.value, validEmail: true });
     }
   };
 

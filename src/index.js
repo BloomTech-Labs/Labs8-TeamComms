@@ -62,5 +62,5 @@ export const persistor = persistStore(store);
 render(
   <Root store={store} />,
 
-  document.getElementById("root")
+  document.getElementById("root") || document.createElement("div")
 );

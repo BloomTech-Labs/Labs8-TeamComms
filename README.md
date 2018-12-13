@@ -1,4 +1,7 @@
 
+## Team Communicator [![Build Status](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms)
+
+
 This is Team Communicator
 
 Click <a href="https://team-comm.netlify.com">here</a> to visit the app, or click on the image below to view our demo:
