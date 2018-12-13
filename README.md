@@ -1,8 +1,14 @@
-#Team Communicator
 
+This is Team Communicator
+
+Click <a href="https://team-comm.netlify.com">here</a> to visit the app, or click on the image below to view our demo:
+
+<img src="https://i.imgur.com/OaSnajI.png" title="Team Communicator" width="100%">
+
+
+# Team Communicator
 ## A web app that helps distributed or remote teams communicate questions and stay in sync.
 
-[![Build Status](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms)
 
 ### PROBLEM:
 
@@ -34,20 +40,22 @@ Client - https://team-comm.netlify.com/
 Styled-Components
 Redux
 React-Redux
-Redux-Saga
+Redux-Thunk
 ESLint
 React-Router-DOM
 Prettier
 Exact-Prettier
 
 **Back-End**
-Argon2 (vs Bcrypt)
 CORS
 Mongoose
+SendGrid
+Socket.io
+
 
 ## Installation
 
-1. Make sure that you have Node.js v8.10 and npm v5 or above installed.
+1. Make sure that you have Node.js v10.13.0 installed.
 
 2. Clone this repo using `git clone https://github.com/Lambda-School-Labs/Labs8-TeamComms.git`
 3. Move to the front-end directory: cd Labs8-TeamComms
@@ -57,6 +65,21 @@ Mongoose
 
 ## Usage
 
+### IMPORTANT: You will need to make a .env file in the base repo directory with your own environment variables setup...here are the current environment variables you will need to generate:
+~~~~
+
+SECRET_KEY="your secret key"
+SKIP_PREFLIGHT_CHECK=true
+MONGOLAB_URL="mongodb://your hosted mongodb url"
+CLIENT_ID="google client id"
+CLIENT_SECRET="google client secret"
+STRIPE_PLAN_ID=stripeplanid
+STRIPE_SECRET_KEY=stripesecretkey
+ZOOM_KEY = "zoomkey"
+ZOOM_SECRET = "zoomsecret"
+SENDGRID_KEY = "sendgridkey"
+
+~~~~ 
 In the **base project** directory, you can run:
 
 ### `yarn start`
@@ -87,6 +110,9 @@ Runs the server in development mode.
 Open [http://localhost:3300](http://localhost:3300) to view it in the browser.
 
 ---
+
+
+
 
 ## User API Documenation
 
@@ -245,33 +271,32 @@ To delete a User, use the above `Edit User` endpoint and change `active: false`.
 
 ---
 
-##Zoom Api
+## Zoom API
 
-> hitting zoom api from postman  
+### Zoom api from Postman  
 https://medium.com/zoom-developer-blog/using-zoom-apis-version-2-with-postman-3fba79dcdf2e  
 
->create meeting schema  
+### Create meeting schema  
 https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meetingcreate  
 
->create zoom jwt token online https://jwt.io/  
-![Alt text](.\public\images\createZoomJwtOnline.png "img");  
+### Create zoom jwt token online https://jwt.io/  
+![Alt text](.\public\images\createZoomJwtOnline.png)
 
->zoom enterprise accounts breakdown  
+### zoom enterprise accounts breakdown  
 https://developer.zoom.us/blog/a-brief-look-at-zoom-account-structures/  
 
 
-api intro  
+### API Intro 
 https://zoom.github.io/api/?shell#introduction  
 
-webhooks  
+### Webhooks  
 https://developer.zoom.us/docs/webhooks/  
 
-dev site  
+### Developer site  
 https://developer.zoom.us/  
 
-zoom sample app  
+### Zoom Sample App  
 https://github.com/zoom/data-visualization-sample-app  
-
 
 
 
@@ -281,25 +306,133 @@ https://github.com/zoom/data-visualization-sample-app
 
 ## Known issues
 
-Build in progress.
-
-## Getting help
-
-If you have questions, concerns, bug reports, etc, please file an issue in this repository's Issue Tracker.
+Please see the open issues in our issue tracker. If you have questions, concerns, bug reports, etc, please file an issue.
 [Our Issue Tracker](https://github.com/Lambda-School-Labs/Labs8-TeamComms/issues)
 
 ## Getting involved
 
-While we are happy to add contributors, we will provide more details once our Lambda Labs MVP is complete.
+# Contributing to Team Communicator
 
----
+Love Team Communicator and want to help? Thanks so much, there's something to do for everybody!
 
-## Open source licensing info
+Please take a moment to review this document in order to make the contribution process easy and effective for everyone involved.
 
-1. [TERMS](TERMS.md)
-2. [LICENSE](LICENSE)
-3. [CFPB Source Code Policy](https://github.com/cfpb/source-code-policy/)
+Following these guidelines helps to communicate that you respect the time of the developers managing and developing this open source project. In return, they should reciprocate that respect in addressing your issue or assessing patches and features.
 
----
+## Bug reports
 
-## Credits and references
+A bug is a _demonstrable problem_ that is caused by the code in the repository.
+Good bug reports are extremely helpful - thank you!
+
+Guidelines for bug reports:
+
+1.  **Use the GitHub issue search** &mdash; check if the issue has already been reported.
+
+2.  **Check if the issue has been fixed** &mdash; try to reproduce it using the latest `master` or development branch in the repository.
+
+3.  **Isolate the problem** &mdash; ideally create a [reduced test case](https://css-tricks.com/reduced-test-cases/) and a live example.
+
+A good bug report shouldn't leave others needing to chase you up for more information. Please try to be as detailed as possible in your report. What is your environment? What steps will reproduce the issue? What browser(s) and OS
+experience the problem? What would you expect to be the outcome? All these details will help people to fix any potential bugs.
+
+Example:
+
+> Short and descriptive example bug report title
+>
+> A summary of the issue and the browser/OS environment in which it occurs. If
+> suitable, include the steps required to reproduce the bug.
+>
+> 1.  This is the first step
+> 2.  This is the second step
+> 3.  Further steps, etc.
+>
+> `<url>` - a link to the reduced test case
+>
+> Any other information you want to share that is relevant to the issue being
+> reported. This might include the lines of code that you have identified as
+> causing the bug, and potential solutions (and your opinions on their
+> merits).
+
+<a name="features"></a>
+
+## Feature requests
+
+Feature requests are welcome. But take a moment to find out whether your idea fits with the scope and aims of the project. It's up to _you_ to make a strong case to convince the project's developers of the merits of this feature. Please provide as much detail and context as possible.
+
+<a name="pull-requests"></a>
+
+## Pull requests
+
+Good pull requests - patches, improvements, new features - are a fantastic
+help. They should remain focused in scope and avoid containing unrelated
+commits.
+
+**Please ask first** before embarking on any significant pull request (e.g.
+implementing features, refactoring code, porting to a different language),
+otherwise you risk spending a lot of time working on something that the
+project's developers might not want to merge into the project.
+
+Please adhere to the coding conventions used throughout a project (indentation,
+accurate comments, etc.) and any other requirements (such as test coverage).
+
+Since the `master` branch is what people actually use in production, we have a
+`dev` branch that unstable changes get merged into first. Only when we
+consider that stable we merge it into the `master` branch and release the
+changes for real.
+
+Adhering to the following process is the best way to get your work
+included in the project:
+
+1.  [Fork](https://help.github.com/articles/fork-a-repo/) the project, clone your fork, and configure the remotes:
+
+    ```bash
+    # Clone your fork of the repo into the current directory
+    git clone https://github.com/<your-username>/Labs8-TeamComms.git
+    # Navigate to the newly cloned directory
+    cd Labs8-TeamComms
+    # Assign the original repo to a remote called "upstream"
+    git remote add upstream https://github.com/<your-username>/Labs8-TeamComms.git
+    ```
+
+2.  If you cloned a while ago, get the latest changes from upstream:
+
+    ```bash
+    git checkout dev
+    git pull upstream dev
+    ```
+
+3.  Create a new topic branch (off the `dev` branch) to contain your feature, change, or fix:
+
+    ```bash
+    git checkout -b <topic-branch-name>
+    ```
+
+4.  Commit your changes in logical chunks. Please adhere to these [git commit message guidelines](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html) or your code is unlikely be merged into the main project. Use Git's [interactive rebase](https://help.github.com/articles/about-git-rebase/) feature to tidy up your commits before making them public.
+
+5.  Locally merge (or rebase) the upstream dev branch into your topic branch:
+
+    ```bash
+    git pull [--rebase] upstream dev
+    ```
+
+6.  Push your topic branch up to your fork:
+
+    ```bash
+    git push origin <topic-branch-name>
+    ```
+
+7.  [Open a Pull Request](https://help.github.com/articles/using-pull-requests/)
+    with a clear title and description.
+
+**IMPORTANT**: By submitting a patch, you agree to allow the project
+owners to license your work under the terms of the [MIT License](https://github.com/Lambda-School-Labs/Labs8-TeamComms/blob/master/LICENSE.md).
+
+# Collaborating guidelines
+
+
+There are few basic rules to ensure high quality of the repo:
+
+- Before merging, a PR requires at least two approvals from the collaborators unless it's an architectural change, a large feature, etc. If it is, then at least 50% of the core team have to agree to merge it, with every team member having a full veto right. (i.e. every single one can block any PR)
+- A PR should remain open for at least two days before merging (does not apply for trivial contributions like fixing a typo). This way everyone has enough time to look into it.
+
+You are always welcome to discuss and propose improvements to this guideline.
