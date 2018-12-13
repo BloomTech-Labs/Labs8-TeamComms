@@ -1,8 +1,8 @@
-#Team Communicator
+## Team Communicator [![Build Status](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms)
 
 ## A web app that helps distributed or remote teams communicate questions and stay in sync.
 
-[![Build Status](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms)
+
 
 ### PROBLEM:
 
