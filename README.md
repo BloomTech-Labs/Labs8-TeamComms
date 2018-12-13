@@ -1,17 +1,55 @@
+# Team Communicator [![Build Status](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms) <a href="https://david-dm.org/Lambda-School-Labs/Labs8-TeamComms.svg">
 
-## Team Communicator [![Build Status](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms)
-
-
-This is Team Communicator
-
-Click <a href="https://team-comm.netlify.com">here</a> to visit the app, or click on the image below to view our demo:
+Click <a href="https://team-comm.netlify.com">here</a> to visit the app.
 
 <img src="https://i.imgur.com/OaSnajI.png" title="Team Communicator" width="100%">
 
+# Table of Contents
+
+- [Team Communicator]()
+  - [A web app that helps distributed or remote teams communicate questions and stay in sync.]()
+    - [PROBLEM:]()
+    - [SOLUTION:]()
+  - [Dependencies]()
+  - [Installation]()
+  - [Usage]()
+    - [IMPORTANT: You will need to make a .env file in the base repo directory with your own environment variables setup...here are the current environment variables you will need to generate:]()
+    - [yarn start]()
+    - [yarn test]()
+    - [yarn build]()
+    - [node server.js]()
+  - [User API Documenation]()
+    - [Register User]()
+      - [Success Response]()
+      - [Error Response]()
+    - [Login User]()
+      - [Success Response]()
+      - [Error Response]()
+    - [Update User]()
+      - [Success Response]()
+      - [Error Response]()
+    - [Delete/Inactivate User]()
+  - [Zoom API]()
+    - [Zoom api from Postman]()
+    - [Create meeting schema]()
+    - [Create zoom jwt token online <a href="https://jwt.io/" rel="nofollow">https://jwt.io/</a>](https://jwt.io/)
+    - [zoom enterprise accounts breakdown]()
+    - [API Intro]()
+    - [Webhooks]()
+    - [Developer site]()
+    - [Zoom Sample App]()
+  - [How to test the software]()
+  - [Known issues]()
+  - [Getting involved]()
+- [Contributing to Team Communicator]()
+  - [Bug reports]()
+  - [Feature requests]()
+  - [Pull requests]()
+- [Collaborating guidelines]()
 
 # Team Communicator
-## A web app that helps distributed or remote teams communicate questions and stay in sync.
 
+## A web app that helps distributed or remote teams communicate questions and stay in sync.
 
 ### PROBLEM:
 
@@ -55,7 +93,6 @@ Mongoose
 SendGrid
 Socket.io
 
-
 ## Installation
 
 1. Make sure that you have Node.js v10.13.0 installed.
@@ -69,8 +106,8 @@ Socket.io
 ## Usage
 
 ### IMPORTANT: You will need to make a .env file in the base repo directory with your own environment variables setup...here are the current environment variables you will need to generate:
-~~~~
 
+```
 SECRET_KEY="your secret key"
 SKIP_PREFLIGHT_CHECK=true
 MONGOLAB_URL="mongodb://your hosted mongodb url"
@@ -81,8 +118,8 @@ STRIPE_SECRET_KEY=stripesecretkey
 ZOOM_KEY = "zoomkey"
 ZOOM_SECRET = "zoomsecret"
 SENDGRID_KEY = "sendgridkey"
+```
 
-~~~~ 
 In the **base project** directory, you can run:
 
 ### `yarn start`
@@ -113,9 +150,6 @@ Runs the server in development mode.
 Open [http://localhost:3300](http://localhost:3300) to view it in the browser.
 
 ---
-
-
-
 
 ## User API Documenation
 
@@ -276,32 +310,37 @@ To delete a User, use the above `Edit User` endpoint and change `active: false`.
 
 ## Zoom API
 
-### Zoom api from Postman  
-https://medium.com/zoom-developer-blog/using-zoom-apis-version-2-with-postman-3fba79dcdf2e  
+### Zoom api from Postman
 
-### Create meeting schema  
-https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meetingcreate  
+https://medium.com/zoom-developer-blog/using-zoom-apis-version-2-with-postman-3fba79dcdf2e
 
-### Create zoom jwt token online https://jwt.io/  
+### Create meeting schema
+
+https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meetingcreate
+
+### Create zoom jwt token online https://jwt.io/
+
 ![Alt text](.\public\images\createZoomJwtOnline.png)
 
-### zoom enterprise accounts breakdown  
-https://developer.zoom.us/blog/a-brief-look-at-zoom-account-structures/  
+### zoom enterprise accounts breakdown
 
+https://developer.zoom.us/blog/a-brief-look-at-zoom-account-structures/
 
-### API Intro 
-https://zoom.github.io/api/?shell#introduction  
+### API Intro
 
-### Webhooks  
-https://developer.zoom.us/docs/webhooks/  
+https://zoom.github.io/api/?shell#introduction
 
-### Developer site  
-https://developer.zoom.us/  
+### Webhooks
 
-### Zoom Sample App  
-https://github.com/zoom/data-visualization-sample-app  
+https://developer.zoom.us/docs/webhooks/
 
+### Developer site
 
+https://developer.zoom.us/
+
+### Zoom Sample App
+
+https://github.com/zoom/data-visualization-sample-app
 
 ---
 
@@ -431,7 +470,6 @@ included in the project:
 owners to license your work under the terms of the [MIT License](https://github.com/Lambda-School-Labs/Labs8-TeamComms/blob/master/LICENSE.md).
 
 # Collaborating guidelines
-
 
 There are few basic rules to ensure high quality of the repo:
 
