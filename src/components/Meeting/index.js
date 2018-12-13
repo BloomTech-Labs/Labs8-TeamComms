@@ -17,8 +17,9 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import StyledChart from "../Chart/";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+// import { DataTable } from "primereact/datatable";
+// import { Column } from "primereact/column";
+import moment from "moment";
 
 import("./css.css");
 
@@ -127,8 +128,7 @@ const EditorWrapper = styled.div`
 `;
 
 const Editor = styled(ReactQuill)`
-  background: white;
-  width: 100%;
+  max-width: 372px;
   .ql-container {
     height: 320px;
     @media (max-width: 500px) {
@@ -136,30 +136,30 @@ const Editor = styled(ReactQuill)`
     }
   }
 `;
-const MeetingDetails = styled.div`
-  display:flex;
-  width: 78%;
-  margin: 0;
-  margin-left: 11.75%;
-  justify-content: center;
-  align-items: center;
-  h1 {
-    color: #ffffff;
-    font-size: 20px;
-  }
-  h2 {
-    color: #facc43;
-    font-size: 20px;
-  }
-  p {
-    color: white;
-  }
-  }
-  @media(max-width:768px) {
-    width: 100%;
-    margin-left: 0;
-  }
-`;
+// const MeetingDetails = styled.div`
+//   display:flex;
+//   width: 78%;
+//   margin: 0;
+//   margin-left: 11.75%;
+//   justify-content: center;
+//   align-items: center;
+//   h1 {
+//     color: #ffffff;
+//     font-size: 20px;
+//   }
+//   h2 {
+//     color: #facc43;
+//     font-size: 20px;
+//   }
+//   p {
+//     color: white;
+//   }
+//   }
+//   @media(max-width:768px) {
+//     width: 100%;
+//     margin-left: 0;
+//   }
+// `;
 
 const QuestionForm = styled.form`
   display: flex;
@@ -182,8 +182,9 @@ class Meeting extends Component {
   constructor(props) {
     super(props);
     this.meeting = {};
-    this.confirm = false;
-
+    const { dispatch } = this.props;
+ 
+    this.buffer = 0;
     this.state = {
       activeIndex: 0,
       color: "white",
@@ -206,6 +207,7 @@ class Meeting extends Component {
         query: "r_var=" + room
       });
     };
+
     const id = this.props.match.params.id;
     socket = socket_connect(id);
 
@@ -222,8 +224,8 @@ class Meeting extends Component {
     socket.on("finalize", () => {
       alert("Meeting has been saved!");
     });
+    
   }
-
   componentDidMount() {
     let header = { Authorization: localStorage.getItem("jwt") };
     axios
@@ -243,10 +245,11 @@ class Meeting extends Component {
           creatorId: res.data.creatorId._id,
           zoom: res.data.zoom
         };
-        if (this.props.userData.user.id === this.meeting.creatorId) {
-          this.confirm = true;
-        }
+        this.confirm = true;
         socket.emit("update-users", this.props.userData.user.displayName);
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 
@@ -256,18 +259,22 @@ class Meeting extends Component {
 
   handleChange = value => {
     if (value.length !== this.state.text.length) {
-      socket.emit("update text", value);
+      this.buffer++;
+      if (this.buffer === 5) {
+        socket.emit("update text", value);
+        this.buffer = 0;
+      }
     }
     this.setState({ text: value });
   };
 
-  // updates state and sends new state to server to distribute to clients with emit
-  changeHandler = html => {
-    this.setState({
-      text: html
-    });
-    socket.emit("update text", this.state.text); //sends data to server
-  };
+  // // updates state and sends new state to server to distribute to clients with emit
+  // changeHandler = html => {
+  //   this.setState({
+  //     text: html
+  //   });
+  //   socket.emit("update text", this.state.text); //sends data to server
+  // };
 
   sendQuestion = e => {
     e.preventDefault();
@@ -286,6 +293,9 @@ class Meeting extends Component {
         <ListItem>{option.question}</ListItem>
       </div>
     );
+  }
+  clickZoom() {
+    alert();
   }
 
   render() {
@@ -307,34 +317,45 @@ class Meeting extends Component {
       ]
     };
 
-    const meetingDetails = [
-      {
-        title: this.meeting.title,
-        zoom: this.meeting.zoom,
-        startTime: this.meeting.startTime
-      }
-    ];
+    //auto sets to local times from utc
+    const humanDate = moment(this.meeting.startTime).format("llll");
+
+    // const clickZoom = <a href=this.meeting.zoom>hey</a>
+    // const meetingDetails = [
+    //   {
+    //     title: this.meeting.title,
+    //     zoom: this.meeting.zoom,
+    //     // zoom: {<Link to='{this.meeting.zoom}/>},
+    //     // zoom: clickZoom,
+    //     startTime: humanDate
+    //   }
+    // ];
 
     return (
       <Fragment>
-        <MeetingDetails>
-          <DataTable
-            value={meetingDetails}
-            responsive={true}
-            header="Meeting Details"
-          >
-            <Column
-              field="title"
-              header="Title"
-              style={{ whiteSpace: "wrap" }}
-            />
-
-            <Column field="startTime" header="Start Time" />
-            <Column field="zoom" header="Zoom Link" />
-          </DataTable>
-        </MeetingDetails>
-
+     
+        <MeetingDetailTable>
+        <table className='top-table'> 
+        <caption><h1>MEETING DETAILS</h1></caption>       
+          <thead>          
+            <tr>
+              <th>Title</th>
+              <th>Start Time</th>
+              <th>Zoom Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{this.meeting.title}</td>
+              <td>{humanDate}</td>              
+              <td><a href={`${this.meeting.zoom}`} target="_blank">{this.meeting.zoom}</a></td>
+              
+            </tr>
+          </tbody>
+        </table>
+        </MeetingDetailTable>
         <Main>
+      
           <AttendeeScroll className="attendee">
             {/* // style=
             {{ width: "25%", height: "500px", background: "white" }} */}
@@ -481,3 +502,110 @@ const mapStateToProps = state => {
   return state;
 };
 export default connect(mapStateToProps)(Meeting);
+
+
+
+
+const MeetingDetailTable = styled.div`
+table {
+  border-spacing: 1;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  width: 78%;
+  // margin: 0 auto;
+  position: relative;
+  margin-bottom: 1%;
+  margin-left: 11.75%;
+  margin-top: 3%;
+  letter-spacing: 0.1em;
+}
+table h1 {
+  color: #ffffff;
+  font-size: 20px;
+  background: #25bea0;
+  line-height: 1.5;
+  margin-bottom: 3px;
+  font-family: Roboto sans-serif;  
+  letter-spacing: 0.25em;
+}
+table * {
+  position: relative;
+}
+table td, table th {
+  padding-left: 8px;
+  width: 33%;
+}
+table thead tr {
+  background: #25bea0;
+  color: #374353;
+  font-size: 14px;
+  line-height: 2;
+ 
+
+}
+table tbody tr {
+  border-bottom: 1px solid #E3F1D5;
+  height: 50px;;
+  text-align: center;
+  /* background: #25bea0; */
+
+}
+table tbody tr:last-child {
+  border: 0;
+}
+table td, table th {
+  text-align: left;
+}
+table td.l, table th.l {
+  text-align: right;
+}
+table td.c, table th.c {
+  text-align: center;
+}
+table td.r, table th.r {
+  text-align: center;
+}
+
+@media screen and (max-width: 35.5em) {
+  table {
+    display: block;
+  }
+  table > *, table tr, table td, table th {
+    display: block;
+    width: auto;
+
+  }
+  table thead {
+    display: none;
+  }
+  table tbody tr {
+    height: auto;
+    padding: 8px 0;
+  }
+  table tbody tr td {
+    padding-left: 45%;
+    margin-bottom: 12px;
+  }
+  table tbody tr td:last-child {
+    margin-bottom: 0;
+  }
+  table tbody tr td:before {
+    position: absolute;
+    font-weight: 700;
+    width: 40%;
+    left: 10px;
+    top: 0;
+  }
+  table tbody tr td:nth-child(1):before {
+    content: "Title";
+  }
+  table tbody tr td:nth-child(2):before {
+    content: "Start Time";
+  }
+  table tbody tr td:nth-child(3):before {
+    content: "Zoom Link";
+  }
+}
+`;

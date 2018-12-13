@@ -23,7 +23,7 @@ export const callUpdateMeeting = (e, header, body, history, dashboard, id) => {
         if (dashboard === true) {
           history.push("/dashboard");
         } else {
-          history.push(`/meeting/${res.data["_id"]}`);
+          history.push(`/meeting/${id}`);
         }
       })
       .catch(err => console.log(err));

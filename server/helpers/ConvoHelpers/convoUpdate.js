@@ -2,11 +2,10 @@ const Convo = require("../../models/ConvoModel"); //Model
 const LiveMeeting = require("../../models/LiveMeetingModel");
 const moment = require("moment");
 
-const convoUpdate = async (req, res) => {
+const convoUpdate = async (req, res, next) => {
   const user = req.user;
   const newConvo = req.body;
   const id = req.params.id;
-  console.log("user", req.user);
 
   try {
     let mappedQuestions = [];
@@ -38,7 +37,7 @@ const convoUpdate = async (req, res) => {
       { questions: questionExtract },
       (err, result) => {
         if (err) {
-          throw new Error("Problem with live meeting");
+          next({code: 500, message: err.message})
         } else {
           return result;
         }
@@ -59,7 +58,7 @@ const convoUpdate = async (req, res) => {
       },
       (err, result) => {
         if (err) {
-          throw new Error(err);
+          next({code: 500, message: err.message})
         } else {
           return result;
         }
@@ -73,7 +72,7 @@ const convoUpdate = async (req, res) => {
         })
         .exec((err, query) => {
           if (err) {
-            throw new Error(err);
+            next({code: 500, message: err.message})
           } else {
             query.invitees.forEach(async invitee => {
               if (invitee.meetings.includes(convo._id) === false) {
