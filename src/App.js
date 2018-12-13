@@ -37,7 +37,7 @@ const AppWrapper = styled.div`
   }
 `;
 
-const FadedLogo = styled(Logo)`
+export const FadedLogo = styled(Logo)`
   margin-left: 35px;
   margin-top: 10px;
 `;
