@@ -321,7 +321,7 @@ class CreateMeeting extends Component {
                   className="datePicker"
                   placeholder="Start"
                   // touchUI={true}
-                  readOnlyInput={true}
+                  // readOnlyInput={true}
                   minDate={moment().toDate()}
                   panelClassName={'calendar-overrideStart'}
                 />
@@ -337,7 +337,7 @@ class CreateMeeting extends Component {
                   className="datePicker"
                   placeholder="End"
                   // touchUI={true}
-                  readOnlyInput={true}
+                  // readOnlyInput={true}
                   minDate={moment().toDate()}
                   panelClassName={'calendar-overrideEnd'}
                 />
