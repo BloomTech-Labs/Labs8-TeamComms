@@ -205,11 +205,20 @@ class Header extends Component {
                   >
                     FEATURES
                   </NavLink>
-                  <Link to="/landing#pricing"> PRICING </Link>
-                  <Link to="/about"> ABOUT US </Link>
+                  <Link to="/landing#pricing" style={{ color: "white" }}>
+                    {" "}
+                    PRICING{" "}
+                  </Link>
+                  <br />
+                  <Link to="/about" style={{ color: "white" }}>
+                    {" "}
+                    ABOUT US{" "}
+                  </Link>
+                  <br />
                   <Link to="/register">
                     <LoginButton> REGISTER </LoginButton>
                   </Link>
+                  <br />
                   <LoginButton
                     onClick={() => {
                       this.props.toggleOverpane(!this.props.overpane);
