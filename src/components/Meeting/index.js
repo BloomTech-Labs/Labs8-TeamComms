@@ -193,9 +193,8 @@ class Meeting extends Component {
   constructor(props) {
     super(props);
     this.meeting = {};
-    this.confirm = false;
     const { dispatch } = this.props;
-
+    this.buffer = 0;
     this.state = {
       activeIndex: 0,
       color: "white",
@@ -218,26 +217,25 @@ class Meeting extends Component {
     //     query: "r_var=" + room
     //   });
     // };
-    const id = this.props.match.params.id;
-    socket = socket_connect(id);
 
-    socket.on("update-users", users => {
-      return this.setState({ users });
-    });
-    socket.on("update text", text => {
-      setTimeout(() => {
+      const id = this.props.match.params.id;
+      socket = socket_connect(id);
+
+      socket.on("update-users", users => {
+        return this.setState({ users });
+      });
+      socket.on("update text", text => {
         return this.setState({ text });
-      }, 1000);
-    });
+      });
 
-    socket.on("question", questions => {
-      return this.setState({ questions });
-    });
-    socket.on("finalize", () => {
-      alert("Meeting has been saved!");
-    });
+      socket.on("question", questions => {
+        return this.setState({ questions });
+      });
+      socket.on("finalize", () => {
+        alert("Meeting has been saved!");
+      });
+    
   }
-
   componentDidMount() {
     let header = { Authorization: localStorage.getItem("jwt") };
     axios
@@ -257,10 +255,11 @@ class Meeting extends Component {
           creatorId: res.data.creatorId._id,
           zoom: res.data.zoom
         };
-        if (this.props.userData.user.id === this.meeting.creatorId) {
-          this.confirm = true;
-        }
+        this.confirm = true;
         socket.emit("update-users", this.props.userData.user.displayName);
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 
@@ -270,7 +269,11 @@ class Meeting extends Component {
 
   handleChange = value => {
     if (value.length !== this.state.text.length) {
+      this.buffer++;
+      if (this.buffer === 5) {
         socket.emit("update text", value);
+        this.buffer = 0;
+      }
     }
     this.setState({ text: value });
   };
