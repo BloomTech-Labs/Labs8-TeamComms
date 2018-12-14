@@ -18,6 +18,10 @@ const Main = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 5px solid #25bea0;
+  border-radius: 5px;
+  margin: 0 auto;
+  width: 90%;
 `;
 
 const FormWrapper = styled.form`
@@ -27,6 +31,9 @@ const FormWrapper = styled.form`
   background-color: white;
   align-items: center;
   justify-content: center;
+  @media (max-width: 650px) {
+    width: 90%;
+  }
 `;
 const Group = styled.fieldset`
   display: flex;
@@ -96,7 +103,6 @@ const AutoInput = styled(AutoComplete)`
 `;
 
 const SaveButton = styled(PrimaryButton)`
-  // width: 45%;
   width: 200px;
   height: 65px;
   color: white;
@@ -179,13 +185,19 @@ class CreateMeeting extends Component {
 
   handleNewConvo = async (e, userInput, history, dashboard) => {
     e.preventDefault();
-    if (
-      !userInput.title ||
-      !userInput.description ||
-      !userInput.start ||
-      !userInput.end
-    ) {
-      alert("Required fields are Title, Description, Start, End");
+    if (!userInput.title || !userInput.description) {
+      alert(
+        "Please complete all the required fields: \n\n-Title \n-Description"
+      );
+      return;
+    } else if (userInput.start > userInput.end) {
+      alert("End Time Cannot Occur Before Start.");
+      return;
+    } else if (userInput.start instanceof Date === false) {
+      alert("Please enter a valid Start date and time.");
+      return;
+    } else if (userInput.end instanceof Date === false) {
+      alert("Please enter a valid End date and time.");
       return;
     } else {
       const body = {
@@ -314,7 +326,7 @@ class CreateMeeting extends Component {
                   inputClassName="input"
                   className="datePicker"
                   placeholder="Start"
-                  readOnlyInput={true}
+                  // readOnlyInput={true}
                   minDate={moment().toDate()}
                   panelClassName={"calendar-overrideStart"}
                 />
@@ -329,7 +341,7 @@ class CreateMeeting extends Component {
                   inputClassName="input"
                   className="datePicker"
                   placeholder="End"
-                  readOnlyInput={true}
+                  // readOnlyInput={true}
                   minDate={moment().toDate()}
                   panelClassName={"calendar-overrideEnd"}
                 />
