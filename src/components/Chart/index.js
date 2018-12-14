@@ -4,10 +4,11 @@ import { Pie } from "react-chartjs-2";
 
 const StyledChartWrapper = styled.div`
   display: flex;
-  margin: 10px auto;
+  margin: 20px auto;
   width: 100%;
   justify-content: center;
   align-items: center;
+  border: 1px solid lightgrey;
 `;
 
 class StyledChart extends PureComponent {

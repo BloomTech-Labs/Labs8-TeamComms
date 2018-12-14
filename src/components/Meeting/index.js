@@ -37,6 +37,7 @@ display: flex;
   @media (min-width: 768px) {
    
     margin: 0 20px;
+    margin-right: 0;
     }
   }
 
@@ -54,18 +55,21 @@ const QuestionButton = styled(SubmitButton)`
 const Main = styled.div`
   display: flex;
   flex-direction: column;
+  background: #ffffff;
   width: 100%;
   margin: 0;
   padding: 0;
   @media (min-width: 768px) {
     flex-direction: row;
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
   }
 `;
 
 const StyledTabView = styled(TabView)`
-  width: 80%;
+  width: 90%;
+  margin: 30px;
+  margin-left: 0;
   display: block;
   @media (max-width: 768px) {
     display: none;
@@ -74,6 +78,7 @@ const StyledTabView = styled(TabView)`
 
 const StyledMobileTabView = styled(TabView)`
   width: 100%;
+  margin: 30px;
   @media (min-width: 768px) {
     display: none;
   }
@@ -101,11 +106,36 @@ const ListItem = styled.p`
   max-width: 100%;
   border: none;
 `;
-const dimText = styled.p`
-  text-align: center;
-  color: grey;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
+const Dim = styled.div`
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  p {
+    text-align: center;
+    color: grey;
+    line-height: 1.25;
+  }
+`;
+
+const FooterWrapper = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background: #ffffff;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+  p {
+    width: 80%;
+    color: #00000;
+    font-style: italic;
+    line-height: 1.25;
+  }
 `;
 
 const EditorWrapper = styled.div`
@@ -128,38 +158,18 @@ const EditorWrapper = styled.div`
 `;
 
 const Editor = styled(ReactQuill)`
-  max-width: 372px;
+  width: 500px;
+  margin-top: 20px;
   .ql-container {
-    height: 320px;
-    @media (max-width: 500px) {
-      height: 20vh;
-    }
+    height: 253px;
+  }
+  @media (max-width: 768px) {
+    max-width: 400px;
+  }
+  @media (max-width: 400px) {
+    max-width: 330px;
   }
 `;
-// const MeetingDetails = styled.div`
-//   display:flex;
-//   width: 78%;
-//   margin: 0;
-//   margin-left: 11.75%;
-//   justify-content: center;
-//   align-items: center;
-//   h1 {
-//     color: #ffffff;
-//     font-size: 20px;
-//   }
-//   h2 {
-//     color: #facc43;
-//     font-size: 20px;
-//   }
-//   p {
-//     color: white;
-//   }
-//   }
-//   @media(max-width:768px) {
-//     width: 100%;
-//     margin-left: 0;
-//   }
-// `;
 
 const QuestionForm = styled.form`
   display: flex;
@@ -183,7 +193,7 @@ class Meeting extends Component {
     super(props);
     this.meeting = {};
     const { dispatch } = this.props;
- 
+
     this.buffer = 0;
     this.state = {
       activeIndex: 0,
@@ -224,7 +234,6 @@ class Meeting extends Component {
     socket.on("finalize", () => {
       alert("Meeting has been saved!");
     });
-    
   }
   componentDidMount() {
     let header = { Authorization: localStorage.getItem("jwt") };
@@ -268,14 +277,6 @@ class Meeting extends Component {
     this.setState({ text: value });
   };
 
-  // // updates state and sends new state to server to distribute to clients with emit
-  // changeHandler = html => {
-  //   this.setState({
-  //     text: html
-  //   });
-  //   socket.emit("update text", this.state.text); //sends data to server
-  // };
-
   sendQuestion = e => {
     e.preventDefault();
     socket.emit("question", this.state.currentQuestion);
@@ -308,11 +309,6 @@ class Meeting extends Component {
             this.meeting.invitees ? this.meeting.invitees.length : 0
           ],
           backgroundColor: ["#facc43", "#25BEA0"]
-          // hoverBackgroundColor: [
-          //     "#FF6384",
-          //     "#36A2EB",
-
-          // ]
         }
       ]
     };
@@ -320,42 +316,38 @@ class Meeting extends Component {
     //auto sets to local times from utc
     const humanDate = moment(this.meeting.startTime).format("llll");
 
-    // const clickZoom = <a href=this.meeting.zoom>hey</a>
-    // const meetingDetails = [
-    //   {
-    //     title: this.meeting.title,
-    //     zoom: this.meeting.zoom,
-    //     // zoom: {<Link to='{this.meeting.zoom}/>},
-    //     // zoom: clickZoom,
-    //     startTime: humanDate
-    //   }
-    // ];
-
     return (
       <Fragment>
-     
         <MeetingDetailTable>
-        <table className='top-table'> 
-        <caption><h1>MEETING DETAILS</h1></caption>       
-          <thead>          
-            <tr>
-              <th>Title</th>
-              <th>Start Time</th>
-              <th>Zoom Link</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{this.meeting.title}</td>
-              <td>{humanDate}</td>              
-              <td><a href={`${this.meeting.zoom}`} target="_blank">{this.meeting.zoom}</a></td>
-              
-            </tr>
-          </tbody>
-        </table>
+          <table className="top-table">
+            <caption>
+              <h1>Meeting Details</h1>
+            </caption>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Start Time</th>
+                <th>Zoom Link</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{this.meeting.title}</td>
+                <td>{humanDate}</td>
+                <td>
+                  <a
+                    href={`${this.meeting.zoom}`}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    {this.meeting.zoom}
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </MeetingDetailTable>
         <Main>
-      
           <AttendeeScroll className="attendee">
             {/* // style=
             {{ width: "25%", height: "500px", background: "white" }} */}
@@ -414,10 +406,12 @@ class Meeting extends Component {
               header="Meeting Notes"
             >
               <EditorWrapper>
-                <dimText>
-                  Collaborate with your team in the notes section below. Any
-                  active User can contribute.
-                </dimText>
+                <Dim>
+                  <p>
+                    Collaborate with your team in the notes section below. Any
+                    active User can contribute.
+                  </p>
+                </Dim>
                 <Editor
                   theme="snow"
                   value={this.state.text}
@@ -431,12 +425,6 @@ class Meeting extends Component {
           </StyledMobileTabView>
 
           <StyledTabView className="tabcustom">
-            {/* // activeIndex=
-            // {this.state.activeIndex}
-            // // onTabChange=
-            // {e => this.setState({ activeIndex: e.index })}
-            // // renderActiveOnly=
-            // {false} */}
             <CustomTabs
               headerClassName={this.props.className}
               header="Questions"
@@ -463,12 +451,45 @@ class Meeting extends Component {
                   Add A Question
                 </QuestionButton>
               </QuestionForm>
+              <FooterWrapper>
+                <img src="/images/onefinger.png" alt="" />
+                <p>
+                  We have made a point to say explicitly at the beginning of
+                  every meeting, “As is our new standard procedure, we will be
+                  using the hand queue system for this meeting. As a quick
+                  refresher, this is where you raise a finger if you’d like to
+                  go next, or two if someone already has their finger up, and so
+                  on.” This reminder is important, because it’s easy to revert
+                  to old habits.
+                  <a
+                    href="https://shift.infinite.red/how-infinite-red-improved-remote-video-meetings-with-a-few-hand-gestures-bbebc0555335"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    &nbsp;(Read More)
+                  </a>
+                  &nbsp;-Jamon Holmgren, CTO,
+                  <a
+                    href="https://infinite.red"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    &nbsp;Infinite Red
+                  </a>
+                </p>
+              </FooterWrapper>
             </CustomTabs>
             <CustomTabs
               headerClassName={this.props.className}
               header="Meeting Notes"
             >
               <EditorWrapper>
+                <Dim>
+                  <p>
+                    Collaborate with your team in the notes section below. Any
+                    active user can contribute.
+                  </p>
+                </Dim>
                 <Editor
                   theme="snow"
                   value={this.state.text}
@@ -476,20 +497,12 @@ class Meeting extends Component {
                   name="text"
                 />
 
-                {this.confirm ? (
-                  <FinalizeButton
-                    style={{ width: "200px" }}
-                    onClick={this.finalizeMeeting}
-                  >
-                    Save
-                  </FinalizeButton>
-                ) : (
-                  <FinalizeButton
-                    style={{ backgroundColor: "gray", width: "200px" }}
-                  >
-                    Creator Only
-                  </FinalizeButton>
-                )}
+                <FinalizeButton
+                  style={{ width: "200px" }}
+                  onClick={this.finalizeMeeting}
+                >
+                  Save
+                </FinalizeButton>
               </EditorWrapper>
             </CustomTabs>
           </StyledTabView>
@@ -503,109 +516,116 @@ const mapStateToProps = state => {
 };
 export default connect(mapStateToProps)(Meeting);
 
-
-
-
 const MeetingDetailTable = styled.div`
-table {
-  border-spacing: 1;
-  border-collapse: collapse;
-  background: white;
-  border-radius: 6px;
-  overflow: hidden;
-  width: 78%;
-  // margin: 0 auto;
-  position: relative;
-  margin-bottom: 1%;
-  margin-left: 11.75%;
-  margin-top: 3%;
-  letter-spacing: 0.1em;
-}
-table h1 {
-  color: #ffffff;
-  font-size: 20px;
-  background: #25bea0;
-  line-height: 1.5;
-  margin-bottom: 3px;
-  font-family: Roboto sans-serif;  
-  letter-spacing: 0.25em;
-}
-table * {
-  position: relative;
-}
-table td, table th {
-  padding-left: 8px;
-  width: 33%;
-}
-table thead tr {
-  background: #25bea0;
-  color: #374353;
-  font-size: 14px;
-  line-height: 2;
- 
-
-}
-table tbody tr {
-  border-bottom: 1px solid #E3F1D5;
-  height: 50px;;
-  text-align: center;
-  /* background: #25bea0; */
-
-}
-table tbody tr:last-child {
-  border: 0;
-}
-table td, table th {
-  text-align: left;
-}
-table td.l, table th.l {
-  text-align: right;
-}
-table td.c, table th.c {
-  text-align: center;
-}
-table td.r, table th.r {
-  text-align: center;
-}
-
-@media screen and (max-width: 35.5em) {
   table {
-    display: block;
-  }
-  table > *, table tr, table td, table th {
-    display: block;
-    width: auto;
+    @media (min-width: 768px) {
+      width: 100%;
+      margin: 0 auto;
+    }
+    border-spacing: 1;
+    border-collapse: collapse;
+    background: white;
+    overflow: hidden;
+    border-bottom: 1px solid lightgrey;
+    margin: 0 auto;
+    position: relative;
+    margin-bottom: 1%;
 
+    margin-top: 3%;
+    letter-spacing: 0.1em;
   }
-  table thead {
-    display: none;
+  table td {
+    padding: 10px;
+  }
+  table h1 {
+    color: #ffffff;
+    font-size: 20px;
+    background: #25bea0;
+    line-height: 1.5;
+    margin-bottom: 3px;
+    font-family: Sans-Serif;
+  }
+  table * {
+    position: relative;
+  }
+  table td,
+  table th {
+    padding-left: 8px;
+    width: 33%;
+  }
+  table thead tr {
+    background: #f4f4f4;
+    color: #374353;
+    font-size: 14px;
+    line-height: 2;
+    border-bottom: 1px solid lightgrey;
   }
   table tbody tr {
-    height: auto;
-    padding: 8px 0;
+    border-bottom: 1px solid #e3f1d5;
+    height: 50px;
+    text-align: center;
+    /* background: #25bea0; */
   }
-  table tbody tr td {
-    padding-left: 45%;
-    margin-bottom: 12px;
+  table tbody tr:last-child {
+    border: 0;
   }
-  table tbody tr td:last-child {
-    margin-bottom: 0;
+  table td,
+  table th {
+    text-align: left;
   }
-  table tbody tr td:before {
-    position: absolute;
-    font-weight: 700;
-    width: 40%;
-    left: 10px;
-    top: 0;
+  table td.l,
+  table th.l {
+    text-align: right;
   }
-  table tbody tr td:nth-child(1):before {
-    content: "Title";
+  table td.c,
+  table th.c {
+    text-align: center;
   }
-  table tbody tr td:nth-child(2):before {
-    content: "Start Time";
+  table td.r,
+  table th.r {
+    text-align: center;
   }
-  table tbody tr td:nth-child(3):before {
-    content: "Zoom Link";
+
+  @media screen and (max-width: 35.5em) {
+    table {
+      display: block;
+    }
+    table > *,
+    table tr,
+    table td,
+    table th {
+      display: block;
+      width: auto;
+    }
+    table thead {
+      display: none;
+    }
+    table tbody tr {
+      height: auto;
+      padding: 8px 0;
+    }
+    table tbody tr td {
+      padding-left: 45%;
+      margin-bottom: 12px;
+    }
+    table tbody tr td:last-child {
+      margin-bottom: 0;
+    }
+    table tbody tr td:before {
+      position: absolute;
+      font-weight: 700;
+      width: 40%;
+      left: 10px;
+      top: 0;
+    }
+    table tbody tr td:nth-child(1):before {
+      content: "Title";
+    }
+    table tbody tr td:nth-child(2):before {
+      content: "Start Time";
+    }
+    table tbody tr td:nth-child(3):before {
+      content: "Zoom Link";
+    }
   }
-}
 `;

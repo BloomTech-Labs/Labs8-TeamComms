@@ -1,4 +1,10 @@
-# Team Communicator [![Build Status](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms) <a href="https://david-dm.org/Lambda-School-Labs/Labs8-TeamComms.svg">
+# Team Communicator
+
+[![Build Status](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms.svg?branch=master)](https://travis-ci.com/Lambda-School-Labs/Labs8-TeamComms)
+
+<a href="https://david-dm.org/Lambda-School-Labs/Labs8-TeamComms">
+    <img src="https://david-dm.org/Lambda-School-Labs/Labs8-TeamComms.svg" alt="Dependency Status" />
+  </a>
 
 Click <a href="https://team-comm.netlify.com">here</a> to visit the app.
 
@@ -6,56 +12,36 @@ Click <a href="https://team-comm.netlify.com">here</a> to visit the app.
 
 # Table of Contents
 
-- [Team Communicator]()
-  - [A web app that helps distributed or remote teams communicate questions and stay in sync.]()
-    - [PROBLEM:]()
-    - [SOLUTION:]()
-  - [Dependencies]()
-  - [Installation]()
-  - [Usage]()
-    - [IMPORTANT: You will need to make a .env file in the base repo directory with your own environment variables setup...here are the current environment variables you will need to generate:]()
-    - [yarn start]()
-    - [yarn test]()
-    - [yarn build]()
-    - [node server.js]()
-  - [User API Documenation]()
-    - [Register User]()
-      - [Success Response]()
-      - [Error Response]()
-    - [Login User]()
-      - [Success Response]()
-      - [Error Response]()
-    - [Update User]()
-      - [Success Response]()
-      - [Error Response]()
-    - [Delete/Inactivate User]()
-  - [Zoom API]()
-    - [Zoom api from Postman]()
-    - [Create meeting schema]()
-    - [Create zoom jwt token online <a href="https://jwt.io/" rel="nofollow">https://jwt.io/</a>](https://jwt.io/)
-    - [zoom enterprise accounts breakdown]()
-    - [API Intro]()
-    - [Webhooks]()
-    - [Developer site]()
-    - [Zoom Sample App]()
-  - [How to test the software]()
-  - [Known issues]()
-  - [Getting involved]()
-- [Contributing to Team Communicator]()
-  - [Bug reports]()
-  - [Feature requests]()
-  - [Pull requests]()
-- [Collaborating guidelines]()
+- [Team Communicator](#team-communicator)
+  - [PROBLEM:](#problem)
+  - [SOLUTION:](#solution)
+  - [Dependencies](#dependencies)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [User API Documentation](#user-api-documentation)
+    - [Register User](#register-user)
+    - [Login User](#login-user)
+    - [Update User](#update-user)
+    - [Delete/Inactivate User](#delete-user)
+  - [Zoom API](#zoom-api)
+  - [How to test the software](#how-to-test-the-software)
+  - [Known issues](#known-issues)
+  - [Getting involved](#getting-involved)
+- [Contributing to Team Communicator](#contributing-to-team-communicator)
+  - [Bug reports](#bug-reports)
+  - [Feature requests](#feature-requests)
+  - [Pull requests](#pull-requests)
+- [Collaborating guidelines](#collaborating-guidelines)
 
 # Team Communicator
 
-## A web app that helps distributed or remote teams communicate questions and stay in sync.
+## A web app that keeps remote teams in sync.
 
-### PROBLEM:
+### Problem:
 
-Educational content is lost from zoom during remote calls that could be saved and reused. What if we could transcribe and save all student/attendee questions during online lectures/brown bags?
+Educational content is lost from zoom during remote calls that could be saved and reused. What if we could transcribe and save all student/attendee questions and notes during online lectures/brown bags?
 
-### SOLUTION:
+### Solution:
 
 Our goal is to create an app that works in sync with Zoom calls to fix an internal problem at Lambda School - Content is lost from Zoom calls that could be saved and reused from each cohort. What if we could transcribe and save all student questions during lecture and brown bags? Our goal is to give back to Lambda with our labs project by creating an app that takes content creation to a whole new level. Questions are no longer lost during lecture - each question is timestamped (when answered) for transcription. Instructors can choose to answer or punt questions. The major feature of our app is recording and pushing zoom calls directly to Youtube, transcribing the calls and pushing transcribed information to a GitHub Wiki page (in this case, it would be a test repo until permissions were granted to update the Lambda School wiki). This allows every lambda lecture to be searchable based on transcription results, editable by students and open source for all cohorts to come.
 
@@ -67,31 +53,15 @@ Express
 React
 NodeJS
 
-**Status**: Initial build in progress.
-
 **Links to production or demo instances**:
 Server - https://teamcomm2.herokuapp.com
 Client - https://team-comm.netlify.com/
 
-**Screenshots**:
-
 ## Dependencies
 
-**Front-End**
-Styled-Components
-Redux
-React-Redux
-Redux-Thunk
-ESLint
-React-Router-DOM
-Prettier
-Exact-Prettier
+[Front-End](package.json)
 
-**Back-End**
-CORS
-Mongoose
-SendGrid
-Socket.io
+[Back-End](./server/package.json)
 
 ## Installation
 
@@ -151,7 +121,7 @@ Open [http://localhost:3300](http://localhost:3300) to view it in the browser.
 
 ---
 
-## User API Documenation
+## User API Documentation
 
 ### Register User
 
@@ -302,7 +272,7 @@ _Code_ : 401
 
 ---
 
-### Delete/Inactivate User
+### Delete User
 
 To delete a User, use the above `Edit User` endpoint and change `active: false`.
 
