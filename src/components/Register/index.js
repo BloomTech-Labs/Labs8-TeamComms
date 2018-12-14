@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { callReg, toggleOverpane } from "../../actions/index";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -133,9 +133,10 @@ class Register extends Component {
       password2: "",
       givenName: "",
       familyName: "",
-      validEmail: true,
-      validPassword1: true,
-      validPassword2: true
+      validEmail: false,
+      validPassword1: false,
+      // validPassword2: true,
+      passwordsMatch: false
     };
   }
 
@@ -150,47 +151,56 @@ class Register extends Component {
     });
   };
 
-  validateEmail = (e, email) => {
-    if (email.length > 0 || e.target.blur) {
+  validateEmail = e => {
+    if (e.target.value.length > 0 || e.target.blur) {
+      // eslint-disable-next-line
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (re.test(email)) {
+      if (re.test(e.target.value)) {
         this.setState({ email: e.target.value, validEmail: true });
       } else {
         this.setState({ email: e.target.value, validEmail: false });
       }
     } else {
-      this.setState({ email: e.target.value, validEmail: true });
+      this.setState({ email: e.target.value, validEmail: false });
     }
   };
 
-  validatePassword1 = (e, password1) => {
+  validatePassword1 = e => {
     if (e.target.blur) {
-      var re = /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/;
+      // eslint-disable-next-line
+      var re = /(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[-_.!@#$%^&*])[\w-_.!@#$%^&*]{8,}$/;
 
-      if (re.test(password1)) {
+      if (re.test(e.target.value)) {
         this.setState({ password1: e.target.value, validPassword1: true });
       } else {
         this.setState({ password1: e.target.value, validPassword1: false });
       }
+    } else {
+      this.setState({ password1: e.target.value, validPassword1: false });
     }
   };
 
-  validatePassword2 = (e, password2) => {
-    if (e.target.blur) {
-      var re = /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/;
-      let match1 = re.test(password2);
-      let match2 = this.state.password1 === this.state.password2 ? true : false;
-      if (match1 && match2) {
-        this.setState({ password2: e.target.value, validPassword2: true });
-      } else {
-        this.setState({ password2: e.target.value, validPassword2: false });
-      }
-    }
-  };
+  // validatePassword2 = e => {
+  //   this.setState({ password2: e.target.value });
+  //   // e.preventDefault();
+  //   // if (e.target.blur) {
+  //   //   if (this.state.password1 == this.state.password2) {
+  //   //     alert();
+  //   //     this.setState({ passwordsMatch: true });
+  //   //   }
+  //   // }
+  // };
 
   handleRegSubmit = (e, userInput, history) => {
     e.preventDefault();
-    if (userInput.password1 === userInput.password2) {
+    if (
+        userInput.password1 === userInput.password2 && 
+        this.state.validEmail &&
+        this.state.validPassword1 &&
+        userInput.email &&
+        userInput.givenName &&
+        userInput.familyName
+      ) {
       const credentials = {
         email: userInput.email,
         password: userInput.password1,
@@ -200,7 +210,7 @@ class Register extends Component {
       this.props.callReg(e, credentials, history);
     } else {
       e.preventDefault();
-      alert("Passwords do not match!");
+      alert("Please check the form for errors.");
       return;
     }
   };
@@ -226,6 +236,7 @@ class Register extends Component {
         <Main>
           <FormWrapper>
             <Lightbox type="content">
+            {/* eslint-disable-next-line */}
               <a>
                 <VidContainer>
                   <LandingImage src="../images/front1000.png" />
@@ -291,16 +302,23 @@ class Register extends Component {
                   required
                   value={this.state.email}
                   onChange={e => {
-                    this.validateEmail(e, this.state.email);
+                    this.validateEmail(e);
                   }}
                   placeholder="E-mail"
                 />
-                {this.state.validEmail ? null : (
-                  <Message
-                    severity="error"
-                    text="Enter a valid e-mail address."
-                  />
-                )}
+                {
+                  !this.state.validEmail && this.state.email.length > 1 ? (
+                    <Message
+                      severity="error"
+                      text="Enter a valid e-mail address."
+                    />
+                  ) 
+                  : this.state.validEmail && this.state.email.length > 1 ? (
+                    <Message
+                      severity="success"
+                    />
+                  ) : null
+                }
               </NSpan>
 
               {this.props.regError ? (
@@ -318,24 +336,59 @@ class Register extends Component {
                   required
                   value={this.state.password1}
                   onChange={e => {
-                    this.validatePassword1(e, this.state.password1);
+                    this.validatePassword1(e);
                   }}
                   placeholder="Password"
                 />
+                {
+                  this.state.validPassword1 ? ( <Message severity="success" />) 
+                  : !this.state.validPassword1 && this.state.password2.length > 0 ? (
+                    <Fragment>
+                      <Message severity="error" text="Password Requirements Not Met:" />
+                      <br />
+                      <Message severity="warn" text="Minimum Length is 8 characters." />
+                      <br />
+                      <Message severity="warn" text="1 Uppercase Letter." />
+                      <br />
+                      <Message severity="warn" text="1 Lowercase Letter." />
+                      <br />
+                      <Message severity="warn" text="1 Number." />
+                      <br />
+                      <Message severity="warn" text="1 Special Character ( - _ . ! @ # $ % ^ & * ).  " />
+                    </Fragment>
+                  ) 
+                  : null
+                }
               </NSpan>
               <br />
               {/* Password 2 */}
               <NSpan className="">
                 <PassInput
+                  feedback={false}
                   id="password2"
                   name="password2"
                   required
                   value={this.state.password2}
                   onChange={e => {
-                    this.validatePassword2(e, this.state.password2);
+                    // this.validatePassword2(e);
+                    this.setState({ password2: e.target.value });
                   }}
                   placeholder="Confirm Password"
                 />
+                
+                {                  
+                  this.state.validPassword1 && this.state.password1 !== this.state.password2 && this.state.password2.length > 0 ? (
+                    <Message severity="error" text="Passwords don't match!" />
+                  ) 
+                  : this.state.validPassword1 && this.state.password1 !== this.state.password2 ? (
+                    <Message text="Please confirm your password." />
+                  ) 
+                  : this.state.validPassword1 && this.state.password1 === this.state.password2 && this.state.password2.length > 0 ? (
+                    <Message severity="success" text="Match!" />
+                  ) 
+                  : null
+                }
+
               </NSpan>
               <br />
               <RegisterButton type="submit"> Register </RegisterButton>
