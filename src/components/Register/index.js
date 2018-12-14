@@ -8,6 +8,7 @@ import { PrimaryButton, SpinnerWrapper } from "../Common";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { Lightbox } from "primereact/lightbox";
+import "./css.css";
 
 const Main = styled.div`
   margin: 0 auto;
@@ -21,9 +22,7 @@ const Main = styled.div`
   }
 `;
 
-const StyledMessage = styled(Message)`
-  transform: rotateY(${props => (props.registerPremium ? "-180deg" : "0")});
-`;
+const StyledMessage = styled(Message)``;
 
 const LandingImage = styled.img`
   max-width: 100%;
@@ -82,15 +81,14 @@ const FormWrapper = styled.form`
   }
 `;
 const Group = styled.fieldset`
-  transition: 0.6s;
+  transition: 1s;
 
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   border: 1px solid grey;
   border-radius: 5px;
-  // transform-style: preserve-3d;
-  transform: rotateY(${props => (props.registerPremium ? "180deg" : "0")});
+
   background-color: ${props => (props.registerPremium ? "#374353" : "#ffffff")};
   padding: 5%;
   margin: 5%;
@@ -99,17 +97,18 @@ const Group = styled.fieldset`
     margin: 0;
     padding: 0 5%;
   }
+  > div {
+    transform: none;
+  }
 `;
 const NSpan = styled.span`
   margin-top: 20px;
 `;
 
 const TextInput = styled(InputText)`
-  transform: rotateY(${props => (props.registerPremium ? "-180deg" : "0")});
   width: 100%;
 `;
 const PassInput = styled(Password)`
-  transform: rotateY(${props => (props.registerPremium ? "-180deg" : "0")});
   width: 100%;
 `;
 
@@ -124,7 +123,6 @@ const RegisterButton = styled(PrimaryButton)`
   margin-top: 15px;
   margin-bottom: 15px;
   border: none;
-  transform: rotateY(${props => (props.registerPremium ? "-180deg" : "0")});
 `;
 
 const RegisterPremium = styled(PrimaryButton)`
@@ -138,7 +136,6 @@ const RegisterPremium = styled(PrimaryButton)`
   margin-top: 15px;
   margin-bottom: 15px;
   border: none;
-  transform: rotateY(${props => (props.registerPremium ? "-180deg" : "0")});
 `;
 
 const SwitchLink = styled.a`
@@ -261,6 +258,9 @@ class Register extends Component {
   };
 
   render() {
+    var style = this.props.registerpremium
+      ? { transform: "rotateY(-180deg)" }
+      : { transform: "rotateY(0)" };
     const userInput = {
       email: this.state.email,
       password1: this.state.password1,
@@ -356,12 +356,15 @@ class Register extends Component {
                 />
                 {!this.state.validEmail && this.state.email.length > 1 ? (
                   <StyledMessage
+                    className={this.props.className}
                     registerPremium={this.props.registerPremium}
                     severity="error"
                     text="Enter a valid e-mail address."
                   />
                 ) : this.state.validEmail && this.state.email.length > 1 ? (
                   <StyledMessage
+                    style={this.props.className}
+                    className={this.props.className}
                     registerPremium={this.props.registerPremium}
                     severity="success"
                   />
@@ -369,7 +372,7 @@ class Register extends Component {
               </NSpan>
 
               {this.props.regError ? (
-                <StyledMessage
+                <Message
                   registerPremium={this.props.registerPremium}
                   severity="error"
                   text="This email address is already registered."
@@ -377,7 +380,7 @@ class Register extends Component {
               ) : null}
               <br />
               {/* Password 1 */}
-              <NSpan className="">
+              <NSpan registerPremium={this.props.registerPremium} className="">
                 <PassInput
                   registerPremium={this.props.registerPremium}
                   id="password1"
@@ -390,38 +393,45 @@ class Register extends Component {
                   placeholder="Password"
                 />
                 {this.state.validPassword1 ? (
-                  <StyledMessage
+                  <Message
+                    className={this.props.className}
                     registerPremium={this.props.registerPremium}
                     severity="success"
                   />
                 ) : !this.state.validPassword1 &&
                 this.state.password2.length > 0 ? (
                   <Fragment>
-                    <StyledMessage
+                    <Message
+                      className={this.props.className}
                       registerPremium={this.props.registerPremium}
                       severity="error"
                       text="Password Requirements Not Met:"
+                      style={{ transform: "none" }}
                     />
                     <br />
-                    <StyledMessage
+                    <Message
+                      className={this.props.className}
                       registerPremium={this.props.registerPremium}
                       severity="warn"
                       text="Minimum Length is 8 characters."
+                      style={{ transform: "none" }}
                     />
                     <br />
-                    <StyledMessage
+                    <Message
                       registerPremium={this.props.registerPremium}
                       severity="warn"
                       text="1 Uppercase Letter."
+                      style={{ transform: "none" }}
                     />
                     <br />
-                    <StyledMessage
+                    <Message
                       registerPremium={this.props.registerPremium}
                       severity="warn"
                       text="1 Lowercase Letter."
                     />
                     <br />
-                    <StyledMessage
+                    <Message
+                      id="number1"
                       registerPremium={this.props.registerPremium}
                       severity="warn"
                       text="1 Number."
