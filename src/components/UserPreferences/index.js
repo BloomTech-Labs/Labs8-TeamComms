@@ -132,7 +132,7 @@ class UserPref extends Component {
       alert("New passwords do not match");
     } else {
       this.props.callUpdate(e, userInput, history);
-      this.this.setState({ oldPw: "", newPw: "", newPw2: "" });
+      this.setState({ oldPw: "", newPw: "", newPw2: "" });
     }
   };
 
