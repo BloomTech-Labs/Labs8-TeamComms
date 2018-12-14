@@ -17,8 +17,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";
 import StyledChart from "../Chart/";
-// import { DataTable } from "primereact/datatable";
-// import { Column } from "primereact/column";
+import Stripe from "../Stripe";
 import moment from "moment";
 
 import("./css.css");
@@ -344,13 +343,21 @@ class Meeting extends Component {
                 <td>{this.meeting.title}</td>
                 <td>{humanDate}</td>
                 <td>
-                  <a
-                    href={`${this.meeting.zoom}`}
-                    rel="noopener noreferrer"
-                    target="_blank"
-                  >
-                    {this.meeting.zoom}
-                  </a>
+                  {this.props.userData.user.premium ? (
+                    <a
+                      href={`${this.meeting.zoom}`}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      {this.meeting.zoom}
+                    </a>
+                  ) : (
+                    <Fragment>
+                      <span>
+                        Pro Users Only! <Stripe />
+                      </span>
+                    </Fragment>
+                  )}
                 </td>
               </tr>
             </tbody>
