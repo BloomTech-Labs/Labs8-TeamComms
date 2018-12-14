@@ -35,13 +35,13 @@ Click <a href="https://team-comm.netlify.com">here</a> to visit the app.
 
 # Team Communicator
 
-## A web app that helps distributed or remote teams communicate questions and stay in sync.
+## A web app that keeps remote teams in sync.
 
-### PROBLEM:
+### Problem:
 
-Educational content is lost from zoom during remote calls that could be saved and reused. What if we could transcribe and save all student/attendee questions during online lectures/brown bags?
+Educational content is lost from zoom during remote calls that could be saved and reused. What if we could transcribe and save all student/attendee questions and notes during online lectures/brown bags?
 
-### SOLUTION:
+### Solution:
 
 Our goal is to create an app that works in sync with Zoom calls to fix an internal problem at Lambda School - Content is lost from Zoom calls that could be saved and reused from each cohort. What if we could transcribe and save all student questions during lecture and brown bags? Our goal is to give back to Lambda with our labs project by creating an app that takes content creation to a whole new level. Questions are no longer lost during lecture - each question is timestamped (when answered) for transcription. Instructors can choose to answer or punt questions. The major feature of our app is recording and pushing zoom calls directly to Youtube, transcribing the calls and pushing transcribed information to a GitHub Wiki page (in this case, it would be a test repo until permissions were granted to update the Lambda School wiki). This allows every lambda lecture to be searchable based on transcription results, editable by students and open source for all cohorts to come.
 
@@ -59,21 +59,9 @@ Client - https://team-comm.netlify.com/
 
 ## Dependencies
 
-**Front-End**
-Styled-Components
-Redux
-React-Redux
-Redux-Thunk
-ESLint
-React-Router-DOM
-Prettier
-Exact-Prettier
+[Front-End](package.json)
 
-**Back-End**
-CORS
-Mongoose
-SendGrid
-Socket.io
+[Back-End](./server/package.json)
 
 ## Installation
 
