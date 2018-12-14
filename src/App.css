@@ -9,3 +9,19 @@
   color: #cfedfc;
   margin-bottom: 2rem;
 }
+
+.scroller::-webkit-scrollbar-track {
+
+  border-radius: 3px;
+  background-color: #ffffff;
+}
+
+.scroller::-webkit-scrollbar {
+  width: 12px;
+  background-color: #fff;
+}
+
+.scroller::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: lightgrey;
+}

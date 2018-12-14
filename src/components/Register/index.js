@@ -8,11 +8,12 @@ import { PrimaryButton, SpinnerWrapper } from "../Common";
 import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { Lightbox } from "primereact/lightbox";
+import "./css.css";
 
 const Main = styled.div`
   margin: 0 auto;
   display: flex;
-
+  height: 100vh;
   // padding: 5px 0 5px 0;
   background: #fff;
   @media (max-width: 768px) {
@@ -20,6 +21,9 @@ const Main = styled.div`
     padding: 0;
   }
 `;
+
+const StyledMessage = styled(Message)``;
+
 const LandingImage = styled.img`
   max-width: 100%;
   cursor: pointer;
@@ -77,17 +81,24 @@ const FormWrapper = styled.form`
   }
 `;
 const Group = styled.fieldset`
+  transition: 1s;
+
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  border: 2px groove white;
+  border: 1px solid grey;
   border-radius: 5px;
+
+  background-color: ${props => (props.registerPremium ? "#374353" : "#ffffff")};
   padding: 5%;
   margin: 5%;
   @media (max-width: 768px) {
     width: 80%;
     margin: 0;
     padding: 0 5%;
+  }
+  > div {
+    transform: none;
   }
 `;
 const NSpan = styled.span`
@@ -113,6 +124,20 @@ const RegisterButton = styled(PrimaryButton)`
   margin-bottom: 15px;
   border: none;
 `;
+
+const RegisterPremium = styled(PrimaryButton)`
+  width: 100%;
+  height: 65px;
+  color: white;
+  border-radius: 5px;
+  background: #facc43;
+  border: 1px solid grey;
+  font-size: 28px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border: none;
+`;
+
 const SwitchLink = styled.a`
   color: #25bea0;
   cursor: pointer;
@@ -191,16 +216,33 @@ class Register extends Component {
   //   // }
   // };
 
-  handleRegSubmit = (e, userInput, history) => {
+  handleRegSubmit = (e, userInput, history, premium) => {
+    e.preventDefault();
+    if (userInput.password1 === userInput.password2) {
+      const credentials = {
+        email: userInput.email,
+        password: userInput.password1,
+        givenName: userInput.givenName,
+        familyName: userInput.familyName
+      };
+      this.props.callReg(e, credentials, history, premium);
+    } else {
+      e.preventDefault();
+      alert("Passwords do not match!");
+      return;
+    }
+  };
+
+  handlePremium = (e, userInput, history) => {
     e.preventDefault();
     if (
-        userInput.password1 === userInput.password2 && 
-        this.state.validEmail &&
-        this.state.validPassword1 &&
-        userInput.email &&
-        userInput.givenName &&
-        userInput.familyName
-      ) {
+      userInput.password1 === userInput.password2 &&
+      this.state.validEmail &&
+      this.state.validPassword1 &&
+      userInput.email &&
+      userInput.givenName &&
+      userInput.familyName
+    ) {
       const credentials = {
         email: userInput.email,
         password: userInput.password1,
@@ -216,6 +258,9 @@ class Register extends Component {
   };
 
   render() {
+    var style = this.props.registerpremium
+      ? { transform: "rotateY(-180deg)" }
+      : { transform: "rotateY(0)" };
     const userInput = {
       email: this.state.email,
       password1: this.state.password1,
@@ -236,7 +281,7 @@ class Register extends Component {
         <Main>
           <FormWrapper>
             <Lightbox type="content">
-            {/* eslint-disable-next-line */}
+              {/* eslint-disable-next-line */}
               <a>
                 <VidContainer>
                   <LandingImage src="../images/front1000.png" />
@@ -269,11 +314,12 @@ class Register extends Component {
               this.handleRegSubmit(e, userInput, history);
             }}
           >
-            <Group>
+            <Group registerPremium={this.props.registerPremium}>
               <br />
               {/* First Name */}
               <NSpan className="">
                 <TextInput
+                  registerPremium={this.props.registerPremium}
                   id="givenName"
                   name="givenName"
                   required
@@ -286,6 +332,7 @@ class Register extends Component {
               {/* Last Name */}
               <NSpan className="">
                 <TextInput
+                  registerPremium={this.props.registerPremium}
                   id="familyName"
                   name="familyName"
                   required
@@ -298,6 +345,7 @@ class Register extends Component {
               {/* Email */}
               <NSpan className="">
                 <TextInput
+                  registerPremium={this.props.registerPremium}
                   name="email"
                   required
                   value={this.state.email}
@@ -306,31 +354,35 @@ class Register extends Component {
                   }}
                   placeholder="E-mail"
                 />
-                {
-                  !this.state.validEmail && this.state.email.length > 1 ? (
-                    <Message
-                      severity="error"
-                      text="Enter a valid e-mail address."
-                    />
-                  ) 
-                  : this.state.validEmail && this.state.email.length > 1 ? (
-                    <Message
-                      severity="success"
-                    />
-                  ) : null
-                }
+                {!this.state.validEmail && this.state.email.length > 1 ? (
+                  <StyledMessage
+                    className={this.props.className}
+                    registerPremium={this.props.registerPremium}
+                    severity="error"
+                    text="Enter a valid e-mail address."
+                  />
+                ) : this.state.validEmail && this.state.email.length > 1 ? (
+                  <StyledMessage
+                    style={this.props.className}
+                    className={this.props.className}
+                    registerPremium={this.props.registerPremium}
+                    severity="success"
+                  />
+                ) : null}
               </NSpan>
 
               {this.props.regError ? (
                 <Message
+                  registerPremium={this.props.registerPremium}
                   severity="error"
                   text="This email address is already registered."
                 />
               ) : null}
               <br />
               {/* Password 1 */}
-              <NSpan className="">
+              <NSpan registerPremium={this.props.registerPremium} className="">
                 <PassInput
+                  registerPremium={this.props.registerPremium}
                   id="password1"
                   name="password1"
                   required
@@ -340,30 +392,64 @@ class Register extends Component {
                   }}
                   placeholder="Password"
                 />
-                {
-                  this.state.validPassword1 ? ( <Message severity="success" />) 
-                  : !this.state.validPassword1 && this.state.password2.length > 0 ? (
-                    <Fragment>
-                      <Message severity="error" text="Password Requirements Not Met:" />
-                      <br />
-                      <Message severity="warn" text="Minimum Length is 8 characters." />
-                      <br />
-                      <Message severity="warn" text="1 Uppercase Letter." />
-                      <br />
-                      <Message severity="warn" text="1 Lowercase Letter." />
-                      <br />
-                      <Message severity="warn" text="1 Number." />
-                      <br />
-                      <Message severity="warn" text="1 Special Character ( - _ . ! @ # $ % ^ & * ).  " />
-                    </Fragment>
-                  ) 
-                  : null
-                }
+                {this.state.validPassword1 ? (
+                  <Message
+                    className={this.props.className}
+                    registerPremium={this.props.registerPremium}
+                    severity="success"
+                  />
+                ) : !this.state.validPassword1 &&
+                this.state.password2.length > 0 ? (
+                  <Fragment>
+                    <Message
+                      className={this.props.className}
+                      registerPremium={this.props.registerPremium}
+                      severity="error"
+                      text="Password Requirements Not Met:"
+                      style={{ transform: "none" }}
+                    />
+                    <br />
+                    <Message
+                      className={this.props.className}
+                      registerPremium={this.props.registerPremium}
+                      severity="warn"
+                      text="Minimum Length is 8 characters."
+                      style={{ transform: "none" }}
+                    />
+                    <br />
+                    <Message
+                      registerPremium={this.props.registerPremium}
+                      severity="warn"
+                      text="1 Uppercase Letter."
+                      style={{ transform: "none" }}
+                    />
+                    <br />
+                    <Message
+                      registerPremium={this.props.registerPremium}
+                      severity="warn"
+                      text="1 Lowercase Letter."
+                    />
+                    <br />
+                    <Message
+                      id="number1"
+                      registerPremium={this.props.registerPremium}
+                      severity="warn"
+                      text="1 Number."
+                    />
+                    <br />
+                    <StyledMessage
+                      registerPremium={this.props.registerPremium}
+                      severity="warn"
+                      text="1 Special Character ( - _ . ! @ # $ % ^ & * ).  "
+                    />
+                  </Fragment>
+                ) : null}
               </NSpan>
               <br />
               {/* Password 2 */}
               <NSpan className="">
                 <PassInput
+                  registerPremium={this.props.registerPremium}
                   feedback={false}
                   id="password2"
                   name="password2"
@@ -375,23 +461,42 @@ class Register extends Component {
                   }}
                   placeholder="Confirm Password"
                 />
-                
-                {                  
-                  this.state.validPassword1 && this.state.password1 !== this.state.password2 && this.state.password2.length > 0 ? (
-                    <Message severity="error" text="Passwords don't match!" />
-                  ) 
-                  : this.state.validPassword1 && this.state.password1 !== this.state.password2 ? (
-                    <Message text="Please confirm your password." />
-                  ) 
-                  : this.state.validPassword1 && this.state.password1 === this.state.password2 && this.state.password2.length > 0 ? (
-                    <Message severity="success" text="Match!" />
-                  ) 
-                  : null
-                }
 
+                {this.state.validPassword1 &&
+                this.state.password1 !== this.state.password2 &&
+                this.state.password2.length > 0 ? (
+                  <StyledMessage
+                    severity="error"
+                    text="Passwords don't match!"
+                  />
+                ) : this.state.validPassword1 &&
+                this.state.password1 !== this.state.password2 ? (
+                  <StyledMessage text="Please confirm your password." />
+                ) : this.state.validPassword1 &&
+                this.state.password1 === this.state.password2 &&
+                this.state.password2.length > 0 ? (
+                  <StyledMessage severity="success" text="Match!" />
+                ) : null}
               </NSpan>
               <br />
-              <RegisterButton type="submit"> Register </RegisterButton>
+              {this.props.registerPremium ? (
+                <RegisterPremium
+                  registerPremium={this.props.registerPremium}
+                  id="registerPremium"
+                  onClick={e => {
+                    this.handleRegSubmit(e, userInput, history);
+                  }}
+                >
+                  Get Premium
+                </RegisterPremium>
+              ) : (
+                <RegisterButton
+                  type="submit"
+                  registerPremium={this.props.registerPremium}
+                >
+                  Register
+                </RegisterButton>
+              )}
             </Group>
 
             <SwitchText>

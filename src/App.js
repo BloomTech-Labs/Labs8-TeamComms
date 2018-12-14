@@ -56,7 +56,7 @@ const Content = styled.div`
 class App extends Component {
   render() {
     return (
-      <AppWrapper history={this.props.history}>
+      <AppWrapper history={this.props.history} className="scroller">
         {this.props.loginSuccess ? (
           <Link to="/dashboard">
             <FadedLogo src="../images/logo.png" width="190x" height="60px" />

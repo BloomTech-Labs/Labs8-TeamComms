@@ -9,6 +9,7 @@
     "draft-js": "^0.10.5",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.7.1",
+    "gsap": "^2.0.2",
     "moment": "^2.22.2",
     "primeicons": "^1.0.0",
     "primereact": "^2.0.0-rc.1",

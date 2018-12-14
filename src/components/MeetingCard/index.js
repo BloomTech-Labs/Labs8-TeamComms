@@ -10,23 +10,35 @@ import {
   // ShareButton,
   // FavoriteButton,
 } from "../Common";
+import moment from "moment";
 
 import { Link } from "react-router-dom";
 
 const Description = styled.p`
-  color: lightgrey;
+  color: grey;
+`;
+
+const HumanDate = styled.p`
+  color: grey;
 `;
 
 class MeetingCard extends Component {
   render() {
+    const humanDate = moment(this.props.meeting.start_time).format("llll");
     const header = { Authorization: localStorage.getItem("jwt") };
 
     return (
       <div className="card">
-        <div>
+        <div
+          style={{
+            borderRight: "1px solid lightgrey",
+            paddingRight: "7px",
+            paddingLeft: "7px"
+          }}
+        >
           <Link to={`/updateMeeting/${this.props.meeting._id}`}>
             <EditButton>
-              <i className="fas fa-edit" />
+              <i className="fas fa-edit fa-fw fa-md" />
             </EditButton>
           </Link>
           <DeleteButton
@@ -45,7 +57,7 @@ class MeetingCard extends Component {
               }
             }}
           >
-            <i className="fas fa-trash" />
+            <i className="fas fa-trash fa-fw fa-md" />
           </DeleteButton>
           {/* <ShareButton>
             <i className="fas fa-share" />
@@ -54,12 +66,36 @@ class MeetingCard extends Component {
             <i className="fas fa-star" />
           </FavoriteButton> */}
         </div>
-        <div>
+        <div
+          style={{
+            borderRight: "1px solid lightgrey",
+            paddingRight: "7px",
+            paddingLeft: "7px"
+          }}
+        >
+          <HumanDate>
+            {humanDate}
+            &nbsp;
+          </HumanDate>
+        </div>
+        <div
+          style={{
+            borderRight: "1px solid lightgrey",
+            paddingRight: "7px",
+            paddingLeft: "7px"
+          }}
+        >
           <Link to={`/meeting/${this.props.meeting._id}`}>
             <h1>{this.props.meeting.title}</h1>
           </Link>
         </div>
-        <div>
+        <div
+          style={{
+            borderRight: "1px solid lightgrey",
+            paddingRight: "7px",
+            paddingLeft: "7px"
+          }}
+        >
           <Description>&nbsp; {this.props.meeting.description}</Description>
         </div>
       </div>

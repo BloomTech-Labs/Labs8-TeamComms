@@ -35,7 +35,7 @@ const Stripe = props => {
       name="Team Communicator"
       description="Use same email as Team Comm acct"
       panelLabel="Go Premium" //Submit button
-      amount={999} //Amount in cents $9.99
+      amount={1999} //Amount in cents $19.99
       billingAddress={false} //Turn on to collect address *recommended(false for testing)
       allowRememberMe={false}
       token={onToken}

@@ -88,7 +88,7 @@
 }
 
 .custom .p-scrollpanel-bar {
-  background-color: #25bea0;
+  background-color: lightgrey;
   opacity: 1;
 
 }
@@ -166,4 +166,8 @@ td {
   .invited {
     width: 100%;
   }
+}
+
+.p-listbox .p-listbox-header .p-listbox-filter-container .p-listbox-filter-icon {
+  color: #25bea0 !important;
 }
