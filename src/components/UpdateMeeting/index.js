@@ -16,6 +16,10 @@ const Main = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 5px solid #25bea0;
+  border-radius: 5px;
+  margin: 0 auto;
+  width: 90%;
 `;
 
 const FormWrapper = styled.form`
@@ -25,6 +29,9 @@ const FormWrapper = styled.form`
   background-color: white;
   align-items: center;
   justify-content: center;
+  @media (max-width: 650px) {
+    width: 90%;
+  }
 `;
 const Group = styled.fieldset`
   display: flex;
@@ -40,7 +47,9 @@ const Group = styled.fieldset`
   }
   @media (max-width: 800px) {
     flex-direction: column;
-    width: 90%;
+    width: 60%;
+    margin: 0px;
+    padding: 0px;
   }
 `;
 const QGroup = styled.fieldset`
@@ -55,6 +64,8 @@ const QGroup = styled.fieldset`
   @media (max-width: 800px) {
     flex-direction: column;
     width: 90%;
+    margin: 0px;
+    padding: 0px;
   }
 `;
 const NewSpan = styled.span`
@@ -90,7 +101,7 @@ const AutoInput = styled(AutoComplete)`
 `;
 
 const SaveButton = styled(PrimaryButton)`
-  width: 45%;
+  width: 200px;
   height: 65px;
   color: white;
   border-radius: 5px;
@@ -99,6 +110,7 @@ const SaveButton = styled(PrimaryButton)`
   font-size: 1.5rem;
   margin: 10px 15px;
   border: none;
+  letter-spacing: 0.1em;
 `;
 
 const AddButton = styled.button`
@@ -301,15 +313,15 @@ class UpdateMeeting extends Component {
                   showTime={true}
                   hourFormat="12"
                   id="start"
-                  name="start"
+                  name={"start"}
                   value={this.state.start}
                   onChange={this.changeHandler}
                   inputClassName="input"
                   className="datePicker"
                   placeholder="Start"
-                  touchUI={true}
-                  readOnlyInput={true}
+                  // readOnlyInput={true}
                   minDate={moment().toDate()}
+                  panelClassName={"calendar-overrideStart"}
                 />
 
                 <Calendar
@@ -322,14 +334,14 @@ class UpdateMeeting extends Component {
                   inputClassName="input"
                   className="datePicker"
                   placeholder="End"
-                  touchUI={true}
-                  readOnlyInput={true}
+                  // readOnlyInput={true}
                   minDate={moment().toDate()}
+                  panelClassName={"calendar-overrideEnd"}
                 />
               </NewSpan>
 
               {/* Repeat */}
-              <NewSpan>
+              {/* <NewSpan>
                 <Checkbox
                   inputId="repeat"
                   name="repeat"
@@ -339,7 +351,7 @@ class UpdateMeeting extends Component {
                 <label htmlFor="repeat" className="p-checkbox-label">
                   Repeat
                 </label>
-              </NewSpan>
+              </NewSpan> */}
             </Group>
 
             <Group>
@@ -402,9 +414,9 @@ class UpdateMeeting extends Component {
                   this.saveForLater(e, userInput, history, id);
                 }}
               >
-                Save for Later
+                Save
               </SaveButton>
-              <SaveButton type="submit">Save and View</SaveButton>
+              <SaveButton type="submit">Save & View</SaveButton>
             </NewSpan>
           </FormWrapper>
         </Main>
