@@ -192,35 +192,56 @@ class UpdateMeeting extends Component {
 
   handleUpdateConvo = async (e, userInput, history, dashboard, id) => {
     e.preventDefault();
-    let inviteeCheck =
-      userInput.invitees.length > 0
-        ? userInput.invitees.map(invited => invited._id)
-        : [];
-    const body = {
-      title: userInput.title,
-      description: userInput.description,
-      startTime: moment(userInput.start),
-      endtime: moment(userInput.end),
-      repeat: userInput.repeat,
-      invitees: inviteeCheck,
-      questions: userInput.questions
-    };
 
-    const header = { Authorization: localStorage.getItem("jwt") };
-    this.props.callUpdateMeeting(e, header, body, history, dashboard, id);
-    this.setState({
-      title: "",
-      description: "",
-      start: "",
-      end: "",
-      repeat: "",
-      invitees: [],
-      questions: [],
-      invited: "",
-      question: "",
-      userSuggestions: null,
-      users: []
-    });
+    // check user inputs
+    if (!userInput.title || !userInput.description) {
+      alert(
+        "Please complete all the required fields: \n\n-Title \n-Description"
+      );
+      return;
+    } else if (userInput.start > userInput.end) {
+      alert("End Time Cannot Occur Before Start.");
+      return;
+    } else if (userInput.start instanceof Date === false) {
+      alert("Please enter a valid Start date and time.");
+      return;
+    } else if (userInput.end instanceof Date === false) {
+      alert("Please enter a valid End date and time.");
+      return;
+      // end input check
+
+
+    } else {
+      let inviteeCheck =
+        userInput.invitees.length > 0
+          ? userInput.invitees.map(invited => invited._id)
+          : [];
+      const body = {
+        title: userInput.title,
+        description: userInput.description,
+        startTime: moment(userInput.start),
+        endtime: moment(userInput.end),
+        repeat: userInput.repeat,
+        invitees: inviteeCheck,
+        questions: userInput.questions
+      };
+
+      const header = { Authorization: localStorage.getItem("jwt") };
+      this.props.callUpdateMeeting(e, header, body, history, dashboard, id);
+      this.setState({
+        title: "",
+        description: "",
+        start: "",
+        end: "",
+        repeat: "",
+        invitees: [],
+        questions: [],
+        invited: "",
+        question: "",
+        userSuggestions: null,
+        users: []
+      });
+    }
   };
 
   addQuestions = e => {
@@ -293,6 +314,7 @@ class UpdateMeeting extends Component {
                   value={this.state.title}
                   onChange={this.changeHandler}
                   placeholder="Meeting Name"
+                  required={true}
                 />
               </NewSpan>
 
@@ -304,6 +326,7 @@ class UpdateMeeting extends Component {
                   value={this.state.description}
                   onChange={this.changeHandler}
                   placeholder="Description"
+                  required={true}
                 />
               </NewSpan>
 
