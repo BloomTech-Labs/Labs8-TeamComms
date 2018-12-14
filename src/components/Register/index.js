@@ -389,7 +389,7 @@ class Register extends Component {
                   registerPremium={this.props.registerPremium}
                   id="registerPremium"
                   onClick={e => {
-                    this.handlePremium(
+                    this.handleSubmit(
                       e,
                       userInput,
                       history,
