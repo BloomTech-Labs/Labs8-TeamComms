@@ -211,24 +211,7 @@ class Register extends Component {
     }
   };
 
-  handleRegSubmit = (e, userInput, history) => {
-    e.preventDefault();
-    if (userInput.password1 === userInput.password2) {
-      const credentials = {
-        email: userInput.email,
-        password: userInput.password1,
-        givenName: userInput.givenName,
-        familyName: userInput.familyName
-      };
-      this.props.callReg(e, credentials, history);
-    } else {
-      e.preventDefault();
-      alert("Passwords do not match!");
-      return;
-    }
-  };
-
-  handlePremium = (e, userInput, history, premium) => {
+  handleRegSubmit = (e, userInput, history, premium) => {
     e.preventDefault();
     if (userInput.password1 === userInput.password2) {
       const credentials = {
@@ -238,6 +221,23 @@ class Register extends Component {
         familyName: userInput.familyName
       };
       this.props.callReg(e, credentials, history, premium);
+    } else {
+      e.preventDefault();
+      alert("Passwords do not match!");
+      return;
+    }
+  };
+
+  handlePremium = (e, userInput, history) => {
+    e.preventDefault();
+    if (userInput.password1 === userInput.password2) {
+      const credentials = {
+        email: userInput.email,
+        password: userInput.password1,
+        givenName: userInput.givenName,
+        familyName: userInput.familyName
+      };
+      this.props.callReg(e, credentials, history);
     } else {
       e.preventDefault();
       alert("Passwords do not match!");
@@ -389,12 +389,7 @@ class Register extends Component {
                   registerPremium={this.props.registerPremium}
                   id="registerPremium"
                   onClick={e => {
-                    this.handleSubmit(
-                      e,
-                      userInput,
-                      history,
-                      this.props.registerPremium
-                    );
+                    this.handleRegSubmit(e, userInput, history);
                   }}
                 >
                   Get Premium
@@ -404,8 +399,7 @@ class Register extends Component {
                   type="submit"
                   registerPremium={this.props.registerPremium}
                 >
-                  {" "}
-                  Register{" "}
+                  Register
                 </RegisterButton>
               )}
             </Group>
