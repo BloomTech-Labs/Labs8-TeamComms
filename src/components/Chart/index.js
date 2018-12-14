@@ -9,6 +9,7 @@ const StyledChartWrapper = styled.div`
   justify-content: center;
   align-items: center;
   border: 1px solid lightgrey;
+  padding: 15px;
 `;
 
 class StyledChart extends PureComponent {

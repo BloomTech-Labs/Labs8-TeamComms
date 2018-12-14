@@ -25,6 +25,15 @@ import("./css.css");
 
 let socket;
 
+const StyledScrollPanel = styled(ScrollPanel)`
+  &&& {
+    width: 100%;
+    margin-bottom: 20px;
+    border: none;
+    height: 75px;
+  }
+`;
+
 const FinalizeButton = styled(SubmitButton)`
   margin: 20px 0 20px 0;
 `;
@@ -352,21 +361,30 @@ class Meeting extends Component {
             {/* // style=
             {{ width: "25%", height: "500px", background: "white" }} */}
             <StyledChart data={data} />
-            <Panel header="Invited" className="invited">
-              <StyledListAttendees
-                options={this.meeting.invitees}
-                optionLabel="displayName"
-                filter={true}
-                className="invited"
-              />
+            <Panel header={`Current Users: ${this.state.users.length}`}>
+              <StyledScrollPanel>
+                <StyledListAttendees
+                  options={this.state.users}
+                  optionLabel="displayName"
+                  filter={true}
+                  className={this.props.className}
+                />
+              </StyledScrollPanel>
             </Panel>
-            <Panel header="Current">
-              <StyledListAttendees
-                options={this.state.users}
-                optionLabel="displayName"
-                filter={true}
-                className={this.props.className}
-              />
+            <Panel
+              header={`Invited Users: ${
+                this.meeting.invitees ? this.meeting.invitees.length : 0
+              }`}
+              className="invited"
+            >
+              <StyledScrollPanel>
+                <StyledListAttendees
+                  options={this.meeting.invitees}
+                  optionLabel="displayName"
+                  filter={true}
+                  className="invited"
+                />
+              </StyledScrollPanel>
             </Panel>
           </AttendeeScroll>
 
@@ -400,6 +418,33 @@ class Meeting extends Component {
                   Add A Question
                 </QuestionButton>
               </QuestionForm>
+              <FooterWrapper>
+                <img src="/images/onefinger.png" alt="" />
+                <p>
+                  We have made a point to say explicitly at the beginning of
+                  every meeting, “As is our new standard procedure, we will be
+                  using the hand queue system for this meeting. As a quick
+                  refresher, this is where you raise a finger if you’d like to
+                  go next, or two if someone already has their finger up, and so
+                  on.” This reminder is important, because it’s easy to revert
+                  to old habits.
+                  <a
+                    href="https://shift.infinite.red/how-infinite-red-improved-remote-video-meetings-with-a-few-hand-gestures-bbebc0555335"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    &nbsp;(Read More)
+                  </a>
+                  &nbsp;-Jamon Holmgren, CTO,
+                  <a
+                    href="https://infinite.red"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    &nbsp;Infinite Red
+                  </a>
+                </p>
+              </FooterWrapper>
             </CustomTabs>
             <CustomTabs
               headerClassName={this.props.className}

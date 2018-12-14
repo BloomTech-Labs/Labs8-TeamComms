@@ -23,8 +23,15 @@ const Masthead = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  @media (max-width: 1100px) {
+    flex-direction: column;
+    background-size: contain;
+    height: 80vh;
+  }
   @media (max-width: 768px) {
     flex-direction: column;
+    background-size: contain;
+    height: 40vh;
   }
 `;
 
