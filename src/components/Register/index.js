@@ -12,7 +12,7 @@ import { Lightbox } from "primereact/lightbox";
 const Main = styled.div`
   margin: 0 auto;
   display: flex;
-
+  height: 100vh;
   // padding: 5px 0 5px 0;
   background: #fff;
   @media (max-width: 768px) {
@@ -77,11 +77,16 @@ const FormWrapper = styled.form`
   }
 `;
 const Group = styled.fieldset`
+  transition: 0.6s;
+
   display: flex;
   flex-wrap: wrap;
   width: 100%;
-  border: 2px groove white;
+  border: 1px solid grey;
   border-radius: 5px;
+  // transform-style: preserve-3d;
+  transform: rotateY(${props => (props.registerPremium ? "180deg" : "0")});
+  background-color: ${props => (props.registerPremium ? "#374353" : "#ffffff")};
   padding: 5%;
   margin: 5%;
   @media (max-width: 768px) {
@@ -95,9 +100,11 @@ const NSpan = styled.span`
 `;
 
 const TextInput = styled(InputText)`
+  transform: rotateY(${props => (props.registerPremium ? "-180deg" : "0")});
   width: 100%;
 `;
 const PassInput = styled(Password)`
+  transform: rotateY(${props => (props.registerPremium ? "-180deg" : "0")});
   width: 100%;
 `;
 
@@ -112,7 +119,23 @@ const RegisterButton = styled(PrimaryButton)`
   margin-top: 15px;
   margin-bottom: 15px;
   border: none;
+  transform: rotateY(${props => (props.registerPremium ? "-180deg" : "0")});
 `;
+
+const RegisterPremium = styled(PrimaryButton)`
+  width: 100%;
+  height: 65px;
+  color: white;
+  border-radius: 5px;
+  background: #facc43;
+  border: 1px solid grey;
+  font-size: 28px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border: none;
+  transform: rotateY(${props => (props.registerPremium ? "-180deg" : "0")});
+`;
+
 const SwitchLink = styled.a`
   color: #25bea0;
   cursor: pointer;
@@ -205,6 +228,23 @@ class Register extends Component {
     }
   };
 
+  handlePremium = (e, userInput, history, premium) => {
+    e.preventDefault();
+    if (userInput.password1 === userInput.password2) {
+      const credentials = {
+        email: userInput.email,
+        password: userInput.password1,
+        givenName: userInput.givenName,
+        familyName: userInput.familyName
+      };
+      this.props.callReg(e, credentials, history, premium);
+    } else {
+      e.preventDefault();
+      alert("Passwords do not match!");
+      return;
+    }
+  };
+
   render() {
     const userInput = {
       email: this.state.email,
@@ -258,11 +298,12 @@ class Register extends Component {
               this.handleRegSubmit(e, userInput, history);
             }}
           >
-            <Group>
+            <Group registerPremium={this.props.registerPremium}>
               <br />
               {/* First Name */}
               <NSpan className="">
                 <TextInput
+                  registerPremium={this.props.registerPremium}
                   id="givenName"
                   name="givenName"
                   required
@@ -275,6 +316,7 @@ class Register extends Component {
               {/* Last Name */}
               <NSpan className="">
                 <TextInput
+                  registerPremium={this.props.registerPremium}
                   id="familyName"
                   name="familyName"
                   required
@@ -287,6 +329,7 @@ class Register extends Component {
               {/* Email */}
               <NSpan className="">
                 <TextInput
+                  registerPremium={this.props.registerPremium}
                   name="email"
                   required
                   value={this.state.email}
@@ -305,6 +348,7 @@ class Register extends Component {
 
               {this.props.regError ? (
                 <Message
+                  registerPremium={this.props.registerPremium}
                   severity="error"
                   text="This email address is already registered."
                 />
@@ -313,6 +357,7 @@ class Register extends Component {
               {/* Password 1 */}
               <NSpan className="">
                 <PassInput
+                  registerPremium={this.props.registerPremium}
                   id="password1"
                   name="password1"
                   required
@@ -327,6 +372,7 @@ class Register extends Component {
               {/* Password 2 */}
               <NSpan className="">
                 <PassInput
+                  registerPremium={this.props.registerPremium}
                   id="password2"
                   name="password2"
                   required
@@ -338,7 +384,30 @@ class Register extends Component {
                 />
               </NSpan>
               <br />
-              <RegisterButton type="submit"> Register </RegisterButton>
+              {this.props.registerPremium ? (
+                <RegisterPremium
+                  registerPremium={this.props.registerPremium}
+                  id="registerPremium"
+                  onClick={e => {
+                    this.handlePremium(
+                      e,
+                      userInput,
+                      history,
+                      this.props.registerPremium
+                    );
+                  }}
+                >
+                  Get Premium
+                </RegisterPremium>
+              ) : (
+                <RegisterButton
+                  type="submit"
+                  registerPremium={this.props.registerPremium}
+                >
+                  {" "}
+                  Register{" "}
+                </RegisterButton>
+              )}
             </Group>
 
             <SwitchText>

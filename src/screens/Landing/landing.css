@@ -1,13 +1,12 @@
 .container {
-  margin: 0 auto;
-  padding: 50px 0 0;
+  margin: 20px auto;
+
   max-width: 960px;
   width: 100%;
 }
 
 .panel {
   background-color: #fff;
-  border-radius: 10px;
   padding: 15px 25px;
   position: relative;
   width: 100%;
@@ -15,7 +14,8 @@
 }
 
 .pricing-table {
-  box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.08), 0px 20px 31px 3px rgba(0, 0, 0, 0.09), 0px 8px 20px 7px rgba(0, 0, 0, 0.02);
+  box-shadow: 0px 10px 13px -6px rgba(0, 0, 0, 0.08),
+    0px 20px 31px 3px rgba(0, 0, 0, 0.09), 0px 8px 20px 7px rgba(0, 0, 0, 0.02);
   display: flex;
   flex-direction: column;
 }
@@ -36,10 +36,6 @@
   padding: 25px;
 }
 
-.pricing-plan:last-child {
-  border-bottom: none;
-}
-
 @media (min-width: 900px) {
   .pricing-plan {
     border-bottom: none;
@@ -50,6 +46,8 @@
 
   .pricing-plan:last-child {
     border-right: none;
+    background: #374353;
+    color: #fff;
   }
 }
 
@@ -59,13 +57,15 @@
 }
 
 .pricing-header {
-  color: #888;
+  color: #25bea0;
+  margin-top: 20px;
   font-weight: 600;
   letter-spacing: 1px;
+  font-size: 30px;
 }
 
 .pricing-features {
-  color: #016FF9;
+  color: #374353;
   font-weight: 600;
   letter-spacing: 1px;
   margin: 50px 0 25px;
@@ -83,16 +83,16 @@
 }
 
 .pricing-price {
-  color: #016FF9;
+  color: #374353;
   display: block;
   font-size: 32px;
   font-weight: 700;
 }
 
 .pricing-button {
-  border: 1px solid #9dd1ff;
-  border-radius: 10px;
-  color: #348EFE;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  color: #374353;
   display: inline-block;
   margin: 25px 0;
   padding: 15px 35px;
@@ -102,15 +102,31 @@
 
 .pricing-button:hover,
 .pricing-button:focus {
-  background-color: #e1f1ff;
+  background-color: #374353;
+  color: #fff;
 }
 
 .pricing-button.is-featured {
-  background-color: #48aaff;
+  background-color: #25bea0;
   color: #fff;
 }
 
 .pricing-button.is-featured:hover,
 .pricing-button.is-featured:active {
-  background-color: #269aff;
+  background-color: #374353;
+}
+
+.strikeout {
+  text-decoration: line-through;
+  color: grey;
+}
+
+.pricing-plan:last-child .pricing-features {
+  border-bottom: none;
+  background: #374353;
+  color: #fff;
+}
+
+.pricing-plan:last-child .pricing-price {
+  color: #facc43;
 }

@@ -7,7 +7,7 @@ import {
 } from "./types";
 // import history from "../history";
 
-export const callReg = (e, credentials, history) => {
+export const callReg = (e, credentials, history, premium = false) => {
   e.preventDefault();
 
   const promise = axios.post(

@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import Register from "../../components/Register";
 import styled from "styled-components";
+import Stripe from "../../components/Stripe";
+import { PrimaryButton } from "../../components/Common";
+import history from "../../history";
 import "./landing.css";
+
 //this screen should return components necessary to build the landing page.
 
 const Main = styled.div`
@@ -15,98 +19,132 @@ const Main = styled.div`
   }
 `;
 
+const PickPlanButton = styled(PrimaryButton)`
+  background: #facc43;
+  width: 300px;
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 20px;
+  font-weight: bold;
+  color: #374353;
+  :hover {
+    color: #25bea0;
+  }
+`;
+
 const Masthead = styled.div`
   background: url(images/masthead.png) no-repeat center center scroll;
   background-size: cover;
   height: 90vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding-bottom: 17%;
+  padding-left: 5%;
   width: 100%;
   @media (max-width: 1100px) {
-    flex-direction: column;
     background-size: contain;
     height: 80vh;
   }
   @media (max-width: 768px) {
-    flex-direction: column;
     background-size: contain;
     height: 40vh;
   }
 `;
 
 class ScreensLanding extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      registerPremium: false
+    };
+  }
+
+  setPremium = () => {
+    this.setState({ registerPremium: true });
+  };
+
+  setFree = () => {
+    this.setState({ registerPremium: false });
+  };
+
   render(props) {
     return (
       <React.Fragment>
-        <Masthead>{/* <img src="/images/masthead.png" alt="" /> */}</Masthead>
+        <Masthead>
+          <a href="#plans">
+            <PickPlanButton>Create your Free Account</PickPlanButton>
+          </a>
+        </Masthead>
         <Main>
-          <div class="background">
-            <div class="container">
-              <div class="panel pricing-table">
-                <div class="pricing-plan">
-                  <img
-                    src="https://s22.postimg.cc/8mv5gn7w1/paper-plane.png"
-                    alt=""
-                    class="pricing-img"
-                  />
-                  <h2 class="pricing-header">Personal</h2>
-                  <ul class="pricing-features">
-                    <li class="pricing-features-item">
-                      Create and Manage Meetings
+          <div id="plans" className="background">
+            <div className="container">
+              <div className="panel pricing-table">
+                <div className="pricing-plan">
+                  <i class="fas fa-user fa-8x" />
+                  <h2 className="pricing-header">Personal</h2>
+                  <ul className="pricing-features">
+                    <li className="pricing-features-item">
+                      Create and Manage up to five meetings/month
                     </li>
-                    <li class="pricing-features-item">
-                      Sleeps after 30 mins of inactivity
+                    <li className="pricing-features-item strikeout">
+                      Create Zoom Meetings
+                    </li>
+                    <li className="pricing-features-item">
+                      Collaborate on notes in real-time
+                    </li>
+                    <li className="pricing-features-item">
+                      Track your meeting questions
                     </li>
                   </ul>
-                  <span class="pricing-price">Free</span>
-                  <a href="#/" class="pricing-button">
-                    Sign up
+                  <span className="pricing-price">Free</span>
+                  <a
+                    href="#register"
+                    className="pricing-button"
+                    onClick={this.setFree}
+                  >
+                    Get Started
                   </a>
                 </div>
 
-                <div class="pricing-plan">
-                  <img
-                    src="https://s28.postimg.cc/ju5bnc3x9/plane.png"
-                    alt=""
-                    class="pricing-img"
-                  />
-                  <h2 class="pricing-header">Professional</h2>
-                  <ul class="pricing-features">
-                    <li class="pricing-features-item">Never sleeps</li>
-                    <li class="pricing-features-item">
-                      Multiple workers for more powerful apps
+                <div className="pricing-plan">
+                  <i class="fas fa-user-astronaut fa-8x" />
+                  <h2 className="pricing-header">Professional</h2>
+                  <ul className="pricing-features">
+                    <li className="pricing-features-item">
+                      Create and Manage <br />
+                      <span style={{ color: "#25BEA0" }}>unlimited</span>{" "}
+                      meetings
+                    </li>
+                    <li className="pricing-features-item">
+                      Create Zoom Meetings
+                    </li>
+                    <li className="pricing-features-item">
+                      Collaborate on notes in real-time
+                    </li>
+                    <li className="pricing-features-item">
+                      Track your meeting questions
                     </li>
                   </ul>
-                  <span class="pricing-price">$150</span>
-                  <a href="#/" class="pricing-button is-featured">
-                    Free trial
-                  </a>
-                </div>
-
-                <div class="pricing-plan">
-                  <img
-                    src="https://s21.postimg.cc/tpm0cge4n/space-ship.png"
-                    alt=""
-                    class="pricing-img"
-                  />
-                  <h2 class="pricing-header">Enterprise</h2>
-                  <ul class="pricing-features">
-                    <li class="pricing-features-item">Dedicated</li>
-                    <li class="pricing-features-item">
-                      Simple horizontal scalability
-                    </li>
-                  </ul>
-                  <span class="pricing-price">$400</span>
-                  <a href="#/" class="pricing-button">
-                    Free trial
+                  <span className="pricing-price">$19.99/month</span>
+                  <a
+                    href="#register"
+                    className="pricing-button is-featured"
+                    onClick={this.setPremium}
+                  >
+                    Get Started
                   </a>
                 </div>
               </div>
             </div>
           </div>
         </Main>
-        <Register {...this.props} />
+        <Register
+          registerPremium={this.state.registerPremium}
+          {...this.props}
+        />
+        <div id="register" />
       </React.Fragment>
     );
   }

@@ -41,8 +41,7 @@ export const DeleteButton = styled.button`
   cursor: pointer;
   color: lightgrey;
   position: relative;
-  top: 5px;
-  right: 5px;
+
   font-size: 14px;
   &:hover {
     color: red !important;
@@ -79,8 +78,7 @@ export const EditButton = styled.button`
   cursor: pointer;
   color: lightgrey;
   position: relative;
-  top: 5px;
-  right: 5px;
+  padding: 0;
   font-size: 14px;
   &:hover {
     color: #fabc09 !important;
@@ -94,8 +92,6 @@ export const ShareButton = styled.button`
   cursor: pointer;
   color: lightgrey;
   position: relative;
-  top: 5px;
-  right: 5px;
   font-size: 14px;
   &:hover {
     color: #374353;

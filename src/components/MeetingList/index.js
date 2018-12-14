@@ -79,6 +79,7 @@ class MeetingList extends Component {
             <ProgressSpinner />
           </SpinnerWrapper>
         ) : null}
+
         <div className="list">
           {this.props.meetings.length === 0 ? this.empty() : meetings}
         </div>
