@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { ProgressSpinner } from "primereact/progressspinner";
+// import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -80,7 +80,7 @@ class Login extends Component {
     this.state = {
       email: "",
       password: "",
-      validEmail: true
+      validEmail: false
     };
   }
 
@@ -103,16 +103,17 @@ class Login extends Component {
     });
   };
 
-  validateEmail = (e, email) => {
-    if (email.length > 0 || e.target.blur) {
+  validateEmail = e => {
+    if (e.target.value.length > 0 || e.target.blur) {
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (re.test(email)) {
+      if (re.test(e.target.value)) {
         this.setState({ email: e.target.value, validEmail: true });
       } else {
         this.setState({ email: e.target.value, validEmail: false });
       }
+    // below edge case that is never hit
     } else {
-      this.setState({ email: e.target.value, validEmail: true });
+      this.setState({ email: e.target.value, validEmail: false });
     }
   };
 
@@ -133,7 +134,8 @@ class Login extends Component {
       >
         {this.props.loginLoading ? (
           <SpinnerWrapper>
-            <ProgressSpinner />
+            {/* commented below out due to double spinner */}
+            {/* <ProgressSpinner /> */}
           </SpinnerWrapper>
         ) : null}
         <Main onClick={event => event.stopPropagation()}>
@@ -172,15 +174,15 @@ class Login extends Component {
                 value={this.state.email} // onChange={this.changeHandler}
                 placeholder="E-mail"
                 onChange={e => {
-                  this.validateEmail(e, this.state.email);
+                  this.validateEmail(e);
                 }}
               />
-              {this.state.validEmail ? null : (
+              {!this.state.validEmail && this.state.email.length > 0 ? (
                 <Message
                   severity="error"
                   text="Enter a valid e-mail address."
                 />
-              )}
+              ) : null}
             </NSpan>
             <br />
             {/* Password */}
