@@ -152,6 +152,7 @@ class Register extends Component {
 
   validateEmail = (e, email) => {
     if (email.length > 0 || e.target.blur) {
+      // eslint-disable-next-line
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       if (re.test(email)) {
         this.setState({ email: e.target.value, validEmail: true });
@@ -226,6 +227,7 @@ class Register extends Component {
         <Main>
           <FormWrapper>
             <Lightbox type="content">
+              {/* eslint-disable-next-line */}
               <a>
                 <VidContainer>
                   <LandingImage src="../images/front1000.png" />
