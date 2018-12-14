@@ -133,7 +133,7 @@ class Register extends Component {
       password2: "",
       givenName: "",
       familyName: "",
-      validEmail: true,
+      validEmail: false,
       validPassword1: true,
       validPassword2: true
     };
@@ -150,16 +150,17 @@ class Register extends Component {
     });
   };
 
-  validateEmail = (e, email) => {
-    if (email.length > 0 || e.target.blur) {
+  validateEmail = (e) => {
+    if (e.target.value.length > 0 || e.target.blur) {
+      // eslint-disable-next-line
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if (re.test(email)) {
+      if (re.test(e.target.value)) {
         this.setState({ email: e.target.value, validEmail: true });
       } else {
         this.setState({ email: e.target.value, validEmail: false });
       }
     } else {
-      this.setState({ email: e.target.value, validEmail: true });
+      this.setState({ email: e.target.value, validEmail: false });
     }
   };
 
@@ -291,16 +292,16 @@ class Register extends Component {
                   required
                   value={this.state.email}
                   onChange={e => {
-                    this.validateEmail(e, this.state.email);
+                    this.validateEmail(e);
                   }}
                   placeholder="E-mail"
                 />
-                {this.state.validEmail ? null : (
+                {!this.state.validEmail && this.state.email.length > 1 ? (
                   <Message
                     severity="error"
                     text="Enter a valid e-mail address."
                   />
-                )}
+                ) : null }
               </NSpan>
 
               {this.props.regError ? (
