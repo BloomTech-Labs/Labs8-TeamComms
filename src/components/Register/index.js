@@ -236,6 +236,7 @@ class Register extends Component {
         <Main>
           <FormWrapper>
             <Lightbox type="content">
+            {/* eslint-disable-next-line */}
               <a>
                 <VidContainer>
                   <LandingImage src="../images/front1000.png" />
