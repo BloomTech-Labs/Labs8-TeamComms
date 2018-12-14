@@ -11,7 +11,7 @@ export const callReg = (e, credentials, history, premium = false) => {
   e.preventDefault();
 
   const promise = axios.post(
-    "https://teamcomm2.herokuapp.com/api/users/register",
+    "http://localhost:8080/api/users/register",
     credentials
   );
 

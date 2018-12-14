@@ -10,6 +10,9 @@ const userRegister = async (req, res, next) => {
       throw new ServerError(400, "Please add a password!");
     }
     const tempUser = req.body;
+    if (req.body.premium) {
+      tempUser.premium = req.body.premium;
+    }
     if (!tempUser.givenName || !tempUser.familyName) {
       throw new ServerError(400, "User must give givenName and familyName");
     } else {
