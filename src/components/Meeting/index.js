@@ -206,17 +206,17 @@ class Meeting extends Component {
       zoom: ""
     };
 
-    const socket_connect = function(room) {
-      return io("localhost:8080/meeting", {
-        query: "r_var=" + room
-      });
-    };
-
     // const socket_connect = function(room) {
-    //   return io("https://teamcomm2.herokuapp.com/meeting", {
+    //   return io("localhost:8080/meeting", {
     //     query: "r_var=" + room
     //   });
     // };
+
+    const socket_connect = function(room) {
+      return io("https://teamcomm2.herokuapp.com/meeting", {
+        query: "r_var=" + room
+      });
+    };
 
     const id = this.props.match.params.id;
     socket = socket_connect(id);
