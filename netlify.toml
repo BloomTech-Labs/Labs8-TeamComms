@@ -3,3 +3,6 @@
 from = "/*"
 to = "/index.html"
 status = 200
+
+[context.production.environment]
+REACT_APP_TOML_PRODUCTION_URL = "https://teamcomm2.herokuapp.com"

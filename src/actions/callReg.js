@@ -13,11 +13,10 @@ export const callReg = (e, credentials, history, stripeToken) => {
     credentials.token = stripeToken.token;
     console.log("with token", credentials);
   }
+  const local = "http://localhost:8080";
+  const server = process.env.REACT_APP_TOML_PRODUCTION_URL || local;
 
-  const promise = axios.post(
-    "http://localhost:8080/api/users/register",
-    credentials
-  );
+  const promise = axios.post(`${server}/api/users/register`, credentials);
 
   return function(dispatch) {
     dispatch({
@@ -30,14 +29,12 @@ export const callReg = (e, credentials, history, stripeToken) => {
           payload: res.data
         });
         localStorage.setItem("jwt", res.data.token);
-        console.log("hist", history);
+
         history.push("/dashboard");
       })
       .catch(err => {
-        console.log({
-          "Axios-Error": err
-        });
         console.log(err);
+
         if (err.message === "Check credentials") {
           dispatch({ type: REG_ERROR });
         } else {

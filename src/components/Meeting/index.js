@@ -245,13 +245,13 @@ class Meeting extends Component {
   }
   componentDidMount() {
     let header = { Authorization: localStorage.getItem("jwt") };
+    const local = "http://localhost:8080";
+    const server = process.env.REACT_APP_TOML_PRODUCTION_URL || local;
+
     axios
-      .get(
-        `https://teamcomm2.herokuapp.com/api/meeting/findbyid/${
-          this.props.match.params.id
-        }`,
-        { headers: header }
-      )
+      .get(`${server}/api/meeting/findbyid/${this.props.match.params.id}`, {
+        headers: header
+      })
       .then(res => {
         this.meeting = {
           _id: res.data._id,

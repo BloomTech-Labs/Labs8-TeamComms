@@ -7,10 +7,13 @@ import {
 
 export const getMeetings = () => {
   const header = { Authorization: localStorage.getItem("jwt") };
-  const promise = axios.get(
-    "https://teamcomm2.herokuapp.com/api/meeting/retrieve",
-    { headers: header }
-  );
+
+  const local = "http://localhost:8080";
+  const server = process.env.REACT_APP_TOML_PRODUCTION_URL || local;
+
+  const promise = axios.get(`${server}/api/meeting/retrieve`, {
+    headers: header
+  });
 
   return function(dispatch) {
     dispatch({
@@ -18,7 +21,6 @@ export const getMeetings = () => {
     });
     promise
       .then(res => {
-        console.log(res);
         dispatch({
           type: GET_MEETING_RETURNED,
           payload: res.data

@@ -5,9 +5,6 @@ import { connect } from "react-redux";
 import history from "../../history";
 
 class _CardForm extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   StripeRegister = (e, payload) => {
     e.preventDefault();
     this.props.callReg(e, this.props.userInput, history, payload);

@@ -8,17 +8,16 @@ import {
 // import history from '../history';
 
 export const callLogIn = (e, userInput, history, overpane) => {
-  console.log("history", history);
   e.preventDefault();
   const credentials = {
     email: userInput.email,
     password: userInput.password
   };
 
-  const promise = axios.post(
-    "https://teamcomm2.herokuapp.com/api/users/login",
-    credentials
-  );
+  const local = "http://localhost:8080";
+  const server = process.env.REACT_APP_TOML_PRODUCTION_URL || local;
+
+  const promise = axios.post(`${server}/api/users/login`, credentials);
 
   return function(dispatch) {
     dispatch({ type: LOGIN_CALLED });
@@ -31,7 +30,6 @@ export const callLogIn = (e, userInput, history, overpane) => {
         history.push("/dashboard");
       })
       .catch(err => {
-        console.log({ "Axios-Error": err });
         dispatch({ type: LOGIN_ERROR });
         history.push("/landing");
       });
