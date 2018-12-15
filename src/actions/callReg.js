@@ -43,7 +43,7 @@ export const callReg = (e, credentials, history, stripeToken) => {
         } else {
           dispatch({ type: REG_ERROR_UNKNOWN });
           alert("Unknown error. Please check your connection and try again.");
-          history.push("/register");
+          history.push("/landing");
         }
       });
   };
