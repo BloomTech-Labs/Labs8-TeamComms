@@ -82,7 +82,7 @@ class ScreensLanding extends Component {
             <div className="container">
               <div className="panel pricing-table">
                 <div className="pricing-plan">
-                  <i class="fas fa-user fa-8x" />
+                  <i className="fas fa-user fa-8x" />
                   <h2 className="pricing-header">Personal</h2>
                   <ul className="pricing-features">
                     <li className="pricing-features-item">
@@ -109,7 +109,7 @@ class ScreensLanding extends Component {
                 </div>
 
                 <div className="pricing-plan">
-                  <i class="fas fa-user-astronaut fa-8x" />
+                  <i className="fas fa-user-astronaut fa-8x" />
                   <h2 className="pricing-header">Professional</h2>
                   <ul className="pricing-features">
                     <li className="pricing-features-item">

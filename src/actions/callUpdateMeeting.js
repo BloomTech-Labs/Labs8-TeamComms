@@ -3,12 +3,13 @@ import { MEETING_UPDATE_CALLED, MEETING_UPDATE_RETURNED } from "./types";
 
 export const callUpdateMeeting = (e, header, body, history, dashboard, id) => {
   e.preventDefault();
-  console.log("id: ", id);
-  const promise = axios.put(
-    `https://teamcomm2.herokuapp.com/api/meeting/update/${id}`,
-    body,
-    { headers: header }
-  );
+
+  const local = "http://localhost:8080";
+  const server = process.env.REACT_APP_TOML_PRODUCTION_URL || local;
+
+  const promise = axios.put(`${server}/api/meeting/update/${id}`, body, {
+    headers: header
+  });
 
   return function(dispatch) {
     dispatch({

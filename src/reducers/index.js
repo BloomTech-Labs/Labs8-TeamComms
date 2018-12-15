@@ -142,14 +142,11 @@ export const reducer = (state = null, action) => {
       });
       console.log("updated meetings", updatedMeetings);
       return { ...state, meetings: updatedMeetings, meetingsLoading: false };
-    // case PREMIUM_CHANGE:
-    //   const userData = state.userData;
-    //   userData.user.premium = action.payload;
-    //   return { ...state, userData: userData };
     case PREMIUM_CHANGE:
-      return Object.assign({}, state.userData.user, {
-        premium: action.payload
-      });
+      const userData = state.userData;
+      userData.user.premium = action.payload;
+      return { ...state, userData: userData };
+
     default:
       return state;
   }

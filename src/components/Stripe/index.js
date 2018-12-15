@@ -22,7 +22,9 @@ const Stripe = props => {
     axios
       .post("https://teamcomm2.herokuapp.com/api/stripe/payment", { token })
       .then(response => {
+        console.log("working");
         props.premiumChange();
+        console.log("working 2");
         alert("Payment Success");
       })
       .catch(error => {

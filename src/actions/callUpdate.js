@@ -4,11 +4,13 @@ import { UPDATE_CALLED, UPDATE_RETURNED } from "./types";
 export const callUpdate = (e, userData, history) => {
   e.preventDefault();
   const header = { Authorization: localStorage.getItem("jwt") };
-  const promise = axios.put(
-    "https://teamcomm2.herokuapp.com/api/users/update",
-    userData,
-    { headers: header }
-  );
+
+  const local = "http://localhost:8080";
+  const server = process.env.REACT_APP_TOML_PRODUCTION_URL || local;
+
+  const promise = axios.put(`${server}/api/users/update`, userData, {
+    headers: header
+  });
 
   return function(dispatch) {
     dispatch({

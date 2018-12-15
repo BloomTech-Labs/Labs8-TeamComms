@@ -9,6 +9,8 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { Lightbox } from "primereact/lightbox";
 import "./css.css";
+import { StripeProvider } from "react-stripe-elements";
+import Checkout from "../Checkout";
 
 const Main = styled.div`
   margin: 0 auto;
@@ -67,7 +69,7 @@ const Paragraph = styled.p`
   line-height: 1.25;
 `;
 
-const FormWrapper = styled.form`
+const FormWrapper = styled.div`
   display: flex;
   width: 50%;
   flex-direction: column;
@@ -125,19 +127,6 @@ const RegisterButton = styled(PrimaryButton)`
   border: none;
 `;
 
-const RegisterPremium = styled(PrimaryButton)`
-  width: 100%;
-  height: 65px;
-  color: white;
-  border-radius: 5px;
-  background: #facc43;
-  border: 1px solid grey;
-  font-size: 28px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border: none;
-`;
-
 const SwitchLink = styled.a`
   color: #25bea0;
   cursor: pointer;
@@ -160,7 +149,6 @@ class Register extends Component {
       familyName: "",
       validEmail: false,
       validPassword1: false,
-      // validPassword2: true,
       passwordsMatch: false
     };
   }
@@ -204,17 +192,6 @@ class Register extends Component {
       this.setState({ password1: e.target.value, validPassword1: false });
     }
   };
-
-  // validatePassword2 = e => {
-  //   this.setState({ password2: e.target.value });
-  //   // e.preventDefault();
-  //   // if (e.target.blur) {
-  //   //   if (this.state.password1 == this.state.password2) {
-  //   //     alert();
-  //   //     this.setState({ passwordsMatch: true });
-  //   //   }
-  //   // }
-  // };
 
   handleRegSubmit = (e, userInput, history, premium) => {
     e.preventDefault();
@@ -308,18 +285,12 @@ class Register extends Component {
               years apart, we still keep you connected.
             </Paragraph>
           </FormWrapper>
-          <FormWrapper
-            method="post"
-            onSubmit={e => {
-              this.handleRegSubmit(e, userInput, history);
-            }}
-          >
+          <FormWrapper method="post">
             <Group registerPremium={this.props.registerPremium}>
               <br />
               {/* First Name */}
               <NSpan className="">
                 <TextInput
-                  registerPremium={this.props.registerPremium}
                   id="givenName"
                   name="givenName"
                   required
@@ -332,7 +303,6 @@ class Register extends Component {
               {/* Last Name */}
               <NSpan className="">
                 <TextInput
-                  registerPremium={this.props.registerPremium}
                   id="familyName"
                   name="familyName"
                   required
@@ -345,7 +315,6 @@ class Register extends Component {
               {/* Email */}
               <NSpan className="">
                 <TextInput
-                  registerPremium={this.props.registerPremium}
                   name="email"
                   required
                   value={this.state.email}
@@ -355,14 +324,14 @@ class Register extends Component {
                   placeholder="E-mail"
                 />
                 {!this.state.validEmail && this.state.email.length > 1 ? (
-                  <StyledMessage
+                  <Message
                     className={this.props.className}
                     registerPremium={this.props.registerPremium}
                     severity="error"
                     text="Enter a valid e-mail address."
                   />
                 ) : this.state.validEmail && this.state.email.length > 1 ? (
-                  <StyledMessage
+                  <Message
                     style={this.props.className}
                     className={this.props.className}
                     registerPremium={this.props.registerPremium}
@@ -382,7 +351,6 @@ class Register extends Component {
               {/* Password 1 */}
               <NSpan registerPremium={this.props.registerPremium} className="">
                 <PassInput
-                  registerPremium={this.props.registerPremium}
                   id="password1"
                   name="password1"
                   required
@@ -395,7 +363,6 @@ class Register extends Component {
                 {this.state.validPassword1 ? (
                   <Message
                     className={this.props.className}
-                    registerPremium={this.props.registerPremium}
                     severity="success"
                   />
                 ) : !this.state.validPassword1 &&
@@ -449,7 +416,6 @@ class Register extends Component {
               {/* Password 2 */}
               <NSpan className="">
                 <PassInput
-                  registerPremium={this.props.registerPremium}
                   feedback={false}
                   id="password2"
                   name="password2"
@@ -480,19 +446,12 @@ class Register extends Component {
               </NSpan>
               <br />
               {this.props.registerPremium ? (
-                <RegisterPremium
-                  registerPremium={this.props.registerPremium}
-                  id="registerPremium"
+                <Checkout userInput={userInput} callReg={this.props.callReg} />
+              ) : (
+                <RegisterButton
                   onClick={e => {
                     this.handleRegSubmit(e, userInput, history);
                   }}
-                >
-                  Get Premium
-                </RegisterPremium>
-              ) : (
-                <RegisterButton
-                  type="submit"
-                  registerPremium={this.props.registerPremium}
                 >
                   Register
                 </RegisterButton>
@@ -529,3 +488,13 @@ export default connect(
     toggleOverpane
   }
 )(Register);
+
+// <RegisterPremium
+//   registerPremium={this.props.registerPremium}
+//   id="registerPremium"
+//   onClick={e => {
+//     this.handleRegSubmit(e, userInput, history);
+//   }}
+// >
+//   Get Premium
+// </RegisterPremium>

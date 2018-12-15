@@ -6,12 +6,12 @@ export const callGoogleLogIn = (history, token) => {
   let bearerToken = `Bearer ${token}`;
   const headers = { Authorization: bearerToken };
 
-  const promise = axios.get(
-    "https://teamcomm2.herokuapp.com/api/users/retrieve",
-    {
-      headers
-    }
-  );
+  const local = "http://localhost:8080";
+  const server = process.env.REACT_APP_TOML_PRODUCTION_URL || local;
+
+  const promise = axios.get(`${server}/api/users/retrieve`, {
+    headers
+  });
 
   return function(dispatch) {
     dispatch({ type: GOOGLE_LOGIN_CALLED });
