@@ -58,6 +58,8 @@ Server - https://teamcomm2.herokuapp.com
 Client - https://team-comm.netlify.com/
 Staging - https://staging--team-comm.netlify.com/
 
+### please merge to staging first...master will only be deployed when staging is approved.
+
 ## Dependencies
 
 [Front-End](package.json)
