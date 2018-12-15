@@ -19,7 +19,6 @@ class _CardForm extends React.Component {
             this.props.stripe
               .createToken()
               .then(payload => e => {
-                console.log("payload", payload);
                 this.StripeRegister(payload);
               })
               .catch(err => {

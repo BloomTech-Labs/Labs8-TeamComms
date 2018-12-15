@@ -215,7 +215,7 @@ class Header extends Component {
                     ABOUT US{" "}
                   </Link>
                   <br />
-                  <Link to="/register">
+                  <Link to="/landing#register">
                     <LoginButton> REGISTER </LoginButton>
                   </Link>
                   <br />
