@@ -56,6 +56,7 @@ NodeJS
 **Links to production or demo instances**:
 Server - https://teamcomm2.herokuapp.com
 Client - https://team-comm.netlify.com/
+Staging - https://staging--team-comm.netlify.com/
 
 ## Dependencies
 
