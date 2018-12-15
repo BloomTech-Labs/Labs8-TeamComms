@@ -2,6 +2,7 @@ const User = require("../../models/UserModel"); //Model
 const generateToken = require("../../validation/generateToken");
 const hashedPassword = require("../../validation/hashedPassword");
 const ServerError = require("../../validation/ErrorHandling/ServerError");
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const userRegister = async (req, res, next) => {
   try {
@@ -10,9 +11,19 @@ const userRegister = async (req, res, next) => {
       throw new ServerError(400, "Please add a password!");
     }
     const tempUser = req.body;
-    if (req.body.premium) {
-      tempUser.premium = req.body.premium;
+
+    if (req.body.token) {
+      tempUser.premium = true;
+      console.log("temp", tempUser);
+      const customer = stripe.customers
+        .create({
+          email: req.body.email,
+          source: req.body.token.id,
+          plan: process.env.STRIPE_PLAN_ID
+        })
+        .catch(err => res.status(500).send(err));
     }
+
     if (!tempUser.givenName || !tempUser.familyName) {
       throw new ServerError(400, "User must give givenName and familyName");
     } else {

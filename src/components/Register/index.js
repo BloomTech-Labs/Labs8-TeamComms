@@ -9,6 +9,8 @@ import { ProgressSpinner } from "primereact/progressspinner";
 import { Message } from "primereact/message";
 import { Lightbox } from "primereact/lightbox";
 import "./css.css";
+import { StripeProvider } from "react-stripe-elements";
+import Checkout from "../Checkout";
 
 const Main = styled.div`
   margin: 0 auto;
@@ -67,7 +69,7 @@ const Paragraph = styled.p`
   line-height: 1.25;
 `;
 
-const FormWrapper = styled.form`
+const FormWrapper = styled.div`
   display: flex;
   width: 50%;
   flex-direction: column;
@@ -308,12 +310,7 @@ class Register extends Component {
               years apart, we still keep you connected.
             </Paragraph>
           </FormWrapper>
-          <FormWrapper
-            method="post"
-            onSubmit={e => {
-              this.handleRegSubmit(e, userInput, history);
-            }}
-          >
+          <FormWrapper method="post">
             <Group registerPremium={this.props.registerPremium}>
               <br />
               {/* First Name */}
@@ -480,19 +477,12 @@ class Register extends Component {
               </NSpan>
               <br />
               {this.props.registerPremium ? (
-                <RegisterPremium
-                  registerPremium={this.props.registerPremium}
-                  id="registerPremium"
+                <Checkout userInput={userInput} callReg={this.props.callReg} />
+              ) : (
+                <RegisterButton
                   onClick={e => {
                     this.handleRegSubmit(e, userInput, history);
                   }}
-                >
-                  Get Premium
-                </RegisterPremium>
-              ) : (
-                <RegisterButton
-                  type="submit"
-                  registerPremium={this.props.registerPremium}
                 >
                   Register
                 </RegisterButton>
@@ -529,3 +519,13 @@ export default connect(
     toggleOverpane
   }
 )(Register);
+
+// <RegisterPremium
+//   registerPremium={this.props.registerPremium}
+//   id="registerPremium"
+//   onClick={e => {
+//     this.handleRegSubmit(e, userInput, history);
+//   }}
+// >
+//   Get Premium
+// </RegisterPremium>

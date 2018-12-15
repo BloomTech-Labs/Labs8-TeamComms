@@ -7,8 +7,12 @@ import {
 } from "./types";
 // import history from "../history";
 
-export const callReg = (e, credentials, history, premium = false) => {
-  e.preventDefault();
+export const callReg = (e, credentials, history, stripeToken) => {
+  console.log("credentials", credentials);
+  if (stripeToken) {
+    credentials.token = stripeToken.token;
+    console.log("with token", credentials);
+  }
 
   const promise = axios.post(
     "http://localhost:8080/api/users/register",
