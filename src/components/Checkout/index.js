@@ -6,6 +6,21 @@ import {
   Elements
 } from "react-stripe-elements";
 import history from "../../history";
+import styled from "styled-components";
+import { PrimaryButton } from "../Common";
+
+const RegisterPremium = styled(PrimaryButton)`
+  width: 100%;
+  height: 65px;
+  color: white;
+  border-radius: 5px;
+  background: #facc43;
+  border: 1px solid grey;
+  font-size: 28px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  border: none;
+`;
 
 // You can customize your Elements to give it the look and feel of your site.
 const createOptions = () => {
@@ -73,7 +88,7 @@ class _CardForm extends Component {
           <div className="error" role="alert">
             {this.state.errorMessage}
           </div>
-          <button>Pay</button>
+          <RegisterPremium>Get Premium</RegisterPremium>
         </form>
       </div>
     );
@@ -88,6 +103,7 @@ export default class Checkout extends Component {
       <StripeProvider apiKey="pk_test_ZU3mlTy0q00DATc9EyF9A8jX">
         <Elements>
           <CardForm
+            style={{ backgroundColor: "#ffffff" }}
             callReg={this.props.callReg}
             userInput={this.props.userInput}
           />

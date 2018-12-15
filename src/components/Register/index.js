@@ -127,19 +127,6 @@ const RegisterButton = styled(PrimaryButton)`
   border: none;
 `;
 
-const RegisterPremium = styled(PrimaryButton)`
-  width: 100%;
-  height: 65px;
-  color: white;
-  border-radius: 5px;
-  background: #facc43;
-  border: 1px solid grey;
-  font-size: 28px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  border: none;
-`;
-
 const SwitchLink = styled.a`
   color: #25bea0;
   cursor: pointer;
