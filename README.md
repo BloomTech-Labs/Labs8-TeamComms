@@ -8,7 +8,7 @@
 
 Click <a href="https://team-comm.netlify.com">here</a> to visit the app.
 
-<img src="https://i.imgur.com/OaSnajI.png" title="Team Communicator" width="100%">
+<img src="https://i.imgur.com/kO5D6oC.png" title="Team Communicator" width="100%">
 
 # Table of Contents
 
