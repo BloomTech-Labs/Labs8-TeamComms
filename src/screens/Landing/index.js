@@ -35,13 +35,18 @@ const PickPlanButton = styled(PrimaryButton)`
 const Masthead = styled.div`
   background: url(images/masthead.png) no-repeat center center scroll;
   background-size: cover;
+
   height: 90vh;
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
   padding-bottom: 17%;
   padding-left: 5%;
-  width: 100%;
+  max-width: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
   @media (max-width: 1100px) {
     background-size: contain;
     height: 80vh;
