@@ -44,6 +44,8 @@ class MeetingList extends Component {
   componentDidMount() {
     if (this.props.token && !localStorage.getItem("jwt")) {
       this.props.callGoogleLogIn(history, this.props.token);
+    } else if (!this.props.token && !localStorage.getItem("jwt")) {
+      history.push("/landing");
     } else {
       this.props.getMeetings();
     }

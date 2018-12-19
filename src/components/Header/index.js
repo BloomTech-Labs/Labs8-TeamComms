@@ -206,13 +206,11 @@ class Header extends Component {
                     FEATURES
                   </NavLink>
                   <Link to="/landing#pricing" style={{ color: "white" }}>
-                    {" "}
-                    PRICING{" "}
+                    PRICING
                   </Link>
                   <br />
                   <Link to="/about" style={{ color: "white" }}>
-                    {" "}
-                    ABOUT US{" "}
+                    ABOUT US
                   </Link>
                   <br />
                   <Link to="/landing#register">

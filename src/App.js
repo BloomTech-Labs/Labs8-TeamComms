@@ -59,11 +59,11 @@ class App extends Component {
       <AppWrapper history={this.props.history} className="scroller">
         {this.props.loginSuccess ? (
           <Link to="/dashboard">
-            <FadedLogo src="../images/logo.png" width="190x" height="60px" />
+            <FadedLogo src="../images/logo.png" width="190x" height="65px" />
           </Link>
         ) : (
           <Link to="/landing">
-            <FadedLogo src="../images/logo.png" width="190x" height="60px" />
+            <FadedLogo src="../images/logo.png" width="190x" height="65px" />
           </Link>
         )}
         <Header history={this.props.history} />
