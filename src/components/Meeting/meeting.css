@@ -1,24 +1,3 @@
-.game-ctn {
-  display: flex;
-  flex-flow: column;
-  background-color: rgba(255, 255, 255, 0);
-  border: 1px solid black;
-  height: 600px;
-  border-radius: 15px;
-  top: 10%;
-  width: 50%;
-  margin: auto;
-}
-
-.game-header {
-  text-align: left;
-  border-bottom: 1px solid black;
-  height: 20px;
-  padding: 10px 0 10px 10px;
-  background-color: rgba(6, 6, 236, 0.1);
-  border-radius: 15px 15px 0 0;
-}
-
 .text-ctn {
   border: 1px solid black;
   background-color: rgba(0, 0, 0, 0.548);
@@ -41,14 +20,6 @@
   height: 300px;
 }
 
-.players-list {
-  list-style: none;
-  color: rgb(15, 250, 15);
-}
-
-.chat-msg {
-  color: rgb(247, 118, 247);
-}
 
 .err-msg {
   color: red;
@@ -97,12 +68,6 @@
   display: none;
 }
 
-/* @media (min-width: 800px) {
-  #pr_id_3_header_0 {
-    display: none;
-  }
-
-} */
 
 .tabcustom {
   width: 80%;

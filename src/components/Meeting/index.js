@@ -2,53 +2,36 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import io from "socket.io-client";
-import { ListBox } from "primereact/listbox";
-import "primereact/resources/themes/nova-light/theme.css";
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";
+
 import { Panel } from "primereact/panel";
 import { TabView, TabPanel } from "primereact/tabview";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { InputText } from "primereact/inputtext";
-import SubmitButton from "../Common/SubmitButton";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import "primereact/resources/themes/nova-light/theme.css";
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";
+
+import StyledScrollPanel from "../Common/StyledScrollPanel";
+import { FinalizeButton, SubmitButton } from "../Common/SubmitButton";
+import { AttendeeScroll } from "../Common/AttendeeScroll";
+import {
+  ListItem,
+  StyledListAttendees,
+  StyledListQuestions
+} from "../Common/List";
+
+import Editor from "../Common/Editor";
+import QuestionForm from "../Common/QuestionForm";
+
 import axios from "axios";
 import StyledChart from "../Chart/";
-import Stripe from "../Stripe";
 import moment from "moment";
 import MeetingDetailTable from "../MeetingDetailTable";
 
-import("./css.css");
+import "react-quill/dist/quill.snow.css";
+import "./meeting.css";
 
 let socket;
-
-const StyledScrollPanel = styled(ScrollPanel)`
-  &&& {
-    width: 100%;
-    margin-bottom: 20px;
-    border: none;
-    height: 75px;
-  }
-`;
-
-const FinalizeButton = styled(SubmitButton)`
-  margin: 20px 0 20px 0;
-`;
-
-const AttendeeScroll = styled(ScrollPanel)`
-display: flex;
- justify-content: center;
- align-items: center;
- flex-direction: column;
-  @media (min-width: 768px) {
-   
-    margin: 0 20px;
-    margin-right: 0;
-    }
-  }
-
-`;
 
 const StyledInputText = styled(InputText)`
   width: 70%;
@@ -91,28 +74,6 @@ const StyledMobileTabView = styled(TabView)`
   }
 `;
 
-const StyledListAttendees = styled(ListBox)`
-  &&& {
-    width: 100%;
-    margin-bottom: 20px;
-    border: none;
-  }
-`;
-
-const StyledListQuestions = styled(ListBox)`
-  &&& {
-    white-space: pre-wrap;
-    width: 100%;
-    border: none;
-    overflow-x: hidden;
-  }
-`;
-
-const ListItem = styled.p`
-  white-space: pre-wrap;
-  max-width: 100%;
-  border: none;
-`;
 const Dim = styled.div`
   width: 60%;
   display: flex;
@@ -161,30 +122,6 @@ const EditorWrapper = styled.div`
   }
   em {
     font-style: italic !important;
-  }
-`;
-
-const Editor = styled(ReactQuill)`
-  width: 500px;
-  margin-top: 20px;
-  .ql-container {
-    height: 253px;
-  }
-  @media (max-width: 768px) {
-    max-width: 400px;
-  }
-  @media (max-width: 400px) {
-    max-width: 330px;
-  }
-`;
-
-const QuestionForm = styled.form`
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-  @media (max-width: 400px) {
-    flex-direction: column;
   }
 `;
 

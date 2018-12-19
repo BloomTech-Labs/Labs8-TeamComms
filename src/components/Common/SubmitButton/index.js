@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import PrimaryButton from "../PrimaryButton";
 
-const SubmitButton = styled(PrimaryButton)`
+export const SubmitButton = styled(PrimaryButton)`
   width: 150px;
   height: 30px;
   color: white;
@@ -15,4 +15,6 @@ const SubmitButton = styled(PrimaryButton)`
   margin-left: 10px;
 `;
 
-export default SubmitButton;
+export const FinalizeButton = styled(SubmitButton)`
+  margin: 20px 0 20px 0;
+`;
