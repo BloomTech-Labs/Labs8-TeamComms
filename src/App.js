@@ -3,7 +3,7 @@ import { Route, Switch, Redirect, Link } from "react-router-dom";
 import ScreensLogin from "./screens/Login";
 import ScreensRegister from "./screens/Register";
 import ScreensLanding from "./screens/Landing";
-import ScreensMeetingList from "./screens/MeetingList";
+import ScreensDashboard from "./screens/Dashboard";
 import { connect } from "react-redux";
 import "./App.css";
 import styled from "styled-components";
@@ -89,7 +89,7 @@ class App extends Component {
               }}
             />
             <Route exact path="/meeting/:id" component={Meeting} />
-            <Route path="/dashboard/:token?" component={ScreensMeetingList} />
+            <Route path="/dashboard/:token?" component={ScreensDashboard} />
             <Route path="/preferences" component={UserPreferences} />
             <Route path="/updateMeeting/:id" component={UpdateMeeting} />
             <Route path="/createMeeting" component={CreateMeeting} />

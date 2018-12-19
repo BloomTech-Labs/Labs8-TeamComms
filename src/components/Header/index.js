@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from "react";
-import { Link } from "react-router-dom";
+
 import { connect } from "react-redux";
 import styled from "styled-components";
 import { PrimaryButton, BurgerButton, NavLink } from "../Common";
 import Stripe from "../Stripe";
+import { HashLink as Link } from "react-router-hash-link";
 import {
   callLogOut,
   toggleOverpane,
@@ -205,7 +206,7 @@ class Header extends Component {
                   >
                     FEATURES
                   </NavLink>
-                  <Link to="/landing#pricing" style={{ color: "white" }}>
+                  <Link to="/landing#plans" style={{ color: "white" }}>
                     PRICING
                   </Link>
                   <br />
@@ -244,9 +245,9 @@ class Header extends Component {
                 DASHBOARD
               </NavLink>
               <TextLink to="/preferences">PREFERENCES</TextLink>
-              <Link to="/register">
+              {/* <Link to="/register">
                 <RegisterButton>REFER A FRIEND </RegisterButton>
-              </Link>
+              </Link> */}
               {this.props.userData.user.premium ? null : <Stripe />}
               <LoginButton
                 onClick={() => {
@@ -261,7 +262,7 @@ class Header extends Component {
               {/* <NavLink to="/features">FEATURES</NavLink>
               <NavLink to="/landing#pricing">PRICING</NavLink>
               <NavLink to="/about">ABOUT US</NavLink> */}
-              <Link to="/register">
+              <Link to="/landing#plans">
                 <RegisterButton>REGISTER</RegisterButton>
               </Link>
               <LoginButton

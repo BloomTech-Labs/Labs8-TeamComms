@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import MeetingList from "../../components/MeetingList";
+import Dashboard from "../../components/Dashboard";
 import QuickAdd from "../../components/QuickAdd";
 import SearchBar from "../../components/SearchBar/index";
 import styled from "styled-components";
-import EasterEgg from "../../components/EasterEgg";
+import WelcomeMessage from "../../components/WelcomeMessage";
 import { connect } from "react-redux";
 
 //this screen should return components necessary to build the convo list page.
-const ConvoGrid = styled.div`
+const MeetingGrid = styled.div`
   display: flex;
   flex-wrap: wrap;
   padding: 0;
@@ -23,7 +23,7 @@ const FlexBox = styled.div`
   }
 `;
 
-class ScreensMeetingList extends Component {
+class ScreensDashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,7 +40,7 @@ class ScreensMeetingList extends Component {
   render() {
     if (this.state.search !== "") {
       var filtered_meetings = (
-        <MeetingList
+        <Dashboard
           token={this.props.match.params.token}
           filteredMeetings={this.state.filteredMeetings}
           search={this.state.search}
@@ -48,7 +48,7 @@ class ScreensMeetingList extends Component {
       );
     } else {
       filtered_meetings = (
-        <MeetingList
+        <Dashboard
           token={this.props.match.params.token}
           filteredMeetings={this.props.meetings}
           search={this.state.search}
@@ -57,20 +57,20 @@ class ScreensMeetingList extends Component {
     }
 
     return (
-      <ConvoGrid>
-        <EasterEgg />
+      <MeetingGrid>
+        <WelcomeMessage />
         <FlexBox>
           <QuickAdd />
           <SearchBar filtered={this.filtered} />
         </FlexBox>
         {filtered_meetings}
-      </ConvoGrid>
+      </MeetingGrid>
     );
   }
 }
-ScreensMeetingList.propTypes = {};
+ScreensDashboard.propTypes = {};
 
 const mapStateToProps = state => {
   return state;
 };
-export default connect(mapStateToProps)(ScreensMeetingList);
+export default connect(mapStateToProps)(ScreensDashboard);
