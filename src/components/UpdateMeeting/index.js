@@ -7,7 +7,7 @@ import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { AutoComplete } from "primereact/autocomplete";
-import { PrimaryButton } from "../Common";
+import PrimaryButton from "../Common/PrimaryButton";
 import moment from "moment";
 import axios from "axios";
 
@@ -209,8 +209,6 @@ class UpdateMeeting extends Component {
       alert("Please enter a valid End date and time.");
       return;
       // end input check
-
-
     } else {
       let inviteeCheck =
         userInput.invitees.length > 0

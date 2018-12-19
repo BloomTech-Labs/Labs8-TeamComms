@@ -6,7 +6,7 @@ import { InputText } from "primereact/inputtext";
 import { InputMask } from "primereact/inputmask";
 import { Password } from "primereact/password";
 import { Dropdown } from "primereact/dropdown";
-import { PrimaryButton } from "../Common";
+import PrimaryButton from "../Common/PrimaryButton";
 import Stripe from "../Stripe";
 
 const Main = styled.div`

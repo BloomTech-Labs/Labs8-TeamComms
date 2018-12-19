@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Register from "../../components/Register";
 import styled from "styled-components";
 import Stripe from "../../components/Stripe";
-import { PrimaryButton } from "../../components/Common";
+import PrimaryButton from "../../components/Common/PrimaryButton";
 import history from "../../history";
 import "./landing.css";
 

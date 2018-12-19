@@ -12,7 +12,7 @@ import { Panel } from "primereact/panel";
 import { TabView, TabPanel } from "primereact/tabview";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { InputText } from "primereact/inputtext";
-import { SubmitButton } from "../Common";
+import SubmitButton from "../Common/SubmitButton";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import axios from "axios";

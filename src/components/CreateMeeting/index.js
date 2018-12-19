@@ -7,7 +7,7 @@ import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { AutoComplete } from "primereact/autocomplete";
-import { PrimaryButton } from "../Common";
+import PrimaryButton from "../Common/PrimaryButton";
 import moment from "moment";
 import axios from "axios";
 import "./createMeeting.css";

@@ -6,13 +6,9 @@ import styled from "styled-components";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import history from "../../history";
-import {
-  PrimaryButton,
-  Overpane,
-  CloseButton,
-  LoginLogo,
-  SpinnerWrapper
-} from "../Common";
+import { LoginLogo } from "../Common/Logo";
+import { Overpane, CloseButton, SpinnerWrapper } from "../Common";
+import PrimaryButton from "../Common/PrimaryButton";
 import GoogleButton from "../GoogleButton";
 import { callLogIn, toggleOverpane } from "../../actions/index";
 
@@ -112,7 +108,7 @@ class Login extends Component {
       } else {
         this.setState({ email: e.target.value, validEmail: false });
       }
-    // below edge case that is never hit
+      // below edge case that is never hit
     } else {
       this.setState({ email: e.target.value, validEmail: false });
     }

@@ -3,7 +3,7 @@ import StripeCheckout from "react-stripe-checkout";
 import styled from "styled-components";
 import { premiumChange } from "../../actions/index";
 import { connect } from "react-redux";
-import { PrimaryButton } from "../Common";
+import PrimaryButton from "../Common/PrimaryButton";
 import axios from "axios";
 
 const CustomBtn = styled(PrimaryButton)`

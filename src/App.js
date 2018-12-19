@@ -1,57 +1,22 @@
 import React, { Component } from "react";
 import { Route, Switch, Redirect, Link } from "react-router-dom";
+import { connect } from "react-redux";
+
 import ScreensLogin from "./screens/Login";
 import ScreensRegister from "./screens/Register";
 import ScreensLanding from "./screens/Landing";
 import ScreensDashboard from "./screens/Dashboard";
-import { connect } from "react-redux";
-import "./App.css";
-import styled from "styled-components";
+
 import Header from "./components/Header";
-import { Logo } from "./components/Common";
+import { MainLogo } from "./components/Common/Logo";
+import Content from "./components/Common/Content";
+import AppWrapper from "./components/Common/AppWrapper";
 import CreateMeeting from "./components/CreateMeeting";
 import UpdateMeeting from "./components/UpdateMeeting";
 import Meeting from "./components/Meeting";
-
-import { toggleOverpane } from "./actions/index";
-
 import UserPreferences from "./components/UserPreferences";
-
-const AppWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-x: hidden;
-  background: #374353;
-  background-position: fixed;
-  color: #374353;
-  display: grid;
-  grid-template-columns: 15rem auto;
-  grid-template-rows: 6rem 25rem 5rem;
-  @media (min-width: 1100px) {
-    max-width: 1100px;
-    margin: 0 auto;
-    border: 1px solid lightgrey;
-  }
-`;
-
-export const FadedLogo = styled(Logo)`
-  margin-left: 35px;
-  margin-top: 10px;
-`;
-
-const Content = styled.div`
-  grid-column: 1/3;
-  grid-row: 2;
-`;
-
-// const Footer = styled.div`
-//   grid-column: 2;
-//   grid-row: 4;
-//   background: black;
-// `;
+import { toggleOverpane } from "./actions/index";
+import "./App.css";
 
 class App extends Component {
   render() {
@@ -59,11 +24,11 @@ class App extends Component {
       <AppWrapper history={this.props.history} className="scroller">
         {this.props.loginSuccess ? (
           <Link to="/dashboard">
-            <FadedLogo src="../images/logo.png" width="190x" height="65px" />
+            <MainLogo src="../images/logo.png" width="190x" height="65px" />
           </Link>
         ) : (
           <Link to="/landing">
-            <FadedLogo src="../images/logo.png" width="190x" height="65px" />
+            <MainLogo src="../images/logo.png" width="190x" height="65px" />
           </Link>
         )}
         <Header history={this.props.history} />
