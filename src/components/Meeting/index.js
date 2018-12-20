@@ -169,9 +169,6 @@ class Meeting extends Component {
     socket.on("question", questions => {
       return this.setState({ questions });
     });
-    socket.on("finalize", () => {
-      alert("Meeting has been saved!");
-    });
   }
   componentDidMount() {
     let header = { Authorization: localStorage.getItem("jwt") };
@@ -223,6 +220,7 @@ class Meeting extends Component {
 
   finalizeMeeting = e => {
     e.preventDefault();
+    socket.emit("update text", this.state.text)
     socket.emit("finalize");
   };
 

@@ -9,7 +9,7 @@ module.exports = async function(io) {
     let room = socket.handshake["query"]["r_var"]; //creates a room with the query string sent over by the client
     socket.join(room);
     let liveMeeting = await LiveMeeting.findOne({ meeting: room });
-    if (liveMeeting.notes.length > 0) {
+    if (liveMeeting.notes.length > 0 && !mtg.adapter.rooms[room].text) {
       mtg.adapter.rooms[room].text = liveMeeting.notes;
     }
     if (!mtg.adapter.rooms[room].questions) {
@@ -23,7 +23,7 @@ module.exports = async function(io) {
     socket.on("update text", text => {
       //can we update the content of the database here? TODO
       mtg.adapter.rooms[room].text = text;
-      mtg.to(room).emit("update text", text); //updates text to only the individuals currently in the room id of the /meeting namespace
+      mtg.to(room).emit("update text", mtg.adapter.rooms[room].text); //updates text to only the individuals currently in the room id of the /meeting namespace
     });
 
     socket.on("question", function(question) {
