@@ -14,10 +14,14 @@ const server = express();
 
 server.use(cors());
 server.options("*", cors());
-
-let app = server.listen(process.env.PORT || 8080, () => {
-  console.log(`\n=== Web API Listening on http://localhost:8080... *.* ===\n`);
-});
+let app;
+if (process.env.NODE_ENV !== "test") {
+  app = server.listen(process.env.PORT || 8080, () => {
+    console.log(
+      `\n=== Web API Listening on http://localhost:8080... *.* ===\n`
+    );
+  });
+}
 // SocketIo handlers
 let io = require("socket.io").listen(app);
 let ioHandler = require("./services/socketio")(io);
