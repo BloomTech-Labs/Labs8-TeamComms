@@ -6,7 +6,7 @@ import Header from "./components/Header";
 import App from "./App";
 import Adapter from "enzyme-adapter-react-16";
 import { store } from "./index.js";
-import { FadedLogo } from "./App";
+import { MainLogo } from "./components/Common/Logo";
 import ScreensLanding from "./screens/Landing";
 import "jest-dom/extend-expect";
 import "react-testing-library/cleanup-after-each";
@@ -44,7 +44,7 @@ describe("<App />", () => {
 
   it("should render the logo", () => {
     const renderedComponent = shallow(<App store={store} />).dive();
-    expect(renderedComponent.find(FadedLogo)).toHaveLength(1);
+    expect(renderedComponent.find(MainLogo)).toHaveLength(1);
   });
 });
 
