@@ -40,10 +40,12 @@ const ButtonNavLink = styled(Link)`
   cursor: pointer;
 `;
 
-class MeetingList extends Component {
+class Dashboard extends Component {
   componentDidMount() {
     if (this.props.token && !localStorage.getItem("jwt")) {
       this.props.callGoogleLogIn(history, this.props.token);
+    } else if (!this.props.token && !localStorage.getItem("jwt")) {
+      history.push("/landing");
     } else {
       this.props.getMeetings();
     }
@@ -94,4 +96,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { getMeetings, callDeleteMeeting, callGoogleLogIn }
-)(MeetingList);
+)(Dashboard);

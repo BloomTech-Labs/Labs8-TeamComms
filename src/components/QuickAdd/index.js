@@ -87,7 +87,7 @@ class QuickAdd extends Component {
           onChange={e => {
             this.changeHandler(e);
           }}
-          placeholder="Quick Add (New Conversation Name...)"
+          placeholder="Quick Add (New Meeting Name...)"
         />
         <AddButton>
           <ButtonNavLink

@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Register from "../../components/Register";
 import styled from "styled-components";
-import Stripe from "../../components/Stripe";
-import { PrimaryButton } from "../../components/Common";
-import history from "../../history";
+import PrimaryButton from "../../components/Common/PrimaryButton";
+import PickPlanButton from "../../components/Common/PickPlanButton";
+// import history from "../../history";
 import "./landing.css";
 
 //this screen should return components necessary to build the landing page.
@@ -16,19 +16,6 @@ const Main = styled.div`
 
   @media (max-width: 768px) {
     flex-direction: column;
-  }
-`;
-
-const PickPlanButton = styled(PrimaryButton)`
-  background: #facc43;
-  width: 300px;
-  cursor: pointer;
-  z-index: 1000;
-  font-size: 20px;
-  font-weight: bold;
-  color: #374353;
-  :hover {
-    color: #25bea0;
   }
 `;
 

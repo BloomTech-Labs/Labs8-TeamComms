@@ -1,102 +1,68 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Route, Switch, Redirect, Link } from "react-router-dom";
+import { connect } from "react-redux";
+import GlobalStyles from "./components/Common/GlobalStyles";
 import ScreensLogin from "./screens/Login";
 import ScreensRegister from "./screens/Register";
 import ScreensLanding from "./screens/Landing";
-import ScreensMeetingList from "./screens/MeetingList";
-import { connect } from "react-redux";
-import "./App.css";
-import styled from "styled-components";
+import ScreensDashboard from "./screens/Dashboard";
 import Header from "./components/Header";
-import { Logo } from "./components/Common";
+import Content from "./components/Common/Content";
+import AppWrapper from "./components/Common/AppWrapper";
 import CreateMeeting from "./components/CreateMeeting";
 import UpdateMeeting from "./components/UpdateMeeting";
 import Meeting from "./components/Meeting";
-
-import { toggleOverpane } from "./actions/index";
-
 import UserPreferences from "./components/UserPreferences";
-
-const AppWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-x: hidden;
-  background: #374353;
-  background-position: fixed;
-  color: #374353;
-  display: grid;
-  grid-template-columns: 15rem auto;
-  grid-template-rows: 6rem 25rem 5rem;
-  @media (min-width: 1100px) {
-    max-width: 1100px;
-    margin: 0 auto;
-    border: 1px solid lightgrey;
-  }
-`;
-
-export const FadedLogo = styled(Logo)`
-  margin-left: 35px;
-  margin-top: 10px;
-`;
-
-const Content = styled.div`
-  grid-column: 1/3;
-  grid-row: 2;
-`;
-
-// const Footer = styled.div`
-//   grid-column: 2;
-//   grid-row: 4;
-//   background: black;
-// `;
+import { toggleOverpane } from "./actions/index";
+import { MainLogo } from "./components/Common/Logo";
 
 class App extends Component {
   render() {
     return (
-      <AppWrapper history={this.props.history} className="scroller">
-        {this.props.loginSuccess ? (
-          <Link to="/dashboard">
-            <FadedLogo src="../images/logo.png" width="190x" height="60px" />
-          </Link>
-        ) : (
-          <Link to="/landing">
-            <FadedLogo src="../images/logo.png" width="190x" height="60px" />
-          </Link>
-        )}
-        <Header history={this.props.history} />
-        <Route
-          exact
-          path="/"
-          render={props =>
-            this.props.loginSuccess ? (
-              <Redirect history={props.history} to="/dashboard" />
-            ) : (
-              <Redirect history={props.history} to="/landing" />
-            )
-          }
-        />
-        <Switch>
-          <Content>
-            <Route exact path="/landing" component={ScreensLanding} />
-            <Route
-              exact
-              path="/register"
-              render={props => {
-                return <ScreensRegister history={this.props.history} />;
-              }}
-            />
-            <Route exact path="/meeting/:id" component={Meeting} />
-            <Route path="/dashboard/:token?" component={ScreensMeetingList} />
-            <Route path="/preferences" component={UserPreferences} />
-            <Route path="/updateMeeting/:id" component={UpdateMeeting} />
-            <Route path="/createMeeting" component={CreateMeeting} />
-          </Content>
-        </Switch>
-        <ScreensLogin />
-      </AppWrapper>
+      <Fragment>
+        <GlobalStyles />
+        <AppWrapper history={this.props.history}>
+          {this.props.loginSuccess ? (
+            <Link to="/dashboard">
+              <MainLogo src="../images/logo.png" width="190x" height="65px" />
+            </Link>
+          ) : (
+            <Link to="/landing">
+              <MainLogo src="../images/logo.png" width="190x" height="65px" />
+            </Link>
+          )}
+          <Header history={this.props.history} />
+          <Route
+            exact
+            path="/"
+            render={props =>
+              this.props.loginSuccess ? (
+                <Redirect history={props.history} to="/dashboard" />
+              ) : (
+                <Redirect history={props.history} to="/landing" />
+              )
+            }
+          />
+          <Switch>
+            <Content>
+              <Route exact path="/landing" component={ScreensLanding} />
+              <Route
+                exact
+                path="/register"
+                render={props => {
+                  return <ScreensRegister history={this.props.history} />;
+                }}
+              />
+              <Route exact path="/meeting/:id" component={Meeting} />
+              <Route path="/dashboard/:token?" component={ScreensDashboard} />
+              <Route path="/preferences" component={UserPreferences} />
+              <Route path="/updateMeeting/:id" component={UpdateMeeting} />
+              <Route path="/createMeeting" component={CreateMeeting} />
+            </Content>
+          </Switch>
+          <ScreensLogin />
+        </AppWrapper>
+      </Fragment>
     );
   }
 }

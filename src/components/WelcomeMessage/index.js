@@ -67,7 +67,7 @@ const DisplayName = styled.span`
   color: #fabc09;
 `;
 
-class EasterEgg extends Component {
+class WelcomeMessage extends Component {
   render() {
     let newRandom = randomNumber;
     return (
@@ -94,4 +94,4 @@ class EasterEgg extends Component {
 const mapStateToProps = state => {
   return state;
 };
-export default connect(mapStateToProps)(EasterEgg);
+export default connect(mapStateToProps)(WelcomeMessage);
