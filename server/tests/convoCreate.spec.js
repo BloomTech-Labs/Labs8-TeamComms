@@ -26,15 +26,32 @@ describe("Convo Create", () => {
   });
 
   it("POST: Does NOT work without all required fields", async () => {
-    console.log(token);
     const res = await request(server)
       .post("/api/meeting/create")
       .set("Authorization", token)
       .send({ title: "Fail Meeting" });
     expect(res.status).toBe(400);
   });
+  it("POST: Does NOT work without all required fields", async () => {
+    const res = await request(server)
+      .post("/api/meeting/create")
+      .set("Authorization", token)
+      .send({ description: "Fail Meeting" });
+    expect(res.status).toBe(400);
+  });
+  it("POST: Does NOT work without questions, needs to be empty array", async () => {
+    const res = await request(server)
+      .post("/api/meeting/create")
+      .set("Authorization", token)
+      .send({
+        title: "Successful Meeting",
+        description: "Will be success",
+        startTime: "2018-12-15T09:30:50.726Z",
+        endTime: "2020-12-16T13:30Z"
+      });
+    expect(res.status).toBe(500);
+  });
   it("POST: Does NOT work without token", async () => {
-    console.log(token);
     const res = await request(server)
       .post("/api/meeting/create")
       .send({ title: "Fail Meeting" });
@@ -42,7 +59,6 @@ describe("Convo Create", () => {
   });
 
   it("POST: Does work with all required fields", async () => {
-    console.log(token);
     const res = await request(server)
       .post("/api/meeting/create")
       .set("Authorization", token)
