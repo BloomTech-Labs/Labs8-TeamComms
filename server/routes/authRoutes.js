@@ -14,19 +14,11 @@ Router.get(
   "/google/redirect",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "https://team-comm.netlify.com/register"
+    failureRedirect: "https://teamcomm.app/register"
   }),
   (req, res) => {
-    res.redirect(`https://team-comm.netlify.com/dashboard/${generateToken(req.user)}`);
+    res.redirect(`https://teamcomm.app/dashboard/${generateToken(req.user)}`);
   });
 
-  
-// Router.get(
-//   "/",
-//   passport.authenticate("jwt", { session: false }),
-//   (req, res) => {
-//     res.send(req.user);
-//   }
-// );
 
 module.exports = Router;
