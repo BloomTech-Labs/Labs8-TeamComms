@@ -3,17 +3,8 @@ import StripeCheckout from "react-stripe-checkout";
 import styled from "styled-components";
 import { premiumChange } from "../../actions/index";
 import { connect } from "react-redux";
-import { PrimaryButton } from "../Common";
+import StripeButton from "../Common/StripeButton";
 import axios from "axios";
-
-const CustomBtn = styled(PrimaryButton)`
-  background: #fabc09;
-  color: #ffffff;
-  a {
-    text-decoration: none;
-    color: white;
-  }
-`;
 
 const Stripe = props => {
   const onToken = token => {
@@ -43,7 +34,7 @@ const Stripe = props => {
       token={onToken}
       stripeKey="pk_test_ZU3mlTy0q00DATc9EyF9A8jX"
     >
-      <CustomBtn>Go Premium</CustomBtn>
+      <StripeButton>Go Premium</StripeButton>
     </StripeCheckout>
   );
 };

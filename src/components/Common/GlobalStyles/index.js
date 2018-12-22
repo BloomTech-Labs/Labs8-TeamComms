@@ -1,8 +1,6 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
+import { createGlobalStyle } from "styled-components";
 
+const GlobalStyles = createGlobalStyle`
 html,
 body,
 div,
@@ -144,4 +142,25 @@ html {
 *:after {
   box-sizing: inherit;
 }
-/* End of Reset */
+
+//Scrollbar styles
+
+::-webkit-scrollbar-track {
+
+  border-radius: 3px;
+  background-color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  background-color: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background-color: lightgrey;
+}
+
+`;
+
+export default GlobalStyles;

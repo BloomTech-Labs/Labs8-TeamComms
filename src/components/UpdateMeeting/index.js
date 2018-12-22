@@ -4,10 +4,9 @@ import { callUpdateMeeting } from "../../actions/index";
 import styled from "styled-components";
 import { Calendar } from "primereact/calendar";
 import { InputText } from "primereact/inputtext";
-import { Checkbox } from "primereact/checkbox";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { AutoComplete } from "primereact/autocomplete";
-import { PrimaryButton } from "../Common";
+import PrimaryButton from "../Common/PrimaryButton";
 import moment from "moment";
 import axios from "axios";
 
@@ -209,8 +208,6 @@ class UpdateMeeting extends Component {
       alert("Please enter a valid End date and time.");
       return;
       // end input check
-
-
     } else {
       let inviteeCheck =
         userInput.invitees.length > 0
@@ -341,8 +338,7 @@ class UpdateMeeting extends Component {
                   onChange={this.changeHandler}
                   inputClassName="input"
                   className="datePicker"
-                  placeholder="Start"
-                  // readOnlyInput={true}
+                  placeholder="Start" // readOnlyInput={true}
                   minDate={moment().toDate()}
                   panelClassName={"calendar-overrideStart"}
                 />
@@ -356,8 +352,7 @@ class UpdateMeeting extends Component {
                   onChange={this.changeHandler}
                   inputClassName="input"
                   className="datePicker"
-                  placeholder="End"
-                  // readOnlyInput={true}
+                  placeholder="End" // readOnlyInput={true}
                   minDate={moment().toDate()}
                   panelClassName={"calendar-overrideEnd"}
                 />
@@ -402,7 +397,9 @@ class UpdateMeeting extends Component {
                 style={{ width: "100%", height: "150px", marginTop: "20px" }}
               >
                 {this.state.invitees.map(invited => {
-                  return <Entry>{invited.displayName}</Entry>;
+                  return (
+                    <Entry key={Math.random()}>{invited.displayName}</Entry>
+                  );
                 })}
               </ScrollPanel>
             </Group>
@@ -426,7 +423,7 @@ class UpdateMeeting extends Component {
                 style={{ width: "100%", height: "75px", marginTop: "20px" }}
               >
                 {this.state.questions.map(question => (
-                  <Entry>{question}</Entry>
+                  <Entry key={Math.random()}>{question}</Entry>
                 ))}
               </ScrollPanel>
             </QGroup>

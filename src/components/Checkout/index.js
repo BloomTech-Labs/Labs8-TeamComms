@@ -7,7 +7,7 @@ import {
 } from "react-stripe-elements";
 import history from "../../history";
 import styled from "styled-components";
-import { PrimaryButton } from "../Common";
+import PrimaryButton from "../Common/PrimaryButton";
 
 const RegisterPremium = styled(PrimaryButton)`
   width: 100%;

@@ -7,7 +7,7 @@ import { InputText } from "primereact/inputtext";
 import { Checkbox } from "primereact/checkbox";
 import { ScrollPanel } from "primereact/scrollpanel";
 import { AutoComplete } from "primereact/autocomplete";
-import { PrimaryButton } from "../Common";
+import PrimaryButton from "../Common/PrimaryButton";
 import moment from "moment";
 import axios from "axios";
 import "./createMeeting.css";
@@ -325,8 +325,7 @@ class CreateMeeting extends Component {
                   onChange={this.changeHandler}
                   inputClassName="input"
                   className="datePicker"
-                  placeholder="Start"
-                  // readOnlyInput={true}
+                  placeholder="Start" // readOnlyInput={true}
                   minDate={moment().toDate()}
                   panelClassName={"calendar-overrideStart"}
                 />
@@ -340,8 +339,7 @@ class CreateMeeting extends Component {
                   onChange={this.changeHandler}
                   inputClassName="input"
                   className="datePicker"
-                  placeholder="End"
-                  // readOnlyInput={true}
+                  placeholder="End" // readOnlyInput={true}
                   minDate={moment().toDate()}
                   panelClassName={"calendar-overrideEnd"}
                 />
@@ -399,7 +397,9 @@ class CreateMeeting extends Component {
                 style={{ width: "100%", height: "150px", marginTop: "20px" }}
               >
                 {this.state.invitees.map(invited => {
-                  return <Entry>{invited.displayName}</Entry>;
+                  return (
+                    <Entry key={Math.random()}>{invited.displayName}</Entry>
+                  );
                 })}
               </ScrollPanel>
             </Group>
@@ -422,7 +422,7 @@ class CreateMeeting extends Component {
                 style={{ width: "100%", height: "75px", marginTop: "20px" }}
               >
                 {this.state.questions.map(question => (
-                  <Entry>{question}</Entry>
+                  <Entry key={Math.random()}>{question}</Entry>
                 ))}
               </ScrollPanel>
             </QGroup>
