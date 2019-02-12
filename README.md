@@ -6,7 +6,7 @@
     <img src="https://david-dm.org/Lambda-School-Labs/Labs8-TeamComms.svg" alt="Dependency Status" />
   </a>
 
-Click <a href="https://team-comm.netlify.com">here</a> to visit the app.
+Click <a href="https://www.teamcomm.app">here</a> to visit the app.
 
 <img src="https://i.imgur.com/kO5D6oC.png" title="Team Communicator" width="100%">
 
