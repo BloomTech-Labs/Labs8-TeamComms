@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import PrimaryButton from "../PrimaryButton";
+import styled from 'styled-components'
+import PrimaryButton from '../PrimaryButton'
 const PickPlanButton = styled(PrimaryButton)`
   background: #facc43;
   width: 300px;
@@ -11,6 +11,14 @@ const PickPlanButton = styled(PrimaryButton)`
   :hover {
     color: #25bea0;
   }
-`;
+  @media (max-width: 768px) {
+    width: 250px;
+    font-size: 1rem;
+  }
+  @media (max-width: 500px) {
+    width: 115px;
+    font-size: 0.65rem;
+  }
+`
 
-export default PickPlanButton;
+export default PickPlanButton

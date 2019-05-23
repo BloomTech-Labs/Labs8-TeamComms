@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Register from "../../components/Register";
 import styled from "styled-components";
-import PrimaryButton from "../../components/Common/PrimaryButton";
 import PickPlanButton from "../../components/Common/PickPlanButton";
 // import history from "../../history";
 import "./landing.css";
@@ -21,7 +20,7 @@ const Main = styled.div`
 
 const Masthead = styled.div`
   background: url(images/masthead.png) no-repeat center center scroll;
-  background-size: cover;
+  background-size: contain;
 
   height: 90vh;
   display: flex;
@@ -30,17 +29,26 @@ const Masthead = styled.div`
   padding-bottom: 17%;
   padding-left: 5%;
   max-width: 100%;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
   @media (max-width: 1100px) {
     background-size: contain;
     height: 80vh;
   }
   @media (max-width: 768px) {
-    background-size: contain;
+    background-size: cover;
     height: 40vh;
+    padding-bottom: 10%;
+  }
+  @media (max-width: 500px) {
+    background-size: contain;
+    background-position: left center;
+    padding-bottom: 20%;
+  }
+  @media (max-width: 450px) {
+    padding-bottom: 12%;
   }
 `;
 
